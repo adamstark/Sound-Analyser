@@ -9,7 +9,7 @@
 #include "AudioAnalysisManager.h"
 
 //==============================================================================
-AudioAnalysisManager::AudioAnalysisManager()
+AudioAnalysisManager::AudioAnalysisManager() : audioBuffer(2048)
 {
     
 }
@@ -17,8 +17,13 @@ AudioAnalysisManager::AudioAnalysisManager()
 //==============================================================================
 void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
 {
-    // calculate RMS
-    float rms = signalEnergy.calculateRMS(buffer, numSamples);
+    // add new audio frame to our larger buffer
+    audioBuffer.addNewSamplesToBuffer(buffer,numSamples);
     
-    osc.send("/rms",rms);
+    
+    
+    // calculate RMS
+    float rms = signalEnergy.calculateRMS(audioBuffer.buffer);
+    
+    osc.send("/rmstest",rms);
 }

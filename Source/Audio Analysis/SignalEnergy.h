@@ -10,6 +10,7 @@
 #define __SoundAnalyser__SignalEnergy__
 
 #include <cmath>
+#include <vector>
 
 class SignalEnergy {
     
@@ -17,7 +18,7 @@ public:
     /** constructor */
     SignalEnergy();
     
-    float calculateRMS(float *buffer,int numSamples);
+    float calculateRMS(std::vector<float> buffer);
     
     float calculatePeak(float *buffer,int numSamples);
     

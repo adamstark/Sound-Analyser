@@ -12,6 +12,8 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "OSCSender.h"
 #include "SignalEnergy.h"
+#include "FFT.h"
+#include "AudioBuffer.h"
 #include <iostream>
 
 class AudioAnalysisManager {
@@ -20,14 +22,25 @@ public:
     /** constructor */
     AudioAnalysisManager();
     
+    /** passes the audio buffer through a number of analysis algorithms 
+     * @param buffer the audio buffer containing the audio samples
+     * @param numSamples the number of audio samples in the buffer
+     */
     void analyseAudio(float* buffer,int numSamples);
     
     
 private:
     
+    /** allows osc to be sent to a specific ip address and port number */
     OSCSender osc;
     
+    /** an object for performing analyses relating to signal energy */
     SignalEnergy signalEnergy;
+    
+    AudioBuffer audioBuffer;
+    
+    /** an object for computing the fourier transform of audio frames */
+    //FFT fft;
 };
 
 #endif /* defined(__SoundAnalyser__AudioAnalysisManager__) */
