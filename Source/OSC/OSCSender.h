@@ -21,7 +21,7 @@ public:
     
     UdpTransmitSocket transmitSocket;
     
-    void send(char* address_pattern,float value);
+    void send(const char* address_pattern,float value);
     
 private:
     

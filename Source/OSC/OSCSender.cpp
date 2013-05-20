@@ -9,7 +9,7 @@ OSCSender::OSCSender() : transmitSocket( IpEndpointName( ADDRESS, PORT ) )
 }
 
 //==============================================================================
-void OSCSender::send(char* address_pattern,float value)
+void OSCSender::send(const char* address_pattern,float value)
 {
     char buffer[OUTPUT_BUFFER_SIZE];
     osc::OutboundPacketStream p( buffer, OUTPUT_BUFFER_SIZE );

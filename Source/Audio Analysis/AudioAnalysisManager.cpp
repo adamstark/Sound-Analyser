@@ -8,7 +8,17 @@
 
 #include "AudioAnalysisManager.h"
 
+//==============================================================================
 AudioAnalysisManager::AudioAnalysisManager()
 {
     
+}
+
+//==============================================================================
+void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
+{
+    // calculate RMS
+    float rms = signalEnergy.calculateRMS(buffer, numSamples);
+    
+    osc.send("/rms",rms);
 }

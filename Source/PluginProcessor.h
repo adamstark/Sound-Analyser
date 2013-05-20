@@ -12,7 +12,7 @@
 #define __PLUGINPROCESSOR_H_FF438757__
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "OSCSender.h"
+#include "AudioAnalysisManager.h"
 
 
 //==============================================================================
@@ -69,7 +69,7 @@ public:
 
 private:
     
-    OSCSender osc;
+    AudioAnalysisManager analyser;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SoundAnalyserAudioProcessor)

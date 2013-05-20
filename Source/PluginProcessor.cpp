@@ -164,13 +164,16 @@ void SoundAnalyserAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiB
     {
         float* channelData = buffer.getSampleData (channel);
         
-        
+        if (channel == 0)
+        {
+            analyser.analyseAudio(channelData, buffer.getNumSamples());
+        }
 
         // ..do something to the data...
     }
 
     
-    osc.send("/pluginmessage",0.56);
+    
     
     // In case we have more outputs than inputs, we'll clear any output
     // channels that didn't contain input data, (because these aren't
