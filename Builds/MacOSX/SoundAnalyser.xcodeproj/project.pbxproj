@@ -63,6 +63,17 @@
 		D82C6C11D060D51D3CD5F12C /* AUOutputElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A7005A65636E494B48B7BBE7 /* AUOutputElement.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		D8A504201E7524CD07EC2DBE /* juce_graphics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 519CE473A03B55C852854F0B /* juce_graphics.mm */; };
 		DAA3BB02BB768BCD750A6BA9 /* CAAudioChannelLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1783ACB78F9EFC840CA6DCCF /* CAAudioChannelLayout.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
+		E304F997174A334A00174902 /* OSCSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E304F995174A334A00174902 /* OSCSender.cpp */; };
+		E304F9B3174A336600174902 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E304F99A174A336600174902 /* IpEndpointName.cpp */; };
+		E304F9B4174A336600174902 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E304F99F174A336600174902 /* NetworkingUtils.cpp */; };
+		E304F9B5174A336600174902 /* UdpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E304F9A0174A336600174902 /* UdpSocket.cpp */; };
+		E304F9B6174A336600174902 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E304F9A4174A336600174902 /* NetworkingUtils.cpp */; };
+		E304F9B7174A336600174902 /* UdpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E304F9A5174A336600174902 /* UdpSocket.cpp */; };
+		E304F9B8174A336600174902 /* OscOutboundPacketStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E304F9AA174A336600174902 /* OscOutboundPacketStream.cpp */; };
+		E304F9B9174A336600174902 /* OscPrintReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E304F9AD174A336600174902 /* OscPrintReceivedElements.cpp */; };
+		E304F9BA174A336600174902 /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E304F9AF174A336600174902 /* OscReceivedElements.cpp */; };
+		E304F9BB174A336600174902 /* OscTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E304F9B1174A336600174902 /* OscTypes.cpp */; };
+		E3716FC31749726800F1A7B3 /* AudioAnalysisManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3716FC11749726800F1A7B3 /* AudioAnalysisManager.cpp */; };
 		E65124A287EC2F9717E5E4D7 /* ComponentBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19AFA021571C797B8F562671 /* ComponentBase.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		E759DFFA47981CBBE6C95ED9 /* CAStreamBasicDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43C402C218BB26E4270CBA59 /* CAStreamBasicDescription.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		ED22C4F460F66E8B5AA59AB8 /* juce_gui_extra.mm in Sources */ = {isa = PBXBuildFile; fileRef = A943DFF57A6E13BF38D4BB90 /* juce_gui_extra.mm */; };
@@ -896,8 +907,34 @@
 		E269562938EBCC0C127DFF86 /* juce_module_info */ = {isa = PBXFileReference; lastKnownFileType = text; name = juce_module_info; path = ../../JuceLibraryCode/modules/juce_video/juce_module_info; sourceTree = SOURCE_ROOT; };
 		E2B41226869E381F166BE0FB /* juce_CheckSettingMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_CheckSettingMacros.h; path = ../../JuceLibraryCode/modules/juce_audio_plugin_client/utility/juce_CheckSettingMacros.h; sourceTree = SOURCE_ROOT; };
 		E2FED8ECBA6FB0C77F1DA374 /* juce_ValueTree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_ValueTree.h; path = ../../JuceLibraryCode/modules/juce_data_structures/values/juce_ValueTree.h; sourceTree = SOURCE_ROOT; };
+		E304F995174A334A00174902 /* OSCSender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OSCSender.cpp; path = ../../Source/OSC/OSCSender.cpp; sourceTree = "<group>"; };
+		E304F996174A334A00174902 /* OSCSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSCSender.h; path = ../../Source/OSC/OSCSender.h; sourceTree = "<group>"; };
+		E304F99A174A336600174902 /* IpEndpointName.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IpEndpointName.cpp; sourceTree = "<group>"; };
+		E304F99B174A336600174902 /* IpEndpointName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IpEndpointName.h; sourceTree = "<group>"; };
+		E304F99C174A336600174902 /* NetworkingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkingUtils.h; sourceTree = "<group>"; };
+		E304F99D174A336600174902 /* PacketListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PacketListener.h; sourceTree = "<group>"; };
+		E304F99F174A336600174902 /* NetworkingUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NetworkingUtils.cpp; sourceTree = "<group>"; };
+		E304F9A0174A336600174902 /* UdpSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UdpSocket.cpp; sourceTree = "<group>"; };
+		E304F9A1174A336600174902 /* TimerListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimerListener.h; sourceTree = "<group>"; };
+		E304F9A2174A336600174902 /* UdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UdpSocket.h; sourceTree = "<group>"; };
+		E304F9A4174A336600174902 /* NetworkingUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NetworkingUtils.cpp; sourceTree = "<group>"; };
+		E304F9A5174A336600174902 /* UdpSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UdpSocket.cpp; sourceTree = "<group>"; };
+		E304F9A7174A336600174902 /* MessageMappingOscPacketListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageMappingOscPacketListener.h; sourceTree = "<group>"; };
+		E304F9A8174A336600174902 /* OscException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscException.h; sourceTree = "<group>"; };
+		E304F9A9174A336600174902 /* OscHostEndianness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscHostEndianness.h; sourceTree = "<group>"; };
+		E304F9AA174A336600174902 /* OscOutboundPacketStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OscOutboundPacketStream.cpp; sourceTree = "<group>"; };
+		E304F9AB174A336600174902 /* OscOutboundPacketStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscOutboundPacketStream.h; sourceTree = "<group>"; };
+		E304F9AC174A336600174902 /* OscPacketListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscPacketListener.h; sourceTree = "<group>"; };
+		E304F9AD174A336600174902 /* OscPrintReceivedElements.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OscPrintReceivedElements.cpp; sourceTree = "<group>"; };
+		E304F9AE174A336600174902 /* OscPrintReceivedElements.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscPrintReceivedElements.h; sourceTree = "<group>"; };
+		E304F9AF174A336600174902 /* OscReceivedElements.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OscReceivedElements.cpp; sourceTree = "<group>"; };
+		E304F9B0174A336600174902 /* OscReceivedElements.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscReceivedElements.h; sourceTree = "<group>"; };
+		E304F9B1174A336600174902 /* OscTypes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OscTypes.cpp; sourceTree = "<group>"; };
+		E304F9B2174A336600174902 /* OscTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscTypes.h; sourceTree = "<group>"; };
 		E31A0A12D74166BB6C22D30B /* juce_QuickTimeAudioFormat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_QuickTimeAudioFormat.h; path = ../../JuceLibraryCode/modules/juce_audio_formats/codecs/juce_QuickTimeAudioFormat.h; sourceTree = SOURCE_ROOT; };
 		E321291C6A9474EBE98E89EA /* juce_IIRFilterAudioSource.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_IIRFilterAudioSource.cpp; path = ../../JuceLibraryCode/modules/juce_audio_basics/sources/juce_IIRFilterAudioSource.cpp; sourceTree = SOURCE_ROOT; };
+		E3716FC11749726800F1A7B3 /* AudioAnalysisManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioAnalysisManager.cpp; path = "../../Source/Audio Analysis/AudioAnalysisManager.cpp"; sourceTree = "<group>"; };
+		E3716FC21749726800F1A7B3 /* AudioAnalysisManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioAnalysisManager.h; path = "../../Source/Audio Analysis/AudioAnalysisManager.h"; sourceTree = "<group>"; };
 		E392BF5449ABB98D22D19AFD /* juce_OpenGL_win32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_OpenGL_win32.h; path = ../../JuceLibraryCode/modules/juce_opengl/native/juce_OpenGL_win32.h; sourceTree = SOURCE_ROOT; };
 		E3AC86785EEBAD6F10D7AB1D /* juce_Application.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_Application.cpp; path = ../../JuceLibraryCode/modules/juce_gui_basics/application/juce_Application.cpp; sourceTree = SOURCE_ROOT; };
 		E4ED605FD4336E39EC0EC85D /* juce_ResamplingAudioSource.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_ResamplingAudioSource.cpp; path = ../../JuceLibraryCode/modules/juce_audio_basics/sources/juce_ResamplingAudioSource.cpp; sourceTree = SOURCE_ROOT; };
@@ -2280,6 +2317,8 @@
 		A9ACEF810080CF6091B32305 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				E3716FC017496BED00F1A7B3 /* Audio Analysis */,
+				E304F994174A312900174902 /* OSC */,
 				38529A030A2E0376C2517E81 /* PluginProcessor.cpp */,
 				EFF5E5E8B03D26D13E5B8F98 /* PluginProcessor.h */,
 				7DE54BC9BFAB16077B2DD8F8 /* PluginEditor.cpp */,
@@ -2599,6 +2638,88 @@
 				9F0ABBE69FCCCF441A9CF531 /* MusicDeviceBase.h */,
 			);
 			name = "Juce AU Wrapper";
+			sourceTree = "<group>";
+		};
+		E304F994174A312900174902 /* OSC */ = {
+			isa = PBXGroup;
+			children = (
+				E304F998174A334F00174902 /* oscpack_1_1_0 */,
+				E304F995174A334A00174902 /* OSCSender.cpp */,
+				E304F996174A334A00174902 /* OSCSender.h */,
+			);
+			name = OSC;
+			sourceTree = "<group>";
+		};
+		E304F998174A334F00174902 /* oscpack_1_1_0 */ = {
+			isa = PBXGroup;
+			children = (
+				E304F999174A336600174902 /* ip */,
+				E304F9A6174A336600174902 /* osc */,
+			);
+			name = oscpack_1_1_0;
+			sourceTree = "<group>";
+		};
+		E304F999174A336600174902 /* ip */ = {
+			isa = PBXGroup;
+			children = (
+				E304F99A174A336600174902 /* IpEndpointName.cpp */,
+				E304F99B174A336600174902 /* IpEndpointName.h */,
+				E304F99C174A336600174902 /* NetworkingUtils.h */,
+				E304F99D174A336600174902 /* PacketListener.h */,
+				E304F99E174A336600174902 /* posix */,
+				E304F9A1174A336600174902 /* TimerListener.h */,
+				E304F9A2174A336600174902 /* UdpSocket.h */,
+				E304F9A3174A336600174902 /* win32 */,
+			);
+			name = ip;
+			path = ../../Source/OSC/oscpack_1_1_0/ip;
+			sourceTree = "<group>";
+		};
+		E304F99E174A336600174902 /* posix */ = {
+			isa = PBXGroup;
+			children = (
+				E304F99F174A336600174902 /* NetworkingUtils.cpp */,
+				E304F9A0174A336600174902 /* UdpSocket.cpp */,
+			);
+			path = posix;
+			sourceTree = "<group>";
+		};
+		E304F9A3174A336600174902 /* win32 */ = {
+			isa = PBXGroup;
+			children = (
+				E304F9A4174A336600174902 /* NetworkingUtils.cpp */,
+				E304F9A5174A336600174902 /* UdpSocket.cpp */,
+			);
+			path = win32;
+			sourceTree = "<group>";
+		};
+		E304F9A6174A336600174902 /* osc */ = {
+			isa = PBXGroup;
+			children = (
+				E304F9A7174A336600174902 /* MessageMappingOscPacketListener.h */,
+				E304F9A8174A336600174902 /* OscException.h */,
+				E304F9A9174A336600174902 /* OscHostEndianness.h */,
+				E304F9AA174A336600174902 /* OscOutboundPacketStream.cpp */,
+				E304F9AB174A336600174902 /* OscOutboundPacketStream.h */,
+				E304F9AC174A336600174902 /* OscPacketListener.h */,
+				E304F9AD174A336600174902 /* OscPrintReceivedElements.cpp */,
+				E304F9AE174A336600174902 /* OscPrintReceivedElements.h */,
+				E304F9AF174A336600174902 /* OscReceivedElements.cpp */,
+				E304F9B0174A336600174902 /* OscReceivedElements.h */,
+				E304F9B1174A336600174902 /* OscTypes.cpp */,
+				E304F9B2174A336600174902 /* OscTypes.h */,
+			);
+			name = osc;
+			path = ../../Source/OSC/oscpack_1_1_0/osc;
+			sourceTree = "<group>";
+		};
+		E3716FC017496BED00F1A7B3 /* Audio Analysis */ = {
+			isa = PBXGroup;
+			children = (
+				E3716FC11749726800F1A7B3 /* AudioAnalysisManager.cpp */,
+				E3716FC21749726800F1A7B3 /* AudioAnalysisManager.h */,
+			);
+			name = "Audio Analysis";
 			sourceTree = "<group>";
 		};
 		E3DFE077F4F5DEDEBC155909 /* Juce Library Code */ = {
@@ -2954,6 +3075,17 @@
 				B49E45BC98698D554AF2A3EA /* juce_video.mm in Sources */,
 				9396B559FAB94AB21E6B09C9 /* juce_VST_Wrapper.cpp in Sources */,
 				005EDD204B0BE000EB6A3271 /* juce_VST_Wrapper.mm in Sources */,
+				E3716FC31749726800F1A7B3 /* AudioAnalysisManager.cpp in Sources */,
+				E304F997174A334A00174902 /* OSCSender.cpp in Sources */,
+				E304F9B3174A336600174902 /* IpEndpointName.cpp in Sources */,
+				E304F9B4174A336600174902 /* NetworkingUtils.cpp in Sources */,
+				E304F9B5174A336600174902 /* UdpSocket.cpp in Sources */,
+				E304F9B6174A336600174902 /* NetworkingUtils.cpp in Sources */,
+				E304F9B7174A336600174902 /* UdpSocket.cpp in Sources */,
+				E304F9B8174A336600174902 /* OscOutboundPacketStream.cpp in Sources */,
+				E304F9B9174A336600174902 /* OscPrintReceivedElements.cpp in Sources */,
+				E304F9BA174A336600174902 /* OscReceivedElements.cpp in Sources */,
+				E304F9BB174A336600174902 /* OscTypes.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

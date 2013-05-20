@@ -22,6 +22,7 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     addAndMakeVisible(&testSlider);
 }
 
+//==============================================================================
 SoundAnalyserAudioProcessorEditor::~SoundAnalyserAudioProcessorEditor()
 {
 }
