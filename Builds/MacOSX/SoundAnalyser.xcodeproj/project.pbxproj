@@ -73,7 +73,7 @@
 		E304F9B9174A336600174902 /* OscPrintReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E304F9AD174A336600174902 /* OscPrintReceivedElements.cpp */; };
 		E304F9BA174A336600174902 /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E304F9AF174A336600174902 /* OscReceivedElements.cpp */; };
 		E304F9BB174A336600174902 /* OscTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E304F9B1174A336600174902 /* OscTypes.cpp */; };
-		E3623A46174A562C00C01676 /* SignalEnergy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3623A44174A562C00C01676 /* SignalEnergy.cpp */; };
+		E3531E83174BA72E008D47E0 /* AudioFeatures.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3531E81174BA72E008D47E0 /* AudioFeatures.cpp */; };
 		E3673DE8174A91BC00A3E7AA /* AudioBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3673DE6174A91BC00A3E7AA /* AudioBuffer.cpp */; };
 		E3716FC31749726800F1A7B3 /* AudioAnalysisManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3716FC11749726800F1A7B3 /* AudioAnalysisManager.cpp */; };
 		E37400B1174A80B600DF2B7A /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = E37400AE174A80B600DF2B7A /* kiss_fft.c */; };
@@ -937,8 +937,8 @@
 		E304F9B2174A336600174902 /* OscTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscTypes.h; sourceTree = "<group>"; };
 		E31A0A12D74166BB6C22D30B /* juce_QuickTimeAudioFormat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_QuickTimeAudioFormat.h; path = ../../JuceLibraryCode/modules/juce_audio_formats/codecs/juce_QuickTimeAudioFormat.h; sourceTree = SOURCE_ROOT; };
 		E321291C6A9474EBE98E89EA /* juce_IIRFilterAudioSource.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_IIRFilterAudioSource.cpp; path = ../../JuceLibraryCode/modules/juce_audio_basics/sources/juce_IIRFilterAudioSource.cpp; sourceTree = SOURCE_ROOT; };
-		E3623A44174A562C00C01676 /* SignalEnergy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SignalEnergy.cpp; path = "../../Source/Audio Analysis/SignalEnergy.cpp"; sourceTree = "<group>"; };
-		E3623A45174A562C00C01676 /* SignalEnergy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignalEnergy.h; path = "../../Source/Audio Analysis/SignalEnergy.h"; sourceTree = "<group>"; };
+		E3531E81174BA72E008D47E0 /* AudioFeatures.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioFeatures.cpp; path = "../../Source/Audio Analysis/AudioFeatures.cpp"; sourceTree = "<group>"; };
+		E3531E82174BA72E008D47E0 /* AudioFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioFeatures.h; path = "../../Source/Audio Analysis/AudioFeatures.h"; sourceTree = "<group>"; };
 		E3673DE6174A91BC00A3E7AA /* AudioBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioBuffer.cpp; path = "../../Source/Audio Analysis/AudioBuffer.cpp"; sourceTree = "<group>"; };
 		E3673DE7174A91BC00A3E7AA /* AudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioBuffer.h; path = "../../Source/Audio Analysis/AudioBuffer.h"; sourceTree = "<group>"; };
 		E3716FC11749726800F1A7B3 /* AudioAnalysisManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioAnalysisManager.cpp; path = "../../Source/Audio Analysis/AudioAnalysisManager.cpp"; sourceTree = "<group>"; };
@@ -2733,12 +2733,12 @@
 				E37400AC174A809F00DF2B7A /* kiss_fft130 */,
 				E3716FC11749726800F1A7B3 /* AudioAnalysisManager.cpp */,
 				E3716FC21749726800F1A7B3 /* AudioAnalysisManager.h */,
+				E3531E81174BA72E008D47E0 /* AudioFeatures.cpp */,
+				E3531E82174BA72E008D47E0 /* AudioFeatures.h */,
 				E3673DE6174A91BC00A3E7AA /* AudioBuffer.cpp */,
 				E3673DE7174A91BC00A3E7AA /* AudioBuffer.h */,
 				E37400B2174A80D800DF2B7A /* FFT.cpp */,
 				E37400B3174A80D800DF2B7A /* FFT.h */,
-				E3623A44174A562C00C01676 /* SignalEnergy.cpp */,
-				E3623A45174A562C00C01676 /* SignalEnergy.h */,
 			);
 			name = "Audio Analysis";
 			sourceTree = "<group>";
@@ -3118,10 +3118,10 @@
 				E304F9B9174A336600174902 /* OscPrintReceivedElements.cpp in Sources */,
 				E304F9BA174A336600174902 /* OscReceivedElements.cpp in Sources */,
 				E304F9BB174A336600174902 /* OscTypes.cpp in Sources */,
-				E3623A46174A562C00C01676 /* SignalEnergy.cpp in Sources */,
 				E37400B1174A80B600DF2B7A /* kiss_fft.c in Sources */,
 				E37400B4174A80D800DF2B7A /* FFT.cpp in Sources */,
 				E3673DE8174A91BC00A3E7AA /* AudioBuffer.cpp in Sources */,
+				E3531E83174BA72E008D47E0 /* AudioFeatures.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

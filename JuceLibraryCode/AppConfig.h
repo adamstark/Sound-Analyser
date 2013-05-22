@@ -204,7 +204,7 @@
  #define JucePlugin_Desc                   "SoundAnalyser"
 #endif
 #ifndef  JucePlugin_Manufacturer
- #define JucePlugin_Manufacturer           "adamstark"
+ #define JucePlugin_Manufacturer           "Adam Stark"
 #endif
 #ifndef  JucePlugin_ManufacturerCode
  #define JucePlugin_ManufacturerCode       'Adam'

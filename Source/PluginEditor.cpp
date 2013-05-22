@@ -20,6 +20,11 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     setSize (400, 300);
     
     addAndMakeVisible(&testSlider);
+    
+    
+    testButton.setButtonText("Off");
+    testButton.addListener(this);
+    addAndMakeVisible(&testButton);
 }
 
 //==============================================================================
@@ -33,13 +38,21 @@ void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
     g.fillAll (Colours::white);
     g.setColour (Colours::black);
     g.setFont (15.0f);
-    g.drawFittedText ("Hello World!",
-                      0, 0, getWidth(), getHeight(),
-                      Justification::centred, 1);
+    //g.drawFittedText ("Hello World!", 0, 0, getWidth(), getHeight(), Justification::centred, 1);
+    
+    g.drawLine(10, 10, getWidth()-10, getHeight()-10);
 }
 
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::resized()
 {
+    testButton.setBounds(100, 100, 150, 150);
+    
     testSlider.setBounds(10, 10, getWidth()-10, getHeight()-10);
+}
+
+//==============================================================================
+void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
+{
+    
 }

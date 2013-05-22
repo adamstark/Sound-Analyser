@@ -4,6 +4,7 @@
 #define OSCSENDER_H
 
 #include <iostream>
+#include <vector>
 #include "OscOutboundPacketStream.h"
 #include "UdpSocket.h"
 
@@ -22,6 +23,8 @@ public:
     UdpTransmitSocket transmitSocket;
     
     void send(const char* address_pattern,float value);
+    
+    void send(const char* address_pattern,std::vector<float> values);
     
 private:
     

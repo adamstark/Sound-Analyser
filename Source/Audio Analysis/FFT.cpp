@@ -53,7 +53,7 @@ FFT::~FFT()
 }
 
 //==============================================================================
-void FFT::performFFT(float *frame)
+void FFT::performFFT(std::vector<float> frame)
 {
     // apply the hanning window
     for (int i = 0;i < frameLength;i++)
@@ -70,4 +70,22 @@ void FFT::performFFT(float *frame)
         real[i] = fftOut[i].r;
         imag[i] = fftOut[i].i;
     }
+}
+
+//==============================================================================
+std::vector<float> FFT::getMagnitudeSpectrum()
+{
+    // create a vector to hold the magnitude spectrum
+    std::vector<float> mag(real.size());
+    
+    // for each sample
+    for (int i = 0;i < mag.size();i++)
+    {
+        // calculate the magnitude spectrum sample as the
+        // absolute value of the complex FFT output
+        mag[i] = sqrt(pow(real[i],2) + pow(imag[i],2));
+    }
+    
+    // return the magnitude spectrum
+    return mag;
 }

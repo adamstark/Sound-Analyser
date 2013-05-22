@@ -18,7 +18,7 @@
 //==============================================================================
 /**
 */
-class SoundAnalyserAudioProcessorEditor  : public AudioProcessorEditor
+class SoundAnalyserAudioProcessorEditor  : public AudioProcessorEditor, public ButtonListener
 {
 public:
     SoundAnalyserAudioProcessorEditor (SoundAnalyserAudioProcessor* ownerFilter);
@@ -30,7 +30,11 @@ public:
     
     void resized();
     
+    void buttonClicked (Button* button);
+    
     Slider testSlider;
+    
+    TextButton testButton;
 };
 
 

@@ -21,10 +21,12 @@ public:
     FFT(int frameLength);
     ~FFT();
     
-    void performFFT(float *frame);
+    void performFFT(std::vector<float> frame);
     
     std::vector<float> real;
     std::vector<float> imag;
+    
+    std::vector<float> getMagnitudeSpectrum();
     
 private:
     

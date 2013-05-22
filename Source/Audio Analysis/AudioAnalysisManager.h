@@ -11,7 +11,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "OSCSender.h"
-#include "SignalEnergy.h"
+#include "AudioFeatures.h"
 #include "FFT.h"
 #include "AudioBuffer.h"
 #include <iostream>
@@ -34,13 +34,13 @@ private:
     /** allows osc to be sent to a specific ip address and port number */
     OSCSender osc;
     
-    /** an object for performing analyses relating to signal energy */
-    SignalEnergy signalEnergy;
+    /** an object for calculating audio features */
+    AudioFeatures audioFeatures;
     
     AudioBuffer audioBuffer;
     
     /** an object for computing the fourier transform of audio frames */
-    //FFT fft;
+    FFT fft;
 };
 
 #endif /* defined(__SoundAnalyser__AudioAnalysisManager__) */

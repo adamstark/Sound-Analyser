@@ -9,7 +9,7 @@
 #include "AudioAnalysisManager.h"
 
 //==============================================================================
-AudioAnalysisManager::AudioAnalysisManager() : audioBuffer(2048)
+AudioAnalysisManager::AudioAnalysisManager() : audioBuffer(1024), fft(1024)
 {
     
 }
@@ -20,10 +20,32 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
     // add new audio frame to our larger buffer
     audioBuffer.addNewSamplesToBuffer(buffer,numSamples);
     
+    // calculate the FFT
+    fft.performFFT(audioBuffer.buffer);
     
     
     // calculate RMS
-    float rms = signalEnergy.calculateRMS(audioBuffer.buffer);
+    float rms = audioFeatures.calculateRMS(audioBuffer.buffer);
     
-    osc.send("/rmstest",rms);
+    // calculate peak energy
+    float peak = audioFeatures.calculatePeakEnergy(audioBuffer.buffer);
+
+    // calculate zero crossing rate
+    float zcr = audioFeatures.calculateZeroCrossingRate(audioBuffer.buffer);    
+    
+    // calculate spectral centroid
+    //float spectralCentroid = audioFeatures.calculateSpectralCentroid(fft.getMagnitudeSpectrum());
+
+    
+    
+    osc.send("/rms",rms);
+
+    osc.send("/peak",peak);
+    
+    osc.send("/zcr",zcr);
+    
+    
+    //osc.send("/spectralCentroid",spectralCentroid);
+    
+
 }
