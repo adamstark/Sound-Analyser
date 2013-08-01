@@ -15,11 +15,38 @@
 //==============================================================================
 SoundAnalyserAudioProcessor::SoundAnalyserAudioProcessor()
 {
+
 }
 
 //==============================================================================
 SoundAnalyserAudioProcessor::~SoundAnalyserAudioProcessor()
 {
+}
+
+//==============================================================================
+float SoundAnalyserAudioProcessor::booleanToFloat(bool input)
+{
+    if (input)
+    {
+        return 1.0;
+    }
+    else
+    {
+        return 0.0;
+    }
+}
+
+//==============================================================================
+bool SoundAnalyserAudioProcessor::floatToBoolean(float input)
+{
+    if (input == 1.0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 //==============================================================================
@@ -31,30 +58,48 @@ const String SoundAnalyserAudioProcessor::getName() const
 //==============================================================================
 int SoundAnalyserAudioProcessor::getNumParameters()
 {
-    return 0;
+    return totalNumParams;
 }
 
 //==============================================================================
 float SoundAnalyserAudioProcessor::getParameter (int index)
 {
-    return 0.0f;
+    switch (index)
+    {
+        case pSendRMS:  return booleanToFloat(analyser.sendRMS); break;
+        case pSendPeak: return booleanToFloat(analyser.sendPeak); break;
+        default: return 0.0f;
+    }
 }
 
 //==============================================================================
 void SoundAnalyserAudioProcessor::setParameter (int index, float newValue)
 {
+    switch (index)
+    {
+        case pSendRMS:     analyser.sendRMS = floatToBoolean(newValue);  break;
+        case pSendPeak:    analyser.sendPeak = floatToBoolean(newValue); break;
+        default:            break;
+    }
 }
 
 //==============================================================================
 const String SoundAnalyserAudioProcessor::getParameterName (int index)
 {
+    switch (index)
+    {
+        case pSendRMS:     return "Send RMS";
+        case pSendPeak:    return "Send Peak Energy";
+        default:            break;
+    }
+    
     return String::empty;
 }
 
 //==============================================================================
 const String SoundAnalyserAudioProcessor::getParameterText (int index)
 {
-    return String::empty;
+    return String (getParameter (index), 2);
 }
 
 //==============================================================================

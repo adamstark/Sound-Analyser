@@ -27,7 +27,9 @@ public:
      * @param numSamples the number of audio samples in the buffer
      */
     void analyseAudio(float* buffer,int numSamples);
-    
+        
+    bool sendRMS;
+    bool sendPeak;
     
 private:
     
@@ -41,6 +43,9 @@ private:
     
     /** an object for computing the fourier transform of audio frames */
     FFT fft;
+    
+    
+
 };
 
 #endif /* defined(__SoundAnalyser__AudioAnalysisManager__) */

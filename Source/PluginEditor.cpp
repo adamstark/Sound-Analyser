@@ -19,12 +19,28 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     // This is where our plugin's editor size is set.
     setSize (400, 300);
     
-    addAndMakeVisible(&testSlider);
+    // -------------------------------------------------
+    // RMS
+    RMSLabel.setText("Root Mean Square (RMS)", dontSendNotification);
+    sendRMSButton.setToggleState(false, dontSendNotification);
+    sendRMSButton.setButtonText("Off");
+    addAndMakeVisible(&RMSLabel);
+    addAndMakeVisible(&sendRMSButton);
+    
+    // -------------------------------------------------
+    // PEAK ENERGY
+    peakLabel.setText("Peak Energy", dontSendNotification);
+    addAndMakeVisible(&peakLabel);
+    addAndMakeVisible(&sendPeakButton);
     
     
-    testButton.setButtonText("Off");
-    testButton.addListener(this);
-    addAndMakeVisible(&testButton);
+    
+    // LISTENERS
+    sendRMSButton.addListener(this);
+    sendPeakButton.addListener(this);
+    
+    
+    
 }
 
 //==============================================================================
@@ -46,13 +62,58 @@ void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::resized()
 {
-    testButton.setBounds(100, 100, 150, 150);
+    RMSLabel.setBounds(10,10,200,40);
+    sendRMSButton.setBounds(220, 10, 40, 40);
     
-    testSlider.setBounds(10, 10, getWidth()-10, getHeight()-10);
+    peakLabel.setBounds(10, 60, 200, 40);
+    sendPeakButton.setBounds(220, 60, 40, 40);
+    
 }
 
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
 {
+    // -----------------------------------------------
+    if (button == &sendRMSButton)
+    {
+        // get button state
+        bool state = sendRMSButton.getToggleState();
+        
+        // if it is on
+        if (state == true)
+        {            
+            // set the boolean parameter to 0.0
+            getProcessor()->setParameterNotifyingHost (SoundAnalyserAudioProcessor::pSendRMS,0.0);
+        }
+        else
+        {
+            // set the boolean parameter to 1.0
+            getProcessor()->setParameterNotifyingHost (SoundAnalyserAudioProcessor::pSendRMS,1.0);
+        }
+        
+        sendRMSButton.setToggleState(!state, dontSendNotification);
+   
+    }
     
+    // -----------------------------------------------
+    if (button == &sendPeakButton)
+    {
+        // get button state
+        bool state = sendPeakButton.getToggleState();
+        
+        // if it is on
+        if (state == true)
+        {
+            // set the boolean parameter to 0.0
+            getProcessor()->setParameterNotifyingHost (SoundAnalyserAudioProcessor::pSendPeak,0.0);
+        }
+        else
+        {
+            // set the boolean parameter to 1.0
+            getProcessor()->setParameterNotifyingHost (SoundAnalyserAudioProcessor::pSendPeak,1.0);
+        }
+        
+        sendPeakButton.setToggleState(!state, dontSendNotification);
+        
+    }
 }

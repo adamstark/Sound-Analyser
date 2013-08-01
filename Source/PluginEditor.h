@@ -18,7 +18,7 @@
 //==============================================================================
 /**
 */
-class SoundAnalyserAudioProcessorEditor  : public AudioProcessorEditor, public ButtonListener
+class SoundAnalyserAudioProcessorEditor  : public AudioProcessorEditor, public Button::Listener
 {
 public:
     SoundAnalyserAudioProcessorEditor (SoundAnalyserAudioProcessor* ownerFilter);
@@ -32,9 +32,18 @@ public:
     
     void buttonClicked (Button* button);
     
-    Slider testSlider;
+private:
     
-    TextButton testButton;
+    SoundAnalyserAudioProcessor* getProcessor() const
+    {
+        return static_cast <SoundAnalyserAudioProcessor*> (getAudioProcessor());
+    }
+    
+    TextButton sendRMSButton;
+    TextButton sendPeakButton;
+    
+    Label RMSLabel;
+    Label peakLabel;
 };
 
 

@@ -66,10 +66,24 @@ public:
     //==============================================================================
     void getStateInformation (MemoryBlock& destData);
     void setStateInformation (const void* data, int sizeInBytes);
-
+    
+    
+    enum Parameters
+    {
+        pSendRMS = 0,
+        pSendPeak,
+        totalNumParams
+    };
+    
 private:
     
+    float booleanToFloat(bool input);
+    bool floatToBoolean(float input);
+    
     AudioAnalysisManager analyser;
+    
+    
+    
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SoundAnalyserAudioProcessor)

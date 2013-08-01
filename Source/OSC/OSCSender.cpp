@@ -24,18 +24,17 @@ void OSCSender::send(const char* address_pattern,float value)
 //==============================================================================
 void OSCSender::send(const char* address_pattern,std::vector<float> values)
 {
-    char buffer[OUTPUT_BUFFER_SIZE];
-    osc::OutboundPacketStream p( buffer, OUTPUT_BUFFER_SIZE );
+    char buffer[OUTPUT_BUFFER_SIZE*10];
+    osc::OutboundPacketStream p( buffer, OUTPUT_BUFFER_SIZE*10);
     
-    p << osc::BeginBundleImmediate
-    << osc::BeginMessage(address_pattern);
+    p << osc::BeginMessage(address_pattern);
     
     for (int i = 0;i < values.size();i++)
     {
         p << values[i];
     }
-    
-    p << osc::EndMessage << osc::EndBundle;
+
+    p << osc::EndMessage;
     
     transmitSocket.Send( p.Data(), p.Size() );
 }
