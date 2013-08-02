@@ -70,15 +70,18 @@ public:
     
     enum Parameters
     {
-        pSendRMS = 0,
+        pSendRMS,
         pSendPeak,
         totalNumParams
     };
     
-private:
-    
     float booleanToFloat(bool input);
     bool floatToBoolean(float input);
+    
+    
+private:
+    
+    
     
     AudioAnalysisManager analyser;
     

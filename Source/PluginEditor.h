@@ -18,7 +18,7 @@
 //==============================================================================
 /**
 */
-class SoundAnalyserAudioProcessorEditor  : public AudioProcessorEditor, public Button::Listener
+class SoundAnalyserAudioProcessorEditor  : public AudioProcessorEditor, public Button::Listener, public Timer
 {
 public:
     SoundAnalyserAudioProcessorEditor (SoundAnalyserAudioProcessor* ownerFilter);
@@ -32,6 +32,8 @@ public:
     
     void buttonClicked (Button* button);
     
+    void timerCallback();
+    
 private:
     
     SoundAnalyserAudioProcessor* getProcessor() const
@@ -44,6 +46,8 @@ private:
     
     Label RMSLabel;
     Label peakLabel;
+    
+    void setupAnalysisComponents(TextButton *button,Label *label,String labelText);
 };
 
 

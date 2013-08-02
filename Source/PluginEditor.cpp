@@ -21,27 +21,21 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     
     // -------------------------------------------------
     // RMS
-    RMSLabel.setText("Root Mean Square (RMS)", dontSendNotification);
-    sendRMSButton.setToggleState(false, dontSendNotification);
-    sendRMSButton.setButtonText("Off");
-    addAndMakeVisible(&RMSLabel);
-    addAndMakeVisible(&sendRMSButton);
+    setupAnalysisComponents(&sendRMSButton, &RMSLabel,"Root Mean Square (RMS)");
     
     // -------------------------------------------------
     // PEAK ENERGY
-    peakLabel.setText("Peak Energy", dontSendNotification);
-    addAndMakeVisible(&peakLabel);
-    addAndMakeVisible(&sendPeakButton);
-    
-    
-    
+    setupAnalysisComponents(&sendPeakButton, &peakLabel,"Peak Energy");
+
     // LISTENERS
     sendRMSButton.addListener(this);
     sendPeakButton.addListener(this);
     
     
-    
+    startTimer (50);
 }
+
+
 
 //==============================================================================
 SoundAnalyserAudioProcessorEditor::~SoundAnalyserAudioProcessorEditor()
@@ -49,26 +43,54 @@ SoundAnalyserAudioProcessorEditor::~SoundAnalyserAudioProcessorEditor()
 }
 
 //==============================================================================
+void SoundAnalyserAudioProcessorEditor::setupAnalysisComponents(TextButton* button,Label* label,String labelText)
+{
+    label->setText(labelText, dontSendNotification);
+    button->setColour(TextButton::ColourIds::buttonOnColourId, Colours::blueviolet);
+    button->setColour(TextButton::ColourIds::buttonColourId, Colours::silver);
+    button->setToggleState(false, dontSendNotification);
+
+    addAndMakeVisible(button);
+    addAndMakeVisible(label);
+    
+}
+
+//==============================================================================
 void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
 {
-    g.fillAll (Colours::white);
+    g.fillAll (Colours::lightgrey);
     g.setColour (Colours::black);
     g.setFont (15.0f);
     //g.drawFittedText ("Hello World!", 0, 0, getWidth(), getHeight(), Justification::centred, 1);
     
-    g.drawLine(10, 10, getWidth()-10, getHeight()-10);
+   // g.drawLine(10, 10, getWidth()-10, getHeight()-10);
 }
 
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::resized()
 {
-    RMSLabel.setBounds(10,10,200,40);
-    sendRMSButton.setBounds(220, 10, 40, 40);
+    int buttonSize = 20;
+        
+    RMSLabel.setBounds(10,10,200,20);
+    sendRMSButton.setBounds(220, 10, buttonSize, buttonSize);
     
-    peakLabel.setBounds(10, 60, 200, 40);
-    sendPeakButton.setBounds(220, 60, 40, 40);
+    peakLabel.setBounds(10, 35, 200, 20);
+    sendPeakButton.setBounds(220, 35, buttonSize, buttonSize);
     
 }
+
+//==============================================================================
+void SoundAnalyserAudioProcessorEditor::timerCallback()
+{
+    float RMSstate_f = getProcessor()->getParameter(getProcessor()->Parameters::pSendRMS);
+    bool RMSstate = getProcessor()->floatToBoolean(RMSstate_f);
+    sendRMSButton.setToggleState(RMSstate, dontSendNotification);
+    
+    float peakState_f = getProcessor()->getParameter(getProcessor()->Parameters::pSendPeak);
+    bool peakState = getProcessor()->floatToBoolean(peakState_f);
+    sendPeakButton.setToggleState(peakState, dontSendNotification);
+}
+
 
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
@@ -79,13 +101,15 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
         // get button state
         bool state = sendRMSButton.getToggleState();
         
+        
+        
         // if it is on
         if (state == true)
         {            
             // set the boolean parameter to 0.0
             getProcessor()->setParameterNotifyingHost (SoundAnalyserAudioProcessor::pSendRMS,0.0);
         }
-        else
+        else // if it is off
         {
             // set the boolean parameter to 1.0
             getProcessor()->setParameterNotifyingHost (SoundAnalyserAudioProcessor::pSendRMS,1.0);
