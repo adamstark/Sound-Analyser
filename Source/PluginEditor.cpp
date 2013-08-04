@@ -17,7 +17,7 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     : AudioProcessorEditor (ownerFilter)
 {
     // This is where our plugin's editor size is set.
-    setSize (400, 300);
+    setSize (600, 500);
     
     // -------------------------------------------------
     // RMS
@@ -31,6 +31,11 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     sendRMSButton.addListener(this);
     sendPeakButton.addListener(this);
     
+    
+    
+    plotHeight = 150;
+    plotY = 25;
+
     
     startTimer (50);
 }
@@ -57,12 +62,51 @@ void SoundAnalyserAudioProcessorEditor::setupAnalysisComponents(TextButton* butt
 
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
-{
+{    
+    g.setColour (Colours::darkgrey);
     g.fillAll (Colours::lightgrey);
-    g.setColour (Colours::black);
-    g.setFont (15.0f);
-    //g.drawFittedText ("Hello World!", 0, 0, getWidth(), getHeight(), Justification::centred, 1);
     
+
+    
+    int N = getProcessor()->analyser.plotHistory.size();
+    
+    int plotX = (getWidth()- N)/2;
+    
+    
+    g.fillRect(plotX, plotY, N, plotHeight);
+    
+    g.setColour(Colours::lightsteelblue);
+
+    float previousValue = getProcessor()->analyser.plotHistory[0];
+    
+    // get the max value
+    float maxValue = -10000;
+    for (int i = 0;i < N;i++)
+    {
+        if (getProcessor()->analyser.plotHistory[i] > maxValue)
+        {
+            maxValue = getProcessor()->analyser.plotHistory[i];
+        }
+    }
+    
+    // do the plotting
+    for (int i = 0;i < N-1;i++)
+    {
+        float currentValue = getProcessor()->analyser.plotHistory[i+1];
+        
+        int p1 = plotY + (plotHeight - ((previousValue/maxValue)*plotHeight));
+        int p2 = plotY + (plotHeight - ((currentValue/maxValue)*plotHeight));
+        
+        g.drawLine(plotX+i,p1,plotX+i+1,p2);
+        previousValue = currentValue;
+    }
+    
+    
+    
+    
+    //g.setFont (15.0f);
+    //g.drawFittedText (String(previousValue), 0, 0, getWidth(), getHeight(), Justification::centred, 1);
+
    // g.drawLine(10, 10, getWidth()-10, getHeight()-10);
 }
 
@@ -71,11 +115,11 @@ void SoundAnalyserAudioProcessorEditor::resized()
 {
     int buttonSize = 20;
         
-    RMSLabel.setBounds(10,10,200,20);
-    sendRMSButton.setBounds(220, 10, buttonSize, buttonSize);
+    RMSLabel.setBounds(10,175+10,200,20);
+    sendRMSButton.setBounds(220, 175+10, buttonSize, buttonSize);
     
-    peakLabel.setBounds(10, 35, 200, 20);
-    sendPeakButton.setBounds(220, 35, buttonSize, buttonSize);
+    peakLabel.setBounds(10, 175+35, 200, 20);
+    sendPeakButton.setBounds(220, 175+35, buttonSize, buttonSize);
     
 }
 
@@ -89,6 +133,8 @@ void SoundAnalyserAudioProcessorEditor::timerCallback()
     float peakState_f = getProcessor()->getParameter(getProcessor()->Parameters::pSendPeak);
     bool peakState = getProcessor()->floatToBoolean(peakState_f);
     sendPeakButton.setToggleState(peakState, dontSendNotification);
+    
+    repaint();
 }
 
 

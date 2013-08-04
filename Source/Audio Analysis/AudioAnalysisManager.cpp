@@ -13,6 +13,13 @@ AudioAnalysisManager::AudioAnalysisManager() : audioBuffer(1024), fft(1024)
 {
     sendRMS = false;
     sendPeak = false;
+    
+    plotHistory.resize(512);
+    
+    for (int i = 0;i < 512;i++)
+    {
+        plotHistory[i] = 0;
+    }
 }
 
 //==============================================================================
@@ -29,6 +36,8 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
         // calculate RMS
         float rms = audioFeatures.calculateRMS(audioBuffer.buffer);
         osc.send("/rms",rms);
+        
+        updatePlotHistory(rms);
     }
     
     if (sendPeak)
@@ -55,4 +64,17 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
      */
     
 
+}
+
+
+void AudioAnalysisManager::updatePlotHistory(float newSample)
+{
+    int N = plotHistory.size();
+    
+    for (int i = 0; i < N-1;i++)
+    {
+        plotHistory[i] = plotHistory[i+1];
+    }
+    
+    plotHistory[N-1] = newSample;
 }

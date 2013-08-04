@@ -47,6 +47,8 @@ private:
     Label RMSLabel;
     Label peakLabel;
     
+    int plotX, plotY, plotHeight;
+    
     void setupAnalysisComponents(TextButton *button,Label *label,String labelText);
 };
 

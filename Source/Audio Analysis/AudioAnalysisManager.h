@@ -31,7 +31,11 @@ public:
     bool sendRMS;
     bool sendPeak;
     
+    std::vector<float> plotHistory;
+    
 private:
+    
+    void updatePlotHistory(float newSample);
     
     /** allows osc to be sent to a specific ip address and port number */
     OSCSender osc;
@@ -44,6 +48,8 @@ private:
     /** an object for computing the fourier transform of audio frames */
     FFT fft;
     
+    
+
     
 
 };

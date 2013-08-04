@@ -78,12 +78,13 @@ public:
     float booleanToFloat(bool input);
     bool floatToBoolean(float input);
     
+    AudioAnalysisManager analyser;
     
 private:
     
     
     
-    AudioAnalysisManager analyser;
+    
     
     
     
