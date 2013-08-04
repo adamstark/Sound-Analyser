@@ -43,9 +43,11 @@ private:
     
     TextButton sendRMSButton;
     TextButton sendPeakButton;
+    TextButton sendSpectralCentroidButton;
     
     Label RMSLabel;
     Label peakLabel;
+    Label spectralCentroidLabel;
     
     int plotX, plotY, plotHeight;
     

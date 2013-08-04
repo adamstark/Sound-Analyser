@@ -13,6 +13,7 @@ AudioAnalysisManager::AudioAnalysisManager() : audioBuffer(1024), fft(1024)
 {
     sendRMS = false;
     sendPeak = false;
+    sendSpectralCentroid = false;
     
     plotHistory.resize(512);
     
@@ -31,42 +32,53 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
     // calculate the FFT
     fft.performFFT(audioBuffer.buffer);
     
+    // ------------------------ RMS -------------------------------
     if (sendRMS)
     {
         // calculate RMS
         float rms = audioFeatures.calculateRMS(audioBuffer.buffer);
         osc.send("/rms",rms);
         
-        updatePlotHistory(rms);
+        
     }
     
+    // --------------------- PEAK ENERGY ---------------------------
     if (sendPeak)
     {
         // calculate peak energy
         float peak = audioFeatures.calculatePeakEnergy(audioBuffer.buffer);
         osc.send("/peak",peak);
     }
+    
+    // ------------------- SPECTRAL CENTROID ------------------------
+    if (sendSpectralCentroid)
+    {
+        // calculate spectral centroid
+        float spectralCentroid = audioFeatures.calculateSpectralCentroid(fft.getMagnitudeSpectrum());
+        osc.send("/spectralCentroid",spectralCentroid);
+        
+        updatePlotHistory(spectralCentroid);
+    }
+
 
     /*
     // calculate zero crossing rate
     float zcr = audioFeatures.calculateZeroCrossingRate(audioBuffer.buffer);    
     
-    // calculate spectral centroid
-    float spectralCentroid = audioFeatures.calculateSpectralCentroid(fft.getMagnitudeSpectrum());
-
+    
  
     osc.send("/zcr",zcr);
     
     osc.send("/fft",fft.getMagnitudeSpectrum());
     
     
-    osc.send("/spectralCentroid",spectralCentroid);
+   
      */
     
 
 }
 
-
+//==============================================================================
 void AudioAnalysisManager::updatePlotHistory(float newSample)
 {
     int N = plotHistory.size();

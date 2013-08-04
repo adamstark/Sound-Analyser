@@ -66,8 +66,9 @@ float SoundAnalyserAudioProcessor::getParameter (int index)
 {
     switch (index)
     {
-        case pSendRMS:  return booleanToFloat(analyser.sendRMS); break;
-        case pSendPeak: return booleanToFloat(analyser.sendPeak); break;
+        case pSendRMS:                  return booleanToFloat(analyser.sendRMS); break;
+        case pSendPeak:                 return booleanToFloat(analyser.sendPeak); break;
+        case pSendSpectralCentroid:     return booleanToFloat(analyser.sendSpectralCentroid); break;
         default: return 0.0f;
     }
 }
@@ -77,8 +78,9 @@ void SoundAnalyserAudioProcessor::setParameter (int index, float newValue)
 {
     switch (index)
     {
-        case pSendRMS:     analyser.sendRMS = floatToBoolean(newValue);  break;
-        case pSendPeak:    analyser.sendPeak = floatToBoolean(newValue); break;
+        case pSendRMS:              analyser.sendRMS = floatToBoolean(newValue);  break;
+        case pSendPeak:             analyser.sendPeak = floatToBoolean(newValue); break;
+        case pSendSpectralCentroid: analyser.sendSpectralCentroid = floatToBoolean(newValue); break;
         default:            break;
     }
 }
@@ -88,8 +90,9 @@ const String SoundAnalyserAudioProcessor::getParameterName (int index)
 {
     switch (index)
     {
-        case pSendRMS:     return "Send RMS";
-        case pSendPeak:    return "Send Peak Energy";
+        case pSendRMS:                  return "Send RMS";
+        case pSendPeak:                 return "Send Peak Energy";
+        case pSendSpectralCentroid:     return "Send Spectral Centroid";
         default:            break;
     }
     
@@ -255,6 +258,7 @@ void SoundAnalyserAudioProcessor::getStateInformation (MemoryBlock& destData)
     // add some attributes to it..
     xml.setAttribute ("sendRMS", analyser.sendRMS);
     xml.setAttribute ("sendPeak",analyser.sendPeak);
+    xml.setAttribute ("sendSpectralCentroid",analyser.sendSpectralCentroid);
     
     // then use this helper function to stuff it into the binary blob and return it..
     copyXmlToBinary (xml, destData);
@@ -276,6 +280,7 @@ void SoundAnalyserAudioProcessor::setStateInformation (const void* data, int siz
         {            
             analyser.sendRMS = (bool) xmlState->getBoolAttribute("sendRMS",analyser.sendRMS);
             analyser.sendPeak = (bool) xmlState->getBoolAttribute("sendPeak",analyser.sendPeak);
+            analyser.sendSpectralCentroid = (bool) xmlState->getBoolAttribute("sendSpectralCentroid",analyser.sendSpectralCentroid);
         }
     }
 }

@@ -30,6 +30,7 @@ public:
         
     bool sendRMS;
     bool sendPeak;
+    bool sendSpectralCentroid;
     
     std::vector<float> plotHistory;
     

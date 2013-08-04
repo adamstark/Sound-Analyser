@@ -72,6 +72,7 @@ public:
     {
         pSendRMS,
         pSendPeak,
+        pSendSpectralCentroid,
         totalNumParams
     };
     

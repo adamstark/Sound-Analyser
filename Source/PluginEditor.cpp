@@ -27,9 +27,14 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     // PEAK ENERGY
     setupAnalysisComponents(&sendPeakButton, &peakLabel,"Peak Energy");
 
+    // -------------------------------------------------
+    // SPECTRAL CENTROID
+    setupAnalysisComponents(&sendSpectralCentroidButton, &spectralCentroidLabel, "Spectral Centroid");
+    
     // LISTENERS
     sendRMSButton.addListener(this);
     sendPeakButton.addListener(this);
+    sendSpectralCentroidButton.addListener(this);
     
     
     
@@ -113,13 +118,34 @@ void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::resized()
 {
-    int buttonSize = 20;
-        
-    RMSLabel.setBounds(10,175+10,200,20);
-    sendRMSButton.setBounds(220, 175+10, buttonSize, buttonSize);
+    // the vertical position where the lists begin
+    int beginListPosY = 185;
     
-    peakLabel.setBounds(10, 175+35, 200, 20);
-    sendPeakButton.setBounds(220, 175+35, buttonSize, buttonSize);
+    // the row height
+    int rowHeight = 20;
+    
+    // the size of the buttons
+    int buttonSize = rowHeight;
+    
+    // the horizontal position of the button
+    int buttonPosX = 220;
+    
+    // the horizontal positon of the label
+    int labelPosX = 10;
+    
+    // the width of the label
+    int labelWidth = 200;
+    
+    
+        
+    RMSLabel.setBounds(labelPosX,beginListPosY,labelWidth,rowHeight);
+    sendRMSButton.setBounds(buttonPosX, beginListPosY, buttonSize, buttonSize);
+    
+    peakLabel.setBounds(labelPosX, beginListPosY+25, labelWidth, rowHeight);
+    sendPeakButton.setBounds(buttonPosX, beginListPosY+25, buttonSize, buttonSize);
+    
+    spectralCentroidLabel.setBounds(labelPosX, beginListPosY+50, labelWidth, rowHeight);
+    sendSpectralCentroidButton.setBounds(buttonPosX, beginListPosY+50, buttonSize, buttonSize);
     
 }
 
@@ -134,6 +160,10 @@ void SoundAnalyserAudioProcessorEditor::timerCallback()
     bool peakState = getProcessor()->floatToBoolean(peakState_f);
     sendPeakButton.setToggleState(peakState, dontSendNotification);
     
+    float specCentState_f = getProcessor()->getParameter(getProcessor()->Parameters::pSendSpectralCentroid);
+    bool specCentState = getProcessor()->floatToBoolean(specCentState_f);
+    sendSpectralCentroidButton.setToggleState(specCentState, dontSendNotification);
+    
     repaint();
 }
 
@@ -146,8 +176,6 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
     {
         // get button state
         bool state = sendRMSButton.getToggleState();
-        
-        
         
         // if it is on
         if (state == true)
@@ -185,5 +213,26 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
         
         sendPeakButton.setToggleState(!state, dontSendNotification);
         
+    }
+    
+    // -----------------------------------------------
+    if (button == &sendSpectralCentroidButton)
+    {
+        // get button state
+        bool state = sendSpectralCentroidButton.getToggleState();
+        
+        // if it is on
+        if (state == true)
+        {
+            // set the boolean parameter to 0.0
+            getProcessor()->setParameterNotifyingHost (SoundAnalyserAudioProcessor::pSendSpectralCentroid,0.0);
+        }
+        else
+        {
+            // set the boolean parameter to 1.0
+            getProcessor()->setParameterNotifyingHost (SoundAnalyserAudioProcessor::pSendSpectralCentroid,1.0);
+        }
+        
+        sendSpectralCentroidButton.setToggleState(!state, dontSendNotification);
     }
 }

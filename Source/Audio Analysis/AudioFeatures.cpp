@@ -89,8 +89,8 @@ float AudioFeatures::calculateSpectralCentroid(std::vector<float> magnitudeSpect
     // to hold sum of weighted amplitudes
     float sumWeightedAmplitudes = 0.0;
     
-    // for each bin in the magnitude spectrum
-    for (int i = 0;i < magnitudeSpectrum.size();i++)
+    // for each bin in the first half of the magnitude spectrum
+    for (int i = 0;i < magnitudeSpectrum.size()/2;i++)
     {
         // sum amplitudes
         sumAmplitudes += magnitudeSpectrum[i];
