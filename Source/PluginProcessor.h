@@ -68,6 +68,11 @@ public:
     void setStateInformation (const void* data, int sizeInBytes);
     
     
+    
+    
+    
+    
+    
     enum Parameters
     {
         pSendRMS,
@@ -85,6 +90,7 @@ private:
     
     
     
+    ValueTree analyserTree;
     
     
     

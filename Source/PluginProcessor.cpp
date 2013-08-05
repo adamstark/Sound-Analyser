@@ -13,7 +13,7 @@
 
 
 //==============================================================================
-SoundAnalyserAudioProcessor::SoundAnalyserAudioProcessor()
+SoundAnalyserAudioProcessor::SoundAnalyserAudioProcessor() : analyserTree("SoundAnalyser")
 {
 
 }
@@ -241,7 +241,7 @@ bool SoundAnalyserAudioProcessor::hasEditor() const
 //==============================================================================
 AudioProcessorEditor* SoundAnalyserAudioProcessor::createEditor()
 {
-    return new SoundAnalyserAudioProcessorEditor (this);
+    return new SoundAnalyserAudioProcessorEditor (this,analyserTree);
 }
 
 //==============================================================================
@@ -251,6 +251,7 @@ void SoundAnalyserAudioProcessor::getStateInformation (MemoryBlock& destData)
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
     
+    /*
 
     // Create an outer XML element..
     XmlElement xml ("SoundAnalyserSettings");
@@ -259,6 +260,9 @@ void SoundAnalyserAudioProcessor::getStateInformation (MemoryBlock& destData)
     xml.setAttribute ("sendRMS", analyser.sendRMS);
     xml.setAttribute ("sendPeak",analyser.sendPeak);
     xml.setAttribute ("sendSpectralCentroid",analyser.sendSpectralCentroid);
+     */
+    
+    XmlElement xml(*analyserTree.createXml());
     
     // then use this helper function to stuff it into the binary blob and return it..
     copyXmlToBinary (xml, destData);
@@ -273,6 +277,15 @@ void SoundAnalyserAudioProcessor::setStateInformation (const void* data, int siz
 
     ScopedPointer<XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
     
+    ValueTree newTree = ValueTree::fromXml(*xmlState);
+    
+    analyserTree = newTree;
+    
+    analyserTree.sendPropertyChangeMessage("");
+    
+    /*
+    //newTree.fromXml(&xmlState);
+    
     if (xmlState != nullptr)
     {
         // make sure that it's actually our type of XML object..
@@ -282,7 +295,7 @@ void SoundAnalyserAudioProcessor::setStateInformation (const void* data, int siz
             analyser.sendPeak = (bool) xmlState->getBoolAttribute("sendPeak",analyser.sendPeak);
             analyser.sendSpectralCentroid = (bool) xmlState->getBoolAttribute("sendSpectralCentroid",analyser.sendSpectralCentroid);
         }
-    }
+    }*/
 }
 
 //==============================================================================

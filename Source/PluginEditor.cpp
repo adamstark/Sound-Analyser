@@ -13,8 +13,8 @@
 
 
 //==============================================================================
-SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnalyserAudioProcessor* ownerFilter)
-    : AudioProcessorEditor (ownerFilter)
+SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnalyserAudioProcessor* ownerFilter,  ValueTree analyserTree_)
+    : AudioProcessorEditor (ownerFilter), analyserTree(analyserTree_)
 {
     // This is where our plugin's editor size is set.
     setSize (600, 500);
@@ -31,6 +31,11 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     // SPECTRAL CENTROID
     setupAnalysisComponents(&sendSpectralCentroidButton, &spectralCentroidLabel, "Spectral Centroid");
     
+    
+    newAnalysisButton.setButtonText("+");
+    addAndMakeVisible(&newAnalysisButton);
+    newAnalysisButton.addListener(this);
+    
     // LISTENERS
     sendRMSButton.addListener(this);
     sendPeakButton.addListener(this);
@@ -41,6 +46,7 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     plotHeight = 150;
     plotY = 25;
 
+    analyserTree.addListener(this);
     
     startTimer (50);
 }
@@ -118,6 +124,12 @@ void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::resized()
 {
+    for (int i = 0;i < analysisComponents.size();i++)
+    {
+        analysisComponents[i]->setBounds(10,185+(i*30),analysisComponents[i]->getWidth(),analysisComponents[i]->getHeight());
+    }
+    
+    /*
     // the vertical position where the lists begin
     int beginListPosY = 185;
     
@@ -146,6 +158,9 @@ void SoundAnalyserAudioProcessorEditor::resized()
     
     spectralCentroidLabel.setBounds(labelPosX, beginListPosY+50, labelWidth, rowHeight);
     sendSpectralCentroidButton.setBounds(buttonPosX, beginListPosY+50, buttonSize, buttonSize);
+     */
+    newAnalysisButton.setBounds(10, getHeight()-100, 50, 50);
+    
     
 }
 
@@ -235,4 +250,84 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
         
         sendSpectralCentroidButton.setToggleState(!state, dontSendNotification);
     }
+    
+    if (button == &newAnalysisButton)
+    {
+        AlertWindow w ("Add new analysis..",
+                       "Please slect a new device from the list below",
+                       AlertWindow::NoIcon);
+        
+        StringArray options;
+        
+        for (int i = 0;i < AnalysisModel::Analyses::NumAnalyses;i++)
+        {
+            options.add(AnalysisModel::getAnalysisName(i));
+        }
+        
+        w.addComboBox ("option", options, "some options");
+        
+        w.addButton ("ok",     1, KeyPress (KeyPress::returnKey, 0, 0));
+        w.addButton ("cancel", 0, KeyPress (KeyPress::escapeKey, 0, 0));
+        
+        if (w.runModalLoop() != 0) // is they picked 'ok'
+        {
+            // this is the item they chose in the drop-down list..
+            const int optionIndexChosen = w.getComboBoxComponent ("option")->getSelectedItemIndex();
+            
+            
+            AnalysisModel::addNewAnalysis(analyserTree,optionIndexChosen);
+            
+            /*
+            switch (optionIndexChosen)
+            {
+                case AnalysisModel::RMS:
+                    
+                    analyserTree.addChild(<#const juce::ValueTree &child#>, <#int index#>, <#juce::UndoManager *undoManager#>)
+                    break;
+                    
+                default:
+                    break;
+            }*/
+            
+        }
+    }
+}
+
+void SoundAnalyserAudioProcessorEditor::addAnalysis(ValueTree& analysisTree)
+{
+    if (analysisTree.getType() == AnalysisModel::AnalysisTypes::RMS)
+    {
+        analysisComponents.add(new RMSComponent(analysisTree));
+    }
+    
+    addChildComponent(analysisComponents.getLast());
+    analysisComponents.getLast()->setVisible(true);
+    
+    resized();
+}
+
+
+void SoundAnalyserAudioProcessorEditor::valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property)
+{
+    refreshFromTree();
+}
+
+void SoundAnalyserAudioProcessorEditor::valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded)
+{
+    addAnalysis(childWhichHasBeenAdded);
+}
+
+void SoundAnalyserAudioProcessorEditor::valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved)
+{
+    
+}
+
+void SoundAnalyserAudioProcessorEditor::valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved)
+{
+    
+}
+
+void SoundAnalyserAudioProcessorEditor::valueTreeParentChanged (ValueTree& treeWhoseParentHasChanged)
+{
+    
 }

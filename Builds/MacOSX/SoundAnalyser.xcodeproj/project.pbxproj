@@ -78,6 +78,8 @@
 		E3716FC31749726800F1A7B3 /* AudioAnalysisManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3716FC11749726800F1A7B3 /* AudioAnalysisManager.cpp */; };
 		E37400B1174A80B600DF2B7A /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = E37400AE174A80B600DF2B7A /* kiss_fft.c */; };
 		E37400B4174A80D800DF2B7A /* FFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E37400B2174A80D800DF2B7A /* FFT.cpp */; };
+		E3BF727717AF01CA00CAEABF /* AnalysisModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3BF727517AF01CA00CAEABF /* AnalysisModel.cpp */; };
+		E3BF727B17AF129000CAEABF /* RMSComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3BF727917AF129000CAEABF /* RMSComponent.cpp */; };
 		E65124A287EC2F9717E5E4D7 /* ComponentBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19AFA021571C797B8F562671 /* ComponentBase.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		E759DFFA47981CBBE6C95ED9 /* CAStreamBasicDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43C402C218BB26E4270CBA59 /* CAStreamBasicDescription.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		ED22C4F460F66E8B5AA59AB8 /* juce_gui_extra.mm in Sources */ = {isa = PBXBuildFile; fileRef = A943DFF57A6E13BF38D4BB90 /* juce_gui_extra.mm */; };
@@ -951,6 +953,10 @@
 		E37400B3174A80D800DF2B7A /* FFT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FFT.h; path = "../../Source/Audio Analysis/FFT.h"; sourceTree = "<group>"; };
 		E392BF5449ABB98D22D19AFD /* juce_OpenGL_win32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_OpenGL_win32.h; path = ../../JuceLibraryCode/modules/juce_opengl/native/juce_OpenGL_win32.h; sourceTree = SOURCE_ROOT; };
 		E3AC86785EEBAD6F10D7AB1D /* juce_Application.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_Application.cpp; path = ../../JuceLibraryCode/modules/juce_gui_basics/application/juce_Application.cpp; sourceTree = SOURCE_ROOT; };
+		E3BF727517AF01CA00CAEABF /* AnalysisModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AnalysisModel.cpp; path = "../../Source/Audio Analysis/AnalysisModel.cpp"; sourceTree = "<group>"; };
+		E3BF727617AF01CA00CAEABF /* AnalysisModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnalysisModel.h; path = "../../Source/Audio Analysis/AnalysisModel.h"; sourceTree = "<group>"; };
+		E3BF727917AF129000CAEABF /* RMSComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RMSComponent.cpp; sourceTree = "<group>"; };
+		E3BF727A17AF129000CAEABF /* RMSComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMSComponent.h; sourceTree = "<group>"; };
 		E4ED605FD4336E39EC0EC85D /* juce_ResamplingAudioSource.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_ResamplingAudioSource.cpp; path = ../../JuceLibraryCode/modules/juce_audio_basics/sources/juce_ResamplingAudioSource.cpp; sourceTree = SOURCE_ROOT; };
 		E5076C6B6E7770E736B092F1 /* juce_ImageButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_ImageButton.h; path = ../../JuceLibraryCode/modules/juce_gui_basics/buttons/juce_ImageButton.h; sourceTree = SOURCE_ROOT; };
 		E5888F937EE7DBAC45D92159 /* juce_OpenGLShaderProgram.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_OpenGLShaderProgram.h; path = ../../JuceLibraryCode/modules/juce_opengl/opengl/juce_OpenGLShaderProgram.h; sourceTree = SOURCE_ROOT; };
@@ -2337,6 +2343,7 @@
 				EFF5E5E8B03D26D13E5B8F98 /* PluginProcessor.h */,
 				7DE54BC9BFAB16077B2DD8F8 /* PluginEditor.cpp */,
 				1788A0F344FA1E6247456F4A /* PluginEditor.h */,
+				E3BF727817AF129000CAEABF /* GUI */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -2731,6 +2738,8 @@
 			isa = PBXGroup;
 			children = (
 				E37400AC174A809F00DF2B7A /* kiss_fft130 */,
+				E3BF727517AF01CA00CAEABF /* AnalysisModel.cpp */,
+				E3BF727617AF01CA00CAEABF /* AnalysisModel.h */,
 				E3716FC11749726800F1A7B3 /* AudioAnalysisManager.cpp */,
 				E3716FC21749726800F1A7B3 /* AudioAnalysisManager.h */,
 				E3531E81174BA72E008D47E0 /* AudioFeatures.cpp */,
@@ -2752,6 +2761,16 @@
 				E37400B0174A80B600DF2B7A /* kissfft.hh */,
 			);
 			name = kiss_fft130;
+			sourceTree = "<group>";
+		};
+		E3BF727817AF129000CAEABF /* GUI */ = {
+			isa = PBXGroup;
+			children = (
+				E3BF727917AF129000CAEABF /* RMSComponent.cpp */,
+				E3BF727A17AF129000CAEABF /* RMSComponent.h */,
+			);
+			name = GUI;
+			path = ../../Source/GUI;
 			sourceTree = "<group>";
 		};
 		E3DFE077F4F5DEDEBC155909 /* Juce Library Code */ = {
@@ -3122,6 +3141,8 @@
 				E37400B4174A80D800DF2B7A /* FFT.cpp in Sources */,
 				E3673DE8174A91BC00A3E7AA /* AudioBuffer.cpp in Sources */,
 				E3531E83174BA72E008D47E0 /* AudioFeatures.cpp in Sources */,
+				E3BF727717AF01CA00CAEABF /* AnalysisModel.cpp in Sources */,
+				E3BF727B17AF129000CAEABF /* RMSComponent.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

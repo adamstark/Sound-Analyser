@@ -13,15 +13,17 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
+#include "AnalysisModel.h"
+#include "GUI/RMSComponent.h"
 
 
 //==============================================================================
 /**
 */
-class SoundAnalyserAudioProcessorEditor  : public AudioProcessorEditor, public Button::Listener, public Timer
+class SoundAnalyserAudioProcessorEditor  : public AudioProcessorEditor, public Button::Listener, public Timer, public ValueTree::Listener
 {
 public:
-    SoundAnalyserAudioProcessorEditor (SoundAnalyserAudioProcessor* ownerFilter);
+    SoundAnalyserAudioProcessorEditor (SoundAnalyserAudioProcessor* ownerFilter, ValueTree analyserTree_);
     ~SoundAnalyserAudioProcessorEditor();
 
     //==============================================================================
@@ -30,9 +32,31 @@ public:
     
     void resized();
     
+    void refreshFromTree()
+    {
+        analysisComponents.clear();
+        
+        for (int i = 0;i < analyserTree.getNumChildren();i++)
+        {
+            ValueTree analysisTree = analyserTree.getChild(i);
+            
+            addAnalysis(analysisTree);
+        }
+    }
+    
+    void addAnalysis(ValueTree& analysisTree);
+    
     void buttonClicked (Button* button);
     
     void timerCallback();
+    
+    void valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property);
+    void valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded);
+    void valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved);
+    void valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved);
+    void valueTreeParentChanged (ValueTree& treeWhoseParentHasChanged);
+    
+    
     
 private:
     
@@ -41,6 +65,8 @@ private:
         return static_cast <SoundAnalyserAudioProcessor*> (getAudioProcessor());
     }
     
+  
+    
     TextButton sendRMSButton;
     TextButton sendPeakButton;
     TextButton sendSpectralCentroidButton;
@@ -48,6 +74,12 @@ private:
     Label RMSLabel;
     Label peakLabel;
     Label spectralCentroidLabel;
+    
+    ValueTree analyserTree;
+    
+    OwnedArray<Component> analysisComponents;
+    
+    TextButton newAnalysisButton;
     
     int plotX, plotY, plotHeight;
     
