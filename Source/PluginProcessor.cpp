@@ -279,9 +279,7 @@ void SoundAnalyserAudioProcessor::setStateInformation (const void* data, int siz
     
     ValueTree newTree = ValueTree::fromXml(*xmlState);
     
-    analyserTree = newTree;
-    
-    analyserTree.sendPropertyChangeMessage("");
+    analyserTree.copyPropertiesFrom(newTree, nullptr);
     
     /*
     //newTree.fromXml(&xmlState);

@@ -34,7 +34,7 @@ public:
     
     void refreshFromTree()
     {
-        analysisComponents.clear();
+        /*analysisComponents.clear();
         
         for (int i = 0;i < analyserTree.getNumChildren();i++)
         {
@@ -42,6 +42,8 @@ public:
             
             addAnalysis(analysisTree);
         }
+        
+        resized();*/
     }
     
     void addAnalysis(ValueTree& analysisTree);

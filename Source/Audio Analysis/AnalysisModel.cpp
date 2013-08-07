@@ -11,7 +11,7 @@
 // instantiate static variables
 const Identifier AnalysisModel::Ids::SOUNDANALYSER("SoundAnalyser");
 
-const Identifier AnalysisModel::AnalysisTypes::RMS("Root Mean Square (RMS)");
+const Identifier AnalysisModel::AnalysisTypes::RMS("RMS");
 const Identifier AnalysisModel::AnalysisTypes::PeakEnergy("PeakEnergy");
 const Identifier AnalysisModel::AnalysisTypes::SpectralCentroid("Spectral Centroid");
 

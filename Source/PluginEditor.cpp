@@ -179,6 +179,8 @@ void SoundAnalyserAudioProcessorEditor::timerCallback()
     bool specCentState = getProcessor()->floatToBoolean(specCentState_f);
     sendSpectralCentroidButton.setToggleState(specCentState, dontSendNotification);
     
+    DBG("timer debug message");
+    
     repaint();
 }
 
@@ -186,6 +188,7 @@ void SoundAnalyserAudioProcessorEditor::timerCallback()
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
 {
+    /*
     // -----------------------------------------------
     if (button == &sendRMSButton)
     {
@@ -249,7 +252,7 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
         }
         
         sendSpectralCentroidButton.setToggleState(!state, dontSendNotification);
-    }
+    }*/
     
     if (button == &newAnalysisButton)
     {
@@ -273,6 +276,7 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
         {
             // this is the item they chose in the drop-down list..
             const int optionIndexChosen = w.getComboBoxComponent ("option")->getSelectedItemIndex();
+            
             
             
             AnalysisModel::addNewAnalysis(analyserTree,optionIndexChosen);
@@ -309,7 +313,7 @@ void SoundAnalyserAudioProcessorEditor::addAnalysis(ValueTree& analysisTree)
 
 void SoundAnalyserAudioProcessorEditor::valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property)
 {
-    refreshFromTree();
+   
 }
 
 void SoundAnalyserAudioProcessorEditor::valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded)
