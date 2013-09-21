@@ -179,7 +179,7 @@ void SoundAnalyserAudioProcessorEditor::timerCallback()
     bool specCentState = getProcessor()->floatToBoolean(specCentState_f);
     sendSpectralCentroidButton.setToggleState(specCentState, dontSendNotification);
     
-    DBG("timer debug message");
+    //DBG("timer debug message");
     
     repaint();
 }

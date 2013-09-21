@@ -13,7 +13,7 @@ const Identifier AnalysisModel::Ids::SOUNDANALYSER("SoundAnalyser");
 
 const Identifier AnalysisModel::AnalysisTypes::RMS("RMS");
 const Identifier AnalysisModel::AnalysisTypes::PeakEnergy("PeakEnergy");
-const Identifier AnalysisModel::AnalysisTypes::SpectralCentroid("Spectral Centroid");
+const Identifier AnalysisModel::AnalysisTypes::SpectralCentroid("SpectralCentroid");
 
 const Identifier AnalysisModel::AnalysisProperties::send("Send");
 const Identifier AnalysisModel::AnalysisProperties::plot("Plot");
