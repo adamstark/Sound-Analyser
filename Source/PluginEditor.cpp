@@ -75,7 +75,7 @@ void SoundAnalyserAudioProcessorEditor::setupAnalysisComponents(TextButton* butt
 void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
 {    
     g.setColour (Colours::darkgrey);
-    g.fillAll (Colours::lightgrey);
+    g.fillAll (Colours::purple);
     
 
     

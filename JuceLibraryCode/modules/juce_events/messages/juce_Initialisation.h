@@ -1,30 +1,29 @@
 /*
   ==============================================================================
 
-   This file is part of the JUCE library - "Jules' Utility Class Extensions"
-   Copyright 2004-11 by Raw Material Software Ltd.
+   This file is part of the JUCE library.
+   Copyright (c) 2013 - Raw Material Software Ltd.
 
-  ------------------------------------------------------------------------------
+   Permission is granted to use this software under the terms of either:
+   a) the GPL v2 (or any later version)
+   b) the Affero GPL v3
 
-   JUCE can be redistributed and/or modified under the terms of the GNU General
-   Public License (Version 2), as published by the Free Software Foundation.
-   A copy of the license is included in the JUCE distribution, or can be found
-   online at www.gnu.org/licenses.
+   Details of these licenses can be found at: www.gnu.org/licenses
 
    JUCE is distributed in the hope that it will be useful, but WITHOUT ANY
    WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
    A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-  ------------------------------------------------------------------------------
+   ------------------------------------------------------------------------------
 
    To release a closed-source product which uses JUCE, commercial licenses are
-   available: visit www.rawmaterialsoftware.com/juce for more information.
+   available: visit www.juce.com for more information.
 
   ==============================================================================
 */
 
-#ifndef __JUCE_INITIALISATION_JUCEHEADER__
-#define __JUCE_INITIALISATION_JUCEHEADER__
+#ifndef JUCE_INITIALISATION_H_INCLUDED
+#define JUCE_INITIALISATION_H_INCLUDED
 
 
 //==============================================================================
@@ -64,28 +63,29 @@ JUCE_API void JUCE_CALLTYPE  shutdownJuce_GUI();
     main() function, because it'll take care of shutting down whenever you return
     from the main() call.
 */
-class ScopedJuceInitialiser_GUI
+class JUCE_API  ScopedJuceInitialiser_GUI
 {
 public:
     /** The constructor simply calls initialiseJuce_GUI(). */
-    ScopedJuceInitialiser_GUI()         { initialiseJuce_GUI(); }
+    ScopedJuceInitialiser_GUI();
 
     /** The destructor simply calls shutdownJuce_GUI(). */
-    ~ScopedJuceInitialiser_GUI()        { shutdownJuce_GUI(); }
+    ~ScopedJuceInitialiser_GUI();
 };
 
 
 //==============================================================================
-/*
+/**
     To start a JUCE app, use this macro: START_JUCE_APPLICATION (AppSubClass) where
-    AppSubClass is the name of a class derived from JUCEApplication.
+    AppSubClass is the name of a class derived from JUCEApplication or JUCEApplicationBase.
 
-    See the JUCEApplication class documentation (juce_Application.h) for more details.
-
+    See the JUCEApplication and JUCEApplicationBase class documentation for more details.
 */
-#if JUCE_ANDROID
+#ifdef DOXYGEN
+ #define START_JUCE_APPLICATION(AppClass)
+#elif JUCE_ANDROID
  #define START_JUCE_APPLICATION(AppClass) \
-   juce::JUCEApplication* juce_CreateApplication() { return new AppClass(); }
+   juce::JUCEApplicationBase* juce_CreateApplication() { return new AppClass(); }
 
 #else
  #if JUCE_WINDOWS
@@ -106,9 +106,9 @@ public:
     static juce::JUCEApplicationBase* juce_CreateApplication() { return new AppClass(); } \
     extern "C" JUCE_MAIN_FUNCTION \
     { \
-        juce::JUCEApplication::createInstance = &juce_CreateApplication; \
-        return juce::JUCEApplication::main (JUCE_MAIN_FUNCTION_ARGS); \
+        juce::JUCEApplicationBase::createInstance = &juce_CreateApplication; \
+        return juce::JUCEApplicationBase::main (JUCE_MAIN_FUNCTION_ARGS); \
     }
 #endif
 
-#endif   // __JUCE_INITIALISATION_JUCEHEADER__
+#endif   // JUCE_INITIALISATION_H_INCLUDED

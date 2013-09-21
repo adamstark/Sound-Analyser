@@ -11,8 +11,8 @@
 
 */
 
-#ifndef __JUCE_APPCONFIG_IBCUGA__
-#define __JUCE_APPCONFIG_IBCUGA__
+#ifndef __JUCE_APPCONFIG_NGUERU__
+#define __JUCE_APPCONFIG_NGUERU__
 
 //==============================================================================
 // [BEGIN_USER_CODE_SECTION]
@@ -125,6 +125,10 @@
  //#define JUCE_DONT_AUTOLINK_TO_WIN32_LIBRARIES
 #endif
 
+#ifndef    JUCE_INCLUDE_ZLIB_CODE
+ //#define JUCE_INCLUDE_ZLIB_CODE
+#endif
+
 //==============================================================================
 // juce_graphics flags:
 
@@ -186,7 +190,7 @@
 // Audio plugin settings..
 
 #ifndef  JucePlugin_Build_VST
- #define JucePlugin_Build_VST              0
+ #define JucePlugin_Build_VST              1
 #endif
 #ifndef  JucePlugin_Build_AU
  #define JucePlugin_Build_AU               1
@@ -207,7 +211,7 @@
  #define JucePlugin_Manufacturer           "Adam Stark"
 #endif
 #ifndef  JucePlugin_ManufacturerCode
- #define JucePlugin_ManufacturerCode       'Adam'
+ #define JucePlugin_ManufacturerCode       'adam'
 #endif
 #ifndef  JucePlugin_PluginCode
  #define JucePlugin_PluginCode             'snda'
@@ -285,7 +289,7 @@
  #define JucePlugin_RTASDisableMultiMono   0
 #endif
 #ifndef  JucePlugin_AAXIdentifier
- #define JucePlugin_AAXIdentifier          com.yourcompany.SoundAnalyser
+ #define JucePlugin_AAXIdentifier          com.adamstark.SoundAnalyser
 #endif
 #ifndef  JucePlugin_AAXManufacturerCode
  #define JucePlugin_AAXManufacturerCode    JucePlugin_ManufacturerCode
@@ -303,4 +307,4 @@
  #define JucePlugin_AAXDisableBypass       0
 #endif
 
-#endif  // __JUCE_APPCONFIG_IBCUGA__
+#endif  // __JUCE_APPCONFIG_NGUERU__
