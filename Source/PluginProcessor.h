@@ -18,7 +18,7 @@
 //==============================================================================
 /**
 */
-class SoundAnalyserAudioProcessor  : public AudioProcessor
+class SoundAnalyserAudioProcessor  : public AudioProcessor, public ValueTree::Listener
 {
 public:
     //==============================================================================
@@ -68,9 +68,11 @@ public:
     void setStateInformation (const void* data, int sizeInBytes);
     
     
-    
-    
-    
+    void valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property);
+    void valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded);
+    void valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved);
+    void valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved);
+    void valueTreeParentChanged (ValueTree& treeWhoseParentHasChanged);
     
     
     enum Parameters

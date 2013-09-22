@@ -13,9 +13,11 @@
 
 
 //==============================================================================
-SoundAnalyserAudioProcessor::SoundAnalyserAudioProcessor() : analyserTree("SoundAnalyser")
+SoundAnalyserAudioProcessor::SoundAnalyserAudioProcessor()
 {
-
+    analyserTree = AnalysisModel::createAnalyserTree();
+    
+    analyserTree.addListener(this);
 }
 
 //==============================================================================
@@ -301,4 +303,41 @@ void SoundAnalyserAudioProcessor::setStateInformation (const void* data, int siz
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new SoundAnalyserAudioProcessor();
+}
+
+
+void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property)
+{
+    if (treeWhosePropertyHasChanged.getType() == AnalysisTypes::RMS)
+    {
+        if (property == AnalysisProperties::send)
+        {
+            analyser.sendRMS = treeWhosePropertyHasChanged[AnalysisProperties::send];
+        }
+    }
+}
+
+void SoundAnalyserAudioProcessor::valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded)
+{
+    DBG("ADDED NEW NODE IN PROCESSOR: " << childWhichHasBeenAdded.getType().toString())
+    
+    if (childWhichHasBeenAdded.getType() == AnalysisTypes::RMS)
+    {
+
+    }
+}
+
+void SoundAnalyserAudioProcessor::valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved)
+{
+    
+}
+
+void SoundAnalyserAudioProcessor::valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved)
+{
+    
+}
+
+void SoundAnalyserAudioProcessor::valueTreeParentChanged (ValueTree& treeWhoseParentHasChanged)
+{
+    
 }

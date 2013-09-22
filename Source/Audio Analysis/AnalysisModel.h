@@ -11,34 +11,50 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
+//---------------------------
+struct AnalysisTypes
+{
+    static const Identifier RMS;
+    static const Identifier PeakEnergy;
+    static const Identifier SpectralCentroid;
+};
+
+//----------------------------------------
+struct AnalysisProperties
+{
+    static const Identifier send;
+    static const Identifier plot;
+    
+//    struct RMS {
+//        static const Identifier something;
+//    };
+    
+};
+
 class AnalysisModel {
     
 public:
     
-    enum Analyses
+    enum AnalysisIds
     {
         RMS,
         PeakEnergy,
         SpectralCentroid,
-        NumAnalyses
+        NumAnalysisTypes
     };
     
-    static String getAnalysisName(int analysisID);
+    static ValueTree createAnalyserTree()
+    {
+        ValueTree analyserTree(Ids::SOUNDANALYSER);
+        
+        return analyserTree;
+    }
+        
+    static String getAnalysisName(Identifier analysisType);
   
-    static void addNewAnalysis(ValueTree analysisTree, int analysisID);
+    static void addNewAnalysis(ValueTree analysisTree, int analysisId);
     
-    struct AnalysisTypes
-    {
-        static const Identifier RMS;
-        static const Identifier PeakEnergy;
-        static const Identifier SpectralCentroid;
-    };
-    
-    struct AnalysisProperties
-    {
-        static const Identifier send;
-        static const Identifier plot;
-    };
+    static StringArray getAllAnalysisNames();
     
     struct Ids
     {

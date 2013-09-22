@@ -11,12 +11,12 @@
 // instantiate static variables
 const Identifier AnalysisModel::Ids::SOUNDANALYSER("SoundAnalyser");
 
-const Identifier AnalysisModel::AnalysisTypes::RMS("RMS");
-const Identifier AnalysisModel::AnalysisTypes::PeakEnergy("PeakEnergy");
-const Identifier AnalysisModel::AnalysisTypes::SpectralCentroid("SpectralCentroid");
+const Identifier AnalysisTypes::RMS("RMS");
+const Identifier AnalysisTypes::PeakEnergy("PeakEnergy");
+const Identifier AnalysisTypes::SpectralCentroid("SpectralCentroid");
 
-const Identifier AnalysisModel::AnalysisProperties::send("Send");
-const Identifier AnalysisModel::AnalysisProperties::plot("Plot");
+const Identifier AnalysisProperties::send("Send");
+const Identifier AnalysisProperties::plot("Plot");
 
 AnalysisModel::AnalysisModel()
 {
@@ -24,47 +24,62 @@ AnalysisModel::AnalysisModel()
 }
 
 
-String AnalysisModel::getAnalysisName(int analysisID)
+
+
+String AnalysisModel::getAnalysisName(Identifier analysisType)
 {
     
-    switch (analysisID) {
-        case RMS:
-            return "Root Mean Square (RMS)";
-            break;
-        case PeakEnergy:
-            return "Peak Energy";
-            break;
-        case SpectralCentroid:
-            return "Spectral Centroid";
-            break;
-        default:
-            return "ERROR";
-            break;
+    if (analysisType == AnalysisTypes::RMS)
+    {
+        return "Root Mean Square (RMS)";
+    }
+    else if (analysisType == AnalysisTypes::PeakEnergy)
+    {
+        return "Peak Energy";
+    }
+    else if (analysisType == AnalysisTypes::SpectralCentroid)
+    {
+        return "Spectral Centroid";
+    }
+    else
+    {
+        return "Name Error";
     }
 }
 
-void AnalysisModel::addNewAnalysis(ValueTree analysisTree, int analysisID)
+void AnalysisModel::addNewAnalysis(ValueTree analysisTree, int analysisId)
 {
-    switch (analysisID) {
-        case RMS:
-        {
-            ValueTree node(AnalysisTypes::RMS);
-            node.setProperty(AnalysisProperties::send, 0, nullptr);
-            node.setProperty(AnalysisProperties::plot, 0, nullptr);
-            analysisTree.addChild(node, -1, nullptr);
-            break;
-        }
-            
-        case PeakEnergy:
-        {
-            ValueTree node(AnalysisTypes::PeakEnergy);
-            node.setProperty(AnalysisProperties::send, 0, nullptr);
-            node.setProperty(AnalysisProperties::plot, 0, nullptr);
-            analysisTree.addChild(node, -1, nullptr);
-            break;
-        }
-            
-        default:
-            break;
+    if (analysisId == AnalysisIds::RMS)
+    {
+        ValueTree node(AnalysisTypes::RMS);
+        node.setProperty(AnalysisProperties::send, 0, nullptr);
+        node.setProperty(AnalysisProperties::plot, 0, nullptr);
+        analysisTree.addChild(node, -1, nullptr);
     }
+    else if (analysisId == AnalysisIds::PeakEnergy)
+    {
+        ValueTree node(AnalysisTypes::PeakEnergy);
+        node.setProperty(AnalysisProperties::send, 0, nullptr);
+        node.setProperty(AnalysisProperties::plot, 0, nullptr);
+        analysisTree.addChild(node, -1, nullptr);
+    }
+    else if (analysisId == AnalysisIds::SpectralCentroid)
+    {
+        ValueTree node(AnalysisTypes::SpectralCentroid);
+        node.setProperty(AnalysisProperties::send, 0, nullptr);
+        node.setProperty(AnalysisProperties::plot, 0, nullptr);
+        analysisTree.addChild(node, -1, nullptr);
+    }
+
+}
+
+StringArray AnalysisModel::getAllAnalysisNames()
+{
+    StringArray nameList;
+    
+    nameList.add(getAnalysisName(AnalysisTypes::RMS));
+    nameList.add(getAnalysisName(AnalysisTypes::PeakEnergy));
+    nameList.add(getAnalysisName(AnalysisTypes::SpectralCentroid));
+    
+    return nameList;
 }

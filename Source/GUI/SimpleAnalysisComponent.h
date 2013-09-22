@@ -12,11 +12,11 @@
 #include "../../JuceLibraryCode/JuceHeader.h"
 #include "AnalysisModel.h"
 
-class RMSComponent : public Component, public Button::Listener, public ValueTree::Listener {
+class SimpleAnalysisComponent : public Component, public Button::Listener, public ValueTree::Listener {
     
 public:
-    RMSComponent(ValueTree& analysisTree_);
-    ~RMSComponent()
+    SimpleAnalysisComponent(ValueTree& analysisTree_);
+    ~SimpleAnalysisComponent()
     {
 
     }
@@ -35,11 +35,11 @@ public:
             
             if (state == true)
             {
-                analysisTree.setProperty(AnalysisModel::AnalysisProperties::send, 0, nullptr);
+                analysisTree.setProperty(AnalysisProperties::send, 0, nullptr);
             }
             else
             {
-                analysisTree.setProperty(AnalysisModel::AnalysisProperties::send, 1, nullptr);
+                analysisTree.setProperty(AnalysisProperties::send, 1, nullptr);
             }
         }
     }
@@ -48,21 +48,26 @@ public:
     {
         if (treeWhosePropertyHasChanged == analysisTree)
         {
-            if (property == AnalysisModel::AnalysisProperties::send)
+            if (property == AnalysisProperties::send)
             {
-                int state = (int) treeWhosePropertyHasChanged.getPropertyAsValue(AnalysisModel::AnalysisProperties::send, nullptr).getValue();
+                //int state = (int) treeWhosePropertyHasChanged.getPropertyAsValue(AnalysisProperties::send, nullptr).getValue();
                 
+//                int state = analysisTree[AnalysisProperties::send];
+                sendButton.setToggleState(analysisTree[AnalysisProperties::send],dontSendNotification);
                 
-                
-                if (state == 1)
-                {
-                    sendButton.setToggleState(true, dontSendNotification);
-                }
-                else
-                {
-                    sendButton.setToggleState(false, dontSendNotification);
-                }
+//                
+//                if (state == 1)
+//                {
+//                    sendButton.setToggleState(true, dontSendNotification);
+//                }
+//                else
+//                {
+//                    sendButton.setToggleState(false, dontSendNotification);
+//                }
             }
+            
+            
+            resized();
         }
     }
     
@@ -80,7 +85,7 @@ private:
     ValueTree analysisTree;
     
     //======================================================================//
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (RMSComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleAnalysisComponent)
     //======================================================================//
 };
 

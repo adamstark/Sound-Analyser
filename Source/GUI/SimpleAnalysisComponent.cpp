@@ -6,14 +6,15 @@
 //
 //
 
-#include "RMSComponent.h"
+#include "SimpleAnalysisComponent.h"
 
 //==============================================================================
-RMSComponent::RMSComponent(ValueTree& analysisTree_) : analysisTree(analysisTree_)
+SimpleAnalysisComponent::SimpleAnalysisComponent(ValueTree& analysisTree_) : analysisTree(analysisTree_)
 {
     setSize (290, 50);
     
-    analysisName.setText("Root Mean Square (RMS)", dontSendNotification);
+    String name = AnalysisModel::getAnalysisName(analysisTree.getType());
+    analysisName.setText(name, dontSendNotification);
     addAndMakeVisible(&analysisName);
     
     sendButton.setButtonText("Send");
@@ -29,13 +30,13 @@ RMSComponent::RMSComponent(ValueTree& analysisTree_) : analysisTree(analysisTree
 }
 
 //==============================================================================
-void RMSComponent::refreshFromTree()
-{
+void SimpleAnalysisComponent::refreshFromTree()
+{    
     resized();
 }
 
 //==============================================================================
-void RMSComponent::resized()
+void SimpleAnalysisComponent::resized()
 {
     analysisName.setBounds(0,0,getWidth(),20);
     
@@ -44,7 +45,7 @@ void RMSComponent::resized()
 }
 
 //==============================================================================
-void RMSComponent::paint(Graphics& g)
+void SimpleAnalysisComponent::paint(Graphics& g)
 {
     g.fillAll(Colours::darkgrey);
 }

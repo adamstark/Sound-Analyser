@@ -14,7 +14,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
 #include "AnalysisModel.h"
-#include "GUI/RMSComponent.h"
+#include "GUI/SimpleAnalysisComponent.h"
 
 
 //==============================================================================

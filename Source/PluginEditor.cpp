@@ -45,8 +45,12 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     
     plotHeight = 150;
     plotY = 25;
+    
+
 
     analyserTree.addListener(this);
+    
+  
     
     startTimer (50);
 }
@@ -126,7 +130,7 @@ void SoundAnalyserAudioProcessorEditor::resized()
 {
     for (int i = 0;i < analysisComponents.size();i++)
     {
-        analysisComponents[i]->setBounds(10,185+(i*30),analysisComponents[i]->getWidth(),analysisComponents[i]->getHeight());
+        analysisComponents[i]->setBounds(10,185+(i*analysisComponents[i]->getHeight()),analysisComponents[i]->getWidth(),analysisComponents[i]->getHeight());
     }
     
     /*
@@ -260,12 +264,12 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
                        "Please slect a new device from the list below",
                        AlertWindow::NoIcon);
         
-        StringArray options;
+        StringArray options = AnalysisModel::getAllAnalysisNames();
         
-        for (int i = 0;i < AnalysisModel::Analyses::NumAnalyses;i++)
-        {
-            options.add(AnalysisModel::getAnalysisName(i));
-        }
+//        for (int i = 0;i < Analyses::NumAnalyses;i++)
+//        {
+//            options.add(AnalysisModel::getAnalysisName(i));
+//        }
         
         w.addComboBox ("option", options, "some options");
         
@@ -277,31 +281,22 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
             // this is the item they chose in the drop-down list..
             const int optionIndexChosen = w.getComboBoxComponent ("option")->getSelectedItemIndex();
             
-            
+
             
             AnalysisModel::addNewAnalysis(analyserTree,optionIndexChosen);
-            
-            /*
-            switch (optionIndexChosen)
-            {
-                case AnalysisModel::RMS:
-                    
-                    analyserTree.addChild(<#const juce::ValueTree &child#>, <#int index#>, <#juce::UndoManager *undoManager#>)
-                    break;
-                    
-                default:
-                    break;
-            }*/
-            
         }
     }
 }
 
 void SoundAnalyserAudioProcessorEditor::addAnalysis(ValueTree& analysisTree)
 {
-    if (analysisTree.getType() == AnalysisModel::AnalysisTypes::RMS)
+    if (analysisTree.getType() == AnalysisTypes::RMS)
     {
-        analysisComponents.add(new RMSComponent(analysisTree));
+        analysisComponents.add(new SimpleAnalysisComponent(analysisTree));
+    }
+    else if (analysisTree.getType() == AnalysisTypes::PeakEnergy)
+    {
+        analysisComponents.add(new SimpleAnalysisComponent(analysisTree));
     }
     
     addChildComponent(analysisComponents.getLast());

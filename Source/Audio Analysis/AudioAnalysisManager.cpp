@@ -39,7 +39,7 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
         float rms = audioFeatures.calculateRMS(audioBuffer.buffer);
         osc.send("/rms",rms);
         
-        
+        updatePlotHistory(rms);
     }
     
     // --------------------- PEAK ENERGY ---------------------------
@@ -57,7 +57,7 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
         float spectralCentroid = audioFeatures.calculateSpectralCentroid(fft.getMagnitudeSpectrum());
         osc.send("/spectralCentroid",spectralCentroid);
         
-        updatePlotHistory(spectralCentroid);
+        
     }
 
 
