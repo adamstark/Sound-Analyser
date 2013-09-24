@@ -10,10 +10,18 @@
 
 //==============================================================================
 AudioAnalysisManager::AudioAnalysisManager() : audioBuffer(1024), fft(1024)
-{
-    sendRMS = false;
-    sendPeak = false;
-    sendSpectralCentroid = false;
+{    
+    sRMS.send = false;
+    sRMS.plot = false;
+
+    
+    sPeakEnergy.send = false;
+    sPeakEnergy.plot = false;
+
+    
+    sSpectralCentroid.send = false;
+    sSpectralCentroid.plot = false;
+
     
     plotHistory.resize(512);
     
@@ -33,31 +41,55 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
     fft.performFFT(audioBuffer.buffer);
     
     // ------------------------ RMS -------------------------------
-    if (sendRMS)
+    if (sRMS.send || sRMS.plot)
     {
         // calculate RMS
         float rms = audioFeatures.calculateRMS(audioBuffer.buffer);
-        osc.send("/rms",rms);
         
-        updatePlotHistory(rms);
+        if (sRMS.send)
+        {
+            osc.send("/rms",rms);
+        }
+        
+        if (sRMS.plot)
+        {
+            updatePlotHistory(rms);
+        }
     }
     
     // --------------------- PEAK ENERGY ---------------------------
-    if (sendPeak)
+    if (sPeakEnergy.send || sPeakEnergy.plot)
     {
         // calculate peak energy
         float peak = audioFeatures.calculatePeakEnergy(audioBuffer.buffer);
-        osc.send("/peak",peak);
+        
+        if (sPeakEnergy.send)
+        {
+            osc.send("/peak",peak);
+        }
+        
+        if (sPeakEnergy.plot)
+        {
+            updatePlotHistory(peak);
+        }
     }
     
     // ------------------- SPECTRAL CENTROID ------------------------
-    if (sendSpectralCentroid)
+    if (sSpectralCentroid.send || sSpectralCentroid.plot)
     {
         // calculate spectral centroid
         float spectralCentroid = audioFeatures.calculateSpectralCentroid(fft.getMagnitudeSpectrum());
-        osc.send("/spectralCentroid",spectralCentroid);
         
+        if (sSpectralCentroid.send)
+        {
+            osc.send("/spectralCentroid",spectralCentroid);
+        }
         
+        if (sSpectralCentroid.plot)
+        {
+            updatePlotHistory(spectralCentroid);
+        }
+  
     }
 
 

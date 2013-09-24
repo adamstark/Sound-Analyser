@@ -42,6 +42,24 @@ public:
                 analysisTree.setProperty(AnalysisProperties::send, 1, nullptr);
             }
         }
+        else if (button == &plotButton)
+        {
+            bool state = plotButton.getToggleState();
+            
+            if (state == true)
+            {
+                analysisTree.setProperty(AnalysisProperties::plot, 0, nullptr);
+            }
+            else
+            {
+                AnalysisModel::turnOffAllPlotting(analysisTree);
+                analysisTree.setProperty(AnalysisProperties::plot, 1, nullptr);
+            }
+        }
+        else if (button == &removeButton)
+        {
+            AnalysisModel::removeAnalysis(analysisTree);
+        }
     }
     
     void valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property)
@@ -50,22 +68,12 @@ public:
         {
             if (property == AnalysisProperties::send)
             {
-                //int state = (int) treeWhosePropertyHasChanged.getPropertyAsValue(AnalysisProperties::send, nullptr).getValue();
-                
-//                int state = analysisTree[AnalysisProperties::send];
                 sendButton.setToggleState(analysisTree[AnalysisProperties::send],dontSendNotification);
-                
-//                
-//                if (state == 1)
-//                {
-//                    sendButton.setToggleState(true, dontSendNotification);
-//                }
-//                else
-//                {
-//                    sendButton.setToggleState(false, dontSendNotification);
-//                }
             }
-            
+            else if (property == AnalysisProperties::plot)
+            {
+                plotButton.setToggleState(analysisTree[AnalysisProperties::plot], dontSendNotification);
+            }
             
             resized();
         }
@@ -81,6 +89,9 @@ private:
     
     Label analysisName;
     TextButton sendButton;
+    TextButton plotButton;
+    
+    TextButton removeButton;
     
     ValueTree analysisTree;
     

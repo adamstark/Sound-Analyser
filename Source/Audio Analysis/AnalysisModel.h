@@ -56,6 +56,23 @@ public:
     
     static StringArray getAllAnalysisNames();
     
+    static void turnOffAllPlotting(ValueTree analysisTree)
+    {
+        ValueTree mainTree = analysisTree.getParent();
+        
+        for (int i = 0;i < mainTree.getNumChildren();i++)
+        {
+            mainTree.getChild(i).setProperty(AnalysisProperties::plot, 0, nullptr);
+        }
+    }
+    
+    static void removeAnalysis(ValueTree analysisTree)
+    {
+        ValueTree mainTree = analysisTree.getParent();
+        
+        mainTree.removeChild(analysisTree, nullptr);
+    }
+    
     struct Ids
     {
         static const Identifier SOUNDANALYSER;                /**<  */

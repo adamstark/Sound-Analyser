@@ -16,6 +16,11 @@
 #include "AudioBuffer.h"
 #include <iostream>
 
+typedef struct {
+    bool plot;
+    bool send;
+} AnalysisState;
+
 class AudioAnalysisManager {
 
 public:
@@ -27,10 +32,10 @@ public:
      * @param numSamples the number of audio samples in the buffer
      */
     void analyseAudio(float* buffer,int numSamples);
-        
-    bool sendRMS;
-    bool sendPeak;
-    bool sendSpectralCentroid;
+            
+    AnalysisState sRMS;
+    AnalysisState sPeakEnergy;
+    AnalysisState sSpectralCentroid;
     
     std::vector<float> plotHistory;
     

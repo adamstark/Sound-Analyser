@@ -77,10 +77,10 @@ public:
     
     enum Parameters
     {
-        pSendRMS,
-        pSendPeak,
-        pSendSpectralCentroid,
-        totalNumParams
+       // pSendRMS,
+       // pSendPeak,
+       // pSendSpectralCentroid,
+        totalNumParams = 0
     };
     
     float booleanToFloat(bool input);
@@ -89,9 +89,7 @@ public:
     AudioAnalysisManager analyser;
     
 private:
-    
-    
-    
+        
     ValueTree analyserTree;
     
     

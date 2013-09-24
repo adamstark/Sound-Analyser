@@ -68,9 +68,9 @@ float SoundAnalyserAudioProcessor::getParameter (int index)
 {
     switch (index)
     {
-        case pSendRMS:                  return booleanToFloat(analyser.sendRMS); break;
-        case pSendPeak:                 return booleanToFloat(analyser.sendPeak); break;
-        case pSendSpectralCentroid:     return booleanToFloat(analyser.sendSpectralCentroid); break;
+       // case pSendRMS:                  return booleanToFloat(analyser.sendRMS); break;
+       // case pSendPeak:                 return booleanToFloat(analyser.sendPeak); break;
+       // case pSendSpectralCentroid:     return booleanToFloat(analyser.sendSpectralCentroid); break;
         default: return 0.0f;
     }
 }
@@ -80,9 +80,9 @@ void SoundAnalyserAudioProcessor::setParameter (int index, float newValue)
 {
     switch (index)
     {
-        case pSendRMS:              analyser.sendRMS = floatToBoolean(newValue);  break;
-        case pSendPeak:             analyser.sendPeak = floatToBoolean(newValue); break;
-        case pSendSpectralCentroid: analyser.sendSpectralCentroid = floatToBoolean(newValue); break;
+       // case pSendRMS:              analyser.sendRMS = floatToBoolean(newValue);  break;
+       // case pSendPeak:             analyser.sendPeak = floatToBoolean(newValue); break;
+       // case pSendSpectralCentroid: analyser.sendSpectralCentroid = floatToBoolean(newValue); break;
         default:            break;
     }
 }
@@ -92,9 +92,9 @@ const String SoundAnalyserAudioProcessor::getParameterName (int index)
 {
     switch (index)
     {
-        case pSendRMS:                  return "Send RMS";
-        case pSendPeak:                 return "Send Peak Energy";
-        case pSendSpectralCentroid:     return "Send Spectral Centroid";
+//        case pSendRMS:                  return "Send RMS";
+//        case pSendPeak:                 return "Send Peak Energy";
+//        case pSendSpectralCentroid:     return "Send Spectral Centroid";
         default:            break;
     }
     
@@ -305,38 +305,80 @@ AudioProcessor* JUCE_CALLTYPE createPluginFilter()
     return new SoundAnalyserAudioProcessor();
 }
 
-
+//==============================================================================
 void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property)
 {
     if (treeWhosePropertyHasChanged.getType() == AnalysisTypes::RMS)
     {
         if (property == AnalysisProperties::send)
+        {            
+            analyser.sRMS.send = treeWhosePropertyHasChanged[AnalysisProperties::send];
+        }
+        else if (property == AnalysisProperties::plot)
         {
-            analyser.sendRMS = treeWhosePropertyHasChanged[AnalysisProperties::send];
+            analyser.sRMS.plot = treeWhosePropertyHasChanged[AnalysisProperties::plot];
+        }
+    }
+    else if (treeWhosePropertyHasChanged.getType() == AnalysisTypes::PeakEnergy)
+    {
+        if (property == AnalysisProperties::send)
+        {
+            analyser.sPeakEnergy.send = treeWhosePropertyHasChanged[AnalysisProperties::send];
+        }
+        else if (property == AnalysisProperties::plot)
+        {
+            analyser.sPeakEnergy.plot = treeWhosePropertyHasChanged[AnalysisProperties::plot];
+        }
+    }
+    else if (treeWhosePropertyHasChanged.getType() == AnalysisTypes::SpectralCentroid)
+    {
+        if (property == AnalysisProperties::send)
+        {
+            analyser.sSpectralCentroid.send = treeWhosePropertyHasChanged[AnalysisProperties::send];
+        }
+        else if (property == AnalysisProperties::plot)
+        {
+            analyser.sSpectralCentroid.plot = treeWhosePropertyHasChanged[AnalysisProperties::plot];
         }
     }
 }
 
+//==============================================================================
 void SoundAnalyserAudioProcessor::valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded)
 {
     DBG("ADDED NEW NODE IN PROCESSOR: " << childWhichHasBeenAdded.getType().toString())
-    
-    if (childWhichHasBeenAdded.getType() == AnalysisTypes::RMS)
-    {
+}
 
+//==============================================================================
+void SoundAnalyserAudioProcessor::valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved)
+{
+    if (childWhichHasBeenRemoved.getType() == AnalysisTypes::RMS)
+    {
+        analyser.sRMS.send = false;
+        analyser.sRMS.plot = false;
+        DBG("RMS OFF");
+    }
+    else if (childWhichHasBeenRemoved.getType() == AnalysisTypes::PeakEnergy)
+    {
+        analyser.sPeakEnergy.send = false;
+        analyser.sPeakEnergy.plot = false;
+        DBG("PEAK ENERGY OFF");
+    }
+    else if (childWhichHasBeenRemoved.getType() == AnalysisTypes::SpectralCentroid)
+    {
+        analyser.sSpectralCentroid.send = false;
+        analyser.sSpectralCentroid.plot = false;
+        DBG("SPECTRAL CENTROID ENERGY OFF");
     }
 }
 
-void SoundAnalyserAudioProcessor::valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved)
-{
-    
-}
-
+//==============================================================================
 void SoundAnalyserAudioProcessor::valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved)
 {
     
 }
 
+//==============================================================================
 void SoundAnalyserAudioProcessor::valueTreeParentChanged (ValueTree& treeWhoseParentHasChanged)
 {
     

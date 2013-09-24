@@ -34,7 +34,7 @@ public:
     
     void refreshFromTree()
     {
-        /*analysisComponents.clear();
+        analysisComponents.clear();
         
         for (int i = 0;i < analyserTree.getNumChildren();i++)
         {
@@ -43,7 +43,7 @@ public:
             addAnalysis(analysisTree);
         }
         
-        resized();*/
+        resized();
     }
     
     void addAnalysis(ValueTree& analysisTree);
@@ -67,16 +67,6 @@ private:
         return static_cast <SoundAnalyserAudioProcessor*> (getAudioProcessor());
     }
     
-  
-    
-    TextButton sendRMSButton;
-    TextButton sendPeakButton;
-    TextButton sendSpectralCentroidButton;
-    
-    Label RMSLabel;
-    Label peakLabel;
-    Label spectralCentroidLabel;
-    
     ValueTree analyserTree;
     
     OwnedArray<Component> analysisComponents;
@@ -85,7 +75,7 @@ private:
     
     int plotX, plotY, plotHeight;
     
-    void setupAnalysisComponents(TextButton *button,Label *label,String labelText);
+    //void setupAnalysisComponents(TextButton *button,Label *label,String labelText);
 };
 
 

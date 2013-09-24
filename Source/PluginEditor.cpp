@@ -21,15 +21,15 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     
     // -------------------------------------------------
     // RMS
-    setupAnalysisComponents(&sendRMSButton, &RMSLabel,"Root Mean Square (RMS)");
+   // setupAnalysisComponents(&sendRMSButton, &RMSLabel,"Root Mean Square (RMS)");
     
     // -------------------------------------------------
     // PEAK ENERGY
-    setupAnalysisComponents(&sendPeakButton, &peakLabel,"Peak Energy");
+   // setupAnalysisComponents(&sendPeakButton, &peakLabel,"Peak Energy");
 
     // -------------------------------------------------
     // SPECTRAL CENTROID
-    setupAnalysisComponents(&sendSpectralCentroidButton, &spectralCentroidLabel, "Spectral Centroid");
+   // setupAnalysisComponents(&sendSpectralCentroidButton, &spectralCentroidLabel, "Spectral Centroid");
     
     
     newAnalysisButton.setButtonText("+");
@@ -37,9 +37,9 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     newAnalysisButton.addListener(this);
     
     // LISTENERS
-    sendRMSButton.addListener(this);
-    sendPeakButton.addListener(this);
-    sendSpectralCentroidButton.addListener(this);
+//    sendRMSButton.addListener(this);
+//    sendPeakButton.addListener(this);
+//    sendSpectralCentroidButton.addListener(this);
     
     
     
@@ -50,7 +50,9 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
 
     analyserTree.addListener(this);
     
-  
+    refreshFromTree();
+    
+    DBG("GUI CONSTRUCTOR CALLED");
     
     startTimer (50);
 }
@@ -63,23 +65,23 @@ SoundAnalyserAudioProcessorEditor::~SoundAnalyserAudioProcessorEditor()
 }
 
 //==============================================================================
-void SoundAnalyserAudioProcessorEditor::setupAnalysisComponents(TextButton* button,Label* label,String labelText)
-{
-    label->setText(labelText, dontSendNotification);
-    button->setColour(TextButton::ColourIds::buttonOnColourId, Colours::blueviolet);
-    button->setColour(TextButton::ColourIds::buttonColourId, Colours::silver);
-    button->setToggleState(false, dontSendNotification);
-
-    addAndMakeVisible(button);
-    addAndMakeVisible(label);
-    
-}
+//void SoundAnalyserAudioProcessorEditor::setupAnalysisComponents(TextButton* button,Label* label,String labelText)
+//{
+//    label->setText(labelText, dontSendNotification);
+//    button->setColour(TextButton::ColourIds::buttonOnColourId, Colours::blueviolet);
+//    button->setColour(TextButton::ColourIds::buttonColourId, Colours::silver);
+//    button->setToggleState(false, dontSendNotification);
+//
+//    addAndMakeVisible(button);
+//    addAndMakeVisible(label);
+//    
+//}
 
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
 {    
     g.setColour (Colours::darkgrey);
-    g.fillAll (Colours::purple);
+    g.fillAll (Colours::silver);
     
 
     
@@ -133,131 +135,33 @@ void SoundAnalyserAudioProcessorEditor::resized()
         analysisComponents[i]->setBounds(10,185+(i*analysisComponents[i]->getHeight()),analysisComponents[i]->getWidth(),analysisComponents[i]->getHeight());
     }
     
-    /*
-    // the vertical position where the lists begin
-    int beginListPosY = 185;
-    
-    // the row height
-    int rowHeight = 20;
-    
-    // the size of the buttons
-    int buttonSize = rowHeight;
-    
-    // the horizontal position of the button
-    int buttonPosX = 220;
-    
-    // the horizontal positon of the label
-    int labelPosX = 10;
-    
-    // the width of the label
-    int labelWidth = 200;
-    
-    
-        
-    RMSLabel.setBounds(labelPosX,beginListPosY,labelWidth,rowHeight);
-    sendRMSButton.setBounds(buttonPosX, beginListPosY, buttonSize, buttonSize);
-    
-    peakLabel.setBounds(labelPosX, beginListPosY+25, labelWidth, rowHeight);
-    sendPeakButton.setBounds(buttonPosX, beginListPosY+25, buttonSize, buttonSize);
-    
-    spectralCentroidLabel.setBounds(labelPosX, beginListPosY+50, labelWidth, rowHeight);
-    sendSpectralCentroidButton.setBounds(buttonPosX, beginListPosY+50, buttonSize, buttonSize);
-     */
     newAnalysisButton.setBounds(10, getHeight()-100, 50, 50);
-    
-    
 }
 
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::timerCallback()
 {
-    float RMSstate_f = getProcessor()->getParameter(getProcessor()->Parameters::pSendRMS);
-    bool RMSstate = getProcessor()->floatToBoolean(RMSstate_f);
-    sendRMSButton.setToggleState(RMSstate, dontSendNotification);
-    
-    float peakState_f = getProcessor()->getParameter(getProcessor()->Parameters::pSendPeak);
-    bool peakState = getProcessor()->floatToBoolean(peakState_f);
-    sendPeakButton.setToggleState(peakState, dontSendNotification);
-    
-    float specCentState_f = getProcessor()->getParameter(getProcessor()->Parameters::pSendSpectralCentroid);
-    bool specCentState = getProcessor()->floatToBoolean(specCentState_f);
-    sendSpectralCentroidButton.setToggleState(specCentState, dontSendNotification);
-    
-    //DBG("timer debug message");
-    
+//    float RMSstate_f = getProcessor()->getParameter(getProcessor()->Parameters::pSendRMS);
+//    bool RMSstate = getProcessor()->floatToBoolean(RMSstate_f);
+//    sendRMSButton.setToggleState(RMSstate, dontSendNotification);
+//    
+//    float peakState_f = getProcessor()->getParameter(getProcessor()->Parameters::pSendPeak);
+//    bool peakState = getProcessor()->floatToBoolean(peakState_f);
+//    sendPeakButton.setToggleState(peakState, dontSendNotification);
+//    
+//    float specCentState_f = getProcessor()->getParameter(getProcessor()->Parameters::pSendSpectralCentroid);
+//    bool specCentState = getProcessor()->floatToBoolean(specCentState_f);
+//    sendSpectralCentroidButton.setToggleState(specCentState, dontSendNotification);
+//    
+//    //DBG("timer debug message");
+//    
     repaint();
 }
 
 
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
-{
-    /*
-    // -----------------------------------------------
-    if (button == &sendRMSButton)
-    {
-        // get button state
-        bool state = sendRMSButton.getToggleState();
-        
-        // if it is on
-        if (state == true)
-        {            
-            // set the boolean parameter to 0.0
-            getProcessor()->setParameterNotifyingHost (SoundAnalyserAudioProcessor::pSendRMS,0.0);
-        }
-        else // if it is off
-        {
-            // set the boolean parameter to 1.0
-            getProcessor()->setParameterNotifyingHost (SoundAnalyserAudioProcessor::pSendRMS,1.0);
-        }
-        
-        sendRMSButton.setToggleState(!state, dontSendNotification);
-   
-    }
-    
-    // -----------------------------------------------
-    if (button == &sendPeakButton)
-    {
-        // get button state
-        bool state = sendPeakButton.getToggleState();
-        
-        // if it is on
-        if (state == true)
-        {
-            // set the boolean parameter to 0.0
-            getProcessor()->setParameterNotifyingHost (SoundAnalyserAudioProcessor::pSendPeak,0.0);
-        }
-        else
-        {
-            // set the boolean parameter to 1.0
-            getProcessor()->setParameterNotifyingHost (SoundAnalyserAudioProcessor::pSendPeak,1.0);
-        }
-        
-        sendPeakButton.setToggleState(!state, dontSendNotification);
-        
-    }
-    
-    // -----------------------------------------------
-    if (button == &sendSpectralCentroidButton)
-    {
-        // get button state
-        bool state = sendSpectralCentroidButton.getToggleState();
-        
-        // if it is on
-        if (state == true)
-        {
-            // set the boolean parameter to 0.0
-            getProcessor()->setParameterNotifyingHost (SoundAnalyserAudioProcessor::pSendSpectralCentroid,0.0);
-        }
-        else
-        {
-            // set the boolean parameter to 1.0
-            getProcessor()->setParameterNotifyingHost (SoundAnalyserAudioProcessor::pSendSpectralCentroid,1.0);
-        }
-        
-        sendSpectralCentroidButton.setToggleState(!state, dontSendNotification);
-    }*/
-    
+{    
     if (button == &newAnalysisButton)
     {
         AlertWindow w ("Add new analysis..",
@@ -270,6 +174,8 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
 //        {
 //            options.add(AnalysisModel::getAnalysisName(i));
 //        }
+        
+
         
         w.addComboBox ("option", options, "some options");
         
@@ -288,6 +194,7 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
     }
 }
 
+//==============================================================================
 void SoundAnalyserAudioProcessorEditor::addAnalysis(ValueTree& analysisTree)
 {
     if (analysisTree.getType() == AnalysisTypes::RMS)
@@ -298,6 +205,10 @@ void SoundAnalyserAudioProcessorEditor::addAnalysis(ValueTree& analysisTree)
     {
         analysisComponents.add(new SimpleAnalysisComponent(analysisTree));
     }
+    else if (analysisTree.getType() == AnalysisTypes::SpectralCentroid)
+    {
+        analysisComponents.add(new SimpleAnalysisComponent(analysisTree));
+    }
     
     addChildComponent(analysisComponents.getLast());
     analysisComponents.getLast()->setVisible(true);
@@ -305,27 +216,31 @@ void SoundAnalyserAudioProcessorEditor::addAnalysis(ValueTree& analysisTree)
     resized();
 }
 
-
+//==============================================================================
 void SoundAnalyserAudioProcessorEditor::valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property)
 {
    
 }
 
+//==============================================================================
 void SoundAnalyserAudioProcessorEditor::valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded)
 {
     addAnalysis(childWhichHasBeenAdded);
 }
 
+//==============================================================================
 void SoundAnalyserAudioProcessorEditor::valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved)
 {
-    
+    refreshFromTree();
 }
 
+//==============================================================================
 void SoundAnalyserAudioProcessorEditor::valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved)
 {
     
 }
 
+//==============================================================================
 void SoundAnalyserAudioProcessorEditor::valueTreeParentChanged (ValueTree& treeWhoseParentHasChanged)
 {
     
