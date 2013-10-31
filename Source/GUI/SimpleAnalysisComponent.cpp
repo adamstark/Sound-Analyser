@@ -42,7 +42,10 @@ SimpleAnalysisComponent::SimpleAnalysisComponent(ValueTree& analysisTree_) : ana
 
 //==============================================================================
 void SimpleAnalysisComponent::refreshFromTree()
-{    
+{
+    sendButton.setToggleState(analysisTree[AnalysisProperties::send],dontSendNotification);
+    plotButton.setToggleState(analysisTree[AnalysisProperties::plot], dontSendNotification);
+    
     resized();
 }
 

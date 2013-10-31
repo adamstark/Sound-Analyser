@@ -13,6 +13,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "AudioAnalysisManager.h"
+#include "AnalysisModel.h"
 
 
 //==============================================================================
@@ -68,6 +69,19 @@ public:
     void setStateInformation (const void* data, int sizeInBytes);
     
     
+    void refreshFromTree()
+    {
+        analyser.sRMS.send = analyserTree[AnalysisProperties::send];
+        analyser.sRMS.plot = analyserTree[AnalysisProperties::plot];
+    
+    
+        analyser.sPeakEnergy.send = analyserTree[AnalysisProperties::send];
+        analyser.sPeakEnergy.plot = analyserTree[AnalysisProperties::plot];
+    
+        analyser.sSpectralCentroid.send = analyserTree[AnalysisProperties::send];
+        analyser.sSpectralCentroid.plot = analyserTree[AnalysisProperties::plot];
+    }
+    
     void valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property);
     void valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded);
     void valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved);
@@ -92,7 +106,7 @@ private:
         
     ValueTree analyserTree;
     
-    
+  //  AudioProcessorEditor *editor;
     
     
     

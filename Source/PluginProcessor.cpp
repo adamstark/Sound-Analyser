@@ -243,12 +243,19 @@ bool SoundAnalyserAudioProcessor::hasEditor() const
 //==============================================================================
 AudioProcessorEditor* SoundAnalyserAudioProcessor::createEditor()
 {
+    DBG("CREATE EDITOR CALLED");
+ //   editor = new SoundAnalyserAudioProcessorEditor (this,analyserTree);
+ 
     return new SoundAnalyserAudioProcessorEditor (this,analyserTree);
+  //  return editor;
 }
 
 //==============================================================================
 void SoundAnalyserAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
+    DBG("GET STATE INFORMATION CALLED");
+    
+    DBG("ANALYSER TREE TYPE: " << analyserTree.getType().toString());
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
@@ -265,7 +272,7 @@ void SoundAnalyserAudioProcessor::getStateInformation (MemoryBlock& destData)
      */
     
     XmlElement xml(*analyserTree.createXml());
-    
+        
     // then use this helper function to stuff it into the binary blob and return it..
     copyXmlToBinary (xml, destData);
 }
@@ -273,6 +280,7 @@ void SoundAnalyserAudioProcessor::getStateInformation (MemoryBlock& destData)
 //==============================================================================
 void SoundAnalyserAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
+    DBG("SET STATE INFORMATION CALLED");
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
     
@@ -281,7 +289,17 @@ void SoundAnalyserAudioProcessor::setStateInformation (const void* data, int siz
     
     ValueTree newTree = ValueTree::fromXml(*xmlState);
     
+    DBG("NEW TREE TYPE: " << newTree.getType().toString() << " WITH " << newTree.getNumChildren() << " CHILDREN");
+    
     analyserTree.copyPropertiesFrom(newTree, nullptr);
+
+    DBG("ANALYSER TREE TYPE: " << analyserTree.getType().toString() << " WITH " << analyserTree.getNumChildren() << " CHILDREN");
+    
+    analyserTree = newTree;
+    
+    DBG("ANALYSER TREE TYPE: " << analyserTree.getType().toString() << " WITH " << analyserTree.getNumChildren() << " CHILDREN");
+    
+    //((SoundAnalyserAudioProcessorEditor*)editor)->setValueTree(analyserTree);
     
     /*
     //newTree.fromXml(&xmlState);

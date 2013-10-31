@@ -32,9 +32,22 @@ public:
     
     void resized();
     
+    void setValueTree(ValueTree tree)
+    {
+        analyserTree.removeListener(this);
+        
+        analyserTree = tree;
+        
+        analyserTree.addListener(this);
+        
+        refreshFromTree();
+    }
+    
     void refreshFromTree()
     {
         analysisComponents.clear();
+        
+        DBG("REFRESHING GUI FROM TREE WITH " << analyserTree.getNumChildren() << " CHILDREN");
         
         for (int i = 0;i < analyserTree.getNumChildren();i++)
         {

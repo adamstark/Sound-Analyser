@@ -1,0 +1,21 @@
+
+1 - Mono/Stereo affecting..  always hear the original no matter what (or filtered).
+
+2 - Snapshot - get rid of original.  Even if I pick big buffer I get the same buffer.. always the same 64 values being repeated.  A static value at position 63.. -0.0231.  
+
+3 - Top level revel for reporting interval.
+
+4 - Snapshot and FFT both send blank on one of the channels when in MONO.  FFT off switch should overide the control values.
+
+5 - pitch detection is important.  Single value.
+
+6 - mel scale & bark scale.  Choose number of bars.  
+
+7 - spread(important) and centroid.
+
+8 - beatrack..
+
+
+
+   
+
