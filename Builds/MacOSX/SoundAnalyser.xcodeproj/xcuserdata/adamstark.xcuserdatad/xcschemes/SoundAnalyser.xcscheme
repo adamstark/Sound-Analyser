@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "868F9AAEB6C459F22F6572AA"
+               BlueprintIdentifier = "D15796C15F29CDD00A2C8629"
                BuildableName = "SoundAnalyser.component"
                BlueprintName = "SoundAnalyser"
                ReferencedContainer = "container:SoundAnalyser.xcodeproj">

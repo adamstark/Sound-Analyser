@@ -9,7 +9,7 @@
 #include "AudioAnalysisManager.h"
 
 //==============================================================================
-AudioAnalysisManager::AudioAnalysisManager() : audioBuffer(1024), fft(1024)
+AudioAnalysisManager::AudioAnalysisManager() : audioFeatures(1024), audioBuffer(1024), fft(1024)
 {    
     sRMS.send = false;
     sRMS.plot = false;
@@ -21,8 +21,16 @@ AudioAnalysisManager::AudioAnalysisManager() : audioBuffer(1024), fft(1024)
     
     sSpectralCentroid.send = false;
     sSpectralCentroid.plot = false;
-
     
+    sZeroCrossingRate.send = false;
+    sZeroCrossingRate.plot = false;
+    
+    sSpectralDifference.send = false;
+    sSpectralDifference.plot = false;
+    
+    setAnalyserIdString("1");
+
+
     plotHistory.resize(512);
     
     for (int i = 0;i < 512;i++)
@@ -48,7 +56,7 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
         
         if (sRMS.send)
         {
-            osc.send("/rms",rms);
+            osc.send(sRMS.address_pattern.c_str(),rms);
         }
         
         if (sRMS.plot)
@@ -65,12 +73,28 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
         
         if (sPeakEnergy.send)
         {
-            osc.send("/peak",peak);
+            osc.send(sPeakEnergy.address_pattern.c_str(),peak);
         }
         
         if (sPeakEnergy.plot)
         {
             updatePlotHistory(peak);
+        }
+    }
+    
+    // ------------------- ZERO CROSSING RATE ------------------------
+    if (sZeroCrossingRate.send || sZeroCrossingRate.plot)
+    {
+        float zeroCrossingRate = audioFeatures.calculateZeroCrossingRate(audioBuffer.buffer);
+        
+        if (sZeroCrossingRate.send)
+        {
+            osc.send(sZeroCrossingRate.address_pattern.c_str(), zeroCrossingRate);
+        }
+        
+        if (sZeroCrossingRate.plot)
+        {
+            updatePlotHistory(zeroCrossingRate);
         }
     }
     
@@ -82,7 +106,7 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
         
         if (sSpectralCentroid.send)
         {
-            osc.send("/spectralCentroid",spectralCentroid);
+            osc.send(sSpectralCentroid.address_pattern.c_str(),spectralCentroid);
         }
         
         if (sSpectralCentroid.plot)
@@ -91,22 +115,22 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
         }
   
     }
-
-
-    /*
-    // calculate zero crossing rate
-    float zcr = audioFeatures.calculateZeroCrossingRate(audioBuffer.buffer);    
     
-    
- 
-    osc.send("/zcr",zcr);
-    
-    osc.send("/fft",fft.getMagnitudeSpectrum());
-    
-    
-   
-     */
-    
+    // ------------------- SPECTRAL DIFFERENCE ------------------------
+    if (sSpectralDifference.send || sSpectralDifference.plot)
+    {
+        float spectralDifference = audioFeatures.calculateSpectralDifference(fft.getMagnitudeSpectrum());
+        
+        if (sSpectralDifference.send)
+        {
+            osc.send(sSpectralDifference.address_pattern.c_str(), spectralDifference);
+        }
+        
+        if (sSpectralDifference.plot)
+        {
+            updatePlotHistory(spectralDifference);
+        }
+    }
 
 }
 

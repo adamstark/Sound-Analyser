@@ -58,19 +58,55 @@ public:
     }
 
     template <typename Method>
-    void callListeners (Method method, ValueTree& tree)
+    void callListeners (Method method, ValueTree& tree) const
     {
-        for (int i = valueTreesWithListeners.size(); --i >= 0;)
-            if (ValueTree* const v = valueTreesWithListeners[i])
-                v->listeners.call (method, tree);
+        const int numListeners = valueTreesWithListeners.size();
+
+        if (numListeners > 0)
+        {
+            if (numListeners == 1)
+            {
+                valueTreesWithListeners.getUnchecked(0)->listeners.call (method, tree);
+            }
+            else
+            {
+                const SortedSet<ValueTree*> listenersCopy (valueTreesWithListeners);
+
+                for (int i = 0; i < numListeners; ++i)
+                {
+                    ValueTree* const v = listenersCopy.getUnchecked(i);
+
+                    if (i == 0 || valueTreesWithListeners.contains (v))
+                        v->listeners.call (method, tree);
+                }
+            }
+        }
     }
 
     template <typename Method, typename ParamType>
-    void callListeners (Method method, ValueTree& tree, ParamType& param2)
+    void callListeners (Method method, ValueTree& tree, ParamType& param2) const
     {
-        for (int i = valueTreesWithListeners.size(); --i >= 0;)
-            if (ValueTree* const v = valueTreesWithListeners[i])
-                v->listeners.call (method, tree, param2);
+        const int numListeners = valueTreesWithListeners.size();
+
+        if (numListeners > 0)
+        {
+            if (numListeners == 1)
+            {
+                valueTreesWithListeners.getUnchecked(0)->listeners.call (method, tree, param2);
+            }
+            else
+            {
+                const SortedSet<ValueTree*> listenersCopy (valueTreesWithListeners);
+
+                for (int i = 0; i < numListeners; ++i)
+                {
+                    ValueTree* const v = listenersCopy.getUnchecked(i);
+
+                    if (i == 0 || valueTreesWithListeners.contains (v))
+                        v->listeners.call (method, tree, param2);
+                }
+            }
+        }
     }
 
     void sendPropertyChangeMessage (const Identifier property)
@@ -376,8 +412,9 @@ public:
         XmlElement* const xml = new XmlElement (type.toString());
         properties.copyToXmlAttributes (*xml);
 
-        for (int i = 0; i < children.size(); ++i)
-            xml->addChildElement (children.getObjectPointerUnchecked(i)->createXml());
+        // (NB: it's faster to add nodes to XML elements in reverse order)
+        for (int i = children.size(); --i >= 0;)
+            xml->prependChildElement (children.getObjectPointerUnchecked(i)->createXml());
 
         return xml;
     }
@@ -417,11 +454,10 @@ public:
     class SetPropertyAction  : public UndoableAction
     {
     public:
-        SetPropertyAction (SharedObject* const target_, const Identifier name_,
-                           const var& newValue_, const var& oldValue_,
-                           const bool isAddingNewProperty_, const bool isDeletingProperty_)
-            : target (target_), name (name_), newValue (newValue_), oldValue (oldValue_),
-              isAddingNewProperty (isAddingNewProperty_), isDeletingProperty (isDeletingProperty_)
+        SetPropertyAction (SharedObject* const so, const Identifier propertyName,
+                           const var& newVal, const var& oldVal, bool isAdding, bool isDeleting)
+            : target (so), name (propertyName), newValue (newVal), oldValue (oldVal),
+              isAddingNewProperty (isAdding), isDeletingProperty (isDeleting)
         {
         }
 
@@ -479,11 +515,11 @@ public:
     class AddOrRemoveChildAction  : public UndoableAction
     {
     public:
-        AddOrRemoveChildAction (SharedObject* target_, const int childIndex_, SharedObject* newChild_)
-            : target (target_),
-              child (newChild_ != nullptr ? newChild_ : target_->children.getObjectPointer (childIndex_)),
-              childIndex (childIndex_),
-              isDeleting (newChild_ == nullptr)
+        AddOrRemoveChildAction (SharedObject* parentObject, int index, SharedObject* newChild)
+            : target (parentObject),
+              child (newChild != nullptr ? newChild : parentObject->children.getObjectPointer (index)),
+              childIndex (index),
+              isDeleting (newChild == nullptr)
         {
             jassert (child != nullptr);
         }
@@ -532,8 +568,8 @@ public:
     class MoveChildAction  : public UndoableAction
     {
     public:
-        MoveChildAction (SharedObject* const parent_, const int startIndex_, const int endIndex_) noexcept
-            : parent (parent_), startIndex (startIndex_), endIndex (endIndex_)
+        MoveChildAction (SharedObject* parentObject, int fromIndex, int toIndex) noexcept
+            : parent (parentObject), startIndex (fromIndex), endIndex (toIndex)
         {
         }
 
@@ -604,24 +640,32 @@ ValueTree::ValueTree (const ValueTree& other)  : object (other.object)
 
 ValueTree& ValueTree::operator= (const ValueTree& other)
 {
-    if (listeners.size() > 0)
+    if (object != other.object)
     {
-        if (object != nullptr)
-            object->valueTreesWithListeners.removeValue (this);
+        if (listeners.isEmpty())
+        {
+            object = other.object;
+        }
+        else
+        {
+            if (object != nullptr)
+                object->valueTreesWithListeners.removeValue (this);
 
-        if (other.object != nullptr)
-            other.object->valueTreesWithListeners.add (this);
+            if (other.object != nullptr)
+                other.object->valueTreesWithListeners.add (this);
+
+            object = other.object;
+
+            listeners.call (&ValueTree::Listener::valueTreeRedirected, *this);
+        }
     }
 
-    object = other.object;
-
-    listeners.call (&ValueTree::Listener::valueTreeRedirected, *this);
     return *this;
 }
 
 #if JUCE_COMPILER_SUPPORTS_MOVE_SEMANTICS
 ValueTree::ValueTree (ValueTree&& other) noexcept
-    : object (static_cast <SharedObject::Ptr&&> (other.object))
+    : object (static_cast<SharedObject::Ptr&&> (other.object))
 {
 }
 #endif
@@ -877,7 +921,7 @@ void ValueTree::addListener (Listener* listener)
 {
     if (listener != nullptr)
     {
-        if (listeners.size() == 0 && object != nullptr)
+        if (listeners.isEmpty() && object != nullptr)
             object->valueTreesWithListeners.add (this);
 
         listeners.add (listener);
@@ -888,7 +932,7 @@ void ValueTree::removeListener (Listener* listener)
 {
     listeners.remove (listener);
 
-    if (listeners.size() == 0 && object != nullptr)
+    if (listeners.isEmpty() && object != nullptr)
         object->valueTreesWithListeners.removeValue (this);
 }
 

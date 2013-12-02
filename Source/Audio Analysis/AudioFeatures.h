@@ -17,7 +17,7 @@ class AudioFeatures {
 public:
     
     /** constructor */
-    AudioFeatures();
+    AudioFeatures(int frameSize);
     
     
     // ------------------ time domain features --------------------------
@@ -31,9 +31,13 @@ public:
     
     // ---------------- frequency domain features --------------------------
     
-     float calculateSpectralCentroid(std::vector<float> magnitudeSpectrum);
+    float calculateSpectralCentroid(std::vector<float> magnitudeSpectrum);
+    
+    float calculateSpectralDifference(std::vector<float> magnitudeSpectrum);
     
 private:
+    
+    std::vector<float> prevMagnitudeSpectrum;
     
 };
 

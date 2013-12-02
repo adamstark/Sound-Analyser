@@ -17,6 +17,8 @@ struct AnalysisTypes
     static const Identifier RMS;
     static const Identifier PeakEnergy;
     static const Identifier SpectralCentroid;
+    static const Identifier ZeroCrossingRate;
+    static const Identifier SpectralDifference;
 };
 
 //----------------------------------------
@@ -40,12 +42,16 @@ public:
         RMS,
         PeakEnergy,
         SpectralCentroid,
+        ZeroCrossingRate,
+        SpectralDifference,
         NumAnalysisTypes
     };
     
     static ValueTree createAnalyserTree()
     {
         ValueTree analyserTree(Ids::SOUNDANALYSER);
+        
+        analyserTree.setProperty(Ids::AnalyserId,1,nullptr);
         
         return analyserTree;
     }
@@ -76,6 +82,7 @@ public:
     struct Ids
     {
         static const Identifier SOUNDANALYSER;                /**<  */
+        static const Identifier AnalyserId;
     };
     
 private:

@@ -299,6 +299,9 @@ void SoundAnalyserAudioProcessor::setStateInformation (const void* data, int siz
     
     DBG("ANALYSER TREE TYPE: " << analyserTree.getType().toString() << " WITH " << analyserTree.getNumChildren() << " CHILDREN");
     
+    
+    refreshFromTree();
+    
     //((SoundAnalyserAudioProcessorEditor*)editor)->setValueTree(analyserTree);
     
     /*
@@ -326,7 +329,14 @@ AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 //==============================================================================
 void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property)
 {
-    if (treeWhosePropertyHasChanged.getType() == AnalysisTypes::RMS)
+    if (treeWhosePropertyHasChanged.getType() == AnalysisModel::Ids::SOUNDANALYSER)
+    {
+        if (property == AnalysisModel::Ids::AnalyserId)
+        {
+            analyser.setAnalyserIdString(treeWhosePropertyHasChanged[property].toString().toStdString());
+        }
+    }
+    else if (treeWhosePropertyHasChanged.getType() == AnalysisTypes::RMS)
     {
         if (property == AnalysisProperties::send)
         {            
@@ -359,6 +369,28 @@ void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhose
             analyser.sSpectralCentroid.plot = treeWhosePropertyHasChanged[AnalysisProperties::plot];
         }
     }
+    else if (treeWhosePropertyHasChanged.getType() == AnalysisTypes::ZeroCrossingRate)
+    {
+        if (property == AnalysisProperties::send)
+        {
+            analyser.sZeroCrossingRate.send = treeWhosePropertyHasChanged[AnalysisProperties::send];
+        }
+        else if (property == AnalysisProperties::plot)
+        {
+            analyser.sZeroCrossingRate.plot = treeWhosePropertyHasChanged[AnalysisProperties::plot];
+        }
+    }
+    else if (treeWhosePropertyHasChanged.getType() == AnalysisTypes::SpectralDifference)
+    {
+        if (property == AnalysisProperties::send)
+        {
+            analyser.sSpectralDifference.send = treeWhosePropertyHasChanged[AnalysisProperties::send];
+        }
+        else if (property == AnalysisProperties::plot)
+        {
+            analyser.sSpectralDifference.plot = treeWhosePropertyHasChanged[AnalysisProperties::plot];
+        }
+    }
 }
 
 //==============================================================================
@@ -387,6 +419,12 @@ void SoundAnalyserAudioProcessor::valueTreeChildRemoved (ValueTree& parentTree, 
         analyser.sSpectralCentroid.send = false;
         analyser.sSpectralCentroid.plot = false;
         DBG("SPECTRAL CENTROID ENERGY OFF");
+    }
+    else if (childWhichHasBeenRemoved.getType() == AnalysisTypes::ZeroCrossingRate)
+    {
+        analyser.sZeroCrossingRate.send = false;
+        analyser.sZeroCrossingRate.plot = false;
+        DBG("ZERO CORSSING RATE OFF");
     }
 }
 

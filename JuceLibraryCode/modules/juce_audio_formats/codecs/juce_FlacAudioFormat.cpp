@@ -83,16 +83,14 @@ namespace FlacNamespace
 
 //==============================================================================
 static const char* const flacFormatName = "FLAC file";
-static const char* const flacExtensions[] = { ".flac", 0 };
 
 
 //==============================================================================
 class FlacReader  : public AudioFormatReader
 {
 public:
-    //==============================================================================
     FlacReader (InputStream* const in)
-        : AudioFormatReader (in, TRANS (flacFormatName)),
+        : AudioFormatReader (in, flacFormatName),
           reservoir (2, 0),
           reservoirStart (0),
           samplesInReservoir (0),
@@ -313,7 +311,7 @@ class FlacWriter  : public AudioFormatWriter
 {
 public:
     FlacWriter (OutputStream* const out, double rate, uint32 numChans, uint32 bits, int qualityOptionIndex)
-        : AudioFormatWriter (out, TRANS (flacFormatName), rate, numChans, bits)
+        : AudioFormatWriter (out, flacFormatName, rate, numChans, bits)
     {
         using namespace FlacNamespace;
         encoder = FLAC__stream_encoder_new();
@@ -382,7 +380,7 @@ public:
             samplesToWrite = const_cast<const int**> (channels.getData());
         }
 
-        return FLAC__stream_encoder_process (encoder, (const FLAC__int32**) samplesToWrite, (size_t) numSamples) != 0;
+        return FLAC__stream_encoder_process (encoder, (const FLAC__int32**) samplesToWrite, (unsigned) numSamples) != 0;
     }
 
     bool writeData (const void* const data, const int size) const
@@ -478,7 +476,7 @@ private:
 
 //==============================================================================
 FlacAudioFormat::FlacAudioFormat()
-    : AudioFormat (TRANS (flacFormatName), StringArray (flacExtensions))
+    : AudioFormat (flacFormatName, ".flac")
 {
 }
 
@@ -538,7 +536,7 @@ AudioFormatWriter* FlacAudioFormat::createWriterFor (OutputStream* out,
 
 StringArray FlacAudioFormat::getQualityOptions()
 {
-    const char* options[] = { "0 (Fastest)", "1", "2", "3", "4", "5 (Default)","6", "7", "8 (Highest quality)", 0 };
+    static const char* options[] = { "0 (Fastest)", "1", "2", "3", "4", "5 (Default)","6", "7", "8 (Highest quality)", 0 };
     return StringArray (options);
 }
 

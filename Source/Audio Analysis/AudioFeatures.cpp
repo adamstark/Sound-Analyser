@@ -9,9 +9,14 @@
 #include "AudioFeatures.h"
 
 //==============================================================================
-AudioFeatures::AudioFeatures()
+AudioFeatures::AudioFeatures(int frameSize)
 {
+    prevMagnitudeSpectrum.resize(frameSize);
     
+    for (int i = 0;i < prevMagnitudeSpectrum.size();i++)
+    {
+        prevMagnitudeSpectrum[i] = 0;
+    }
 }
 
 //==============================================================================
@@ -80,6 +85,11 @@ float AudioFeatures::calculateZeroCrossingRate(std::vector<float> buffer)
     return zcr;
 }
 
+//==============================================================================//
+//========================= FREQUENCY DOMAIN FEATURES ==========================//
+//==============================================================================//
+
+
 //==============================================================================
 float AudioFeatures::calculateSpectralCentroid(std::vector<float> magnitudeSpectrum)
 {
@@ -101,4 +111,29 @@ float AudioFeatures::calculateSpectralCentroid(std::vector<float> magnitudeSpect
     
     // the spectral centroid is the sum of weighted amplitudes divided by the sum of amplitdues
     return sumWeightedAmplitudes / sumAmplitudes;
+}
+
+//==============================================================================
+float AudioFeatures::calculateSpectralDifference(std::vector<float> magnitudeSpectrum)
+{
+    float sum = 0;	// initialise sum to zero
+    
+	for (int i = 0;i < magnitudeSpectrum.size();i++)
+	{
+		// calculate difference
+		float diff = magnitudeSpectrum[i] - prevMagnitudeSpectrum[i];
+		
+		// ensure all difference values are positive
+		if (diff < 0)
+		{
+			diff = diff*-1;
+		}
+		
+		// add difference to sum
+		sum = sum+diff;
+        
+        prevMagnitudeSpectrum[i] = magnitudeSpectrum[i];
+	}
+	
+	return sum;
 }

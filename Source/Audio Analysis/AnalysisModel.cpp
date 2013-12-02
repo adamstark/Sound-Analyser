@@ -10,10 +10,13 @@
 
 // instantiate static variables
 const Identifier AnalysisModel::Ids::SOUNDANALYSER("SoundAnalyser");
+const Identifier AnalysisModel::Ids::AnalyserId("AnalyserId");
 
 const Identifier AnalysisTypes::RMS("RMS");
 const Identifier AnalysisTypes::PeakEnergy("PeakEnergy");
 const Identifier AnalysisTypes::SpectralCentroid("SpectralCentroid");
+const Identifier AnalysisTypes::ZeroCrossingRate("ZeroCrossingRate");
+const Identifier AnalysisTypes::SpectralDifference("SpectralDifference");
 
 const Identifier AnalysisProperties::send("Send");
 const Identifier AnalysisProperties::plot("Plot");
@@ -40,6 +43,14 @@ String AnalysisModel::getAnalysisName(Identifier analysisType)
     else if (analysisType == AnalysisTypes::SpectralCentroid)
     {
         return "Spectral Centroid";
+    }
+    else if (analysisType == AnalysisTypes::ZeroCrossingRate)
+    {
+        return "Zero Crossing Rate";
+    }
+    else if (analysisType == AnalysisTypes::SpectralDifference)
+    {
+        return "Spectral Difference";
     }
     else
     {
@@ -70,6 +81,21 @@ void AnalysisModel::addNewAnalysis(ValueTree analysisTree, int analysisId)
         node.setProperty(AnalysisProperties::plot, 0, nullptr);
         analysisTree.addChild(node, -1, nullptr);
     }
+    else if (analysisId == AnalysisIds::ZeroCrossingRate)
+    {
+        ValueTree node(AnalysisTypes::ZeroCrossingRate);
+        node.setProperty(AnalysisProperties::send, 0, nullptr);
+        node.setProperty(AnalysisProperties::plot, 0, nullptr);
+        analysisTree.addChild(node, -1, nullptr);
+    }
+    else if (analysisId == AnalysisIds::SpectralDifference)
+    {
+        ValueTree node(AnalysisTypes::SpectralDifference);
+        node.setProperty(AnalysisProperties::send, 0, nullptr);
+        node.setProperty(AnalysisProperties::plot, 0, nullptr);
+        analysisTree.addChild(node, -1, nullptr);
+    }
+
 
 }
 
@@ -80,6 +106,8 @@ StringArray AnalysisModel::getAllAnalysisNames()
     nameList.add(getAnalysisName(AnalysisTypes::RMS));
     nameList.add(getAnalysisName(AnalysisTypes::PeakEnergy));
     nameList.add(getAnalysisName(AnalysisTypes::SpectralCentroid));
+    nameList.add(getAnalysisName(AnalysisTypes::ZeroCrossingRate));
+    nameList.add(getAnalysisName(AnalysisTypes::SpectralDifference));
     
     return nameList;
 }

@@ -71,15 +71,26 @@ public:
     
     void refreshFromTree()
     {
-        analyser.sRMS.send = analyserTree[AnalysisProperties::send];
-        analyser.sRMS.plot = analyserTree[AnalysisProperties::plot];
+        
+        ValueTree rmsTree = analyserTree.getChildWithName(AnalysisTypes::RMS);
+        analyser.sRMS.send = rmsTree[AnalysisProperties::send];
+        analyser.sRMS.plot = rmsTree[AnalysisProperties::plot];
     
+        ValueTree peakEnergyTree = analyserTree.getChildWithName(AnalysisTypes::PeakEnergy);
+        analyser.sPeakEnergy.send = peakEnergyTree[AnalysisProperties::send];
+        analyser.sPeakEnergy.plot = peakEnergyTree[AnalysisProperties::plot];
     
-        analyser.sPeakEnergy.send = analyserTree[AnalysisProperties::send];
-        analyser.sPeakEnergy.plot = analyserTree[AnalysisProperties::plot];
-    
-        analyser.sSpectralCentroid.send = analyserTree[AnalysisProperties::send];
-        analyser.sSpectralCentroid.plot = analyserTree[AnalysisProperties::plot];
+        ValueTree specCentroidTree = analyserTree.getChildWithName(AnalysisTypes::SpectralCentroid);
+        analyser.sSpectralCentroid.send = specCentroidTree[AnalysisProperties::send];
+        analyser.sSpectralCentroid.plot = specCentroidTree[AnalysisProperties::plot];
+        
+        ValueTree zcrTree = analyserTree.getChildWithName(AnalysisTypes::ZeroCrossingRate);
+        analyser.sZeroCrossingRate.send = zcrTree[AnalysisProperties::send];
+        analyser.sZeroCrossingRate.plot = zcrTree[AnalysisProperties::plot];
+        
+        ValueTree specDiffTree = analyserTree.getChildWithName(AnalysisTypes::SpectralDifference);
+        analyser.sSpectralDifference.send = specDiffTree[AnalysisProperties::send];
+        analyser.sSpectralDifference.plot = specDiffTree[AnalysisProperties::plot];
     }
     
     void valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property);

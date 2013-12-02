@@ -428,30 +428,19 @@ public:
     {
         double pos;
 
-        if (maximum > minimum)
-        {
-            if (value < minimum)
-            {
-                pos = 0.0;
-            }
-            else if (value > maximum)
-            {
-                pos = 1.0;
-            }
-            else
-            {
-                pos = owner.valueToProportionOfLength (value);
-                jassert (pos >= 0 && pos <= 1.0);
-            }
-        }
-        else
-        {
+        if (maximum <= minimum)
             pos = 0.5;
-        }
+        else if (value < minimum)
+            pos = 0.0;
+        else if (value > maximum)
+            pos = 1.0;
+        else
+            pos = owner.valueToProportionOfLength (value);
 
         if (isVertical() || style == IncDecButtons)
             pos = 1.0 - pos;
 
+        jassert (pos >= 0 && pos <= 1.0);
         return (float) (sliderRegionStart + pos * sliderRegionSize);
     }
 
@@ -595,10 +584,10 @@ public:
 
         if (style == IncDecButtons)
         {
-            owner.addAndMakeVisible (incButton = lf.createSliderButton (true));
+            owner.addAndMakeVisible (incButton = lf.createSliderButton (owner, true));
             incButton->addListener (this);
 
-            owner.addAndMakeVisible (decButton = lf.createSliderButton (false));
+            owner.addAndMakeVisible (decButton = lf.createSliderButton (owner, false));
             decButton->addListener (this);
 
             if (incDecButtonMode != incDecButtonsNotDraggable)
@@ -609,10 +598,7 @@ public:
             else
             {
                 incButton->setRepeatSpeed (300, 100, 20);
-                incButton->addMouseListener (decButton, false);
-
                 decButton->setRepeatSpeed (300, 100, 20);
-                decButton->addMouseListener (incButton, false);
             }
 
             const String tooltip (owner.getTooltip());
@@ -625,7 +611,7 @@ public:
             decButton = nullptr;
         }
 
-        owner.setComponentEffect (lf.getSliderEffect());
+        owner.setComponentEffect (lf.getSliderEffect (owner));
 
         owner.resized();
         owner.repaint();
@@ -1269,16 +1255,16 @@ public:
     public:
         PopupDisplayComponent (Slider& s)
             : owner (s),
-              font (s.getLookAndFeel().getSliderPopupFont())
+              font (s.getLookAndFeel().getSliderPopupFont (s))
         {
             setAlwaysOnTop (true);
-            setAllowedPlacement (owner.getLookAndFeel().getSliderPopupPlacement());
+            setAllowedPlacement (owner.getLookAndFeel().getSliderPopupPlacement (s));
         }
 
         void paintContent (Graphics& g, int w, int h)
         {
             g.setFont (font);
-            g.setColour (findColour (TooltipWindow::textColourId, true));
+            g.setColour (owner.findColour (TooltipWindow::textColourId, true));
             g.drawFittedText (text, Rectangle<int> (w, h), Justification::centred, 1);
         }
 
@@ -1308,7 +1294,7 @@ public:
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PopupDisplayComponent)
     };
 
-    ScopedPointer <PopupDisplayComponent> popupDisplay;
+    ScopedPointer<PopupDisplayComponent> popupDisplay;
     Component* parentForPopupDisplay;
 
     //==============================================================================

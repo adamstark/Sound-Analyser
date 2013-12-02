@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>4D93805D-72AF-4BC0-8157-C8B5EC60F349</string>
+	<key>IDESourceControlProjectName</key>
+	<string>SoundAnalyser</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>74B91FA9-F192-4B6C-BBD0-7BDC351F1E66</key>
+		<string>https://bitbucket.org/adamstark/sound-analyser.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Builds/MacOSX/SoundAnalyser.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>74B91FA9-F192-4B6C-BBD0-7BDC351F1E66</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://bitbucket.org/adamstark/sound-analyser.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>74B91FA9-F192-4B6C-BBD0-7BDC351F1E66</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>74B91FA9-F192-4B6C-BBD0-7BDC351F1E66</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SoundAnalyser</string>
+		</dict>
+	</array>
+</dict>
+</plist>

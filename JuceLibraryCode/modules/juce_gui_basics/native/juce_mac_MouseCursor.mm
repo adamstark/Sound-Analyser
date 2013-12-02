@@ -62,7 +62,6 @@ namespace MouseCursorHelpers
             return CustomMouseCursorInfo (im, (int) (hx * im.getWidth()),
                                               (int) (hy * im.getHeight())).create();
 
-        jassertfalse;
         return nullptr;
     }
 }
@@ -95,7 +94,16 @@ void* MouseCursor::createStandardMouseCursor (MouseCursor::StandardCursorType ty
             case LeftEdgeResizeCursor:  c = [NSCursor resizeLeftCursor]; break;
             case RightEdgeResizeCursor: c = [NSCursor resizeRightCursor]; break;
             case CrosshairCursor:       c = [NSCursor crosshairCursor]; break;
-            case CopyingCursor:         return MouseCursorHelpers::fromWebKitFile ("copyCursor.png", 0, 0);
+
+            case CopyingCursor:
+            {
+               #if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6
+                if (void* m = MouseCursorHelpers::fromWebKitFile ("copyCursor.png", 0, 0))
+                    return m;
+               #endif
+                c = [NSCursor dragCopyCursor]; // added in 10.6
+                break;
+            }
 
             case UpDownResizeCursor:
             case TopEdgeResizeCursor:
@@ -146,8 +154,8 @@ void MouseCursor::showInWindow (ComponentPeer*) const
 #else
 
 void* CustomMouseCursorInfo::create() const                                              { return nullptr; }
-void* MouseCursor::createStandardMouseCursor (MouseCursor::StandardCursorType type)      { return nullptr; }
-void MouseCursor::deleteMouseCursor (void* const cursorHandle, const bool isStandard)    {}
+void* MouseCursor::createStandardMouseCursor (MouseCursor::StandardCursorType)           { return nullptr; }
+void MouseCursor::deleteMouseCursor (void*, bool)                                        {}
 void MouseCursor::showInAllWindows() const                                               {}
 void MouseCursor::showInWindow (ComponentPeer*) const                                    {}
 

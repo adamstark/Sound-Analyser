@@ -353,6 +353,12 @@ void Graphics::fillRectList (const RectangleList<float>& rectangles) const
     context.fillRectList (rectangles);
 }
 
+void Graphics::fillRectList (const RectangleList<int>& rects) const
+{
+    for (const Rectangle<int>* r = rects.begin(), * const e = rects.end(); r != e; ++r)
+        context.fillRect (*r, false);
+}
+
 void Graphics::setPixel (int x, int y) const
 {
     context.fillRect (Rectangle<int> (x, y, 1, 1), false);
@@ -437,6 +443,11 @@ void Graphics::drawEllipse (float x, float y, float width, float height, float l
     Path p;
     p.addEllipse (x, y, width, height);
     strokePath (p, PathStrokeType (lineThickness));
+}
+
+void Graphics::drawEllipse (const Rectangle<float>& area, float lineThickness) const
+{
+    drawEllipse (area.getX(), area.getY(), area.getWidth(), area.getHeight(), lineThickness);
 }
 
 void Graphics::fillRoundedRectangle (float x, float y, float width, float height, float cornerSize) const

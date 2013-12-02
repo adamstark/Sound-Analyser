@@ -19,6 +19,7 @@
 typedef struct {
     bool plot;
     bool send;
+    std::string address_pattern;
 } AnalysisState;
 
 class AudioAnalysisManager {
@@ -36,8 +37,23 @@ public:
     AnalysisState sRMS;
     AnalysisState sPeakEnergy;
     AnalysisState sSpectralCentroid;
+    AnalysisState sZeroCrossingRate;
+    AnalysisState sSpectralDifference;
     
     std::vector<float> plotHistory;
+    
+    void setAnalyserIdString(std::string analyserId)
+    {
+        std::string idWithSlash("/");
+        
+        idWithSlash = idWithSlash.append(analyserId);
+        
+        sRMS.address_pattern = idWithSlash.append("/rms");
+        sPeakEnergy.address_pattern = idWithSlash.append("/peakEnergy");
+        sSpectralCentroid.address_pattern = idWithSlash.append("/spectralCentroid");
+        sZeroCrossingRate.address_pattern = idWithSlash.append("/zcr");
+        sSpectralDifference.address_pattern = idWithSlash.append("/SpectralDifference");
+    }
     
 private:
     

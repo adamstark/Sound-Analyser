@@ -19,28 +19,28 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     // This is where our plugin's editor size is set.
     setSize (600, 500);
     
-    // -------------------------------------------------
-    // RMS
-   // setupAnalysisComponents(&sendRMSButton, &RMSLabel,"Root Mean Square (RMS)");
-    
-    // -------------------------------------------------
-    // PEAK ENERGY
-   // setupAnalysisComponents(&sendPeakButton, &peakLabel,"Peak Energy");
 
-    // -------------------------------------------------
-    // SPECTRAL CENTROID
-   // setupAnalysisComponents(&sendSpectralCentroidButton, &spectralCentroidLabel, "Spectral Centroid");
-    
     
     newAnalysisButton.setButtonText("+");
     addAndMakeVisible(&newAnalysisButton);
     newAnalysisButton.addListener(this);
     
-    // LISTENERS
-//    sendRMSButton.addListener(this);
-//    sendPeakButton.addListener(this);
-//    sendSpectralCentroidButton.addListener(this);
     
+    
+    //analyserId.setText(analyserTree[AnalysisModel::Ids::AnalyserId], dontSendNotification);
+//    analyserId.setEditable(true);
+  //  analyserId.setColour(Label::ColourIds::backgroundColourId, Colours::white);
+   // analyserId.setColour(Label::ColourIds::outlineColourId, Colours::lightgrey);
+    analyserId.addItem("1", 1);
+    analyserId.addItem("2", 2);
+    analyserId.addItem("3", 3);
+    analyserId.addItem("4", 4);
+    analyserId.addItem("5", 5);
+    analyserId.addItem("6", 6);
+    analyserId.addItem("7", 7);
+    
+    
+    addAndMakeVisible(&analyserId);
     
     
     plotHeight = 150;
@@ -49,6 +49,8 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
 
 
     analyserTree.addListener(this);
+    
+    analyserId.addListener(this);
     
     refreshFromTree();
     
@@ -63,19 +65,6 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
 SoundAnalyserAudioProcessorEditor::~SoundAnalyserAudioProcessorEditor()
 {
 }
-
-//==============================================================================
-//void SoundAnalyserAudioProcessorEditor::setupAnalysisComponents(TextButton* button,Label* label,String labelText)
-//{
-//    label->setText(labelText, dontSendNotification);
-//    button->setColour(TextButton::ColourIds::buttonOnColourId, Colours::blueviolet);
-//    button->setColour(TextButton::ColourIds::buttonColourId, Colours::silver);
-//    button->setToggleState(false, dontSendNotification);
-//
-//    addAndMakeVisible(button);
-//    addAndMakeVisible(label);
-//    
-//}
 
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
@@ -136,25 +125,13 @@ void SoundAnalyserAudioProcessorEditor::resized()
     }
     
     newAnalysisButton.setBounds(10, getHeight()-100, 50, 50);
+    
+    analyserId.setBounds(300,getHeight()-60,40,18);
 }
 
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::timerCallback()
 {
-//    float RMSstate_f = getProcessor()->getParameter(getProcessor()->Parameters::pSendRMS);
-//    bool RMSstate = getProcessor()->floatToBoolean(RMSstate_f);
-//    sendRMSButton.setToggleState(RMSstate, dontSendNotification);
-//    
-//    float peakState_f = getProcessor()->getParameter(getProcessor()->Parameters::pSendPeak);
-//    bool peakState = getProcessor()->floatToBoolean(peakState_f);
-//    sendPeakButton.setToggleState(peakState, dontSendNotification);
-//    
-//    float specCentState_f = getProcessor()->getParameter(getProcessor()->Parameters::pSendSpectralCentroid);
-//    bool specCentState = getProcessor()->floatToBoolean(specCentState_f);
-//    sendSpectralCentroidButton.setToggleState(specCentState, dontSendNotification);
-//    
-//    //DBG("timer debug message");
-//    
     repaint();
 }
 
@@ -209,6 +186,14 @@ void SoundAnalyserAudioProcessorEditor::addAnalysis(ValueTree& analysisTree)
     {
         analysisComponents.add(new SimpleAnalysisComponent(analysisTree));
     }
+    else if (analysisTree.getType() == AnalysisTypes::ZeroCrossingRate)
+    {
+        analysisComponents.add(new SimpleAnalysisComponent(analysisTree));
+    }
+    else if (analysisTree.getType() == AnalysisTypes::SpectralDifference)
+    {
+        analysisComponents.add(new SimpleAnalysisComponent(analysisTree));
+    }
     
     addChildComponent(analysisComponents.getLast());
     analysisComponents.getLast()->setVisible(true);
@@ -219,7 +204,10 @@ void SoundAnalyserAudioProcessorEditor::addAnalysis(ValueTree& analysisTree)
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property)
 {
-   
+    if (property == AnalysisModel::Ids::AnalyserId)
+    {
+        refreshFromTree();
+    }
 }
 
 //==============================================================================

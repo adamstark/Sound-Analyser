@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 #include "OscOutboundPacketStream.h"
 #include "UdpSocket.h"
 
@@ -26,8 +27,9 @@ public:
     
     void send(const char* address_pattern,std::vector<float> values);
     
+
 private:
-    
+            
 };
 
 #endif

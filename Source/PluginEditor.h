@@ -20,8 +20,7 @@
 //==============================================================================
 /**
 */
-class SoundAnalyserAudioProcessorEditor  : public AudioProcessorEditor, public Button::Listener, public Timer, public ValueTree::Listener
-{
+class SoundAnalyserAudioProcessorEditor  : public AudioProcessorEditor, public Button::Listener, public Timer, public ValueTree::Listener, public ComboBox::Listener {
 public:
     SoundAnalyserAudioProcessorEditor (SoundAnalyserAudioProcessor* ownerFilter, ValueTree analyserTree_);
     ~SoundAnalyserAudioProcessorEditor();
@@ -56,6 +55,9 @@ public:
             addAnalysis(analysisTree);
         }
         
+        //analyserId.setText(analyserTree[AnalysisModel::Ids::AnalyserId],dontSendNotification);
+        analyserId.setSelectedId(analyserTree[AnalysisModel::Ids::AnalyserId]);
+        
         resized();
     }
     
@@ -71,6 +73,28 @@ public:
     void valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved);
     void valueTreeParentChanged (ValueTree& treeWhoseParentHasChanged);
     
+    void labelTextChanged (Label* labelThatHasChanged)
+    {
+//        if (labelThatHasChanged == &analyserId)
+//        {
+//            analyserTree.setProperty(AnalysisModel::Ids::AnalyserId, analyserId.getText(), nullptr);
+//        }
+    }
+    
+    void textEditorTextChanged (TextEditor& textEditor)
+    {
+
+        analyserTree.setProperty(AnalysisModel::Ids::AnalyserId, textEditor.getText(), nullptr);
+
+    }
+    
+    void comboBoxChanged (ComboBox* comboBoxThatHasChanged)
+    {
+        if (comboBoxThatHasChanged == &analyserId)
+        {
+            analyserTree.setProperty(AnalysisModel::Ids::AnalyserId, analyserId.getSelectedIdAsValue(), nullptr);
+        }
+    }
     
     
 private:
@@ -87,6 +111,8 @@ private:
     TextButton newAnalysisButton;
     
     int plotX, plotY, plotHeight;
+    
+    ComboBox analyserId;
     
     //void setupAnalysisComponents(TextButton *button,Label *label,String labelText);
 };
