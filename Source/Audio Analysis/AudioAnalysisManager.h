@@ -16,6 +16,9 @@
 #include "AudioBuffer.h"
 #include <iostream>
 
+#include "AudioAnalysis.h"
+#include "RMS.h"
+
 typedef struct {
     bool plot;
     bool send;
@@ -48,6 +51,11 @@ public:
         
         idWithSlash = idWithSlash.append(analyserId);
         
+        for (int i = 0;i < audioAnalyses.size();i++)
+        {
+            audioAnalyses[i]->buildAddressPatternFromId(idWithSlash);
+        }
+        
         sRMS.address_pattern = idWithSlash.append("/rms");
         sPeakEnergy.address_pattern = idWithSlash.append("/peakEnergy");
         sSpectralCentroid.address_pattern = idWithSlash.append("/spectralCentroid");
@@ -71,7 +79,9 @@ private:
     FFT fft;
     
     
-
+    RMS rms;
+    
+    Array<AudioAnalysis*> audioAnalyses;
     
 
 };

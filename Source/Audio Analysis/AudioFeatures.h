@@ -35,6 +35,7 @@ public:
     
     float calculateSpectralDifference(std::vector<float> magnitudeSpectrum);
     
+    
 private:
     
     std::vector<float> prevMagnitudeSpectrum;

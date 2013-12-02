@@ -10,7 +10,11 @@
 
 //==============================================================================
 AudioAnalysisManager::AudioAnalysisManager() : audioFeatures(1024), audioBuffer(1024), fft(1024)
-{    
+{
+    audioAnalyses.add(&rms);
+    
+    
+    
     sRMS.send = false;
     sRMS.plot = false;
 
@@ -48,22 +52,50 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
     // calculate the FFT
     fft.performFFT(audioBuffer.buffer);
     
-    // ------------------------ RMS -------------------------------
-    if (sRMS.send || sRMS.plot)
+//    // ------------------------ RMS -------------------------------
+//    if (sRMS.send || sRMS.plot)
+//    {
+//        // calculate RMS
+//        float rms = audioFeatures.calculateRMS(audioBuffer.buffer);
+//        
+//        if (sRMS.send)
+//        {
+//            osc.send(sRMS.address_pattern.c_str(),rms);
+//        }
+//        
+//        if (sRMS.plot)
+//        {
+//            updatePlotHistory(rms);
+//        }
+//    }
+    
+    for (int i = 0;i < audioAnalyses.size();i++)
     {
-        // calculate RMS
-        float rms = audioFeatures.calculateRMS(audioBuffer.buffer);
-        
-        if (sRMS.send)
+        if (audioAnalyses[i]->send || audioAnalyses[i]->plot)
         {
-            osc.send(sRMS.address_pattern.c_str(),rms);
-        }
-        
-        if (sRMS.plot)
-        {
-            updatePlotHistory(rms);
+            float output;
+            
+            if (audioAnalyses[i]->getDomainOfAnalysis() == TIMEDOMAIN)
+            {
+                output = audioAnalyses[i]->performAnalysis(audioBuffer.buffer);
+            }
+            else
+            {
+                output = audioAnalyses[i]->performAnalysis(fft.getMagnitudeSpectrum());
+            }
+            
+            if (audioAnalyses[i]->send)
+            {
+                osc.send(audioAnalyses[i]->addressPattern.c_str(), output);
+            }
+            
+            if (audioAnalyses[i]->plot)
+            {
+                updatePlotHistory(output);
+            }
         }
     }
+    
     
     // --------------------- PEAK ENERGY ---------------------------
     if (sPeakEnergy.send || sPeakEnergy.plot)
