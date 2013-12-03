@@ -34,15 +34,20 @@ public:
         // return the square root of the mean of squared samples
         return sqrt(sum / ((float) buffer.size()));
     }
+        
+    std::string getCoreAddressPattern()
+    {        
+        return "/rms";
+    }
     
     void buildAddressPatternFromId(std::string idWithForwardSlash)
     {
         addressPattern = idWithForwardSlash.append(getCoreAddressPattern());
     }
     
-    std::string getCoreAddressPattern()
-    {        
-        return "/rms";
+    Identifier getIdentifier()
+    {
+        return AnalysisTypes::RMS;
     }
     
     AnalysisDomain getDomainOfAnalysis()

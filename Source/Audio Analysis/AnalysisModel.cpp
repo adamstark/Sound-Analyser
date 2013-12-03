@@ -17,21 +17,20 @@ const Identifier AnalysisTypes::PeakEnergy("PeakEnergy");
 const Identifier AnalysisTypes::SpectralCentroid("SpectralCentroid");
 const Identifier AnalysisTypes::ZeroCrossingRate("ZeroCrossingRate");
 const Identifier AnalysisTypes::SpectralDifference("SpectralDifference");
+const Identifier AnalysisTypes::StandardDeviation("StandardDeviation");
 
 const Identifier AnalysisProperties::send("Send");
 const Identifier AnalysisProperties::plot("Plot");
+
+Array<Identifier> AnalysisModel::analysisList = buildAnalysisList();
 
 AnalysisModel::AnalysisModel()
 {
     
 }
 
-
-
-
 String AnalysisModel::getAnalysisName(Identifier analysisType)
 {
-    
     if (analysisType == AnalysisTypes::RMS)
     {
         return "Root Mean Square (RMS)";
@@ -52,6 +51,10 @@ String AnalysisModel::getAnalysisName(Identifier analysisType)
     {
         return "Spectral Difference";
     }
+    else if (analysisType == AnalysisTypes::StandardDeviation)
+    {
+        return "Standard Deviation";
+    }
     else
     {
         return "Name Error";
@@ -60,54 +63,32 @@ String AnalysisModel::getAnalysisName(Identifier analysisType)
 
 void AnalysisModel::addNewAnalysis(ValueTree analysisTree, int analysisId)
 {
-    if (analysisId == AnalysisIds::RMS)
+    if (analysisId < analysisList.size())
     {
-        ValueTree node(AnalysisTypes::RMS);
-        node.setProperty(AnalysisProperties::send, 0, nullptr);
-        node.setProperty(AnalysisProperties::plot, 0, nullptr);
-        analysisTree.addChild(node, -1, nullptr);
+        if (false) // <-- some future special case where we need a different structure
+        {
+            
+        }
+        else
+        {
+            ValueTree node(analysisList[analysisId]);
+            node.setProperty(AnalysisProperties::send, 0, nullptr);
+            node.setProperty(AnalysisProperties::plot, 0, nullptr);
+            analysisTree.addChild(node, -1, nullptr);
+        }
     }
-    else if (analysisId == AnalysisIds::PeakEnergy)
-    {
-        ValueTree node(AnalysisTypes::PeakEnergy);
-        node.setProperty(AnalysisProperties::send, 0, nullptr);
-        node.setProperty(AnalysisProperties::plot, 0, nullptr);
-        analysisTree.addChild(node, -1, nullptr);
-    }
-    else if (analysisId == AnalysisIds::SpectralCentroid)
-    {
-        ValueTree node(AnalysisTypes::SpectralCentroid);
-        node.setProperty(AnalysisProperties::send, 0, nullptr);
-        node.setProperty(AnalysisProperties::plot, 0, nullptr);
-        analysisTree.addChild(node, -1, nullptr);
-    }
-    else if (analysisId == AnalysisIds::ZeroCrossingRate)
-    {
-        ValueTree node(AnalysisTypes::ZeroCrossingRate);
-        node.setProperty(AnalysisProperties::send, 0, nullptr);
-        node.setProperty(AnalysisProperties::plot, 0, nullptr);
-        analysisTree.addChild(node, -1, nullptr);
-    }
-    else if (analysisId == AnalysisIds::SpectralDifference)
-    {
-        ValueTree node(AnalysisTypes::SpectralDifference);
-        node.setProperty(AnalysisProperties::send, 0, nullptr);
-        node.setProperty(AnalysisProperties::plot, 0, nullptr);
-        analysisTree.addChild(node, -1, nullptr);
-    }
-
+    
 
 }
 
 StringArray AnalysisModel::getAllAnalysisNames()
 {
     StringArray nameList;
-    
-    nameList.add(getAnalysisName(AnalysisTypes::RMS));
-    nameList.add(getAnalysisName(AnalysisTypes::PeakEnergy));
-    nameList.add(getAnalysisName(AnalysisTypes::SpectralCentroid));
-    nameList.add(getAnalysisName(AnalysisTypes::ZeroCrossingRate));
-    nameList.add(getAnalysisName(AnalysisTypes::SpectralDifference));
-    
+
+    for (int i = 0;i < analysisList.size();i++)
+    {
+        nameList.add(getAnalysisName(analysisList[i]));
+    }
+        
     return nameList;
 }

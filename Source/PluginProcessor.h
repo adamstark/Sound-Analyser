@@ -71,26 +71,13 @@ public:
     
     void refreshFromTree()
     {
-        
-        ValueTree rmsTree = analyserTree.getChildWithName(AnalysisTypes::RMS);
-        analyser.sRMS.send = rmsTree[AnalysisProperties::send];
-        analyser.sRMS.plot = rmsTree[AnalysisProperties::plot];
-    
-        ValueTree peakEnergyTree = analyserTree.getChildWithName(AnalysisTypes::PeakEnergy);
-        analyser.sPeakEnergy.send = peakEnergyTree[AnalysisProperties::send];
-        analyser.sPeakEnergy.plot = peakEnergyTree[AnalysisProperties::plot];
-    
-        ValueTree specCentroidTree = analyserTree.getChildWithName(AnalysisTypes::SpectralCentroid);
-        analyser.sSpectralCentroid.send = specCentroidTree[AnalysisProperties::send];
-        analyser.sSpectralCentroid.plot = specCentroidTree[AnalysisProperties::plot];
-        
-        ValueTree zcrTree = analyserTree.getChildWithName(AnalysisTypes::ZeroCrossingRate);
-        analyser.sZeroCrossingRate.send = zcrTree[AnalysisProperties::send];
-        analyser.sZeroCrossingRate.plot = zcrTree[AnalysisProperties::plot];
-        
-        ValueTree specDiffTree = analyserTree.getChildWithName(AnalysisTypes::SpectralDifference);
-        analyser.sSpectralDifference.send = specDiffTree[AnalysisProperties::send];
-        analyser.sSpectralDifference.plot = specDiffTree[AnalysisProperties::plot];
+        for (int i = 0;i < analyser.audioAnalyses.size();i++)
+        {
+            ValueTree tree = analyserTree.getChildWithName(analyser.audioAnalyses[i]->getIdentifier());
+            
+            analyser.audioAnalyses[i]->send = tree[AnalysisProperties::send];
+            analyser.audioAnalyses[i]->plot = tree[AnalysisProperties::plot];
+        }
     }
     
     void valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property);
@@ -102,9 +89,6 @@ public:
     
     enum Parameters
     {
-       // pSendRMS,
-       // pSendPeak,
-       // pSendSpectralCentroid,
         totalNumParams = 0
     };
     
@@ -116,8 +100,6 @@ public:
 private:
         
     ValueTree analyserTree;
-    
-  //  AudioProcessorEditor *editor;
     
     
     

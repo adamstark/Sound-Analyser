@@ -19,6 +19,7 @@ struct AnalysisTypes
     static const Identifier SpectralCentroid;
     static const Identifier ZeroCrossingRate;
     static const Identifier SpectralDifference;
+    static const Identifier StandardDeviation;
 };
 
 //----------------------------------------
@@ -36,17 +37,7 @@ struct AnalysisProperties
 class AnalysisModel {
     
 public:
-    
-    enum AnalysisIds
-    {
-        RMS,
-        PeakEnergy,
-        SpectralCentroid,
-        ZeroCrossingRate,
-        SpectralDifference,
-        NumAnalysisTypes
-    };
-    
+        
     static ValueTree createAnalyserTree()
     {
         ValueTree analyserTree(Ids::SOUNDANALYSER);
@@ -77,6 +68,22 @@ public:
         ValueTree mainTree = analysisTree.getParent();
         
         mainTree.removeChild(analysisTree, nullptr);
+    }
+    
+    static Array<Identifier> analysisList;
+    
+    static Array<Identifier> buildAnalysisList()
+    {
+        Array<Identifier> analysisList;
+        
+        analysisList.add(AnalysisTypes::RMS);
+        analysisList.add(AnalysisTypes::PeakEnergy);
+        analysisList.add(AnalysisTypes::ZeroCrossingRate);
+        analysisList.add(AnalysisTypes::SpectralCentroid);
+        analysisList.add(AnalysisTypes::SpectralDifference);
+        analysisList.add(AnalysisTypes::StandardDeviation);
+        
+        return analysisList;
     }
     
     struct Ids

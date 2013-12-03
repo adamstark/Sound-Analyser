@@ -11,6 +11,7 @@
 
 #include <vector>
 #include <string>
+#include "AnalysisModel.h"
 
 enum AnalysisDomain
 {
@@ -41,9 +42,12 @@ public:
     
     virtual AnalysisDomain getDomainOfAnalysis() = 0;
     
+    virtual Identifier getIdentifier() = 0;
+        
     bool plot;
     bool send;
     std::string addressPattern;
+
     
 };
 

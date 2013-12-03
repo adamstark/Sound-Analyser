@@ -174,26 +174,15 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::addAnalysis(ValueTree& analysisTree)
 {
-    if (analysisTree.getType() == AnalysisTypes::RMS)
+    if (false) // <-- some special future condition that may require a different UI component
+    {
+        // add some special component
+    }
+    else
     {
         analysisComponents.add(new SimpleAnalysisComponent(analysisTree));
     }
-    else if (analysisTree.getType() == AnalysisTypes::PeakEnergy)
-    {
-        analysisComponents.add(new SimpleAnalysisComponent(analysisTree));
-    }
-    else if (analysisTree.getType() == AnalysisTypes::SpectralCentroid)
-    {
-        analysisComponents.add(new SimpleAnalysisComponent(analysisTree));
-    }
-    else if (analysisTree.getType() == AnalysisTypes::ZeroCrossingRate)
-    {
-        analysisComponents.add(new SimpleAnalysisComponent(analysisTree));
-    }
-    else if (analysisTree.getType() == AnalysisTypes::SpectralDifference)
-    {
-        analysisComponents.add(new SimpleAnalysisComponent(analysisTree));
-    }
+    
     
     addChildComponent(analysisComponents.getLast());
     analysisComponents.getLast()->setVisible(true);

@@ -86,7 +86,6 @@
 		E12CFFEA87D25EB6DF25A3CC /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D9E3E916A97F43EE0939AF /* AudioToolbox.framework */; };
 		E26CBEA831205533C3D1064B /* OscTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B2EFC9631C58CAB3B8820BF /* OscTypes.cpp */; };
 		E39E0C33184D0BEE00D9EA48 /* AudioAnalysis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E39E0C31184D0BEE00D9EA48 /* AudioAnalysis.cpp */; };
-		E39E0C36184D0D8E00D9EA48 /* RMS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E39E0C34184D0D8E00D9EA48 /* RMS.cpp */; };
 		E83BA22B2BEBBFBA5C9B8525 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2433F57B310BD804836D706 /* CoreAudio.framework */; };
 		EC2E1A6A6785689BCDB561F7 /* juce_RTAS_MacResources.r in Rez */ = {isa = PBXBuildFile; fileRef = 44ECB985E000404D0F591653 /* juce_RTAS_MacResources.r */; };
 		EEEBB1391316412393AE688F /* AnalysisModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA40F1D2AC72E2F035F3F918 /* AnalysisModel.cpp */; };
@@ -967,11 +966,15 @@
 		E27D9E31D7D0CA6E1B0203EA /* juce_ListenerList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_ListenerList.h; path = ../../JuceLibraryCode/modules/juce_events/broadcasters/juce_ListenerList.h; sourceTree = SOURCE_ROOT; };
 		E2C6013349043BBE5B7150A9 /* juce_MidiMessageSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_MidiMessageSequence.h; path = ../../JuceLibraryCode/modules/juce_audio_basics/midi/juce_MidiMessageSequence.h; sourceTree = SOURCE_ROOT; };
 		E2D8A96B506342F0EF825661 /* juce_win32_QuickTimeMovieComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_win32_QuickTimeMovieComponent.cpp; path = ../../JuceLibraryCode/modules/juce_video/native/juce_win32_QuickTimeMovieComponent.cpp; sourceTree = SOURCE_ROOT; };
+		E32840EB184DEBE800B3CBBD /* PeakEnergy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeakEnergy.h; sourceTree = "<group>"; };
+		E32840EC184DEBE800B3CBBD /* RMS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMS.h; sourceTree = "<group>"; };
+		E32840ED184DEC2200B3CBBD /* ZeroCrossingRate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZeroCrossingRate.h; sourceTree = "<group>"; };
+		E32840EE184DF01500B3CBBD /* SpectralCentroid.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpectralCentroid.h; sourceTree = "<group>"; };
+		E32840EF184DF56500B3CBBD /* SpectralDifference.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpectralDifference.h; sourceTree = "<group>"; };
+		E32840F0184DFD8600B3CBBD /* StandardDeviation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StandardDeviation.h; sourceTree = "<group>"; };
 		E36E4B1503DB5C1FA11BCF42 /* juce_ResizableBorderComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_ResizableBorderComponent.h; path = ../../JuceLibraryCode/modules/juce_gui_basics/layout/juce_ResizableBorderComponent.h; sourceTree = SOURCE_ROOT; };
 		E39E0C31184D0BEE00D9EA48 /* AudioAnalysis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioAnalysis.cpp; path = "../../Source/Audio Analysis/AudioAnalysis.cpp"; sourceTree = "<group>"; };
 		E39E0C32184D0BEE00D9EA48 /* AudioAnalysis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioAnalysis.h; path = "../../Source/Audio Analysis/AudioAnalysis.h"; sourceTree = "<group>"; };
-		E39E0C34184D0D8E00D9EA48 /* RMS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RMS.cpp; path = "../../Source/Audio Analysis/RMS.cpp"; sourceTree = "<group>"; };
-		E39E0C35184D0D8E00D9EA48 /* RMS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMS.h; path = "../../Source/Audio Analysis/RMS.h"; sourceTree = "<group>"; };
 		E3EEF7756AA6D261AE14227A /* juce_BasicNativeHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_BasicNativeHeaders.h; path = ../../JuceLibraryCode/modules/juce_core/native/juce_BasicNativeHeaders.h; sourceTree = SOURCE_ROOT; };
 		E482B334B67A604B52F2886B /* AUBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AUBase.cpp; path = Extras/CoreAudio/AudioUnits/AUPublic/AUBase/AUBase.cpp; sourceTree = DEVELOPER_DIR; };
 		E49C9833D05A583C63B1F035 /* juce_ColourSelector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_ColourSelector.h; path = ../../JuceLibraryCode/modules/juce_gui_extra/misc/juce_ColourSelector.h; sourceTree = SOURCE_ROOT; };
@@ -1359,6 +1362,7 @@
 		33EFB5C5C8DB2A45189F323C /* Audio Analysis */ = {
 			isa = PBXGroup;
 			children = (
+				E32840EA184DEBE800B3CBBD /* Analyses */,
 				E39E0C31184D0BEE00D9EA48 /* AudioAnalysis.cpp */,
 				E39E0C32184D0BEE00D9EA48 /* AudioAnalysis.h */,
 				AA40F1D2AC72E2F035F3F918 /* AnalysisModel.cpp */,
@@ -1372,8 +1376,6 @@
 				E83B06C790B98A9579AE8EA7 /* FFT.cpp */,
 				884A3328315DC012E4941368 /* FFT.h */,
 				466F33014E1D967C134B725D /* kiss_fft130 */,
-				E39E0C34184D0D8E00D9EA48 /* RMS.cpp */,
-				E39E0C35184D0D8E00D9EA48 /* RMS.h */,
 			);
 			name = "Audio Analysis";
 			sourceTree = "<group>";
@@ -2833,6 +2835,20 @@
 			name = native;
 			sourceTree = "<group>";
 		};
+		E32840EA184DEBE800B3CBBD /* Analyses */ = {
+			isa = PBXGroup;
+			children = (
+				E32840EB184DEBE800B3CBBD /* PeakEnergy.h */,
+				E32840EC184DEBE800B3CBBD /* RMS.h */,
+				E32840EE184DF01500B3CBBD /* SpectralCentroid.h */,
+				E32840EF184DF56500B3CBBD /* SpectralDifference.h */,
+				E32840F0184DFD8600B3CBBD /* StandardDeviation.h */,
+				E32840ED184DEC2200B3CBBD /* ZeroCrossingRate.h */,
+			);
+			name = Analyses;
+			path = "../../Source/Audio Analysis/Analyses";
+			sourceTree = "<group>";
+		};
 		E4FC91D7275B12FF98A06B39 /* utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -3186,7 +3202,6 @@
 				3BEC21AB2D2360C358624E20 /* NetworkingUtils.cpp in Sources */,
 				9353E23CF6847AC200F7339F /* UdpSocket.cpp in Sources */,
 				B2ECEE58E6EBBBF82CBF95E9 /* OscOutboundPacketStream.cpp in Sources */,
-				E39E0C36184D0D8E00D9EA48 /* RMS.cpp in Sources */,
 				F66452F8D463045FE0F7F0E4 /* OscPrintReceivedElements.cpp in Sources */,
 				26DDDD863570BF687D3ED73A /* OscReceivedElements.cpp in Sources */,
 				E26CBEA831205533C3D1064B /* OscTypes.cpp in Sources */,
