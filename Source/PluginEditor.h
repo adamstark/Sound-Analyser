@@ -114,7 +114,6 @@ private:
     
     ComboBox analyserId;
     
-    //void setupAnalysisComponents(TextButton *button,Label *label,String labelText);
 };
 
 

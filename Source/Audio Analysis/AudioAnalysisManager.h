@@ -16,11 +16,14 @@
 #include "AudioBuffer.h"
 #include <iostream>
 
-typedef struct {
-    bool plot;
-    bool send;
-    std::string address_pattern;
-} AnalysisState;
+#include "AudioAnalysis.h"
+#include "Analyses/RMS.h"
+#include "Analyses/PeakEnergy.h"
+#include "Analyses/ZeroCrossingRate.h"
+#include "Analyses/SpectralCentroid.h"
+#include "Analyses/SpectralDifference.h"
+#include "Analyses/StandardDeviation.h"
+
 
 class AudioAnalysisManager {
 
@@ -33,13 +36,7 @@ public:
      * @param numSamples the number of audio samples in the buffer
      */
     void analyseAudio(float* buffer,int numSamples);
-            
-    AnalysisState sRMS;
-    AnalysisState sPeakEnergy;
-    AnalysisState sSpectralCentroid;
-    AnalysisState sZeroCrossingRate;
-    AnalysisState sSpectralDifference;
-    
+                
     std::vector<float> plotHistory;
     
     void setAnalyserIdString(std::string analyserId)
@@ -48,14 +45,17 @@ public:
         
         idWithSlash = idWithSlash.append(analyserId);
         
-        sRMS.address_pattern = idWithSlash.append("/rms");
-        sPeakEnergy.address_pattern = idWithSlash.append("/peakEnergy");
-        sSpectralCentroid.address_pattern = idWithSlash.append("/spectralCentroid");
-        sZeroCrossingRate.address_pattern = idWithSlash.append("/zcr");
-        sSpectralDifference.address_pattern = idWithSlash.append("/SpectralDifference");
+        for (int i = 0;i < audioAnalyses.size();i++)
+        {
+            audioAnalyses[i]->buildAddressPatternFromId(idWithSlash);
+        }
     }
     
+    Array<AudioAnalysis*> audioAnalyses;
+    
 private:
+    
+    int frameSize;
     
     void updatePlotHistory(float newSample);
     
@@ -63,7 +63,7 @@ private:
     OSCSender osc;
     
     /** an object for calculating audio features */
-    AudioFeatures audioFeatures;
+   // AudioFeatures audioFeatures;
     
     AudioBuffer audioBuffer;
     
@@ -71,8 +71,12 @@ private:
     FFT fft;
     
     
-
-    
+    RMS rms;
+    PeakEnergy peakEnergy;
+    ZeroCrossingRate zcr;
+    SpectralCentroid spectralCentroid;
+    SpectralDifference spectralDifference;
+    StandardDeviation standardDeviation;
 
 };
 
