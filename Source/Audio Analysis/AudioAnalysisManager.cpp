@@ -20,15 +20,17 @@ AudioAnalysisManager::AudioAnalysisManager() : audioBuffer(frameSize), fft(frame
     audioAnalyses.add(&fftMagnitudeSpectrum);
     
     
+    currentAnalysisToPlotType = FloatOutput;
     
     setAnalyserIdString("1");
 
-
+    vectorPlot.resize(512);
     plotHistory.resize(512);
     
     for (int i = 0;i < 512;i++)
     {
         plotHistory[i] = 0;
+        vectorPlot[i] = 0;
     }
 }
 
@@ -88,11 +90,11 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
                 {
                     osc.send(audioAnalyses[i]->addressPattern.c_str(), output);
                 }
-//                  FIX
-//                if (audioAnalyses[i]->plot)
-//                {
-//                    updatePlotHistory(output);
-//                }
+
+                if (audioAnalyses[i]->plot)
+                {
+                    setVectorPlot(output);
+                }
             }
             
             

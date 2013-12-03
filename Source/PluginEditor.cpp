@@ -72,42 +72,78 @@ void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
     g.setColour (Colours::darkgrey);
     g.fillAll (Colours::silver);
     
-
-    
-    int N = getProcessor()->analyser.plotHistory.size();
-    
-    int plotX = (getWidth()- N)/2;
-    
-    
-    g.fillRect(plotX, plotY, N, plotHeight);
-    
-    g.setColour(Colours::lightsteelblue);
-
-    float previousValue = getProcessor()->analyser.plotHistory[0];
-    
-    // get the max value
-    float maxValue = -10000;
-    for (int i = 0;i < N;i++)
+    if (getProcessor()->analyser.currentAnalysisToPlotType == FloatOutput)
     {
-        if (getProcessor()->analyser.plotHistory[i] > maxValue)
+        int N = getProcessor()->analyser.plotHistory.size();
+        
+        int plotX = (getWidth()- N)/2;
+        
+        
+        g.fillRect(plotX, plotY, N, plotHeight);
+        
+        g.setColour(Colours::lightsteelblue);
+
+        float previousValue = getProcessor()->analyser.plotHistory[0];
+        
+        // get the max value
+        float maxValue = -10000;
+        for (int i = 0;i < N;i++)
         {
-            maxValue = getProcessor()->analyser.plotHistory[i];
+            if (getProcessor()->analyser.plotHistory[i] > maxValue)
+            {
+                maxValue = getProcessor()->analyser.plotHistory[i];
+            }
         }
-    }
+        
+        // do the plotting
+        for (int i = 0;i < N-1;i++)
+        {
+            float currentValue = getProcessor()->analyser.plotHistory[i+1];
+            
+            int p1 = plotY + (plotHeight - ((previousValue/maxValue)*plotHeight));
+            int p2 = plotY + (plotHeight - ((currentValue/maxValue)*plotHeight));
+            
+            g.drawLine(plotX+i,p1,plotX+i+1,p2);
+            previousValue = currentValue;
+        }
     
-    // do the plotting
-    for (int i = 0;i < N-1;i++)
+    }
+    else if (getProcessor()->analyser.currentAnalysisToPlotType == VectorOutput)
     {
-        float currentValue = getProcessor()->analyser.plotHistory[i+1];
+        int N = getProcessor()->analyser.vectorPlot.size();
         
-        int p1 = plotY + (plotHeight - ((previousValue/maxValue)*plotHeight));
-        int p2 = plotY + (plotHeight - ((currentValue/maxValue)*plotHeight));
+        int plotX = (getWidth()- N)/2;
         
-        g.drawLine(plotX+i,p1,plotX+i+1,p2);
-        previousValue = currentValue;
+        
+        g.fillRect(plotX, plotY, N, plotHeight);
+        
+        g.setColour(Colours::greenyellow);
+        
+        float previousValue = getProcessor()->analyser.vectorPlot[0];
+        
+        // get the max value
+        float maxValue = -10000;
+        for (int i = 0;i < N;i++)
+        {
+            if (getProcessor()->analyser.vectorPlot[i] > maxValue)
+            {
+                maxValue = getProcessor()->analyser.vectorPlot[i];
+            }
+        }
+        
+        // do the plotting
+        for (int i = 0;i < N-1;i++)
+        {
+            float currentValue = getProcessor()->analyser.vectorPlot[i+1];
+            
+            int p1 = plotY + (plotHeight - ((previousValue/maxValue)*plotHeight));
+            int p2 = plotY + (plotHeight - ((currentValue/maxValue)*plotHeight));
+            
+            g.drawLine(plotX+i,p1,plotX+i+1,p2);
+            previousValue = currentValue;
+        }
+        
     }
-    
-    
     
     
     //g.setFont (15.0f);

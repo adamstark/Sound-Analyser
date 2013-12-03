@@ -339,7 +339,13 @@ void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhose
                 }
                 else if (property == AnalysisProperties::plot)
                 {
+                    
                     analyser.audioAnalyses[i]->plot = treeWhosePropertyHasChanged[AnalysisProperties::plot];
+                    
+                    if (analyser.audioAnalyses[i]->plot)
+                    {
+                        analyser.currentAnalysisToPlotType = analyser.audioAnalyses[i]->getOutputType();  
+                    }
                 }
 
             }

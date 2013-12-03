@@ -38,6 +38,7 @@ public:
     void analyseAudio(float* buffer,int numSamples);
                 
     std::vector<float> plotHistory;
+    std::vector<float> vectorPlot;
     
     void setAnalyserIdString(std::string analyserId)
     {
@@ -53,11 +54,36 @@ public:
     
     Array<AudioAnalysis*> audioAnalyses;
     
+    OutputType currentAnalysisToPlotType;
+    
 private:
     
     int frameSize;
     
     void updatePlotHistory(float newSample);
+    
+    void setVectorPlot(std::vector<float> v)
+    {
+        if (v.size() >= 512)
+        {
+            for (int i = 0;i < 512;i++)
+            {
+                vectorPlot[i] = v[i];
+            }
+        }
+        else if (v.size() < 512)
+        {
+            for (int i = 0;i < v.size();i++)
+            {
+                vectorPlot[i] = v[i];
+            }
+            
+            for (int i = v.size();i < 512;i++)
+            {
+                vectorPlot[i] = 0.0;
+            }
+        }
+    }
     
     /** allows osc to be sent to a specific ip address and port number */
     OSCSender osc;
@@ -69,6 +95,8 @@ private:
     
     /** an object for computing the fourier transform of audio frames */
     FFT fft;
+    
+
     
     
     RMS rms;
