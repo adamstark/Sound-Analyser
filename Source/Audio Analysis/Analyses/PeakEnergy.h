@@ -20,7 +20,7 @@ public:
         addressPattern = getCoreAddressPattern();
     }
     
-    float performAnalysis(std::vector<float> buffer)
+    float performAnalysis_f(std::vector<float> buffer)
     {
         // create variable with very small value to hold the peak value
         float peak = -10000.0;
@@ -56,6 +56,11 @@ public:
     Identifier getIdentifier()
     {
         return AnalysisTypes::PeakEnergy;
+    }
+    
+    OutputType getOutputType()
+    {
+        return FloatOutput;
     }
     
     AnalysisDomain getDomainOfAnalysis()

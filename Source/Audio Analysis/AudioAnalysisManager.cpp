@@ -17,6 +17,7 @@ AudioAnalysisManager::AudioAnalysisManager() : audioBuffer(frameSize), fft(frame
     audioAnalyses.add(&spectralCentroid);
     audioAnalyses.add(&spectralDifference);
     audioAnalyses.add(&standardDeviation);
+    audioAnalyses.add(&fftMagnitudeSpectrum);
     
     
     
@@ -45,26 +46,56 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
     {
         if (audioAnalyses[i]->send || audioAnalyses[i]->plot)
         {
-            float output;
+            if (audioAnalyses[i]->getOutputType() == FloatOutput)
+            {
             
-            if (audioAnalyses[i]->getDomainOfAnalysis() == TIMEDOMAIN)
-            {
-                output = audioAnalyses[i]->performAnalysis(audioBuffer.buffer);
+                float output;
+                
+                if (audioAnalyses[i]->getDomainOfAnalysis() == TIMEDOMAIN)
+                {
+                    output = audioAnalyses[i]->performAnalysis_f(audioBuffer.buffer);
+                }
+                else
+                {
+                    output = audioAnalyses[i]->performAnalysis_f(fft.getMagnitudeSpectrum());
+                }
+                
+                if (audioAnalyses[i]->send)
+                {
+                    osc.send(audioAnalyses[i]->addressPattern.c_str(), output);
+                }
+                
+                if (audioAnalyses[i]->plot)
+                {
+                    updatePlotHistory(output);
+                }
+
             }
-            else
+            else if (audioAnalyses[i]->getOutputType() == VectorOutput)
             {
-                output = audioAnalyses[i]->performAnalysis(fft.getMagnitudeSpectrum());
+                std::vector<float> output;
+                
+                if (audioAnalyses[i]->getDomainOfAnalysis() == TIMEDOMAIN)
+                {
+                    output = audioAnalyses[i]->performAnalysis_v(audioBuffer.buffer);
+                }
+                else
+                {
+                    output = audioAnalyses[i]->performAnalysis_v(fft.getMagnitudeSpectrum());
+                }
+                
+                if (audioAnalyses[i]->send)
+                {
+                    osc.send(audioAnalyses[i]->addressPattern.c_str(), output);
+                }
+//                  FIX
+//                if (audioAnalyses[i]->plot)
+//                {
+//                    updatePlotHistory(output);
+//                }
             }
             
-            if (audioAnalyses[i]->send)
-            {
-                osc.send(audioAnalyses[i]->addressPattern.c_str(), output);
-            }
             
-            if (audioAnalyses[i]->plot)
-            {
-                updatePlotHistory(output);
-            }
         }
     }
     

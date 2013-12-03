@@ -20,6 +20,7 @@ struct AnalysisTypes
     static const Identifier ZeroCrossingRate;
     static const Identifier SpectralDifference;
     static const Identifier StandardDeviation;
+    static const Identifier FFT;
 };
 
 //----------------------------------------
@@ -82,6 +83,7 @@ public:
         analysisList.add(AnalysisTypes::SpectralCentroid);
         analysisList.add(AnalysisTypes::SpectralDifference);
         analysisList.add(AnalysisTypes::StandardDeviation);
+        analysisList.add(AnalysisTypes::FFT);
         
         return analysisList;
     }

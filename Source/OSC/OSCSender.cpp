@@ -24,8 +24,8 @@ void OSCSender::send(const char* address_pattern,float value)
 //==============================================================================
 void OSCSender::send(const char* address_pattern,std::vector<float> values)
 {
-    char buffer[OUTPUT_BUFFER_SIZE*10];
-    osc::OutboundPacketStream p( buffer, OUTPUT_BUFFER_SIZE*10);
+    char buffer[OUTPUT_BUFFER_SIZE*50];
+    osc::OutboundPacketStream p( buffer, OUTPUT_BUFFER_SIZE*50);
     
     p << osc::BeginMessage(address_pattern);
     

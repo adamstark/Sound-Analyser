@@ -20,7 +20,7 @@ public:
         addressPattern = getCoreAddressPattern();
     }
     
-    float performAnalysis(std::vector<float> magnitudeSpectrum)
+    float performAnalysis_f(std::vector<float> magnitudeSpectrum)
     {
         // to hold sum of amplitudes
         float sumAmplitudes = 0.0;
@@ -55,6 +55,11 @@ public:
     Identifier getIdentifier()
     {
         return AnalysisTypes::SpectralCentroid;
+    }
+    
+    OutputType getOutputType()
+    {
+        return FloatOutput;
     }
     
     AnalysisDomain getDomainOfAnalysis()

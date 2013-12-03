@@ -11,7 +11,6 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "OSCSender.h"
-#include "AudioFeatures.h"
 #include "FFT.h"
 #include "AudioBuffer.h"
 #include <iostream>
@@ -23,6 +22,7 @@
 #include "Analyses/SpectralCentroid.h"
 #include "Analyses/SpectralDifference.h"
 #include "Analyses/StandardDeviation.h"
+#include "Analyses/FFTMagnitudeSpectrum.h"
 
 
 class AudioAnalysisManager {
@@ -77,6 +77,8 @@ private:
     SpectralCentroid spectralCentroid;
     SpectralDifference spectralDifference;
     StandardDeviation standardDeviation;
+    
+    FFTMagnitudeSpectrum fftMagnitudeSpectrum;
 
 };
 

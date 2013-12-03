@@ -18,6 +18,7 @@ const Identifier AnalysisTypes::SpectralCentroid("SpectralCentroid");
 const Identifier AnalysisTypes::ZeroCrossingRate("ZeroCrossingRate");
 const Identifier AnalysisTypes::SpectralDifference("SpectralDifference");
 const Identifier AnalysisTypes::StandardDeviation("StandardDeviation");
+const Identifier AnalysisTypes::FFT("FFT");
 
 const Identifier AnalysisProperties::send("Send");
 const Identifier AnalysisProperties::plot("Plot");
@@ -54,6 +55,10 @@ String AnalysisModel::getAnalysisName(Identifier analysisType)
     else if (analysisType == AnalysisTypes::StandardDeviation)
     {
         return "Standard Deviation";
+    }
+    else if (analysisType == AnalysisTypes::FFT)
+    {
+        return "FFT Magnitude Spectrum";
     }
     else
     {

@@ -20,7 +20,7 @@ public:
         addressPattern = getCoreAddressPattern();
     }
     
-    float performAnalysis(std::vector<float> buffer)
+    float performAnalysis_f(std::vector<float> buffer)
     {
         // create a variable to hold the zero crossing rate
         float zcr;
@@ -58,6 +58,11 @@ public:
     Identifier getIdentifier()
     {
         return AnalysisTypes::ZeroCrossingRate;
+    }
+    
+    OutputType getOutputType()
+    {
+        return FloatOutput;
     }
     
     AnalysisDomain getDomainOfAnalysis()

@@ -29,7 +29,7 @@ public:
         }
     }
     
-    float performAnalysis(std::vector<float> magnitudeSpectrum)
+    float performAnalysis_f(std::vector<float> magnitudeSpectrum)
     {
         float sum = 0;	// initialise sum to zero
         
@@ -66,6 +66,11 @@ public:
     Identifier getIdentifier()
     {
         return AnalysisTypes::SpectralDifference;
+    }
+    
+    OutputType getOutputType()
+    {
+        return FloatOutput;
     }
     
     AnalysisDomain getDomainOfAnalysis()
