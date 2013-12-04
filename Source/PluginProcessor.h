@@ -77,6 +77,12 @@ public:
             
             analyser.audioAnalyses[i]->send = tree[AnalysisProperties::send];
             analyser.audioAnalyses[i]->plot = tree[AnalysisProperties::plot];
+            
+            if (tree.getType() == AnalysisTypes::FFT)
+            {
+                int numSamples = tree[AnalysisProperties::FFT::numSamplesToSend];
+                ((FFTMagnitudeSpectrum*)analyser.audioAnalyses[i])->setNumFFTSamplesToSend(numSamples);
+            }
         }
     }
     

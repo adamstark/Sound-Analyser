@@ -329,27 +329,49 @@ void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhose
     }
     else
     {
-        for (int i = 0;i < analyser.audioAnalyses.size();i++)
+        // send state changes
+        if (property == AnalysisProperties::send)
         {
-            if (treeWhosePropertyHasChanged.getType() == analyser.audioAnalyses[i]->getIdentifier())
+            for (int i = 0;i < analyser.audioAnalyses.size();i++)
             {
-                if (property == AnalysisProperties::send)
+                 if (treeWhosePropertyHasChanged.getType() == analyser.audioAnalyses[i]->getIdentifier())
+                 {
+                     analyser.audioAnalyses[i]->send = treeWhosePropertyHasChanged[AnalysisProperties::send];
+                 }
+            }
+        }
+        // plot state changes
+        else if (property == AnalysisProperties::plot)
+        {
+            for (int i = 0;i < analyser.audioAnalyses.size();i++)
+            {
+                if (treeWhosePropertyHasChanged.getType() == analyser.audioAnalyses[i]->getIdentifier())
                 {
-                    analyser.audioAnalyses[i]->send = treeWhosePropertyHasChanged[AnalysisProperties::send];
-                }
-                else if (property == AnalysisProperties::plot)
-                {
-                    
                     analyser.audioAnalyses[i]->plot = treeWhosePropertyHasChanged[AnalysisProperties::plot];
                     
                     if (analyser.audioAnalyses[i]->plot)
                     {
-                        analyser.currentAnalysisToPlotType = analyser.audioAnalyses[i]->getOutputType();  
+                        analyser.currentAnalysisToPlotType = analyser.audioAnalyses[i]->getOutputType();
                     }
                 }
-
             }
         }
+        // FFT numSamples
+        else if (property == AnalysisProperties::FFT::numSamplesToSend)
+        {
+            for (int i = 0;i < analyser.audioAnalyses.size();i++)
+            {
+                if (AnalysisTypes::FFT == analyser.audioAnalyses[i]->getIdentifier())
+                {
+                    int numSamples = treeWhosePropertyHasChanged[AnalysisProperties::FFT::numSamplesToSend];
+                    
+                    // set num samples to send
+                    ((FFTMagnitudeSpectrum*)analyser.audioAnalyses[i])->setNumFFTSamplesToSend(numSamples);
+                }
+            }
+        }
+        
+        
     }
 }
 

@@ -75,8 +75,8 @@ void FFT::performFFT(std::vector<float> frame)
 //==============================================================================
 std::vector<float> FFT::getMagnitudeSpectrum()
 {
-    // create a vector to hold the magnitude spectrum
-    std::vector<float> mag(real.size());
+    // create a vector to hold the first half of the magnitude spectrum
+    std::vector<float> mag(real.size()/2);
     
     // for each sample
     for (int i = 0;i < mag.size();i++)

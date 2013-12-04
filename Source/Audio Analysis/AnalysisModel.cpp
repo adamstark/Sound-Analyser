@@ -12,6 +12,7 @@
 const Identifier AnalysisModel::Ids::SOUNDANALYSER("SoundAnalyser");
 const Identifier AnalysisModel::Ids::AnalyserId("AnalyserId");
 
+// Analysis Types
 const Identifier AnalysisTypes::RMS("RMS");
 const Identifier AnalysisTypes::PeakEnergy("PeakEnergy");
 const Identifier AnalysisTypes::SpectralCentroid("SpectralCentroid");
@@ -20,9 +21,12 @@ const Identifier AnalysisTypes::SpectralDifference("SpectralDifference");
 const Identifier AnalysisTypes::StandardDeviation("StandardDeviation");
 const Identifier AnalysisTypes::FFT("FFT");
 
+// Analysis Properties
 const Identifier AnalysisProperties::send("Send");
 const Identifier AnalysisProperties::plot("Plot");
+const Identifier AnalysisProperties::FFT::numSamplesToSend("NumSamplesToSend");
 
+// The Analysis List
 Array<Identifier> AnalysisModel::analysisList = buildAnalysisList();
 
 AnalysisModel::AnalysisModel()
@@ -70,9 +74,13 @@ void AnalysisModel::addNewAnalysis(ValueTree analysisTree, int analysisId)
 {
     if (analysisId < analysisList.size())
     {
-        if (false) // <-- some future special case where we need a different structure
+        if (analysisList[analysisId] == AnalysisTypes::FFT) // <-- some future special case where we need a different structure
         {
-            
+            ValueTree node(analysisList[analysisId]);
+            node.setProperty(AnalysisProperties::send, 0, nullptr);
+            node.setProperty(AnalysisProperties::plot, 0, nullptr);
+            node.setProperty(AnalysisProperties::FFT::numSamplesToSend, 512, nullptr);
+            analysisTree.addChild(node, -1, nullptr);
         }
         else
         {

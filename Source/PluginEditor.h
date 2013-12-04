@@ -15,6 +15,7 @@
 #include "PluginProcessor.h"
 #include "AnalysisModel.h"
 #include "GUI/SimpleAnalysisComponent.h"
+#include "GUI/FFTComponent.h"
 
 
 //==============================================================================

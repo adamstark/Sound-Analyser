@@ -21,9 +21,13 @@ public:
     
     void setFrameSize(int frameSize)
     {
-        prevMagnitudeSpectrum.resize(frameSize);
+        // because we are interested in the first half of the
+        // magnitude spectrum only, we use frameSize/2
+        int magSize = frameSize / 2;
         
-        for (int i = 0;i < frameSize;i++)
+        prevMagnitudeSpectrum.resize(magSize);
+        
+        for (int i = 0;i < magSize;i++)
         {
             prevMagnitudeSpectrum[i] = 0.0;
         }
@@ -73,9 +77,9 @@ public:
         return FloatOutput;
     }
     
-    AnalysisDomain getDomainOfAnalysis()
+    InputType getInputType()
     {
-        return FREQDOMAIN;
+        return MagnitudeSpectrumInput;
     }
     
 private:

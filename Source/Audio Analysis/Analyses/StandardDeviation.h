@@ -74,9 +74,9 @@ public:
         return FloatOutput;
     }
     
-    AnalysisDomain getDomainOfAnalysis()
+    InputType getInputType()
     {
-        return TIMEDOMAIN;
+        return AudioBufferInput;
     }
 };
 

@@ -13,10 +13,10 @@
 #include <string>
 #include "AnalysisModel.h"
 
-enum AnalysisDomain
+enum InputType
 {
-    TIMEDOMAIN,
-    FREQDOMAIN
+    AudioBufferInput,
+    MagnitudeSpectrumInput
 };
 
 enum OutputType
@@ -56,7 +56,7 @@ public:
         return v;
     }
     
-    virtual AnalysisDomain getDomainOfAnalysis() = 0;
+    virtual InputType getInputType() = 0;
     
     virtual OutputType getOutputType() = 0;
     

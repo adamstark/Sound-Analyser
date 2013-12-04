@@ -68,7 +68,11 @@ SoundAnalyserAudioProcessorEditor::~SoundAnalyserAudioProcessorEditor()
 
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
-{    
+{
+    // FIX!!!!!! - DO WE HAVE A THREADING PROBLEM HERE?
+    // WHAT IF THE PROCESSOR IS WRITING TO THE PLOT HISTORY OR VECTOR?
+    // DOESN'T SEEM TO HAPPEN BUT NEED TO MAKE SURE PERHAPS?
+    
     g.setColour (Colours::darkgrey);
     g.fillAll (Colours::silver);
     
@@ -111,11 +115,14 @@ void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
     else if (getProcessor()->analyser.currentAnalysisToPlotType == VectorOutput)
     {
         int N = getProcessor()->analyser.vectorPlot.size();
+        int plotWidth = 512;
         
-        int plotX = (getWidth()- N)/2;
+        //int plotX = (getWidth()- N)/2;
+        int plotX = (getWidth() - plotWidth) / 2;
         
         
-        g.fillRect(plotX, plotY, N, plotHeight);
+        //g.fillRect(plotX, plotY, N, plotHeight);
+        g.fillRect(plotX,plotY, plotWidth,plotHeight);
         
         g.setColour(Colours::greenyellow);
         
@@ -139,7 +146,12 @@ void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
             int p1 = plotY + (plotHeight - ((previousValue/maxValue)*plotHeight));
             int p2 = plotY + (plotHeight - ((currentValue/maxValue)*plotHeight));
             
-            g.drawLine(plotX+i,p1,plotX+i+1,p2);
+            int x1 = i*round(512.0/((double)N-1.));
+            int x2 = (i+1)*round(512.0/((double)N-1.));
+            
+            g.drawLine(plotX+x1,p1,plotX+x2,p2);
+            //g.drawLine(plotX+i,p1,plotX+i+1,p2);
+
             previousValue = currentValue;
         }
         
@@ -155,9 +167,14 @@ void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::resized()
 {
+    int lastComponentY = 0;
+    
     for (int i = 0;i < analysisComponents.size();i++)
     {
-        analysisComponents[i]->setBounds(10,185+(i*analysisComponents[i]->getHeight()),analysisComponents[i]->getWidth(),analysisComponents[i]->getHeight());
+       // analysisComponents[i]->setBounds(10,185+(i*analysisComponents[i]->getHeight()),analysisComponents[i]->getWidth(),analysisComponents[i]->getHeight());
+        analysisComponents[i]->setBounds(10,185+lastComponentY,analysisComponents[i]->getWidth(),analysisComponents[i]->getHeight());
+        
+        lastComponentY += analysisComponents[i]->getHeight();
     }
     
     newAnalysisButton.setBounds(10, getHeight()-100, 50, 50);
@@ -210,11 +227,12 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::addAnalysis(ValueTree& analysisTree)
 {
-    if (false) // <-- some special future condition that may require a different UI component
+    // FFT
+    if (analysisTree.getType() == AnalysisTypes::FFT)
     {
-        // add some special component
+        analysisComponents.add(new FFTComponent(analysisTree));
     }
-    else
+    else // GENERIC
     {
         analysisComponents.add(new SimpleAnalysisComponent(analysisTree));
     }

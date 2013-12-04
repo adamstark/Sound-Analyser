@@ -22,7 +22,31 @@ public:
     
     std::vector<float> performAnalysis_v(std::vector<float> magnitudeSpectrum)
     {
-        return magnitudeSpectrum;
+        std::vector<float> newSpec;
+        
+        newSpec.resize(numSamplesToSend);
+        
+        if (newSpec.size() <= magnitudeSpectrum.size())
+        {
+            for (int i = 0;i < newSpec.size();i++)
+            {
+                newSpec[i] = magnitudeSpectrum[i];
+            }
+        }
+        else // <--- THIS SHOULDN'T HAPPEN
+        {
+            for (int i = 0;i < magnitudeSpectrum.size();i++)
+            {
+                newSpec[i] = magnitudeSpectrum[i];
+            }
+        
+            for (int i = magnitudeSpectrum.size();i < newSpec.size();i++)
+            {
+                newSpec[i] = 0.0;
+            }
+        }
+        
+        return newSpec;
     }
     
     std::string getCoreAddressPattern()
@@ -45,10 +69,18 @@ public:
         return VectorOutput;
     }
     
-    AnalysisDomain getDomainOfAnalysis()
+    InputType getInputType()
     {
-        return FREQDOMAIN;
+        return MagnitudeSpectrumInput;
     }
+    
+    void setNumFFTSamplesToSend(int numSamples)
+    {
+        numSamplesToSend = numSamples;
+    }
+    
+private:
+    int numSamplesToSend;
 };
 
 #endif

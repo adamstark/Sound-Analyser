@@ -9,8 +9,10 @@
 #include "AudioAnalysisManager.h"
 
 //==============================================================================
-AudioAnalysisManager::AudioAnalysisManager() : audioBuffer(frameSize), fft(frameSize), spectralDifference(frameSize), frameSize(1024)
+AudioAnalysisManager::AudioAnalysisManager() : frameSize(1024), audioBuffer(frameSize), fft(frameSize), spectralDifference(frameSize)
 {
+    fftMagnitudeSpectrum.setNumFFTSamplesToSend(frameSize/2);
+    
     audioAnalyses.add(&rms);
     audioAnalyses.add(&peakEnergy);
     audioAnalyses.add(&zcr);
@@ -18,7 +20,6 @@ AudioAnalysisManager::AudioAnalysisManager() : audioBuffer(frameSize), fft(frame
     audioAnalyses.add(&spectralDifference);
     audioAnalyses.add(&standardDeviation);
     audioAnalyses.add(&fftMagnitudeSpectrum);
-    
     
     currentAnalysisToPlotType = FloatOutput;
     
@@ -53,13 +54,17 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
             
                 float output;
                 
-                if (audioAnalyses[i]->getDomainOfAnalysis() == TIMEDOMAIN)
+                if (audioAnalyses[i]->getInputType() == AudioBufferInput)
                 {
                     output = audioAnalyses[i]->performAnalysis_f(audioBuffer.buffer);
                 }
-                else
+                else if (audioAnalyses[i]->getInputType() == MagnitudeSpectrumInput)
                 {
                     output = audioAnalyses[i]->performAnalysis_f(fft.getMagnitudeSpectrum());
+                }
+                else
+                {
+                    output = 0.0; // failsafe!
                 }
                 
                 if (audioAnalyses[i]->send)
@@ -77,13 +82,19 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
             {
                 std::vector<float> output;
                 
-                if (audioAnalyses[i]->getDomainOfAnalysis() == TIMEDOMAIN)
+                if (audioAnalyses[i]->getInputType() == AudioBufferInput)
                 {
                     output = audioAnalyses[i]->performAnalysis_v(audioBuffer.buffer);
                 }
-                else
+                else if (audioAnalyses[i]->getInputType() == MagnitudeSpectrumInput)
                 {
                     output = audioAnalyses[i]->performAnalysis_v(fft.getMagnitudeSpectrum());
+                }
+                else
+                {
+                    // failsafe!
+                    output.resize(1);
+                    output[0] = 0.0;
                 }
                 
                 if (audioAnalyses[i]->send)
@@ -93,7 +104,7 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
 
                 if (audioAnalyses[i]->plot)
                 {
-                    setVectorPlot(output);
+                    updateVectorPlot(output);
                 }
             }
             

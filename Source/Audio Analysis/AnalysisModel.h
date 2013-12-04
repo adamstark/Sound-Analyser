@@ -32,6 +32,9 @@ struct AnalysisProperties
 //    struct RMS {
 //        static const Identifier something;
 //    };
+    struct FFT {
+        static const Identifier numSamplesToSend;
+    };
     
 };
 
