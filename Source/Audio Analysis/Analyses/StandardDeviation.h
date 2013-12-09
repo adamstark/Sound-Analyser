@@ -20,7 +20,7 @@ public:
         addressPattern = getCoreAddressPattern();
     }
     
-    float performAnalysis(std::vector<float> buffer)
+    float performAnalysis_f(std::vector<float> buffer)
     {
         if (buffer.size() > 0)
         {
@@ -69,9 +69,14 @@ public:
         return AnalysisTypes::StandardDeviation;
     }
     
-    AnalysisDomain getDomainOfAnalysis()
+    OutputType getOutputType()
     {
-        return TIMEDOMAIN;
+        return FloatOutput;
+    }
+    
+    InputType getInputType()
+    {
+        return AudioBufferInput;
     }
 };
 

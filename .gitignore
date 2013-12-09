@@ -1,1 +1,3 @@
 Builds/MacOSX/Build
+*.xcuserstate
+OldAnalyser

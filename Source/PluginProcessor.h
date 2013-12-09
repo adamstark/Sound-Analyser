@@ -71,12 +71,20 @@ public:
     
     void refreshFromTree()
     {
+        analyser.setBufferSize(analyserTree[AnalysisModel::Ids::BufferSize]);
+        
         for (int i = 0;i < analyser.audioAnalyses.size();i++)
         {
             ValueTree tree = analyserTree.getChildWithName(analyser.audioAnalyses[i]->getIdentifier());
             
             analyser.audioAnalyses[i]->send = tree[AnalysisProperties::send];
             analyser.audioAnalyses[i]->plot = tree[AnalysisProperties::plot];
+            
+            if (tree.getType() == AnalysisTypes::FFT)
+            {
+                int numSamples = tree[AnalysisProperties::FFT::numSamplesToSend];
+                ((FFTMagnitudeSpectrum*)analyser.audioAnalyses[i])->setNumFFTSamplesToSend(numSamples);
+            }
         }
     }
     
@@ -95,11 +103,13 @@ public:
     float booleanToFloat(bool input);
     bool floatToBoolean(float input);
     
+    ValueTree analyserTree;
+    
     AudioAnalysisManager analyser;
     
 private:
         
-    ValueTree analyserTree;
+
     
     
     

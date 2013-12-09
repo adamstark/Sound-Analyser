@@ -13,9 +13,9 @@
 
 
 //==============================================================================
-SoundAnalyserAudioProcessor::SoundAnalyserAudioProcessor()
+SoundAnalyserAudioProcessor::SoundAnalyserAudioProcessor() : analyserTree( AnalysisModel::createAnalyserTree()), analyser(analyserTree[AnalysisModel::Ids::BufferSize])
 {
-    analyserTree = AnalysisModel::createAnalyserTree();
+    
     
     analyserTree.addListener(this);
 }
@@ -322,28 +322,62 @@ void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhose
 {
     if (treeWhosePropertyHasChanged.getType() == AnalysisModel::Ids::SOUNDANALYSER)
     {
+        // analyser ID property
         if (property == AnalysisModel::Ids::AnalyserId)
         {
             analyser.setAnalyserIdString(treeWhosePropertyHasChanged[property].toString().toStdString());
         }
+        // buffer size property
+        else if (property == AnalysisModel::Ids::BufferSize)
+        {
+            analyser.setBufferSize(treeWhosePropertyHasChanged[property]);
+        }
     }
     else
     {
-        for (int i = 0;i < analyser.audioAnalyses.size();i++)
+        // send state changes
+        if (property == AnalysisProperties::send)
         {
-            if (treeWhosePropertyHasChanged.getType() == analyser.audioAnalyses[i]->getIdentifier())
+            for (int i = 0;i < analyser.audioAnalyses.size();i++)
             {
-                if (property == AnalysisProperties::send)
-                {
-                    analyser.audioAnalyses[i]->send = treeWhosePropertyHasChanged[AnalysisProperties::send];
-                }
-                else if (property == AnalysisProperties::plot)
-                {
-                    analyser.audioAnalyses[i]->plot = treeWhosePropertyHasChanged[AnalysisProperties::plot];
-                }
-
+                 if (treeWhosePropertyHasChanged.getType() == analyser.audioAnalyses[i]->getIdentifier())
+                 {
+                     analyser.audioAnalyses[i]->send = treeWhosePropertyHasChanged[AnalysisProperties::send];
+                 }
             }
         }
+        // plot state changes
+        else if (property == AnalysisProperties::plot)
+        {
+            for (int i = 0;i < analyser.audioAnalyses.size();i++)
+            {
+                if (treeWhosePropertyHasChanged.getType() == analyser.audioAnalyses[i]->getIdentifier())
+                {
+                    analyser.audioAnalyses[i]->plot = treeWhosePropertyHasChanged[AnalysisProperties::plot];
+                    
+                    if (analyser.audioAnalyses[i]->plot)
+                    {
+                        analyser.currentAnalysisToPlotType = analyser.audioAnalyses[i]->getOutputType();
+                    }
+                }
+            }
+        }
+        // FFT numSamples
+        else if (property == AnalysisProperties::FFT::numSamplesToSend)
+        {
+            for (int i = 0;i < analyser.audioAnalyses.size();i++)
+            {
+                if (AnalysisTypes::FFT == analyser.audioAnalyses[i]->getIdentifier())
+                {
+                    int numSamples = treeWhosePropertyHasChanged[AnalysisProperties::FFT::numSamplesToSend];
+                    
+                    // set num samples to send
+                    ((FFTMagnitudeSpectrum*)analyser.audioAnalyses[i])->setNumFFTSamplesToSend(numSamples);
+                }
+            }
+        }
+        
+        
     }
 }
 

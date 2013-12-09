@@ -20,7 +20,7 @@ public:
         addressPattern = getCoreAddressPattern();
     }
     
-    float performAnalysis(std::vector<float> buffer)
+    float performAnalysis_f(std::vector<float> buffer)
     {
         // create a variable to hold the zero crossing rate
         float zcr;
@@ -60,9 +60,14 @@ public:
         return AnalysisTypes::ZeroCrossingRate;
     }
     
-    AnalysisDomain getDomainOfAnalysis()
+    OutputType getOutputType()
     {
-        return TIMEDOMAIN;
+        return FloatOutput;
+    }
+    
+    InputType getInputType()
+    {
+        return AudioBufferInput;
     }
 };
 

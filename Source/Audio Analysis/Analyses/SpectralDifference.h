@@ -21,15 +21,19 @@ public:
     
     void setFrameSize(int frameSize)
     {
-        prevMagnitudeSpectrum.resize(frameSize);
+        // because we are interested in the first half of the
+        // magnitude spectrum only, we use frameSize/2
+        int magSize = frameSize / 2;
         
-        for (int i = 0;i < frameSize;i++)
+        prevMagnitudeSpectrum.resize(magSize);
+        
+        for (int i = 0;i < magSize;i++)
         {
             prevMagnitudeSpectrum[i] = 0.0;
         }
     }
     
-    float performAnalysis(std::vector<float> magnitudeSpectrum)
+    float performAnalysis_f(std::vector<float> magnitudeSpectrum)
     {
         float sum = 0;	// initialise sum to zero
         
@@ -68,9 +72,14 @@ public:
         return AnalysisTypes::SpectralDifference;
     }
     
-    AnalysisDomain getDomainOfAnalysis()
+    OutputType getOutputType()
     {
-        return FREQDOMAIN;
+        return FloatOutput;
+    }
+    
+    InputType getInputType()
+    {
+        return MagnitudeSpectrumInput;
     }
     
 private:

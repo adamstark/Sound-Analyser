@@ -40,11 +40,18 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     analyserId.addItem("7", 7);
     
     
+    bufferSizeLabel.setText(String("Buffer Size: " + analyserTree[AnalysisModel::Ids::BufferSize].toString()), dontSendNotification);
+    addAndMakeVisible(&bufferSizeLabel);
+    
     addAndMakeVisible(&analyserId);
     
     
+    analyserIdText.setText("Analyser Id:", dontSendNotification);
+    addAndMakeVisible(&analyserIdText);
+    
+    
     plotHeight = 150;
-    plotY = 25;
+    plotY = 40;
     
 
 
@@ -68,46 +75,94 @@ SoundAnalyserAudioProcessorEditor::~SoundAnalyserAudioProcessorEditor()
 
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
-{    
+{
+    // FIX!!!!!! - DO WE HAVE A THREADING PROBLEM HERE?
+    // WHAT IF THE PROCESSOR IS WRITING TO THE PLOT HISTORY OR VECTOR?
+    // DOESN'T SEEM TO HAPPEN BUT NEED TO MAKE SURE PERHAPS?
+    
     g.setColour (Colours::darkgrey);
     g.fillAll (Colours::silver);
     
-
-    
-    int N = getProcessor()->analyser.plotHistory.size();
-    
-    int plotX = (getWidth()- N)/2;
-    
-    
-    g.fillRect(plotX, plotY, N, plotHeight);
-    
-    g.setColour(Colours::lightsteelblue);
-
-    float previousValue = getProcessor()->analyser.plotHistory[0];
-    
-    // get the max value
-    float maxValue = -10000;
-    for (int i = 0;i < N;i++)
+    if (getProcessor()->analyser.currentAnalysisToPlotType == FloatOutput)
     {
-        if (getProcessor()->analyser.plotHistory[i] > maxValue)
+        int N = getProcessor()->analyser.plotHistory.size();
+        
+        int plotX = (getWidth()- N)/2;
+        
+        
+        g.fillRect(plotX, plotY, N, plotHeight);
+        
+        g.setColour(Colours::lightsteelblue);
+
+        float previousValue = getProcessor()->analyser.plotHistory[0];
+        
+        // get the max value
+        float maxValue = -10000;
+        for (int i = 0;i < N;i++)
         {
-            maxValue = getProcessor()->analyser.plotHistory[i];
+            if (getProcessor()->analyser.plotHistory[i] > maxValue)
+            {
+                maxValue = getProcessor()->analyser.plotHistory[i];
+            }
         }
-    }
+        
+        // do the plotting
+        for (int i = 0;i < N-1;i++)
+        {
+            float currentValue = getProcessor()->analyser.plotHistory[i+1];
+            
+            int p1 = plotY + (plotHeight - ((previousValue/maxValue)*plotHeight));
+            int p2 = plotY + (plotHeight - ((currentValue/maxValue)*plotHeight));
+            
+            g.drawLine(plotX+i,p1,plotX+i+1,p2);
+            previousValue = currentValue;
+        }
     
-    // do the plotting
-    for (int i = 0;i < N-1;i++)
+    }
+    else if (getProcessor()->analyser.currentAnalysisToPlotType == VectorOutput)
     {
-        float currentValue = getProcessor()->analyser.plotHistory[i+1];
+        int N = getProcessor()->analyser.vectorPlot.size();
+        int plotWidth = 512;
         
-        int p1 = plotY + (plotHeight - ((previousValue/maxValue)*plotHeight));
-        int p2 = plotY + (plotHeight - ((currentValue/maxValue)*plotHeight));
+        //int plotX = (getWidth()- N)/2;
+        int plotX = (getWidth() - plotWidth) / 2;
         
-        g.drawLine(plotX+i,p1,plotX+i+1,p2);
-        previousValue = currentValue;
+        
+        //g.fillRect(plotX, plotY, N, plotHeight);
+        g.fillRect(plotX,plotY, plotWidth,plotHeight);
+        
+        g.setColour(Colours::greenyellow);
+        
+        float previousValue = getProcessor()->analyser.vectorPlot[0];
+        
+        // get the max value
+        float maxValue = -10000;
+        for (int i = 0;i < N;i++)
+        {
+            if (getProcessor()->analyser.vectorPlot[i] > maxValue)
+            {
+                maxValue = getProcessor()->analyser.vectorPlot[i];
+            }
+        }
+        
+        // do the plotting
+        for (int i = 0;i < N-1;i++)
+        {
+            float currentValue = getProcessor()->analyser.vectorPlot[i+1];
+            
+            int p1 = plotY + (plotHeight - ((previousValue/maxValue)*plotHeight));
+            int p2 = plotY + (plotHeight - ((currentValue/maxValue)*plotHeight));
+            
+            int x1 = i*round(512.0/((double)N-1.));
+            int x2 = (i+1)*round(512.0/((double)N-1.));
+            
+            g.drawLine(plotX+x1,p1,plotX+x2,p2);
+            //g.drawLine(plotX+i,p1,plotX+i+1,p2);
+
+            previousValue = currentValue;
+        }
+        
     }
-    
-    
     
     
     //g.setFont (15.0f);
@@ -119,14 +174,21 @@ void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::resized()
 {
+    bufferSizeLabel.setBounds(10, 10, 120, 20);
+    
+    int lastComponentY = 0;
+    
     for (int i = 0;i < analysisComponents.size();i++)
     {
-        analysisComponents[i]->setBounds(10,185+(i*analysisComponents[i]->getHeight()),analysisComponents[i]->getWidth(),analysisComponents[i]->getHeight());
+        analysisComponents[i]->setBounds(10,(plotY+plotHeight+10)+lastComponentY,analysisComponents[i]->getWidth(),analysisComponents[i]->getHeight());
+        
+        lastComponentY += analysisComponents[i]->getHeight();
     }
     
-    newAnalysisButton.setBounds(10, getHeight()-100, 50, 50);
+    newAnalysisButton.setBounds(10, getHeight()-60, 50, 50);
     
-    analyserId.setBounds(300,getHeight()-60,40,18);
+    analyserIdText.setBounds(getWidth()-160, 10, 80, 20);
+    analyserId.setBounds(getWidth()-70, 10, 60, 20);
 }
 
 //==============================================================================
@@ -174,11 +236,12 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::addAnalysis(ValueTree& analysisTree)
 {
-    if (false) // <-- some special future condition that may require a different UI component
+    // FFT
+    if (analysisTree.getType() == AnalysisTypes::FFT)
     {
-        // add some special component
+        analysisComponents.add(new FFTComponent(analysisTree));
     }
-    else
+    else // GENERIC
     {
         analysisComponents.add(new SimpleAnalysisComponent(analysisTree));
     }
@@ -196,6 +259,10 @@ void SoundAnalyserAudioProcessorEditor::valueTreePropertyChanged (ValueTree& tre
     if (property == AnalysisModel::Ids::AnalyserId)
     {
         refreshFromTree();
+    }
+    else if (property == AnalysisModel::Ids::BufferSize)
+    {
+        bufferSizeLabel.setText(String("Buffer Size: " + analyserTree[AnalysisModel::Ids::BufferSize].toString()), dontSendNotification);
     }
 }
 

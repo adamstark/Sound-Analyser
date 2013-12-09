@@ -20,7 +20,7 @@ public:
         addressPattern = getCoreAddressPattern();
     }
     
-    float performAnalysis(std::vector<float> buffer)
+    float performAnalysis_f(std::vector<float> buffer)
     {
         // create variable to hold the sum
         float sum = 0;
@@ -50,9 +50,14 @@ public:
         return AnalysisTypes::RMS;
     }
     
-    AnalysisDomain getDomainOfAnalysis()
+    OutputType getOutputType()
     {
-        return TIMEDOMAIN;
+        return FloatOutput;
+    }
+    
+    InputType getInputType()
+    {
+        return AudioBufferInput;
     }
 };
 

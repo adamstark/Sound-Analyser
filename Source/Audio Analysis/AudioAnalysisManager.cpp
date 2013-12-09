@@ -9,25 +9,29 @@
 #include "AudioAnalysisManager.h"
 
 //==============================================================================
-AudioAnalysisManager::AudioAnalysisManager() : audioBuffer(frameSize), fft(frameSize), spectralDifference(frameSize), frameSize(1024)
+AudioAnalysisManager::AudioAnalysisManager(int bufferSize_) : bufferSize(bufferSize_), audioBuffer(bufferSize), fft(bufferSize), spectralDifference(bufferSize)
 {
+    setBufferSize(bufferSize);
+        
     audioAnalyses.add(&rms);
     audioAnalyses.add(&peakEnergy);
     audioAnalyses.add(&zcr);
     audioAnalyses.add(&spectralCentroid);
     audioAnalyses.add(&spectralDifference);
     audioAnalyses.add(&standardDeviation);
+    audioAnalyses.add(&fftMagnitudeSpectrum);
     
-    
+    currentAnalysisToPlotType = FloatOutput;
     
     setAnalyserIdString("1");
 
-
+    vectorPlot.resize(512);
     plotHistory.resize(512);
     
     for (int i = 0;i < 512;i++)
     {
         plotHistory[i] = 0;
+        vectorPlot[i] = 0;
     }
 }
 
@@ -45,26 +49,66 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
     {
         if (audioAnalyses[i]->send || audioAnalyses[i]->plot)
         {
-            float output;
+            if (audioAnalyses[i]->getOutputType() == FloatOutput)
+            {
             
-            if (audioAnalyses[i]->getDomainOfAnalysis() == TIMEDOMAIN)
-            {
-                output = audioAnalyses[i]->performAnalysis(audioBuffer.buffer);
+                float output;
+                
+                if (audioAnalyses[i]->getInputType() == AudioBufferInput)
+                {
+                    output = audioAnalyses[i]->performAnalysis_f(audioBuffer.buffer);
+                }
+                else if (audioAnalyses[i]->getInputType() == MagnitudeSpectrumInput)
+                {
+                    output = audioAnalyses[i]->performAnalysis_f(fft.getMagnitudeSpectrum());
+                }
+                else
+                {
+                    output = 0.0; // failsafe!
+                }
+                
+                if (audioAnalyses[i]->send)
+                {
+                    osc.send(audioAnalyses[i]->addressPattern.c_str(), output);
+                }
+                
+                if (audioAnalyses[i]->plot)
+                {
+                    updatePlotHistory(output);
+                }
+
             }
-            else
+            else if (audioAnalyses[i]->getOutputType() == VectorOutput)
             {
-                output = audioAnalyses[i]->performAnalysis(fft.getMagnitudeSpectrum());
+                std::vector<float> output;
+                
+                if (audioAnalyses[i]->getInputType() == AudioBufferInput)
+                {
+                    output = audioAnalyses[i]->performAnalysis_v(audioBuffer.buffer);
+                }
+                else if (audioAnalyses[i]->getInputType() == MagnitudeSpectrumInput)
+                {
+                    output = audioAnalyses[i]->performAnalysis_v(fft.getMagnitudeSpectrum());
+                }
+                else
+                {
+                    // failsafe!
+                    output.resize(1);
+                    output[0] = 0.0;
+                }
+                
+                if (audioAnalyses[i]->send)
+                {
+                    osc.send(audioAnalyses[i]->addressPattern.c_str(), output);
+                }
+
+                if (audioAnalyses[i]->plot)
+                {
+                    updateVectorPlot(output);
+                }
             }
             
-            if (audioAnalyses[i]->send)
-            {
-                osc.send(audioAnalyses[i]->addressPattern.c_str(), output);
-            }
             
-            if (audioAnalyses[i]->plot)
-            {
-                updatePlotHistory(output);
-            }
         }
     }
     

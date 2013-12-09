@@ -9,37 +9,13 @@
 #include "FFT.h"
 
 //==============================================================================
-FFT::FFT(int _frameLength)
+FFT::FFT(int _frameLength) : initialised(false)
 {
-    // initialise the frame length
+    // store the frame length
     frameLength = _frameLength;
     
-    // initialise FFT input and output arrays
-    fftIn = new kiss_fft_cpx[frameLength];
-    fftOut = new kiss_fft_cpx[frameLength];
-    
-    // initialise input frame to be initially zero
-    for (int i = 0;i < frameLength;i++)
-    {
-        fftIn[i].r = 0.0;
-        fftIn[i].i = 0.0;
-    }
-    
-    // initialise FFT configuration
-    cfg = kiss_fft_alloc(frameLength,0,0,0);
-    
-    // resize the window vector so it is large enough to hold the window
-    window.resize(frameLength);
-    
-    // calculate the hanning window and store it in the vector
-    for (int i = 0;i < frameLength;i++)
-    {
-        window[i] = 0.5 * (1.0 - cos(2.0*M_PI*(((float)(i+1))/((float)frameLength))));
-    }
-    
-    // resize output vectors
-    real.resize(frameLength);
-    imag.resize(frameLength);
+    // allocate memory and set up FFT
+    initialise();
 }
 
 //==============================================================================
@@ -49,7 +25,10 @@ FFT::~FFT()
     free(cfg);
     
     delete [] fftIn;
+    fftIn = NULL;
+    
     delete [] fftOut;
+    fftOut = NULL;
 }
 
 //==============================================================================
@@ -75,8 +54,8 @@ void FFT::performFFT(std::vector<float> frame)
 //==============================================================================
 std::vector<float> FFT::getMagnitudeSpectrum()
 {
-    // create a vector to hold the magnitude spectrum
-    std::vector<float> mag(real.size());
+    // create a vector to hold the first half of the magnitude spectrum
+    std::vector<float> mag(real.size()/2);
     
     // for each sample
     for (int i = 0;i < mag.size();i++)

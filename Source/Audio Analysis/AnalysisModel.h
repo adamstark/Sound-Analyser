@@ -9,6 +9,8 @@
 #ifndef __SoundAnalyser__AnalysisModel__
 #define __SoundAnalyser__AnalysisModel__
 
+#define DEFAULT_BUFFER_SIZE 1024
+
 #include "../JuceLibraryCode/JuceHeader.h"
 
 //---------------------------
@@ -20,6 +22,7 @@ struct AnalysisTypes
     static const Identifier ZeroCrossingRate;
     static const Identifier SpectralDifference;
     static const Identifier StandardDeviation;
+    static const Identifier FFT;
 };
 
 //----------------------------------------
@@ -31,6 +34,9 @@ struct AnalysisProperties
 //    struct RMS {
 //        static const Identifier something;
 //    };
+    struct FFT {
+        static const Identifier numSamplesToSend;
+    };
     
 };
 
@@ -38,14 +44,7 @@ class AnalysisModel {
     
 public:
         
-    static ValueTree createAnalyserTree()
-    {
-        ValueTree analyserTree(Ids::SOUNDANALYSER);
-        
-        analyserTree.setProperty(Ids::AnalyserId,1,nullptr);
-        
-        return analyserTree;
-    }
+    static ValueTree createAnalyserTree();
         
     static String getAnalysisName(Identifier analysisType);
   
@@ -82,6 +81,7 @@ public:
         analysisList.add(AnalysisTypes::SpectralCentroid);
         analysisList.add(AnalysisTypes::SpectralDifference);
         analysisList.add(AnalysisTypes::StandardDeviation);
+        analysisList.add(AnalysisTypes::FFT);
         
         return analysisList;
     }
@@ -90,6 +90,7 @@ public:
     {
         static const Identifier SOUNDANALYSER;                /**<  */
         static const Identifier AnalyserId;
+        static const Identifier BufferSize;
     };
     
 private:

@@ -13,10 +13,16 @@
 #include <string>
 #include "AnalysisModel.h"
 
-enum AnalysisDomain
+enum InputType
 {
-    TIMEDOMAIN,
-    FREQDOMAIN
+    AudioBufferInput,
+    MagnitudeSpectrumInput
+};
+
+enum OutputType
+{
+    FloatOutput,
+    VectorOutput
 };
 
 class AudioAnalysis
@@ -38,9 +44,21 @@ public:
     
     virtual void buildAddressPatternFromId(std::string idWithForwardSlash) = 0;
 
-    virtual float performAnalysis(std::vector<float> buffer) = 0;
+    virtual float performAnalysis_f(std::vector<float> buffer)
+    {
+        return 0.0;
+    }
     
-    virtual AnalysisDomain getDomainOfAnalysis() = 0;
+    virtual std::vector<float> performAnalysis_v(std::vector<float> buffer)
+    {
+        std::vector<float> v;
+        
+        return v;
+    }
+    
+    virtual InputType getInputType() = 0;
+    
+    virtual OutputType getOutputType() = 0;
     
     virtual Identifier getIdentifier() = 0;
         
