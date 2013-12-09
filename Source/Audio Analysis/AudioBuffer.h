@@ -16,16 +16,18 @@ class AudioBuffer {
     
 public:
     /** constructor */
-    AudioBuffer(int _bufferLength);
+    AudioBuffer(int bufferSize_);
         
     void addNewSamplesToBuffer(float *samples,int numSamples);
     
-    int getBufferLength();
+    void setBufferSize(int bufferSize_);
+    
+    int getBufferSize();
     
     std::vector<float> buffer;
     
 private:
-    int bufferLength;
+    int bufferSize;
     
     
 };

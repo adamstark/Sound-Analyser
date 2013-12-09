@@ -115,6 +115,9 @@ private:
     
     ComboBox analyserId;
     
+    Label analyserIdText;
+    Label bufferSizeLabel;
+    
 };
 
 

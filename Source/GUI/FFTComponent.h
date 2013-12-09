@@ -74,6 +74,10 @@ public:
             {
                 plotButton.setToggleState(analysisTree[AnalysisProperties::plot], dontSendNotification);
             }
+            else if (property == AnalysisProperties::FFT::numSamplesToSend)
+            {
+                numFFTSamples.setText(treeWhosePropertyHasChanged[property], dontSendNotification);
+            }
             
             resized();
         }
@@ -90,6 +94,15 @@ public:
         {
             int numSamples = numFFTSamples.getTextValue().getValue();
             
+            ValueTree analyserTree = analysisTree.getParent();
+            
+            int bufferSize = analyserTree[AnalysisModel::Ids::BufferSize];
+            
+            if (numSamples > bufferSize/2)
+            {
+                numSamples = bufferSize/2;
+            }
+            
             analysisTree.setProperty(AnalysisProperties::FFT::numSamplesToSend, numSamples, nullptr);
         }
     }
@@ -102,6 +115,7 @@ private:
     
     TextButton removeButton;
     
+    Label numFFTSamplesText;
     Label numFFTSamples;
     
     ValueTree analysisTree;

@@ -11,6 +11,7 @@
 // instantiate static variables
 const Identifier AnalysisModel::Ids::SOUNDANALYSER("SoundAnalyser");
 const Identifier AnalysisModel::Ids::AnalyserId("AnalyserId");
+const Identifier AnalysisModel::Ids::BufferSize("BufferSize");
 
 // Analysis Types
 const Identifier AnalysisTypes::RMS("RMS");
@@ -29,11 +30,25 @@ const Identifier AnalysisProperties::FFT::numSamplesToSend("NumSamplesToSend");
 // The Analysis List
 Array<Identifier> AnalysisModel::analysisList = buildAnalysisList();
 
+//==============================================================================
 AnalysisModel::AnalysisModel()
 {
     
 }
 
+//==============================================================================
+ValueTree AnalysisModel::createAnalyserTree()
+{
+    ValueTree analyserTree(Ids::SOUNDANALYSER);
+    
+    analyserTree.setProperty(Ids::AnalyserId,1,nullptr);
+    
+    analyserTree.setProperty(Ids::BufferSize,DEFAULT_BUFFER_SIZE,nullptr);
+    
+    return analyserTree;
+}
+
+//==============================================================================
 String AnalysisModel::getAnalysisName(Identifier analysisType)
 {
     if (analysisType == AnalysisTypes::RMS)
@@ -70,6 +85,7 @@ String AnalysisModel::getAnalysisName(Identifier analysisType)
     }
 }
 
+//==============================================================================
 void AnalysisModel::addNewAnalysis(ValueTree analysisTree, int analysisId)
 {
     if (analysisId < analysisList.size())
@@ -94,6 +110,7 @@ void AnalysisModel::addNewAnalysis(ValueTree analysisTree, int analysisId)
 
 }
 
+//==============================================================================
 StringArray AnalysisModel::getAllAnalysisNames()
 {
     StringArray nameList;

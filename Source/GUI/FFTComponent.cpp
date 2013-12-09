@@ -32,6 +32,9 @@ FFTComponent::FFTComponent(ValueTree& analysisTree_) : analysisTree(analysisTree
     removeButton.setButtonText("x");
     addAndMakeVisible(&removeButton);
     
+    numFFTSamplesText.setText("# Samples", dontSendNotification);
+    addAndMakeVisible(&numFFTSamplesText);
+    
     numFFTSamples.setColour(Label::ColourIds::backgroundColourId, Colours::white);
     numFFTSamples.setColour(Label::ColourIds::outlineColourId, Colours::lightgrey);
     numFFTSamples.setText("512", dontSendNotification);
@@ -68,7 +71,9 @@ void FFTComponent::resized()
     
     removeButton.setBounds(100,25,20,20);
     
-    numFFTSamples.setBounds(0,50,40,20);
+    numFFTSamplesText.setBounds(0, 50, 70, 20);
+    numFFTSamples.setBounds(80,50,40,20);
+
     
 }
 

@@ -9,6 +9,8 @@
 #ifndef __SoundAnalyser__AnalysisModel__
 #define __SoundAnalyser__AnalysisModel__
 
+#define DEFAULT_BUFFER_SIZE 1024
+
 #include "../JuceLibraryCode/JuceHeader.h"
 
 //---------------------------
@@ -42,14 +44,7 @@ class AnalysisModel {
     
 public:
         
-    static ValueTree createAnalyserTree()
-    {
-        ValueTree analyserTree(Ids::SOUNDANALYSER);
-        
-        analyserTree.setProperty(Ids::AnalyserId,1,nullptr);
-        
-        return analyserTree;
-    }
+    static ValueTree createAnalyserTree();
         
     static String getAnalysisName(Identifier analysisType);
   
@@ -95,6 +90,7 @@ public:
     {
         static const Identifier SOUNDANALYSER;                /**<  */
         static const Identifier AnalyserId;
+        static const Identifier BufferSize;
     };
     
 private:

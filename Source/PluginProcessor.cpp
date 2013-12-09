@@ -13,9 +13,9 @@
 
 
 //==============================================================================
-SoundAnalyserAudioProcessor::SoundAnalyserAudioProcessor()
+SoundAnalyserAudioProcessor::SoundAnalyserAudioProcessor() : analyserTree( AnalysisModel::createAnalyserTree()), analyser(analyserTree[AnalysisModel::Ids::BufferSize])
 {
-    analyserTree = AnalysisModel::createAnalyserTree();
+    
     
     analyserTree.addListener(this);
 }
@@ -322,9 +322,15 @@ void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhose
 {
     if (treeWhosePropertyHasChanged.getType() == AnalysisModel::Ids::SOUNDANALYSER)
     {
+        // analyser ID property
         if (property == AnalysisModel::Ids::AnalyserId)
         {
             analyser.setAnalyserIdString(treeWhosePropertyHasChanged[property].toString().toStdString());
+        }
+        // buffer size property
+        else if (property == AnalysisModel::Ids::BufferSize)
+        {
+            analyser.setBufferSize(treeWhosePropertyHasChanged[property]);
         }
     }
     else

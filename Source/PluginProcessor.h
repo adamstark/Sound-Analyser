@@ -71,6 +71,8 @@ public:
     
     void refreshFromTree()
     {
+        analyser.setBufferSize(analyserTree[AnalysisModel::Ids::BufferSize]);
+        
         for (int i = 0;i < analyser.audioAnalyses.size();i++)
         {
             ValueTree tree = analyserTree.getChildWithName(analyser.audioAnalyses[i]->getIdentifier());
@@ -101,11 +103,13 @@ public:
     float booleanToFloat(bool input);
     bool floatToBoolean(float input);
     
+    ValueTree analyserTree;
+    
     AudioAnalysisManager analyser;
     
 private:
         
-    ValueTree analyserTree;
+
     
     
     

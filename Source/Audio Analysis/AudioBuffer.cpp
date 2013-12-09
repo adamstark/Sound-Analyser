@@ -9,16 +9,21 @@
 #include "AudioBuffer.h"
 
 //==============================================================================
-AudioBuffer::AudioBuffer(int _bufferLength)
+AudioBuffer::AudioBuffer(int bufferSize_)
+{
+
+}
+
+void AudioBuffer::setBufferSize(int bufferSize_)
 {
     // initialise buffer length
-    bufferLength = _bufferLength;
+    bufferSize = bufferSize_;
     
     // resize the buffer vector to hold the right number of samples
-    buffer.resize(bufferLength);
+    buffer.resize(bufferSize);
     
     // initialise the buffer to zeros
-    for (int i = 0;i < bufferLength;i++)
+    for (int i = 0;i < bufferSize;i++)
     {
         buffer[i] = 0.0;
     }
@@ -29,17 +34,17 @@ void AudioBuffer::addNewSamplesToBuffer(float *samples,int numSamples)
 {    
     // if the number of new samples does not
     // exceed the buffer length
-    if (numSamples <= bufferLength)
+    if (numSamples <= bufferSize)
     {
         // shift back existing audio samples
-        for (int k = 0;k < (bufferLength - numSamples);k++)
+        for (int k = 0;k < (bufferSize - numSamples);k++)
         {
             buffer[k] = buffer[k+numSamples];
         }
         
         // now copy the new samples to the remaining part of the buffer
         int j = 0;
-        for (int k = bufferLength-numSamples;k < bufferLength;k++)
+        for (int k = bufferSize-numSamples;k < bufferSize;k++)
         {
             buffer[k] = samples[j];
             j++;
@@ -48,15 +53,15 @@ void AudioBuffer::addNewSamplesToBuffer(float *samples,int numSamples)
     else // otherwise we have more samples than our buffer can hold
     {
         // in this case, we will copy the most recent samples to the buffer
-        for (int k = 0;k < bufferLength;k++)
+        for (int k = 0;k < bufferSize;k++)
         {
-            buffer[k] = samples[numSamples-bufferLength+k];
+            buffer[k] = samples[numSamples-bufferSize+k];
         }
     }
 }
 
 //==============================================================================
-int AudioBuffer::getBufferLength()
+int AudioBuffer::getBufferSize()
 {
-    return bufferLength;
+    return bufferSize;
 }

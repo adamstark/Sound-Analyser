@@ -40,11 +40,18 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     analyserId.addItem("7", 7);
     
     
+    bufferSizeLabel.setText(String("Buffer Size: " + analyserTree[AnalysisModel::Ids::BufferSize].toString()), dontSendNotification);
+    addAndMakeVisible(&bufferSizeLabel);
+    
     addAndMakeVisible(&analyserId);
     
     
+    analyserIdText.setText("Analyser Id:", dontSendNotification);
+    addAndMakeVisible(&analyserIdText);
+    
+    
     plotHeight = 150;
-    plotY = 25;
+    plotY = 40;
     
 
 
@@ -167,19 +174,21 @@ void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::resized()
 {
+    bufferSizeLabel.setBounds(10, 10, 120, 20);
+    
     int lastComponentY = 0;
     
     for (int i = 0;i < analysisComponents.size();i++)
     {
-       // analysisComponents[i]->setBounds(10,185+(i*analysisComponents[i]->getHeight()),analysisComponents[i]->getWidth(),analysisComponents[i]->getHeight());
-        analysisComponents[i]->setBounds(10,185+lastComponentY,analysisComponents[i]->getWidth(),analysisComponents[i]->getHeight());
+        analysisComponents[i]->setBounds(10,(plotY+plotHeight+10)+lastComponentY,analysisComponents[i]->getWidth(),analysisComponents[i]->getHeight());
         
         lastComponentY += analysisComponents[i]->getHeight();
     }
     
-    newAnalysisButton.setBounds(10, getHeight()-100, 50, 50);
+    newAnalysisButton.setBounds(10, getHeight()-60, 50, 50);
     
-    analyserId.setBounds(300,getHeight()-60,40,18);
+    analyserIdText.setBounds(getWidth()-160, 10, 80, 20);
+    analyserId.setBounds(getWidth()-70, 10, 60, 20);
 }
 
 //==============================================================================
@@ -250,6 +259,10 @@ void SoundAnalyserAudioProcessorEditor::valueTreePropertyChanged (ValueTree& tre
     if (property == AnalysisModel::Ids::AnalyserId)
     {
         refreshFromTree();
+    }
+    else if (property == AnalysisModel::Ids::BufferSize)
+    {
+        bufferSizeLabel.setText(String("Buffer Size: " + analyserTree[AnalysisModel::Ids::BufferSize].toString()), dontSendNotification);
     }
 }
 

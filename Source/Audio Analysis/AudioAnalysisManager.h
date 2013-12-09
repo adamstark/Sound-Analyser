@@ -31,7 +31,7 @@ class AudioAnalysisManager {
 
 public:
     /** constructor */
-    AudioAnalysisManager();
+    AudioAnalysisManager(int bufferSize_);
     
     /** passes the audio buffer through a number of analysis algorithms 
      * @param buffer the audio buffer containing the audio samples
@@ -58,9 +58,31 @@ public:
     
     OutputType currentAnalysisToPlotType;
     
+    void setBufferSize(int bufferSize_)
+    {
+        // store the buffer size
+        bufferSize = bufferSize_;
+        
+        // initialise the audio buffer
+        audioBuffer.setBufferSize(bufferSize);
+        
+        // set up the fft
+        fft.setFrameLength(bufferSize);
+        
+        // -----------------------------------------------
+        // now for some analysis specific initialisations
+        
+        // set the number of samples for the fft magnitude spectrum
+        fftMagnitudeSpectrum.setNumFFTSamplesToSend(bufferSize/2);
+        
+        // set the buffer size for the spectral difference
+        spectralDifference.setFrameSize(bufferSize);
+    }
+    
+    
 private:
     
-    int frameSize;
+    int bufferSize;
     
     void updatePlotHistory(float newSample);
     

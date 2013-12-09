@@ -9,10 +9,10 @@
 #include "AudioAnalysisManager.h"
 
 //==============================================================================
-AudioAnalysisManager::AudioAnalysisManager() : frameSize(1024), audioBuffer(frameSize), fft(frameSize), spectralDifference(frameSize)
+AudioAnalysisManager::AudioAnalysisManager(int bufferSize_) : bufferSize(bufferSize_), audioBuffer(bufferSize), fft(bufferSize), spectralDifference(bufferSize)
 {
-    fftMagnitudeSpectrum.setNumFFTSamplesToSend(frameSize/2);
-    
+    setBufferSize(bufferSize);
+        
     audioAnalyses.add(&rms);
     audioAnalyses.add(&peakEnergy);
     audioAnalyses.add(&zcr);
