@@ -3,9 +3,19 @@
 
 
 //==============================================================================
-OSCSender::OSCSender() : transmitSocket( IpEndpointName( ADDRESS, PORT ) )
+OSCSender::OSCSender()
 {
+    currentIP = ADDRESS;
+    currentPort = PORT;
+    
+    transmitSocket = new UdpTransmitSocket( IpEndpointName( currentIP.c_str(), currentPort) );
+}
 
+//==============================================================================
+
+OSCSender::~OSCSender()
+{
+	delete transmitSocket;
 }
 
 //==============================================================================
@@ -18,7 +28,7 @@ void OSCSender::send(const char* address_pattern,float value)
     << osc::BeginMessage(address_pattern) << value << osc::EndMessage
     << osc::EndBundle;
     
-    transmitSocket.Send( p.Data(), p.Size() );
+    transmitSocket->Send( p.Data(), p.Size() );
 }
 
 //==============================================================================
@@ -36,5 +46,5 @@ void OSCSender::send(const char* address_pattern,std::vector<float> values)
 
     p << osc::EndMessage;
     
-    transmitSocket.Send( p.Data(), p.Size() );
+    transmitSocket->Send( p.Data(), p.Size() );
 }

@@ -18,6 +18,8 @@ SoundAnalyserAudioProcessor::SoundAnalyserAudioProcessor() : analyserTree( Analy
     
     
     analyserTree.addListener(this);
+    
+    refreshFromTree();
 }
 
 //==============================================================================
@@ -331,6 +333,14 @@ void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhose
         else if (property == AnalysisModel::Ids::BufferSize)
         {
             analyser.setBufferSize(treeWhosePropertyHasChanged[property]);
+        }
+        else if (property == AnalysisModel::Ids::Port)
+        {
+            analyser.setOSCPort(treeWhosePropertyHasChanged[property]);
+        }
+        else if (property == AnalysisModel::Ids::IPAddress)
+        {
+            analyser.setIPAddress(treeWhosePropertyHasChanged[property].toString().toStdString());
         }
     }
     else

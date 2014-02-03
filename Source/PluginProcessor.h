@@ -73,6 +73,11 @@ public:
     {
         analyser.setBufferSize(analyserTree[AnalysisModel::Ids::BufferSize]);
         
+        analyser.setOSCPort(analyserTree[AnalysisModel::Ids::Port]);
+        
+        analyser.setIPAddress(analyserTree[AnalysisModel::Ids::IPAddress].toString().toStdString());
+
+        
         for (int i = 0;i < analyser.audioAnalyses.size();i++)
         {
             ValueTree tree = analyserTree.getChildWithName(analyser.audioAnalyses[i]->getIdentifier());

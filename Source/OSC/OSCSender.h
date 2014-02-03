@@ -21,7 +21,23 @@ public:
     /** constructor */
     OSCSender();
     
-    UdpTransmitSocket transmitSocket;
+    ~OSCSender();
+    
+    UdpTransmitSocket *transmitSocket;
+    
+    void setPort(int port)
+    {
+        currentPort = port;
+        
+        reconnect();
+    }
+    
+    void setIPAddress(std::string IPAddress)
+    {
+        currentIP = IPAddress;
+        
+        reconnect();
+    }
     
     void send(const char* address_pattern,float value);
     
@@ -29,7 +45,16 @@ public:
     
 
 private:
-            
+    
+    void reconnect()
+    {
+        delete transmitSocket;
+        
+        transmitSocket = new UdpTransmitSocket(IpEndpointName(currentIP.c_str(),currentPort));
+    }
+    
+    int currentPort;
+    std::string currentIP;
 };
 
 #endif

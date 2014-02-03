@@ -14,14 +14,16 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
 #include "AnalysisModel.h"
+#include "GUI/PluginLookAndFeel.h"
 #include "GUI/SimpleAnalysisComponent.h"
 #include "GUI/FFTComponent.h"
+
 
 
 //==============================================================================
 /**
 */
-class SoundAnalyserAudioProcessorEditor  : public AudioProcessorEditor, public Button::Listener, public Timer, public ValueTree::Listener, public ComboBox::Listener {
+class SoundAnalyserAudioProcessorEditor  : public AudioProcessorEditor, public Button::Listener, public Timer, public ValueTree::Listener, public Label::Listener {
 public:
     SoundAnalyserAudioProcessorEditor (SoundAnalyserAudioProcessor* ownerFilter, ValueTree analyserTree_);
     ~SoundAnalyserAudioProcessorEditor();
@@ -56,8 +58,10 @@ public:
             addAnalysis(analysisTree);
         }
         
-        //analyserId.setText(analyserTree[AnalysisModel::Ids::AnalyserId],dontSendNotification);
-        analyserId.setSelectedId(analyserTree[AnalysisModel::Ids::AnalyserId]);
+        analyserId.setText(analyserTree[AnalysisModel::Ids::AnalyserId],dontSendNotification);
+
+        OSCPort.setText(analyserTree[AnalysisModel::Ids::Port],dontSendNotification);
+        IPAddressValue.setText(analyserTree[AnalysisModel::Ids::IPAddress],dontSendNotification);
         
         resized();
     }
@@ -76,10 +80,18 @@ public:
     
     void labelTextChanged (Label* labelThatHasChanged)
     {
-//        if (labelThatHasChanged == &analyserId)
-//        {
-//            analyserTree.setProperty(AnalysisModel::Ids::AnalyserId, analyserId.getText(), nullptr);
-//        }
+        if (labelThatHasChanged == &analyserId)
+        {
+            analyserTree.setProperty(AnalysisModel::Ids::AnalyserId, analyserId.getText(), nullptr);
+        }
+        else if (labelThatHasChanged == &OSCPort)
+        {
+            analyserTree.setProperty(AnalysisModel::Ids::Port, OSCPort.getText(),nullptr);
+        }
+        else if (labelThatHasChanged == &IPAddressValue)
+        {
+            analyserTree.setProperty(AnalysisModel::Ids::IPAddress, IPAddressValue.getText(),nullptr);
+        }
     }
     
     void textEditorTextChanged (TextEditor& textEditor)
@@ -87,14 +99,6 @@ public:
 
         analyserTree.setProperty(AnalysisModel::Ids::AnalyserId, textEditor.getText(), nullptr);
 
-    }
-    
-    void comboBoxChanged (ComboBox* comboBoxThatHasChanged)
-    {
-        if (comboBoxThatHasChanged == &analyserId)
-        {
-            analyserTree.setProperty(AnalysisModel::Ids::AnalyserId, analyserId.getSelectedIdAsValue(), nullptr);
-        }
     }
     
     
@@ -113,10 +117,21 @@ private:
     
     int plotX, plotY, plotHeight;
     
-    ComboBox analyserId;
+    Label analyserId;
+    
+    
+    Label OSCPort;
+    Label OSCPortText;
+    
+    Label IPAddressValue;
+    Label IPAddressText;
     
     Label analyserIdText;
     Label bufferSizeLabel;
+    
+    Label pluginTitleLabel;
+    
+    PluginLookAndFeel pluginLookAndFeel;
     
 };
 

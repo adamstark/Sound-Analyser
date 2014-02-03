@@ -12,6 +12,8 @@
 const Identifier AnalysisModel::Ids::SOUNDANALYSER("SoundAnalyser");
 const Identifier AnalysisModel::Ids::AnalyserId("AnalyserId");
 const Identifier AnalysisModel::Ids::BufferSize("BufferSize");
+const Identifier AnalysisModel::Ids::Port("Port");
+const Identifier AnalysisModel::Ids::IPAddress("IPAddress");
 
 // Analysis Types
 const Identifier AnalysisTypes::RMS("RMS");
@@ -44,6 +46,10 @@ ValueTree AnalysisModel::createAnalyserTree()
     analyserTree.setProperty(Ids::AnalyserId,1,nullptr);
     
     analyserTree.setProperty(Ids::BufferSize,DEFAULT_BUFFER_SIZE,nullptr);
+    
+    analyserTree.setProperty(Ids::Port,DEFAULT_OSC_PORT,nullptr);
+    
+    analyserTree.setProperty(Ids::IPAddress, "127.0.0.1", nullptr);
     
     return analyserTree;
 }

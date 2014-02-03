@@ -79,6 +79,15 @@ public:
         spectralDifference.setFrameSize(bufferSize);
     }
     
+    void setOSCPort(int oscPort)
+    {
+        osc.setPort(oscPort);
+    }
+    
+    void setIPAddress(std::string IPAddress)
+    {
+        osc.setIPAddress(IPAddress);
+    }
     
 private:
     

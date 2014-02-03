@@ -10,6 +10,7 @@
 #define __SoundAnalyser__AnalysisModel__
 
 #define DEFAULT_BUFFER_SIZE 1024
+#define DEFAULT_OSC_PORT 8000
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -90,6 +91,8 @@ public:
     {
         static const Identifier SOUNDANALYSER;                /**<  */
         static const Identifier AnalyserId;
+        static const Identifier Port;
+        static const Identifier IPAddress;
         static const Identifier BufferSize;
     };
     
