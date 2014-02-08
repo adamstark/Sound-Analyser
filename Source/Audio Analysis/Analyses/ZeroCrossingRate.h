@@ -15,16 +15,20 @@
 class ZeroCrossingRate : public AudioAnalysis
 {
 public:
+    
+    //==============================================================================
     ZeroCrossingRate()
     {
         addressPattern = getCoreAddressPattern();
     }
     
+    //==============================================================================
     String getName()
     {
         return "Zero Crossing Rate";
     }
     
+    //==============================================================================
     float performAnalysis_f(std::vector<float> buffer)
     {
         // create a variable to hold the zero crossing rate
@@ -50,26 +54,31 @@ public:
         return zcr;
     }
     
+    //==============================================================================
     std::string getCoreAddressPattern()
     {
         return "/zcr";
     }
     
+    //==============================================================================
     void buildAddressPatternFromId(std::string idWithForwardSlash)
     {
         addressPattern = idWithForwardSlash.append(getCoreAddressPattern());
     }
     
+    //==============================================================================
     Identifier getIdentifier()
     {
         return AnalysisTypes::ZeroCrossingRate;
     }
     
+    //==============================================================================
     OutputType getOutputType()
     {
         return FloatOutput;
     }
     
+    //==============================================================================
     InputType getInputType()
     {
         return AudioBufferInput;

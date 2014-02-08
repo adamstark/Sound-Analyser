@@ -40,6 +40,15 @@ public:
         
     }
     
+    // override this if you have extra parameters for
+    // the analysis algorithm you are developing as you
+    // will need to initialise them in the ValueTree
+    virtual void initialise(ValueTree &analysisTree)
+    {
+        send = analysisTree[AnalysisProperties::send];
+        plot = analysisTree[AnalysisProperties::plot];
+    }
+    
     virtual std::string getCoreAddressPattern() = 0;
     
     virtual void buildAddressPatternFromId(std::string idWithForwardSlash) = 0;

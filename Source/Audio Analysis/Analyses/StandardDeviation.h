@@ -15,16 +15,20 @@
 class StandardDeviation : public AudioAnalysis
 {
 public:
+    
+    //==============================================================================
     StandardDeviation()
     {
         addressPattern = getCoreAddressPattern();
     }
     
+    //==============================================================================
     String getName()
     {
         return "Standard Deviation";
     }
     
+    //==============================================================================
     float performAnalysis_f(std::vector<float> buffer)
     {
         if (buffer.size() > 0)
@@ -59,26 +63,31 @@ public:
         }
     }
     
+    //==============================================================================
     std::string getCoreAddressPattern()
     {
         return "/standardDeviation";
     }
     
+    //==============================================================================
     void buildAddressPatternFromId(std::string idWithForwardSlash)
     {
         addressPattern = idWithForwardSlash.append(getCoreAddressPattern());
     }
     
+    //==============================================================================
     Identifier getIdentifier()
     {
         return AnalysisTypes::StandardDeviation;
     }
     
+    //==============================================================================
     OutputType getOutputType()
     {
         return FloatOutput;
     }
     
+    //==============================================================================
     InputType getInputType()
     {
         return AudioBufferInput;

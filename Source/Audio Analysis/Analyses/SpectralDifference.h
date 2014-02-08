@@ -12,6 +12,8 @@
 class SpectralDifference : public AudioAnalysis
 {
 public:
+    
+    //==============================================================================
     SpectralDifference(int frameSize)
     {
         addressPattern = getCoreAddressPattern();
@@ -19,11 +21,13 @@ public:
         setFrameSize(frameSize);
     }
     
+    //==============================================================================
     String getName()
     {
         return "Spectral Difference";
     }
     
+    //==============================================================================
     void setFrameSize(int frameSize)
     {
         // because we are interested in the first half of the
@@ -38,6 +42,7 @@ public:
         }
     }
     
+    //==============================================================================
     float performAnalysis_f(std::vector<float> magnitudeSpectrum)
     {
         float sum = 0;	// initialise sum to zero
@@ -62,26 +67,31 @@ public:
         return sum;
     }
     
+    //==============================================================================
     std::string getCoreAddressPattern()
     {
         return "/spectralDifference";
     }
     
+    //==============================================================================
     void buildAddressPatternFromId(std::string idWithForwardSlash)
     {
         addressPattern = idWithForwardSlash.append(getCoreAddressPattern());
     }
     
+    //==============================================================================
     Identifier getIdentifier()
     {
         return AnalysisTypes::SpectralDifference;
     }
     
+    //==============================================================================
     OutputType getOutputType()
     {
         return FloatOutput;
     }
     
+    //==============================================================================
     InputType getInputType()
     {
         return MagnitudeSpectrumInput;

@@ -15,16 +15,20 @@
 class RMS : public AudioAnalysis
 {
 public:
+    
+    //==============================================================================
     RMS()
     {
         addressPattern = getCoreAddressPattern();
     }
     
+    //==============================================================================
     String getName()
     {
         return "Root Mean Square (RMS)";
     }
     
+    //==============================================================================
     float performAnalysis_f(std::vector<float> buffer)
     {
         // create variable to hold the sum
@@ -39,28 +43,32 @@ public:
         // return the square root of the mean of squared samples
         return sqrt(sum / ((float) buffer.size()));
     }
-        
+    
+    //==============================================================================
     std::string getCoreAddressPattern()
     {        
         return "/rms";
     }
     
+    //==============================================================================
     void buildAddressPatternFromId(std::string idWithForwardSlash)
     {
         addressPattern = idWithForwardSlash.append(getCoreAddressPattern());
     }
     
+    //==============================================================================
     Identifier getIdentifier()
     {
         return AnalysisTypes::RMS;
-        //return Identifier("RMS");
     }
     
+    //==============================================================================
     OutputType getOutputType()
     {
         return FloatOutput;
     }
     
+    //==============================================================================
     InputType getInputType()
     {
         return AudioBufferInput;

@@ -59,6 +59,18 @@ public:
     }
     
     //==============================================================================
+    /** overriding initialise here as we have extra fields! */
+    void initialise(ValueTree &analysisTree)
+    {
+        send = analysisTree[AnalysisProperties::send];
+        plot = analysisTree[AnalysisProperties::plot];
+        
+        // this property is unique to FFT
+        numSamplesToSend = analysisTree[AnalysisProperties::FFT::numSamplesToSend];
+
+    }
+    
+    //==============================================================================
     std::string getCoreAddressPattern()
     {
         return "/fft";

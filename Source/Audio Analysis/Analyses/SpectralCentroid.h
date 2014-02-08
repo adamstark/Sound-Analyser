@@ -15,16 +15,20 @@
 class SpectralCentroid : public AudioAnalysis
 {
 public:
+    
+    //==============================================================================
     SpectralCentroid()
     {
         addressPattern = getCoreAddressPattern();
     }
     
+    //==============================================================================
     String getName()
     {
         return "Spectral Centroid";
     }
     
+    //==============================================================================
     float performAnalysis_f(std::vector<float> magnitudeSpectrum)
     {
         // to hold sum of amplitudes
@@ -47,26 +51,31 @@ public:
         return sumWeightedAmplitudes / sumAmplitudes;
     }
     
+    //==============================================================================
     std::string getCoreAddressPattern()
     {
         return "/spectralCentroid";
     }
     
+    //==============================================================================
     void buildAddressPatternFromId(std::string idWithForwardSlash)
     {
         addressPattern = idWithForwardSlash.append(getCoreAddressPattern());
     }
     
+    //==============================================================================
     Identifier getIdentifier()
     {
         return AnalysisTypes::SpectralCentroid;
     }
     
+    //==============================================================================
     OutputType getOutputType()
     {
         return FloatOutput;
     }
     
+    //==============================================================================
     InputType getInputType()
     {
         return MagnitudeSpectrumInput;
