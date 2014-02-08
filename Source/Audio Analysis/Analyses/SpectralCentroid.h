@@ -20,6 +20,11 @@ public:
         addressPattern = getCoreAddressPattern();
     }
     
+    String getName()
+    {
+        return "Spectral Centroid";
+    }
+    
     float performAnalysis_f(std::vector<float> magnitudeSpectrum)
     {
         // to hold sum of amplitudes

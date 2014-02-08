@@ -20,6 +20,11 @@ public:
         addressPattern = getCoreAddressPattern();
     }
     
+    String getName()
+    {
+        return "Zero Crossing Rate";
+    }
+    
     float performAnalysis_f(std::vector<float> buffer)
     {
         // create a variable to hold the zero crossing rate

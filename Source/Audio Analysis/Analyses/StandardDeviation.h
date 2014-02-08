@@ -20,6 +20,11 @@ public:
         addressPattern = getCoreAddressPattern();
     }
     
+    String getName()
+    {
+        return "Standard Deviation";
+    }
+    
     float performAnalysis_f(std::vector<float> buffer)
     {
         if (buffer.size() > 0)

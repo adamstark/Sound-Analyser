@@ -248,12 +248,15 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
                        "Please slect a new device from the list below",
                        AlertWindow::NoIcon);
         
-        StringArray options = AnalysisModel::getAllAnalysisNames();
+        //StringArray options = AnalysisModel::getAllAnalysisNames();
+        StringArray options;
         
-//        for (int i = 0;i < Analyses::NumAnalyses;i++)
-//        {
-//            options.add(AnalysisModel::getAnalysisName(i));
-//        }
+        
+        
+        for (int i = 0;i < getProcessor()->analyser.audioAnalyses.size();i++)
+        {
+            options.add(getProcessor()->analyser.audioAnalyses[i]->getName());
+        }
         
 
         
@@ -267,9 +270,9 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
             // this is the item they chose in the drop-down list..
             const int optionIndexChosen = w.getComboBoxComponent ("option")->getSelectedItemIndex();
             
-
+            AudioAnalysis *chosenAnalysis = getProcessor()->analyser.audioAnalyses[optionIndexChosen];
             
-            AnalysisModel::addNewAnalysis(analyserTree,optionIndexChosen);
+            AnalysisModel::addNewAnalysis(analyserTree,chosenAnalysis->getIdentifier(),chosenAnalysis->getName());
         }
     }
 }

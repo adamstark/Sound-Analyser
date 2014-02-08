@@ -54,7 +54,7 @@ public:
         }
     }
     
-    Array<AudioAnalysis*> audioAnalyses;
+    OwnedArray<AudioAnalysis> audioAnalyses;
     
     OutputType currentAnalysisToPlotType;
     

@@ -15,11 +15,20 @@
 class FFTMagnitudeSpectrum : public AudioAnalysis
 {
 public:
+    
+    //==============================================================================
     FFTMagnitudeSpectrum()
     {
         addressPattern = getCoreAddressPattern();
     }
     
+    //==============================================================================
+    String getName()
+    {
+        return "FFT Magnitude Spectrum";
+    }
+    
+    //==============================================================================
     std::vector<float> performAnalysis_v(std::vector<float> magnitudeSpectrum)
     {
         std::vector<float> newSpec;
@@ -49,31 +58,37 @@ public:
         return newSpec;
     }
     
+    //==============================================================================
     std::string getCoreAddressPattern()
     {
         return "/fft";
     }
     
+    //==============================================================================
     void buildAddressPatternFromId(std::string idWithForwardSlash)
     {
         addressPattern = idWithForwardSlash.append(getCoreAddressPattern());
     }
     
+    //==============================================================================
     Identifier getIdentifier()
     {
         return AnalysisTypes::FFT;
     }
     
+    //==============================================================================
     OutputType getOutputType()
     {
         return VectorOutput;
     }
     
+    //==============================================================================
     InputType getInputType()
     {
         return MagnitudeSpectrumInput;
     }
     
+    //==============================================================================
     void setNumFFTSamplesToSend(int numSamples)
     {
         numSamplesToSend = numSamples;

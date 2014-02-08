@@ -13,7 +13,7 @@ FFTComponent::FFTComponent(ValueTree& analysisTree_) : analysisTree(analysisTree
 {
     setSize (580, 30);
     
-    String name = AnalysisModel::getAnalysisName(analysisTree.getType());
+    String name = analysisTree[AnalysisProperties::name];
     analysisName.setText(name, dontSendNotification);
     addAndMakeVisible(&analysisName);
     

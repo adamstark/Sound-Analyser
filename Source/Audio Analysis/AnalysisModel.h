@@ -31,10 +31,8 @@ struct AnalysisProperties
 {
     static const Identifier send;
     static const Identifier plot;
+    static const Identifier name;
     
-//    struct RMS {
-//        static const Identifier something;
-//    };
     struct FFT {
         static const Identifier numSamplesToSend;
     };
@@ -46,46 +44,13 @@ class AnalysisModel {
 public:
         
     static ValueTree createAnalyserTree();
-        
-    static String getAnalysisName(Identifier analysisType);
   
-    static void addNewAnalysis(ValueTree analysisTree, int analysisId);
+    static void addNewAnalysis(ValueTree analysisTree, Identifier analysisId, String name);
     
-    static StringArray getAllAnalysisNames();
+    static void turnOffAllPlotting(ValueTree analysisTree);
     
-    static void turnOffAllPlotting(ValueTree analysisTree)
-    {
-        ValueTree mainTree = analysisTree.getParent();
-        
-        for (int i = 0;i < mainTree.getNumChildren();i++)
-        {
-            mainTree.getChild(i).setProperty(AnalysisProperties::plot, 0, nullptr);
-        }
-    }
+    static void removeAnalysis(ValueTree analysisTree);
     
-    static void removeAnalysis(ValueTree analysisTree)
-    {
-        ValueTree mainTree = analysisTree.getParent();
-        
-        mainTree.removeChild(analysisTree, nullptr);
-    }
-    
-    static Array<Identifier> analysisList;
-    
-    static Array<Identifier> buildAnalysisList()
-    {
-        Array<Identifier> analysisList;
-        
-        analysisList.add(AnalysisTypes::RMS);
-        analysisList.add(AnalysisTypes::PeakEnergy);
-        analysisList.add(AnalysisTypes::ZeroCrossingRate);
-        analysisList.add(AnalysisTypes::SpectralCentroid);
-        analysisList.add(AnalysisTypes::SpectralDifference);
-        analysisList.add(AnalysisTypes::StandardDeviation);
-        analysisList.add(AnalysisTypes::FFT);
-        
-        return analysisList;
-    }
     
     struct Ids
     {

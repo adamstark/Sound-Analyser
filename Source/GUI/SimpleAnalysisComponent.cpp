@@ -15,7 +15,7 @@ SimpleAnalysisComponent::SimpleAnalysisComponent(ValueTree& analysisTree_) : ana
     
     
     
-    String name = AnalysisModel::getAnalysisName(analysisTree.getType());
+    String name = analysisTree[AnalysisProperties::name];
     analysisName.setText(name, dontSendNotification);
     analysisName.setFont(Font(16));
     addAndMakeVisible(&analysisName);

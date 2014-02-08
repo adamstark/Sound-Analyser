@@ -15,11 +15,20 @@
 class PeakEnergy : public AudioAnalysis
 {
 public:
+    
+    //==============================================================================
     PeakEnergy()
     {
         addressPattern = getCoreAddressPattern();
     }
     
+    //==============================================================================
+    String getName()
+    {
+        return "Peak Energy";
+    }
+    
+    //==============================================================================
     float performAnalysis_f(std::vector<float> buffer)
     {
         // create variable with very small value to hold the peak value
@@ -42,27 +51,32 @@ public:
         // return the peak value
         return peak;
     }
-        
+    
+    //==============================================================================
     std::string getCoreAddressPattern()
     {
         return "/peakEnergy";
     }
     
+    //==============================================================================
     void buildAddressPatternFromId(std::string idWithForwardSlash)
     {
         addressPattern = idWithForwardSlash.append(getCoreAddressPattern());
     }
     
+    //==============================================================================
     Identifier getIdentifier()
     {
         return AnalysisTypes::PeakEnergy;
     }
     
+    //==============================================================================
     OutputType getOutputType()
     {
         return FloatOutput;
     }
     
+    //==============================================================================
     InputType getInputType()
     {
         return AudioBufferInput;

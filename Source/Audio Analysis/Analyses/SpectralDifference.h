@@ -19,6 +19,11 @@ public:
         setFrameSize(frameSize);
     }
     
+    String getName()
+    {
+        return "Spectral Difference";
+    }
+    
     void setFrameSize(int frameSize)
     {
         // because we are interested in the first half of the

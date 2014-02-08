@@ -20,6 +20,11 @@ public:
         addressPattern = getCoreAddressPattern();
     }
     
+    String getName()
+    {
+        return "Root Mean Square (RMS)";
+    }
+    
     float performAnalysis_f(std::vector<float> buffer)
     {
         // create variable to hold the sum
@@ -48,6 +53,7 @@ public:
     Identifier getIdentifier()
     {
         return AnalysisTypes::RMS;
+        //return Identifier("RMS");
     }
     
     OutputType getOutputType()

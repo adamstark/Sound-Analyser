@@ -61,6 +61,8 @@ public:
     virtual OutputType getOutputType() = 0;
     
     virtual Identifier getIdentifier() = 0;
+    
+    virtual String getName() = 0;
         
     bool plot;
     bool send;
