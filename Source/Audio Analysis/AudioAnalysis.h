@@ -12,6 +12,7 @@
 #include <vector>
 #include <string>
 #include "AnalysisModel.h"
+#include "../GUI/SimpleAnalysisComponent.h"
 
 enum InputType
 {
@@ -56,6 +57,11 @@ public:
         
     }
     
+    virtual Component* getGUIComponent(ValueTree& analysisTree)
+    {
+        return new SimpleAnalysisComponent(analysisTree);
+    }
+        
     virtual std::string getCoreAddressPattern() = 0;
     
     virtual void buildAddressPatternFromId(std::string idWithForwardSlash) = 0;

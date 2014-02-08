@@ -10,6 +10,7 @@
 #define SoundAnalyser_FFTMagnitudeSpectrum_h
 
 #include "AudioAnalysis.h"
+#include "../../GUI/FFTComponent.h"
 #include <cmath>
 
 class FFTMagnitudeSpectrum : public AudioAnalysis
@@ -84,6 +85,13 @@ public:
                 numSamplesToSend = tree[property];
             }
         }
+    }
+    
+    //==============================================================================
+    /** overriding this as we have a custom GUI */
+    virtual Component* getGUIComponent(ValueTree& analysisTree)
+    {
+        return new FFTComponent(analysisTree);
     }
     
     //==============================================================================

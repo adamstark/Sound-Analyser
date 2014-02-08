@@ -280,14 +280,14 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::addAnalysis(ValueTree& analysisTree)
 {
-    // FFT
-    if (analysisTree.getType() == AnalysisTypes::FFT)
+
+    for (int i = 0;i < getProcessor()->analyser.audioAnalyses.size();i++)
     {
-        analysisComponents.add(new FFTComponent(analysisTree));
-    }
-    else // GENERIC
-    {
-        analysisComponents.add(new SimpleAnalysisComponent(analysisTree));
+        if (analysisTree.getType() == getProcessor()->analyser.audioAnalyses[i]->getIdentifier())
+        {
+            analysisComponents.add(getProcessor()->analyser.audioAnalyses[i]->getGUIComponent(analysisTree));
+
+        }
     }
     
     
