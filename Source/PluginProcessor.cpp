@@ -372,19 +372,16 @@ void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhose
                 }
             }
         }
-        // FFT numSamples
-        else if (property == AnalysisProperties::FFT::numSamplesToSend)
+        else // deal with custom properties here
         {
             for (int i = 0;i < analyser.audioAnalyses.size();i++)
             {
-                if (AnalysisTypes::FFT == analyser.audioAnalyses[i]->getIdentifier())
+                if (treeWhosePropertyHasChanged.getType() == analyser.audioAnalyses[i]->getIdentifier())
                 {
-                    int numSamples = treeWhosePropertyHasChanged[AnalysisProperties::FFT::numSamplesToSend];
-                    
-                    // set num samples to send
-                    ((FFTMagnitudeSpectrum*)analyser.audioAnalyses[i])->setNumFFTSamplesToSend(numSamples);
+                    analyser.audioAnalyses[i]->handleCustomPropertyChange(treeWhosePropertyHasChanged, property);
                 }
             }
+                
         }
         
         
@@ -394,7 +391,7 @@ void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhose
 //==============================================================================
 void SoundAnalyserAudioProcessor::valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded)
 {
-    DBG("ADDED NEW NODE IN PROCESSOR: " << childWhichHasBeenAdded.getType().toString())
+    refreshFromTree();
 }
 
 //==============================================================================

@@ -20,6 +20,9 @@ public:
     FFTMagnitudeSpectrum()
     {
         addressPattern = getCoreAddressPattern();
+        
+        // initialise
+        numSamplesToSend = 512;
     }
     
     //==============================================================================
@@ -71,6 +74,19 @@ public:
     }
     
     //==============================================================================
+    /** overriding this as we have custom properties */
+    void handleCustomPropertyChange(ValueTree& tree, const Identifier& property)
+    {
+        if (tree.getType() == AnalysisTypes::FFT)
+        {
+            if (property == AnalysisProperties::FFT::numSamplesToSend)
+            {
+                numSamplesToSend = tree[property];
+            }
+        }
+    }
+    
+    //==============================================================================
     std::string getCoreAddressPattern()
     {
         return "/fft";
@@ -100,7 +116,7 @@ public:
         return MagnitudeSpectrumInput;
     }
     
-    //==============================================================================
+    //===============================================================================
     void setNumFFTSamplesToSend(int numSamples)
     {
         numSamplesToSend = numSamples;

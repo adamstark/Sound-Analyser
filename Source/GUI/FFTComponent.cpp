@@ -35,6 +35,7 @@ FFTComponent::FFTComponent(ValueTree& analysisTree_) : analysisTree(analysisTree
     numFFTSamplesText.setText("# Samples", dontSendNotification);
     addAndMakeVisible(&numFFTSamplesText);
     
+    numFFTSamples.setColour(Label::textColourId, Colours::black);
     numFFTSamples.setColour(Label::ColourIds::backgroundColourId, Colours::white);
     numFFTSamples.setColour(Label::ColourIds::outlineColourId, Colours::lightgrey);
     numFFTSamples.setText("512", dontSendNotification);

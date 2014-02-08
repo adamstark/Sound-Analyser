@@ -56,9 +56,13 @@ ValueTree AnalysisModel::createAnalyserTree()
 void AnalysisModel::addNewAnalysis(ValueTree analysisTree, Identifier analysisId, String name)
 {
     ValueTree node(analysisId);
+    
+
+    
     node.setProperty(AnalysisProperties::send, 0, nullptr);
     node.setProperty(AnalysisProperties::plot, 0, nullptr);
     node.setProperty(AnalysisProperties::name, name, nullptr);
+    
     
 
     // extra properties for FFT

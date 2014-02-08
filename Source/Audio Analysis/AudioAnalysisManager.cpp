@@ -104,6 +104,7 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
 
                 if (audioAnalyses[i]->plot)
                 {
+                    DBG("UPDATING VECTOR PLOT");
                     updateVectorPlot(output);
                 }
             }

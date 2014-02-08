@@ -45,8 +45,15 @@ public:
     // will need to initialise them in the ValueTree
     virtual void initialise(ValueTree &analysisTree)
     {
+        DBG("CALLED GENERIC INITIALISE");
+        
         send = analysisTree[AnalysisProperties::send];
         plot = analysisTree[AnalysisProperties::plot];
+    }
+    
+    virtual void handleCustomPropertyChange(ValueTree& tree, const Identifier& property)
+    {
+        
     }
     
     virtual std::string getCoreAddressPattern() = 0;
