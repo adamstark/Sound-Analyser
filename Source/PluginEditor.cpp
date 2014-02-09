@@ -272,7 +272,9 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
             
             AudioAnalysis *chosenAnalysis = getProcessor()->analyser.audioAnalyses[optionIndexChosen];
             
-            AnalysisModel::addNewAnalysis(analyserTree,chosenAnalysis->getIdentifier(),chosenAnalysis->getName());
+            AnalysisModel::addNewAnalysis(analyserTree, chosenAnalysis->createAnalysisTree());
+            
+            //AnalysisModel::addNewAnalysis(analyserTree,chosenAnalysis->getIdentifier(),chosenAnalysis->getName());
         }
     }
 }

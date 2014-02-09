@@ -78,13 +78,26 @@ public:
     /** overriding this as we have custom properties */
     void handleCustomPropertyChange(ValueTree& tree, const Identifier& property)
     {
-        if (tree.getType() == AnalysisTypes::FFT)
+        if (property == AnalysisProperties::FFT::numSamplesToSend)
         {
-            if (property == AnalysisProperties::FFT::numSamplesToSend)
-            {
-                numSamplesToSend = tree[property];
-            }
+            numSamplesToSend = tree[property];
         }
+    }
+    
+    //==============================================================================
+    /** overriding this as we have custom parameters */
+    virtual ValueTree createAnalysisTree()
+    {
+        ValueTree tree(getIdentifier());
+        
+        tree.setProperty(AnalysisProperties::send, 0, nullptr);
+        tree.setProperty(AnalysisProperties::plot, 0, nullptr);
+        tree.setProperty(AnalysisProperties::name, getName(), nullptr);
+        
+        // extra properties for FFT
+        tree.setProperty(AnalysisProperties::FFT::numSamplesToSend, 512, nullptr);
+
+        return tree;
     }
     
     //==============================================================================
@@ -99,17 +112,11 @@ public:
     {
         return "/fft";
     }
-    
-    //==============================================================================
-    void buildAddressPatternFromId(std::string idWithForwardSlash)
-    {
-        addressPattern = idWithForwardSlash.append(getCoreAddressPattern());
-    }
-    
+        
     //==============================================================================
     Identifier getIdentifier()
     {
-        return AnalysisTypes::FFT;
+        return Identifier("FFT");
     }
     
     //==============================================================================

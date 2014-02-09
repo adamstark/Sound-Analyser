@@ -49,17 +49,11 @@ public:
     {        
         return "/rms";
     }
-    
-    //==============================================================================
-    void buildAddressPatternFromId(std::string idWithForwardSlash)
-    {
-        addressPattern = idWithForwardSlash.append(getCoreAddressPattern());
-    }
-    
+        
     //==============================================================================
     Identifier getIdentifier()
     {
-        return AnalysisTypes::RMS;
+        return Identifier("RMS");
     }
     
     //==============================================================================

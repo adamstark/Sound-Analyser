@@ -74,15 +74,9 @@ public:
     }
     
     //==============================================================================
-    void buildAddressPatternFromId(std::string idWithForwardSlash)
-    {
-        addressPattern = idWithForwardSlash.append(getCoreAddressPattern());
-    }
-    
-    //==============================================================================
     Identifier getIdentifier()
     {
-        return AnalysisTypes::SpectralDifference;
+        return Identifier("SpectralDifference");
     }
     
     //==============================================================================

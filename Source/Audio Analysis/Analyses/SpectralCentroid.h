@@ -56,17 +56,11 @@ public:
     {
         return "/spectralCentroid";
     }
-    
-    //==============================================================================
-    void buildAddressPatternFromId(std::string idWithForwardSlash)
-    {
-        addressPattern = idWithForwardSlash.append(getCoreAddressPattern());
-    }
-    
+        
     //==============================================================================
     Identifier getIdentifier()
     {
-        return AnalysisTypes::SpectralCentroid;
+        return Identifier("SpectralCentroid");
     }
     
     //==============================================================================

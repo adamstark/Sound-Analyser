@@ -15,15 +15,6 @@ const Identifier AnalysisModel::Ids::BufferSize("BufferSize");
 const Identifier AnalysisModel::Ids::Port("Port");
 const Identifier AnalysisModel::Ids::IPAddress("IPAddress");
 
-// Analysis Types
-const Identifier AnalysisTypes::RMS("RMS");
-const Identifier AnalysisTypes::PeakEnergy("PeakEnergy");
-const Identifier AnalysisTypes::SpectralCentroid("SpectralCentroid");
-const Identifier AnalysisTypes::ZeroCrossingRate("ZeroCrossingRate");
-const Identifier AnalysisTypes::SpectralDifference("SpectralDifference");
-const Identifier AnalysisTypes::StandardDeviation("StandardDeviation");
-const Identifier AnalysisTypes::FFT("FFT");
-
 // Analysis Properties
 const Identifier AnalysisProperties::send("Send");
 const Identifier AnalysisProperties::plot("Plot");
@@ -53,25 +44,9 @@ ValueTree AnalysisModel::createAnalyserTree()
 }
 
 //==============================================================================
-void AnalysisModel::addNewAnalysis(ValueTree analysisTree, Identifier analysisId, String name)
-{
-    ValueTree node(analysisId);
-    
-
-    
-    node.setProperty(AnalysisProperties::send, 0, nullptr);
-    node.setProperty(AnalysisProperties::plot, 0, nullptr);
-    node.setProperty(AnalysisProperties::name, name, nullptr);
-    
-    
-
-    // extra properties for FFT
-    if (analysisId == AnalysisTypes::FFT)
-    {
-        node.setProperty(AnalysisProperties::FFT::numSamplesToSend, 512, nullptr);
-    }
-  
-    analysisTree.addChild(node, -1, nullptr);
+void AnalysisModel::addNewAnalysis(ValueTree analyserTree, ValueTree newNode)
+{  
+    analyserTree.addChild(newNode, -1, nullptr);
 }
 
 //==============================================================================

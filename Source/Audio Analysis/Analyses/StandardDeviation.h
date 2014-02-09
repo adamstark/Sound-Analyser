@@ -70,15 +70,9 @@ public:
     }
     
     //==============================================================================
-    void buildAddressPatternFromId(std::string idWithForwardSlash)
-    {
-        addressPattern = idWithForwardSlash.append(getCoreAddressPattern());
-    }
-    
-    //==============================================================================
     Identifier getIdentifier()
     {
-        return AnalysisTypes::StandardDeviation;
+        return Identifier("StandardDeviation");
     }
     
     //==============================================================================

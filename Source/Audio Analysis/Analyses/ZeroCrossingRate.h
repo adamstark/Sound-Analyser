@@ -59,17 +59,11 @@ public:
     {
         return "/zcr";
     }
-    
-    //==============================================================================
-    void buildAddressPatternFromId(std::string idWithForwardSlash)
-    {
-        addressPattern = idWithForwardSlash.append(getCoreAddressPattern());
-    }
-    
+
     //==============================================================================
     Identifier getIdentifier()
     {
-        return AnalysisTypes::ZeroCrossingRate;
+        return Identifier("ZeroCrossingRate");
     }
     
     //==============================================================================

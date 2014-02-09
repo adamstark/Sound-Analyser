@@ -14,18 +14,6 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-//---------------------------
-struct AnalysisTypes
-{
-    static const Identifier RMS;
-    static const Identifier PeakEnergy;
-    static const Identifier SpectralCentroid;
-    static const Identifier ZeroCrossingRate;
-    static const Identifier SpectralDifference;
-    static const Identifier StandardDeviation;
-    static const Identifier FFT;
-};
-
 //----------------------------------------
 struct AnalysisProperties
 {
@@ -44,8 +32,8 @@ class AnalysisModel {
 public:
         
     static ValueTree createAnalyserTree();
-  
-    static void addNewAnalysis(ValueTree analysisTree, Identifier analysisId, String name);
+    
+    static void addNewAnalysis(ValueTree analyserTree, ValueTree newNode);
     
     static void turnOffAllPlotting(ValueTree analysisTree);
     

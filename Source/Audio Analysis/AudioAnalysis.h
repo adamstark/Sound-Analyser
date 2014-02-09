@@ -41,6 +41,18 @@ public:
         
     }
     
+    //==============================================================================
+    virtual InputType getInputType() = 0;
+    
+    virtual OutputType getOutputType() = 0;
+    
+    virtual Identifier getIdentifier() = 0;
+    
+    virtual String getName() = 0;
+    
+    virtual std::string getCoreAddressPattern() = 0;
+    
+    //==============================================================================
     // override this if you have extra parameters for
     // the analysis algorithm you are developing as you
     // will need to initialise them in the ValueTree
@@ -61,10 +73,11 @@ public:
     {
         return new SimpleAnalysisComponent(analysisTree);
     }
-        
-    virtual std::string getCoreAddressPattern() = 0;
     
-    virtual void buildAddressPatternFromId(std::string idWithForwardSlash) = 0;
+    void buildAddressPatternFromId(std::string idWithForwardSlash)
+    {
+        addressPattern = idWithForwardSlash.append(getCoreAddressPattern());
+    }
 
     virtual float performAnalysis_f(std::vector<float> buffer)
     {
@@ -78,14 +91,17 @@ public:
         return v;
     }
     
-    virtual InputType getInputType() = 0;
+    virtual ValueTree createAnalysisTree()
+    {
+        ValueTree tree(getIdentifier());
     
-    virtual OutputType getOutputType() = 0;
-    
-    virtual Identifier getIdentifier() = 0;
-    
-    virtual String getName() = 0;
-        
+        tree.setProperty(AnalysisProperties::send, 0, nullptr);
+        tree.setProperty(AnalysisProperties::plot, 0, nullptr);
+        tree.setProperty(AnalysisProperties::name, getName(), nullptr);
+                 
+        return tree;
+    }
+         
     bool plot;
     bool send;
     std::string addressPattern;

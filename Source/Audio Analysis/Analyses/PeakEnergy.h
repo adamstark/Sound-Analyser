@@ -57,17 +57,11 @@ public:
     {
         return "/peakEnergy";
     }
-    
-    //==============================================================================
-    void buildAddressPatternFromId(std::string idWithForwardSlash)
-    {
-        addressPattern = idWithForwardSlash.append(getCoreAddressPattern());
-    }
-    
+        
     //==============================================================================
     Identifier getIdentifier()
     {
-        return AnalysisTypes::PeakEnergy;
+        return Identifier("PeakEnergy");
     }
     
     //==============================================================================
