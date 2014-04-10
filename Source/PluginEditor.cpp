@@ -22,8 +22,8 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     
     LookAndFeel::setDefaultLookAndFeel(&pluginLookAndFeel);
     
-    MemoryInputStream mis(BinaryData::TenorSansRegular_ttf, BinaryData::TenorSansRegular_ttfSize, false);
-    Typeface::Ptr typeface = new CustomTypeface(mis);
+    //MemoryInputStream mis(BinaryData::TenorSansRegular_ttf, BinaryData::TenorSansRegular_ttfSize, false);
+    //Typeface::Ptr typeface = new CustomTypeface(mis);
     
     Font logoFont;//(typeface);
     logoFont.setHeight(40);

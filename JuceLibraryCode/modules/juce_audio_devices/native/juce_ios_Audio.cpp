@@ -122,7 +122,7 @@ public:
         setSessionFloat64Property (kAudioSessionProperty_PreferredHardwareSampleRate, targetSampleRate);
         updateSampleRates();
 
-        setSessionFloat64Property (kAudioSessionProperty_PreferredHardwareIOBufferDuration, preferredBufferSize / sampleRate);
+        setSessionFloat32Property (kAudioSessionProperty_PreferredHardwareIOBufferDuration, preferredBufferSize / sampleRate);
         updateCurrentBufferSize();
 
         prepareFloatBuffers (actualBufferSize);
@@ -227,10 +227,10 @@ private:
             zeromem (outputChannels, sizeof (outputChannels));
 
             for (int i = 0; i < numInputChannels; ++i)
-                inputChannels[i] = floatData.getSampleData (i);
+                inputChannels[i] = floatData.getWritePointer (i);
 
             for (int i = 0; i < numOutputChannels; ++i)
-                outputChannels[i] = floatData.getSampleData (i + numInputChannels);
+                outputChannels[i] = floatData.getWritePointer (i + numInputChannels);
         }
     }
 
@@ -553,6 +553,7 @@ private:
     }
 
     static void setSessionUInt32Property  (AudioSessionPropertyID propID, UInt32  v) noexcept  { AudioSessionSetProperty (propID, sizeof (v), &v); }
+    static void setSessionFloat32Property (AudioSessionPropertyID propID, Float32 v) noexcept  { AudioSessionSetProperty (propID, sizeof (v), &v); }
     static void setSessionFloat64Property (AudioSessionPropertyID propID, Float64 v) noexcept  { AudioSessionSetProperty (propID, sizeof (v), &v); }
 
     JUCE_DECLARE_NON_COPYABLE (iOSAudioIODevice)

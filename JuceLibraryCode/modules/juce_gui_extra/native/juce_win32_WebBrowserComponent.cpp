@@ -158,7 +158,7 @@ private:
                 owner.pageFinishedLoading (getStringFromVariant (pDispParams->rgvarg[0].pvarVal));
                 return S_OK;
             }
-            else if (dispIdMember == DISPID_WINDOWCLOSING)
+            else if (dispIdMember == 263 /*DISPID_WINDOWCLOSING*/)
             {
                 owner.windowCloseRequest();
 
@@ -214,13 +214,15 @@ void WebBrowserComponent::goToURL (const String& url,
 {
     lastURL = url;
 
-    lastHeaders.clear();
     if (headers != nullptr)
         lastHeaders = *headers;
+    else
+        lastHeaders.clear();
 
-    lastPostData.setSize (0);
     if (postData != nullptr)
         lastPostData = *postData;
+    else
+        lastPostData.reset();
 
     blankPageShown = false;
 
