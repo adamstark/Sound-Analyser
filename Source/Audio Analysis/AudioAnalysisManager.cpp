@@ -9,7 +9,7 @@
 #include "AudioAnalysisManager.h"
 
 //==============================================================================
-AudioAnalysisManager::AudioAnalysisManager(int bufferSize_) : bufferSize(bufferSize_), audioBuffer(bufferSize), fft(bufferSize), spectralDifference(bufferSize)
+AudioAnalysisManager::AudioAnalysisManager(int bufferSize_) : bufferSize(bufferSize_), audioBuffer(bufferSize), spectralDifference(bufferSize), gist(bufferSize,44100)
 {
     setBufferSize(bufferSize);
         
@@ -41,8 +41,10 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
     // add new audio frame to our larger buffer
     audioBuffer.addNewSamplesToBuffer(buffer,numSamples);
     
+    gist.processAudioFrame(audioBuffer.buffer);
+    
     // calculate the FFT
-    fft.performFFT(audioBuffer.buffer);
+    //fft.performFFT(audioBuffer.buffer);
     
     
     for (int i = 0;i < audioAnalyses.size();i++)
@@ -60,7 +62,11 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
                 }
                 else if (audioAnalyses[i]->getInputType() == MagnitudeSpectrumInput)
                 {
-                    output = audioAnalyses[i]->performAnalysis_f(fft.getMagnitudeSpectrum());
+                    output = audioAnalyses[i]->performAnalysis_f(gist.getMagnitudeSpectrum());
+                }
+                else if (audioAnalyses[i]->getInputType() == GistInput)
+                {
+                    output = audioAnalyses[i]->performAnalysis_f(&gist);
                 }
                 else
                 {
@@ -88,7 +94,11 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
                 }
                 else if (audioAnalyses[i]->getInputType() == MagnitudeSpectrumInput)
                 {
-                    output = audioAnalyses[i]->performAnalysis_v(fft.getMagnitudeSpectrum());
+                    output = audioAnalyses[i]->performAnalysis_v(gist.getMagnitudeSpectrum());
+                }
+                else if (audioAnalyses[i]->getInputType() == GistInput)
+                {
+                    output = audioAnalyses[i]->performAnalysis_v(&gist);
                 }
                 else
                 {

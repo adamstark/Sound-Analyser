@@ -29,27 +29,9 @@ public:
     }
     
     //==============================================================================
-    float performAnalysis_f(std::vector<float> buffer)
+    float performAnalysis_f(Gist<float> *g)
     {
-        // create variable with very small value to hold the peak value
-        float peak = -10000.0;
-        
-        // for each audio sample
-        for (int i = 0;i < buffer.size();i++)
-        {
-            // store the absolute value of the sample
-            float absSample = fabs(buffer[i]);
-            
-            // if the absolute value is larger than the peak
-            if (absSample > peak)
-            {
-                // the peak takes on the sample value
-                peak = absSample;
-            }
-        }
-        
-        // return the peak value
-        return peak;
+        return g->peakEnergy();
     }
     
     //==============================================================================
@@ -73,7 +55,7 @@ public:
     //==============================================================================
     InputType getInputType()
     {
-        return AudioBufferInput;
+        return GistInput;
     }
 };
 

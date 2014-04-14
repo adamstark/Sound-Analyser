@@ -13,11 +13,13 @@
 #include <string>
 #include "AnalysisModel.h"
 #include "../GUI/SimpleAnalysisComponent.h"
+#include "Gist/Gist.h"
 
 enum InputType
 {
     AudioBufferInput,
-    MagnitudeSpectrumInput
+    MagnitudeSpectrumInput,
+    GistInput
 };
 
 enum OutputType
@@ -78,7 +80,19 @@ public:
     {
         addressPattern = idWithForwardSlash.append(getCoreAddressPattern());
     }
-
+    
+    virtual float performAnalysis_f(Gist<float> *g)
+    {
+        return 0.0;
+    }
+    
+    virtual std::vector<float> performAnalysis_v(Gist<float> *g)
+    {
+        std::vector<float> v;
+        
+        return v;
+    }
+    
     virtual float performAnalysis_f(std::vector<float> buffer)
     {
         return 0.0;

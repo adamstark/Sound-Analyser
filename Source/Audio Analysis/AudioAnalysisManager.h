@@ -11,9 +11,10 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "OSCSender.h"
-#include "FFT.h"
 #include "AudioBuffer.h"
 #include <iostream>
+
+#include "Gist/Gist.h"
 
 #include "AudioAnalysis.h"
 #include "Analyses/RMS.h"
@@ -67,7 +68,9 @@ public:
         audioBuffer.setBufferSize(bufferSize);
         
         // set up the fft
-        fft.setFrameLength(bufferSize);
+        //fft.setFrameLength(bufferSize);
+        
+        gist.setAudioFrameSize(bufferSize);
         
         // -----------------------------------------------
         // now for some analysis specific initialisations
@@ -76,7 +79,7 @@ public:
         fftMagnitudeSpectrum.setNumFFTSamplesToSend(bufferSize/2);
         
         // set the buffer size for the spectral difference
-        spectralDifference.setFrameSize(bufferSize);
+        //spectralDifference.setFrameSize(bufferSize);
     }
     
     void setOSCPort(int oscPort)
@@ -171,8 +174,8 @@ private:
     AudioBuffer audioBuffer;
     
     /** an object for computing the fourier transform of audio frames */
-    FFT fft;
-    
+    //FFT fft;
+
     
     RMS rms;
     PeakEnergy peakEnergy;
@@ -183,7 +186,7 @@ private:
     
     FFTMagnitudeSpectrum fftMagnitudeSpectrum;
     
-    
+    Gist<float> gist;
 
 };
 

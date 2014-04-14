@@ -29,29 +29,9 @@ public:
     }
     
     //==============================================================================
-    float performAnalysis_f(std::vector<float> buffer)
+    float performAnalysis_f(Gist<float> *g)
     {
-        // create a variable to hold the zero crossing rate
-        float zcr;
-        
-        // for each audio sample, starting from the second one
-        for (int i = 1;i < buffer.size();i++)
-        {
-            // initialise two booleans indicating whether or not
-            // the current and previous sample are positive
-            bool current = (buffer[i] > 0);
-            bool previous = (buffer[i-1] > 0);
-            
-            // if the sign is different
-            if (current != previous)
-            {
-                // add one to the zero crossing rate
-                zcr = zcr + 1.0;
-            }
-        }
-        
-        // return the zero crossing rate
-        return zcr;
+        return g->zeroCrossingRate();
     }
     
     //==============================================================================
@@ -75,7 +55,7 @@ public:
     //==============================================================================
     InputType getInputType()
     {
-        return AudioBufferInput;
+        return GistInput;
     }
 };
 
