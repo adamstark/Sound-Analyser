@@ -24,6 +24,7 @@
 #include "Analyses/SpectralDifference.h"
 #include "Analyses/StandardDeviation.h"
 #include "Analyses/FFTMagnitudeSpectrum.h"
+#include "Analyses/Pitch.h"
 
 #include <speex/speex_resampler.h>
 
@@ -183,6 +184,7 @@ private:
     SpectralCentroid spectralCentroid;
     SpectralDifference spectralDifference;
     StandardDeviation standardDeviation;
+    Pitch pitch;
     
     FFTMagnitudeSpectrum fftMagnitudeSpectrum;
     

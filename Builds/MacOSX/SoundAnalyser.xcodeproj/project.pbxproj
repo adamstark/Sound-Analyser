@@ -991,6 +991,7 @@
 		E2C6013349043BBE5B7150A9 /* juce_MidiMessageSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_MidiMessageSequence.h; path = ../../JuceLibraryCode/modules/juce_audio_basics/midi/juce_MidiMessageSequence.h; sourceTree = SOURCE_ROOT; };
 		E2D8A96B506342F0EF825661 /* juce_win32_QuickTimeMovieComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_win32_QuickTimeMovieComponent.cpp; path = ../../JuceLibraryCode/modules/juce_video/native/juce_win32_QuickTimeMovieComponent.cpp; sourceTree = SOURCE_ROOT; };
 		E36E4B1503DB5C1FA11BCF42 /* juce_ResizableBorderComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_ResizableBorderComponent.h; path = ../../JuceLibraryCode/modules/juce_gui_basics/layout/juce_ResizableBorderComponent.h; sourceTree = SOURCE_ROOT; };
+		E37E705318FC9302001DD38E /* Pitch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Pitch.h; path = "../../Source/Audio Analysis/Analyses/Pitch.h"; sourceTree = "<group>"; };
 		E3A0435118FC3BBF00637992 /* CoreFrequencyDomainFeatures.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CoreFrequencyDomainFeatures.cpp; sourceTree = "<group>"; };
 		E3A0435218FC3BBF00637992 /* CoreFrequencyDomainFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreFrequencyDomainFeatures.h; sourceTree = "<group>"; };
 		E3A0435318FC3BBF00637992 /* CoreTimeDomainFeatures.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CoreTimeDomainFeatures.cpp; sourceTree = "<group>"; };
@@ -1779,6 +1780,7 @@
 				97A6FFCD9A9E7D7DD7BB5131 /* SpectralDifference.h */,
 				CC40F5202DAB79E2426F77A4 /* StandardDeviation.h */,
 				137579B9547A709D9824849D /* ZeroCrossingRate.h */,
+				E37E705318FC9302001DD38E /* Pitch.h */,
 			);
 			name = Analyses;
 			sourceTree = "<group>";
