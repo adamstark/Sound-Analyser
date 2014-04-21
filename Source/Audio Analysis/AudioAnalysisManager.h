@@ -25,6 +25,7 @@
 #include "Analyses/StandardDeviation.h"
 #include "Analyses/FFTMagnitudeSpectrum.h"
 #include "Analyses/Pitch.h"
+#include "Analyses/MelFrequencyCepstralCoefficients.h"
 
 #include <speex/speex_resampler.h>
 
@@ -185,6 +186,7 @@ private:
     SpectralDifference spectralDifference;
     StandardDeviation standardDeviation;
     Pitch pitch;
+    MelFrequencyCepstralCoefficients mfcc;
     
     FFTMagnitudeSpectrum fftMagnitudeSpectrum;
     

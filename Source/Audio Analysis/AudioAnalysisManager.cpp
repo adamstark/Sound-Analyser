@@ -21,6 +21,7 @@ AudioAnalysisManager::AudioAnalysisManager(int bufferSize_) : bufferSize(bufferS
     audioAnalyses.add(&standardDeviation);
     audioAnalyses.add(&fftMagnitudeSpectrum);
     audioAnalyses.add(&pitch);
+    audioAnalyses.add(&mfcc);
     
     currentAnalysisToPlotType = FloatOutput;
     

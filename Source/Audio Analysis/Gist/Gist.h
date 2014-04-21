@@ -37,6 +37,9 @@
 // pitch detection
 #include "pitch/Yin.h"
 
+// MFCC
+#include "mfcc/MFCC.h"
+
 // fft
 #include "fftw3.h"
 
@@ -45,7 +48,7 @@ class Gist
 {
 public:
     
-    Gist(int frameSize_,int sampleRate_) : yin(sampleRate_), onsetDetectionFunction(frameSize_), fftConfigured(false)
+    Gist(int frameSize_,int sampleRate_) : yin(sampleRate_), onsetDetectionFunction(frameSize_), fftConfigured(false), mfcc(frameSize_,sampleRate_)
     {
         setAudioFrameSize(frameSize_);
     }
@@ -70,6 +73,7 @@ public:
         configureFFT();
         
         onsetDetectionFunction.setFrameSize(frameSize);
+        mfcc.setFrameSize(frameSize);
     }
     
     void processAudioFrame(std::vector<T> audioFrame_)
@@ -128,7 +132,22 @@ public:
         return coreFrequencyDomainFeatures.spectralCentroid(magnitudeSpectrum);
     }
     
+    T spectralCrest()
+    {
+        return coreFrequencyDomainFeatures.spectralCrest(magnitudeSpectrum);
+    }
+    
+    T spectralFlatness()
+    {
+        return coreFrequencyDomainFeatures.spectralFlatness(magnitudeSpectrum);
+    }
+    
     //================= ONSET DETECTION FUNCTIONS =================
+    
+    T energyDifference()
+    {
+        return onsetDetectionFunction.energyDifference(audioFrame);
+    }
     
     T spectralDifference()
     {
@@ -140,6 +159,16 @@ public:
         return onsetDetectionFunction.spectralDifferenceHWR(magnitudeSpectrum);
     }
     
+    T complexSpectralDifference()
+    {
+        return onsetDetectionFunction.complexSpectralDifference(fftReal,fftImag);
+    }
+    
+    T highFrequencyContent()
+    {
+        return onsetDetectionFunction.highFrequencyContent(magnitudeSpectrum);
+    }
+    
     //=========================== PITCH ============================
     
     /** Calculates monophonic pitch according to the Yin algorithm
@@ -149,7 +178,16 @@ public:
     {
         return yin.pitchYin(audioFrame);
     }
+    
+    //=========================== MFCCs =============================
 
+    /** Calculates the Mel Frequency Cepstral Coefficients
+     * @returns the MFCCs as a vector
+     */
+    std::vector<T> melFrequencyCepstralCoefficients()
+    {
+        return mfcc.melFrequencyCepstralCoefficients(magnitudeSpectrum);
+    }
     
 private:
     
@@ -233,6 +271,8 @@ private:
     
     /** object to compute pitch estimates via the Yin algorithm */
     Yin<T> yin;
+    
+    MFCC<T> mfcc;
 };
 
 
