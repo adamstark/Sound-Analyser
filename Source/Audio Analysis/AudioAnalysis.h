@@ -59,9 +59,7 @@ public:
     // the analysis algorithm you are developing as you
     // will need to initialise them in the ValueTree
     virtual void initialise(ValueTree &analysisTree)
-    {
-        DBG("CALLED GENERIC INITIALISE");
-        
+    {        
         send = analysisTree[AnalysisProperties::send];
         plot = analysisTree[AnalysisProperties::plot];
     }

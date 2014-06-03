@@ -48,9 +48,7 @@ public:
     void refreshFromTree()
     {
         analysisComponents.clear();
-        
-        DBG("REFRESHING GUI FROM TREE WITH " << analyserTree.getNumChildren() << " CHILDREN");
-        
+                
         for (int i = 0;i < analyserTree.getNumChildren();i++)
         {
             ValueTree analysisTree = analyserTree.getChild(i);

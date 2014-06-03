@@ -906,7 +906,6 @@
 		CBA04A69E2C23004590891A0 /* juce_module_info */ = {isa = PBXFileReference; lastKnownFileType = text; name = juce_module_info; path = ../../JuceLibraryCode/modules/juce_audio_processors/juce_module_info; sourceTree = SOURCE_ROOT; };
 		CBCAFC559F9DC46864B19FA7 /* juce_VST3_Wrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = juce_VST3_Wrapper.mm; path = ../../JuceLibraryCode/modules/juce_audio_plugin_client/VST3/juce_VST3_Wrapper.mm; sourceTree = SOURCE_ROOT; };
 		CC1374EB854B04336DAAD154 /* juce_MidiBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_MidiBuffer.cpp; path = ../../JuceLibraryCode/modules/juce_audio_basics/midi/juce_MidiBuffer.cpp; sourceTree = SOURCE_ROOT; };
-		CC40F5202DAB79E2426F77A4 /* StandardDeviation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StandardDeviation.h; path = "../../Source/Audio Analysis/Analyses/StandardDeviation.h"; sourceTree = SOURCE_ROOT; };
 		CC5C98A4CD2167B9B7F52310 /* juce_RectanglePlacement.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_RectanglePlacement.cpp; path = ../../JuceLibraryCode/modules/juce_graphics/placement/juce_RectanglePlacement.cpp; sourceTree = SOURCE_ROOT; };
 		CCB40227D54598F4410845C9 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; name = Makefile; path = ../../Source/OSC/oscpack_1_1_0/Makefile; sourceTree = SOURCE_ROOT; };
 		CCD6FB11E376A0036FA6A0F6 /* juce_Uuid.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_Uuid.h; path = ../../JuceLibraryCode/modules/juce_core/misc/juce_Uuid.h; sourceTree = SOURCE_ROOT; };
@@ -1782,7 +1781,6 @@
 				A63A91465E988F4A378F51D6 /* RMS.h */,
 				3A0B048DBE4BF272F9F60481 /* SpectralCentroid.h */,
 				97A6FFCD9A9E7D7DD7BB5131 /* SpectralDifference.h */,
-				CC40F5202DAB79E2426F77A4 /* StandardDeviation.h */,
 				137579B9547A709D9824849D /* ZeroCrossingRate.h */,
 				E37E705318FC9302001DD38E /* Pitch.h */,
 				E3CA2A8B190582EF00E9DC84 /* MelFrequencyCepstralCoefficients.h */,

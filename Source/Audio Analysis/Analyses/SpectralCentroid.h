@@ -12,6 +12,8 @@
 #include "AudioAnalysis.h"
 #include <cmath>
 
+
+
 class SpectralCentroid : public AudioAnalysis
 {
 public:

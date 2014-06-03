@@ -22,7 +22,6 @@
 #include "Analyses/ZeroCrossingRate.h"
 #include "Analyses/SpectralCentroid.h"
 #include "Analyses/SpectralDifference.h"
-#include "Analyses/StandardDeviation.h"
 #include "Analyses/FFTMagnitudeSpectrum.h"
 #include "Analyses/Pitch.h"
 #include "Analyses/MelFrequencyCepstralCoefficients.h"
@@ -99,6 +98,8 @@ private:
     int bufferSize;
     
     void updatePlotHistory(float newSample);
+    
+    void addAudioAnalysisAlgorithms();
     
     std::vector<float> resamplePlot(std::vector<float> v)
     {
@@ -179,14 +180,14 @@ private:
     //FFT fft;
 
     
-    RMS rms;
-    PeakEnergy peakEnergy;
-    ZeroCrossingRate zcr;
-    SpectralCentroid spectralCentroid;
-    SpectralDifference spectralDifference;
-    StandardDeviation standardDeviation;
-    Pitch pitch;
-    MelFrequencyCepstralCoefficients mfcc;
+//    RMS rms;
+//    PeakEnergy peakEnergy;
+//    ZeroCrossingRate zcr;
+//    SpectralCentroid spectralCentroid;
+//    SpectralDifference spectralDifference;
+//    StandardDeviation standardDeviation;
+//    Pitch pitch;
+//    MelFrequencyCepstralCoefficients mfcc;
     
     FFTMagnitudeSpectrum fftMagnitudeSpectrum;
     

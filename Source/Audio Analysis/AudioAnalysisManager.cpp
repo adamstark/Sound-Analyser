@@ -9,19 +9,13 @@
 #include "AudioAnalysisManager.h"
 
 //==============================================================================
-AudioAnalysisManager::AudioAnalysisManager(int bufferSize_) : bufferSize(bufferSize_), audioBuffer(bufferSize), spectralDifference(bufferSize), gist(bufferSize,44100)
+AudioAnalysisManager::AudioAnalysisManager(int bufferSize_) : bufferSize(bufferSize_), audioBuffer(bufferSize)/*, spectralDifference(bufferSize)*/, gist(bufferSize,44100)
 {
     setBufferSize(bufferSize);
-        
-    audioAnalyses.add(&rms);
-    audioAnalyses.add(&peakEnergy);
-    audioAnalyses.add(&zcr);
-    audioAnalyses.add(&spectralCentroid);
-    audioAnalyses.add(&spectralDifference);
-    audioAnalyses.add(&standardDeviation);
-    audioAnalyses.add(&fftMagnitudeSpectrum);
-    audioAnalyses.add(&pitch);
-    audioAnalyses.add(&mfcc);
+    
+    
+    // this function adds all algorithms that the plug-in will have access to
+    addAudioAnalysisAlgorithms();
     
     currentAnalysisToPlotType = FloatOutput;
     
@@ -35,6 +29,19 @@ AudioAnalysisManager::AudioAnalysisManager(int bufferSize_) : bufferSize(bufferS
         plotHistory[i] = 0;
         vectorPlot[i] = 0;
     }
+}
+
+//==============================================================================
+void AudioAnalysisManager::addAudioAnalysisAlgorithms()
+{
+    audioAnalyses.add(new RMS());
+    audioAnalyses.add(new PeakEnergy());
+    audioAnalyses.add(new ZeroCrossingRate());
+    audioAnalyses.add(new SpectralCentroid());
+    audioAnalyses.add(new SpectralDifference(bufferSize));
+    audioAnalyses.add(new FFTMagnitudeSpectrum());
+    audioAnalyses.add(new Pitch());
+    audioAnalyses.add(new MelFrequencyCepstralCoefficients());
 }
 
 //==============================================================================
@@ -116,7 +123,6 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
 
                 if (audioAnalyses[i]->plot)
                 {
-                    DBG("UPDATING VECTOR PLOT");
                     updateVectorPlot(output);
                 }
             }
