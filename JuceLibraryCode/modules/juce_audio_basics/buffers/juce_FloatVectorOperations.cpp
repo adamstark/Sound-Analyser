@@ -53,8 +53,8 @@ namespace FloatVectorHelpers
         static forcedinline ParallelType load1 (Type v) noexcept                        { return _mm_load1_ps (&v); }
         static forcedinline ParallelType loadA (const Type* v) noexcept                 { return _mm_load_ps (v); }
         static forcedinline ParallelType loadU (const Type* v) noexcept                 { return _mm_loadu_ps (v); }
-        static forcedinline void storeA (Type* dest, ParallelType a) noexcept           { return _mm_store_ps (dest, a); }
-        static forcedinline void storeU (Type* dest, ParallelType a) noexcept           { return _mm_storeu_ps (dest, a); }
+        static forcedinline void storeA (Type* dest, ParallelType a) noexcept           { _mm_store_ps (dest, a); }
+        static forcedinline void storeU (Type* dest, ParallelType a) noexcept           { _mm_storeu_ps (dest, a); }
 
         static forcedinline ParallelType add (ParallelType a, ParallelType b) noexcept  { return _mm_add_ps (a, b); }
         static forcedinline ParallelType sub (ParallelType a, ParallelType b) noexcept  { return _mm_sub_ps (a, b); }
@@ -75,8 +75,8 @@ namespace FloatVectorHelpers
         static forcedinline ParallelType load1 (Type v) noexcept                        { return _mm_load1_pd (&v); }
         static forcedinline ParallelType loadA (const Type* v) noexcept                 { return _mm_load_pd (v); }
         static forcedinline ParallelType loadU (const Type* v) noexcept                 { return _mm_loadu_pd (v); }
-        static forcedinline void storeA (Type* dest, ParallelType a) noexcept           { return _mm_store_pd (dest, a); }
-        static forcedinline void storeU (Type* dest, ParallelType a) noexcept           { return _mm_storeu_pd (dest, a); }
+        static forcedinline void storeA (Type* dest, ParallelType a) noexcept           { _mm_store_pd (dest, a); }
+        static forcedinline void storeU (Type* dest, ParallelType a) noexcept           { _mm_storeu_pd (dest, a); }
 
         static forcedinline ParallelType add (ParallelType a, ParallelType b) noexcept  { return _mm_add_pd (a, b); }
         static forcedinline ParallelType sub (ParallelType a, ParallelType b) noexcept  { return _mm_sub_pd (a, b); }
@@ -134,8 +134,8 @@ namespace FloatVectorHelpers
         static forcedinline ParallelType load1 (Type v) noexcept                        { return vld1q_dup_f32 (&v); }
         static forcedinline ParallelType loadA (const Type* v) noexcept                 { return vld1q_f32 (v); }
         static forcedinline ParallelType loadU (const Type* v) noexcept                 { return vld1q_f32 (v); }
-        static forcedinline void storeA (Type* dest, ParallelType a) noexcept           { return vst1q_f32 (dest, a); }
-        static forcedinline void storeU (Type* dest, ParallelType a) noexcept           { return vst1q_f32 (dest, a); }
+        static forcedinline void storeA (Type* dest, ParallelType a) noexcept           { vst1q_f32 (dest, a); }
+        static forcedinline void storeU (Type* dest, ParallelType a) noexcept           { vst1q_f32 (dest, a); }
 
         static forcedinline ParallelType add (ParallelType a, ParallelType b) noexcept  { return vaddq_f32 (a, b); }
         static forcedinline ParallelType sub (ParallelType a, ParallelType b) noexcept  { return vsubq_f32 (a, b); }
@@ -156,8 +156,8 @@ namespace FloatVectorHelpers
         static forcedinline ParallelType load1 (Type v) noexcept                        { return v; }
         static forcedinline ParallelType loadA (const Type* v) noexcept                 { return *v; }
         static forcedinline ParallelType loadU (const Type* v) noexcept                 { return *v; }
-        static forcedinline void storeA (Type* dest, ParallelType a) noexcept           { return *dest = a; }
-        static forcedinline void storeU (Type* dest, ParallelType a) noexcept           { return *dest = a; }
+        static forcedinline void storeA (Type* dest, ParallelType a) noexcept           { *dest = a; }
+        static forcedinline void storeU (Type* dest, ParallelType a) noexcept           { *dest = a; }
 
         static forcedinline ParallelType add (ParallelType a, ParallelType b) noexcept  { return a + b; }
         static forcedinline ParallelType sub (ParallelType a, ParallelType b) noexcept  { return a - b; }
@@ -229,7 +229,7 @@ namespace FloatVectorHelpers
 
         static Type findMinOrMax (const Type* src, int num, const bool isMinimum) noexcept
         {
-            const int numLongOps = num / Mode::numParallel;
+            int numLongOps = num / Mode::numParallel;
 
            #if JUCE_USE_SSE_INTRINSICS
             if (numLongOps > 1 && isSSE2Available())
@@ -246,7 +246,7 @@ namespace FloatVectorHelpers
 
                     if (isMinimum)
                     {
-                        for (int i = 1; i < numLongOps; ++i)
+                        while (--numLongOps > 0)
                         {
                             src += Mode::numParallel;
                             val = Mode::min (val, Mode::loadA (src));
@@ -254,7 +254,7 @@ namespace FloatVectorHelpers
                     }
                     else
                     {
-                        for (int i = 1; i < numLongOps; ++i)
+                        while (--numLongOps > 0)
                         {
                             src += Mode::numParallel;
                             val = Mode::max (val, Mode::loadA (src));
@@ -268,7 +268,7 @@ namespace FloatVectorHelpers
 
                     if (isMinimum)
                     {
-                        for (int i = 1; i < numLongOps; ++i)
+                        while (--numLongOps > 0)
                         {
                             src += Mode::numParallel;
                             val = Mode::min (val, Mode::loadU (src));
@@ -276,7 +276,7 @@ namespace FloatVectorHelpers
                     }
                     else
                     {
-                        for (int i = 1; i < numLongOps; ++i)
+                        while (--numLongOps > 0)
                         {
                             src += Mode::numParallel;
                             val = Mode::max (val, Mode::loadU (src));
@@ -288,6 +288,7 @@ namespace FloatVectorHelpers
                                         : Mode::max (val);
 
                 num &= (Mode::numParallel - 1);
+                src += Mode::numParallel;
 
                 for (int i = 0; i < num; ++i)
                     result = isMinimum ? jmin (result, src[i])
@@ -302,7 +303,7 @@ namespace FloatVectorHelpers
 
         static Range<Type> findMinAndMax (const Type* src, int num) noexcept
         {
-            const int numLongOps = num / Mode::numParallel;
+            int numLongOps = num / Mode::numParallel;
 
            #if JUCE_USE_SSE_INTRINSICS
             if (numLongOps > 1 && isSSE2Available())
@@ -318,7 +319,7 @@ namespace FloatVectorHelpers
                     mn = Mode::loadA (src);
                     mx = mn;
 
-                    for (int i = 1; i < numLongOps; ++i)
+                    while (--numLongOps > 0)
                     {
                         src += Mode::numParallel;
                         const ParallelType v = Mode::loadA (src);
@@ -332,7 +333,7 @@ namespace FloatVectorHelpers
                     mn = Mode::loadU (src);
                     mx = mn;
 
-                    for (int i = 1; i < numLongOps; ++i)
+                    while (--numLongOps > 0)
                     {
                         src += Mode::numParallel;
                         const ParallelType v = Mode::loadU (src);
@@ -344,7 +345,9 @@ namespace FloatVectorHelpers
                 Range<Type> result (Mode::min (mn),
                                     Mode::max (mx));
 
-                num &= 3;
+                num &= (Mode::numParallel - 1);
+                src += Mode::numParallel;
+
                 for (int i = 0; i < num; ++i)
                     result = result.getUnionWith (src[i]);
 
@@ -549,9 +552,9 @@ void FloatVectorOperations::negate (double* dest, const double* src, int num) no
 void JUCE_CALLTYPE FloatVectorOperations::convertFixedToFloat (float* dest, const int* src, float multiplier, int num) noexcept
 {
    #if JUCE_USE_ARM_NEON
-    JUCE_PERFORM_NEON_OP_SRC_DEST (dest[i] = src[i] * multiplier,
-                                   vmulq_n_f32 (vcvtq_f32_s32 (vld1q_s32 (src)), multiplier),
-                                   JUCE_LOAD_NONE)
+    JUCE_PERFORM_VEC_OP_SRC_DEST (dest[i] = src[i] * multiplier,
+                                  vmulq_n_f32 (vcvtq_f32_s32 (vld1q_s32 (src)), multiplier),
+                                  JUCE_LOAD_NONE, JUCE_INCREMENT_SRC_DEST, )
    #else
     JUCE_PERFORM_VEC_OP_SRC_DEST (dest[i] = src[i] * multiplier,
                                   Mode::mul (mult, _mm_cvtepi32_ps (_mm_loadu_si128 ((const __m128i*) src))),

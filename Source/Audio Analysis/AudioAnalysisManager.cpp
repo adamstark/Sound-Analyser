@@ -13,7 +13,6 @@ AudioAnalysisManager::AudioAnalysisManager(int bufferSize_) : bufferSize(bufferS
 {
     setBufferSize(bufferSize);
     
-    
     // this function adds all algorithms that the plug-in will have access to
     addAudioAnalysisAlgorithms();
     

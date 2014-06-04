@@ -170,7 +170,7 @@ private:
     
     /** allows osc to be sent to a specific ip address and port number */
     OSCSender osc;
-    
+        
     /** an object for calculating audio features */
    // AudioFeatures audioFeatures;
     

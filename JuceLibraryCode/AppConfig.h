@@ -214,10 +214,10 @@
  #define JucePlugin_Build_AAX              0
 #endif
 #ifndef  JucePlugin_Name
- #define JucePlugin_Name                   "SoundAnalyser"
+ #define JucePlugin_Name                   "Sound Analyser"
 #endif
 #ifndef  JucePlugin_Desc
- #define JucePlugin_Desc                   "SoundAnalyser"
+ #define JucePlugin_Desc                   "Sound Analyser"
 #endif
 #ifndef  JucePlugin_Manufacturer
  #define JucePlugin_Manufacturer           "Adam Stark"
@@ -229,10 +229,10 @@
  #define JucePlugin_ManufacturerEmail      ""
 #endif
 #ifndef  JucePlugin_ManufacturerCode
- #define JucePlugin_ManufacturerCode       'adam'
+ #define JucePlugin_ManufacturerCode       'Asta'
 #endif
 #ifndef  JucePlugin_PluginCode
- #define JucePlugin_PluginCode             'snda'
+ #define JucePlugin_PluginCode             'Snda'
 #endif
 #ifndef  JucePlugin_MaxNumInputChannels
  #define JucePlugin_MaxNumInputChannels    2
@@ -259,13 +259,13 @@
  #define JucePlugin_EditorRequiresKeyboardFocus  0
 #endif
 #ifndef  JucePlugin_Version
- #define JucePlugin_Version                1.0.0
+ #define JucePlugin_Version                0.1.2
 #endif
 #ifndef  JucePlugin_VersionCode
- #define JucePlugin_VersionCode            0x10000
+ #define JucePlugin_VersionCode            0x102
 #endif
 #ifndef  JucePlugin_VersionString
- #define JucePlugin_VersionString          "1.0.0"
+ #define JucePlugin_VersionString          "0.1.2"
 #endif
 #ifndef  JucePlugin_VSTUniqueID
  #define JucePlugin_VSTUniqueID            JucePlugin_PluginCode

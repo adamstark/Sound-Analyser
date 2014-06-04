@@ -313,6 +313,12 @@ public:
     /** Gives the ComboBox a tooltip. */
     void setTooltip (const String& newTooltip) override;
 
+    /** This can be used to allow the scroll-wheel to nudge the chosen item.
+        By default it's disabled, and I'd recommend leaving it disabled if there's any
+        chance that the control might be inside a scrollable list or viewport.
+    */
+    void setScrollWheelEnabled (bool enabled) noexcept;
+
 
     //==============================================================================
     /** A set of colour IDs to use to change the colour of various aspects of the combo box.
@@ -387,6 +393,8 @@ public:
     bool keyPressed (const KeyPress&) override;
     /** @internal */
     void valueChanged (Value&) override;
+    /** @internal */
+    void parentHierarchyChanged() override;
 
     // These methods' bool parameters have changed: see their new method signatures.
     JUCE_DEPRECATED (void clear (bool));
@@ -410,7 +418,8 @@ private:
     OwnedArray <ItemInfo> items;
     Value currentId;
     int lastCurrentId;
-    bool isButtonDown, separatorPending, menuActive;
+    bool isButtonDown, separatorPending, menuActive, scrollWheelEnabled;
+    float mouseWheelAccumulator;
     ListenerList <Listener> listeners;
     ScopedPointer<Label> label;
     String textWhenNothingSelected, noChoicesMessage;

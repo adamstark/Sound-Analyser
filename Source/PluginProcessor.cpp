@@ -28,28 +28,20 @@ SoundAnalyserAudioProcessor::~SoundAnalyserAudioProcessor()
 }
 
 //==============================================================================
-float SoundAnalyserAudioProcessor::booleanToFloat(bool input)
+void SoundAnalyserAudioProcessor::refreshFromTree()
 {
-    if (input)
+    analyser.setBufferSize(analyserTree[AnalysisModel::Ids::BufferSize]);
+    
+    analyser.setOSCPort(analyserTree[AnalysisModel::Ids::Port]);
+    
+    analyser.setIPAddress(analyserTree[AnalysisModel::Ids::IPAddress].toString().toStdString());
+    
+    
+    for (int i = 0;i < analyser.audioAnalyses.size();i++)
     {
-        return 1.0;
-    }
-    else
-    {
-        return 0.0;
-    }
-}
-
-//==============================================================================
-bool SoundAnalyserAudioProcessor::floatToBoolean(float input)
-{
-    if (input == 1.0)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
+        ValueTree tree = analyserTree.getChildWithName(analyser.audioAnalyses[i]->getIdentifier());
+        
+        analyser.audioAnalyses[i]->initialise(tree);
     }
 }
 
@@ -245,27 +237,8 @@ AudioProcessorEditor* SoundAnalyserAudioProcessor::createEditor()
 //==============================================================================
 void SoundAnalyserAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
-    
-    /*
-
-    // Create an outer XML element..
-    XmlElement xml ("SoundAnalyserSettings");
-    
-    // add some attributes to it..
-    xml.setAttribute ("sendRMS", analyser.sendRMS);
-    xml.setAttribute ("sendPeak",analyser.sendPeak);
-    xml.setAttribute ("sendSpectralCentroid",analyser.sendSpectralCentroid);
-     */
-    
-    // THIS ONE IS RIGHT
     ScopedPointer<XmlElement> xml = analyserTree.createXml();
     
-    // THIS ONE IS WRONG
-    //XmlElement xml(*analyserTree.createXml());
-        
     // then use this helper function to stuff it into the binary blob and return it..
     copyXmlToBinary (*xml, destData);
 }
@@ -273,18 +246,9 @@ void SoundAnalyserAudioProcessor::getStateInformation (MemoryBlock& destData)
 //==============================================================================
 void SoundAnalyserAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
-    
-
     ScopedPointer<XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
     
-    ValueTree newTree = ValueTree::fromXml(*xmlState);
-    
-    analyserTree.copyPropertiesFrom(newTree, nullptr);
-    
-    //analyserTree = newTree;
-    
+    analyserTree = ValueTree::fromXml(*xmlState);
     
     refreshFromTree();
 }

@@ -898,11 +898,7 @@ public:
 
     NSRect constrainRect (NSRect r)
     {
-        if (constrainer != nullptr
-            #if defined (MAC_OS_X_VERSION_10_7) && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7)
-             && ([window styleMask] & NSFullScreenWindowMask) == 0
-            #endif
-            )
+        if (constrainer != nullptr && ! isKioskMode())
         {
             Rectangle<int> pos      (convertToRectInt (flippedScreenRect (r)));
             Rectangle<int> original (convertToRectInt (flippedScreenRect ([window frame])));
@@ -1140,8 +1136,7 @@ public:
 
     bool isFocused() const override
     {
-        return isSharedWindow ? this == currentlyFocusedPeer
-                              : [window isKeyWindow];
+        return this == currentlyFocusedPeer;
     }
 
     void grabFocus() override
@@ -1155,7 +1150,7 @@ public:
         }
     }
 
-    void textInputRequired (const Point<int>&) override {}
+    void textInputRequired (Point<int>, TextInputTarget&) override {}
 
     //==============================================================================
     void repaint (const Rectangle<int>& area) override

@@ -1,138 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="NGUErU" name="SoundAnalyser" projectType="audioplug" version="1.0.0"
+<JUCERPROJECT id="NGUErU" name="Sound Analyser" projectType="audioplug" version="0.1.2"
               bundleIdentifier="com.adamstark.SoundAnalyser" includeBinaryInAppConfig="1"
-              buildVST="0" buildAU="1" pluginName="SoundAnalyser" pluginDesc="SoundAnalyser"
-              pluginManufacturer="Adam Stark" pluginManufacturerCode="adam"
-              pluginCode="snda" pluginChannelConfigs="{1, 1}, {2, 2}" pluginIsSynth="0"
+              buildVST="0" buildAU="1" pluginName="Sound Analyser" pluginDesc="Sound Analyser"
+              pluginManufacturer="Adam Stark" pluginManufacturerCode="Asta"
+              pluginCode="Snda" pluginChannelConfigs="{1, 1}, {2, 2}" pluginIsSynth="0"
               pluginWantsMidiIn="0" pluginProducesMidiOut="0" pluginSilenceInIsSilenceOut="0"
               pluginEditorRequiresKeys="0" pluginAUExportPrefix="SoundAnalyserAU"
               pluginRTASCategory="" aaxIdentifier="com.adamstark.SoundAnalyser"
               pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="3.1.0"
               companyName="Adam Stark" buildVST3="1" buildRTAS="0" buildAAX="0">
-  <MAINGROUP id="VsHW7o" name="SoundAnalyser">
+  <MAINGROUP id="VsHW7o" name="Sound Analyser">
     <GROUP id="{0F5E9544-A7EE-7AC3-489A-8BF69D05E6FB}" name="Source">
       <GROUP id="{5855A183-D5A6-41E2-2853-4D2D0B7D04EC}" name="Audio Analysis">
         <GROUP id="{5F23D3B2-E86A-3F28-2031-C3DC511F2CF4}" name="Analyses">
-          <FILE id="NiCxQP" name="FFTMagnitudeSpectrum.h" compile="0" resource="0"
+          <FILE id="oBxKm6" name="FFTMagnitudeSpectrum.h" compile="0" resource="0"
                 file="Source/Audio Analysis/Analyses/FFTMagnitudeSpectrum.h"/>
-          <FILE id="lIvWHV" name="PeakEnergy.h" compile="0" resource="0" file="Source/Audio Analysis/Analyses/PeakEnergy.h"/>
-          <FILE id="sliSp2" name="RMS.h" compile="0" resource="0" file="Source/Audio Analysis/Analyses/RMS.h"/>
-          <FILE id="owxN63" name="SpectralCentroid.h" compile="0" resource="0"
+          <FILE id="ii2Nx9" name="MelFrequencyCepstralCoefficients.h" compile="0"
+                resource="0" file="Source/Audio Analysis/Analyses/MelFrequencyCepstralCoefficients.h"/>
+          <FILE id="KbSdqZ" name="PeakEnergy.h" compile="0" resource="0" file="Source/Audio Analysis/Analyses/PeakEnergy.h"/>
+          <FILE id="CmFWdM" name="Pitch.h" compile="0" resource="0" file="Source/Audio Analysis/Analyses/Pitch.h"/>
+          <FILE id="SIHJrp" name="RMS.h" compile="0" resource="0" file="Source/Audio Analysis/Analyses/RMS.h"/>
+          <FILE id="frK4qA" name="SpectralCentroid.h" compile="0" resource="0"
                 file="Source/Audio Analysis/Analyses/SpectralCentroid.h"/>
-          <FILE id="bORpZw" name="SpectralDifference.h" compile="0" resource="0"
+          <FILE id="glvett" name="SpectralDifference.h" compile="0" resource="0"
                 file="Source/Audio Analysis/Analyses/SpectralDifference.h"/>
-          <FILE id="lZau9K" name="StandardDeviation.h" compile="0" resource="0"
-                file="Source/Audio Analysis/Analyses/StandardDeviation.h"/>
-          <FILE id="P19XWD" name="ZeroCrossingRate.h" compile="0" resource="0"
+          <FILE id="GEv8TP" name="ZeroCrossingRate.h" compile="0" resource="0"
                 file="Source/Audio Analysis/Analyses/ZeroCrossingRate.h"/>
         </GROUP>
-        <FILE id="JEIAtP" name="AnalysisModel.cpp" compile="1" resource="0"
+        <FILE id="rHFJIY" name="AnalysisModel.cpp" compile="1" resource="0"
               file="Source/Audio Analysis/AnalysisModel.cpp"/>
-        <FILE id="d4KYTq" name="AnalysisModel.h" compile="0" resource="0" file="Source/Audio Analysis/AnalysisModel.h"/>
-        <FILE id="UGXTSi" name="AudioAnalysis.cpp" compile="1" resource="0"
+        <FILE id="GGTjxh" name="AnalysisModel.h" compile="0" resource="0" file="Source/Audio Analysis/AnalysisModel.h"/>
+        <FILE id="qTvT1H" name="AudioAnalysis.cpp" compile="1" resource="0"
               file="Source/Audio Analysis/AudioAnalysis.cpp"/>
-        <FILE id="NH9YOx" name="AudioAnalysis.h" compile="0" resource="0" file="Source/Audio Analysis/AudioAnalysis.h"/>
-        <FILE id="dO1xiR" name="AudioAnalysisManager.cpp" compile="1" resource="0"
+        <FILE id="oMAhBz" name="AudioAnalysis.h" compile="0" resource="0" file="Source/Audio Analysis/AudioAnalysis.h"/>
+        <FILE id="OuF7MA" name="AudioAnalysisManager.cpp" compile="1" resource="0"
               file="Source/Audio Analysis/AudioAnalysisManager.cpp"/>
-        <FILE id="rIKHDs" name="AudioAnalysisManager.h" compile="0" resource="0"
+        <FILE id="VMGV8j" name="AudioAnalysisManager.h" compile="0" resource="0"
               file="Source/Audio Analysis/AudioAnalysisManager.h"/>
-        <FILE id="iE3Yjn" name="AudioBuffer.cpp" compile="1" resource="0" file="Source/Audio Analysis/AudioBuffer.cpp"/>
-        <FILE id="kGqbae" name="AudioBuffer.h" compile="0" resource="0" file="Source/Audio Analysis/AudioBuffer.h"/>
-        <FILE id="irIGZy" name="FFT.cpp" compile="1" resource="0" file="Source/Audio Analysis/FFT.cpp"/>
-        <FILE id="s31az6" name="FFT.h" compile="0" resource="0" file="Source/Audio Analysis/FFT.h"/>
-        <GROUP id="{A1400184-AB22-4EAF-2C44-EEFC78CD8D66}" name="kiss_fft130">
-          <FILE id="tInmvX" name="_kiss_fft_guts.h" compile="0" resource="0"
-                file="Source/Audio Analysis/kiss_fft130/_kiss_fft_guts.h"/>
-          <FILE id="OWtY0w" name="CHANGELOG" compile="0" resource="1" file="Source/Audio Analysis/kiss_fft130/CHANGELOG"/>
-          <FILE id="Cegekk" name="COPYING" compile="0" resource="1" file="Source/Audio Analysis/kiss_fft130/COPYING"/>
-          <FILE id="QBjpau" name="kiss_fft.c" compile="1" resource="0" file="Source/Audio Analysis/kiss_fft130/kiss_fft.c"/>
-          <FILE id="DJds97" name="kiss_fft.h" compile="0" resource="0" file="Source/Audio Analysis/kiss_fft130/kiss_fft.h"/>
-          <FILE id="PPeOkf" name="kissfft.hh" compile="0" resource="0" file="Source/Audio Analysis/kiss_fft130/kissfft.hh"/>
-          <FILE id="JS9gec" name="Makefile" compile="0" resource="1" file="Source/Audio Analysis/kiss_fft130/Makefile"/>
-          <FILE id="sAVJNe" name="README" compile="0" resource="1" file="Source/Audio Analysis/kiss_fft130/README"/>
-          <FILE id="YQN4XC" name="README.simd" compile="0" resource="1" file="Source/Audio Analysis/kiss_fft130/README.simd"/>
+        <FILE id="qHxN7e" name="AudioBuffer.cpp" compile="1" resource="0" file="Source/Audio Analysis/AudioBuffer.cpp"/>
+        <FILE id="ffKwVx" name="AudioBuffer.h" compile="0" resource="0" file="Source/Audio Analysis/AudioBuffer.h"/>
+        <GROUP id="{B104AE80-E29E-9C47-A17C-7F704719710F}" name="Gist">
+          <GROUP id="{E680687C-88AF-E481-090D-08CB712BB121}" name="core">
+            <FILE id="el1MgU" name="CoreFrequencyDomainFeatures.cpp" compile="1"
+                  resource="0" file="Source/Audio Analysis/Gist/core/CoreFrequencyDomainFeatures.cpp"/>
+            <FILE id="VccWKL" name="CoreFrequencyDomainFeatures.h" compile="0"
+                  resource="0" file="Source/Audio Analysis/Gist/core/CoreFrequencyDomainFeatures.h"/>
+            <FILE id="twxpFo" name="CoreTimeDomainFeatures.cpp" compile="1" resource="0"
+                  file="Source/Audio Analysis/Gist/core/CoreTimeDomainFeatures.cpp"/>
+            <FILE id="zp9IAq" name="CoreTimeDomainFeatures.h" compile="0" resource="0"
+                  file="Source/Audio Analysis/Gist/core/CoreTimeDomainFeatures.h"/>
+          </GROUP>
+          <FILE id="fAPYII" name="Gist.h" compile="0" resource="0" file="Source/Audio Analysis/Gist/Gist.h"/>
+          <GROUP id="{4D0089CE-BAD6-45E1-4235-F0F6F54099B5}" name="mfcc">
+            <FILE id="thMME4" name="MFCC.cpp" compile="1" resource="0" file="Source/Audio Analysis/Gist/mfcc/MFCC.cpp"/>
+            <FILE id="cu8Hyo" name="MFCC.h" compile="0" resource="0" file="Source/Audio Analysis/Gist/mfcc/MFCC.h"/>
+          </GROUP>
+          <GROUP id="{82BFBF28-3880-0486-A727-0A256D51D455}" name="onset-detection-functions">
+            <FILE id="tTZXPe" name="OnsetDetectionFunction.cpp" compile="1" resource="0"
+                  file="Source/Audio Analysis/Gist/onset-detection-functions/OnsetDetectionFunction.cpp"/>
+            <FILE id="b3oU6L" name="OnsetDetectionFunction.h" compile="0" resource="0"
+                  file="Source/Audio Analysis/Gist/onset-detection-functions/OnsetDetectionFunction.h"/>
+          </GROUP>
+          <GROUP id="{56B44D4D-2D8B-F731-CDFE-8D4CB7EA3766}" name="pitch">
+            <FILE id="fpSCBd" name="Yin.cpp" compile="1" resource="0" file="Source/Audio Analysis/Gist/pitch/Yin.cpp"/>
+            <FILE id="WaDJFA" name="Yin.h" compile="0" resource="0" file="Source/Audio Analysis/Gist/pitch/Yin.h"/>
+          </GROUP>
         </GROUP>
       </GROUP>
       <GROUP id="{D4AAB6E1-C1DC-EA71-4428-CD61C0EE9884}" name="Binary Data">
-        <FILE id="jE1DcM" name="tex2.png" compile="0" resource="1" file="Source/Binary Data/tex2.png"/>
+        <FILE id="Lr8tgu" name="tex2.png" compile="0" resource="1" file="Source/Binary Data/tex2.png"/>
       </GROUP>
       <GROUP id="{CBED0502-5EEF-C98B-8E69-65652E239DBC}" name="GUI">
-        <FILE id="Exfnwu" name="FFTComponent.cpp" compile="1" resource="0"
+        <FILE id="AFVroT" name="FFTComponent.cpp" compile="1" resource="0"
               file="Source/GUI/FFTComponent.cpp"/>
-        <FILE id="F1ZZIN" name="FFTComponent.h" compile="0" resource="0" file="Source/GUI/FFTComponent.h"/>
-        <FILE id="xoAE8n" name="PluginLookAndFeel.cpp" compile="1" resource="0"
+        <FILE id="hWFfrR" name="FFTComponent.h" compile="0" resource="0" file="Source/GUI/FFTComponent.h"/>
+        <FILE id="e5tomC" name="PluginLookAndFeel.cpp" compile="1" resource="0"
               file="Source/GUI/PluginLookAndFeel.cpp"/>
-        <FILE id="YTgD3y" name="PluginLookAndFeel.h" compile="0" resource="0"
+        <FILE id="JWyAeo" name="PluginLookAndFeel.h" compile="0" resource="0"
               file="Source/GUI/PluginLookAndFeel.h"/>
-        <FILE id="s3f8SD" name="SimpleAnalysisComponent.cpp" compile="1" resource="0"
+        <FILE id="hnUtaG" name="SimpleAnalysisComponent.cpp" compile="1" resource="0"
               file="Source/GUI/SimpleAnalysisComponent.cpp"/>
-        <FILE id="qrELP1" name="SimpleAnalysisComponent.h" compile="0" resource="0"
+        <FILE id="AjXcyH" name="SimpleAnalysisComponent.h" compile="0" resource="0"
               file="Source/GUI/SimpleAnalysisComponent.h"/>
       </GROUP>
       <GROUP id="{E272EF55-E791-F73E-CD41-E9ACF2676A38}" name="OSC">
         <GROUP id="{6D41ACEC-05D0-7535-6B53-138914AE1425}" name="oscpack_1_1_0">
-          <GROUP id="{5307764F-B5AC-37FD-AFA7-FB17E9D4B549}" name="ip">
-            <FILE id="c0UYCx" name="IpEndpointName.cpp" compile="1" resource="0"
+          <GROUP id="{63FD2E93-A59B-7E6F-40D0-E32421A9F9E2}" name="ip">
+            <FILE id="LXcgPH" name="IpEndpointName.cpp" compile="1" resource="0"
                   file="Source/OSC/oscpack_1_1_0/ip/IpEndpointName.cpp"/>
-            <FILE id="Or3K4A" name="IpEndpointName.h" compile="0" resource="0"
+            <FILE id="GE6zUc" name="IpEndpointName.h" compile="0" resource="0"
                   file="Source/OSC/oscpack_1_1_0/ip/IpEndpointName.h"/>
-            <FILE id="EoRlUm" name="NetworkingUtils.h" compile="0" resource="0"
+            <FILE id="djDsJc" name="NetworkingUtils.h" compile="0" resource="0"
                   file="Source/OSC/oscpack_1_1_0/ip/NetworkingUtils.h"/>
-            <FILE id="yNze3v" name="PacketListener.h" compile="0" resource="0"
+            <FILE id="Cba7DB" name="PacketListener.h" compile="0" resource="0"
                   file="Source/OSC/oscpack_1_1_0/ip/PacketListener.h"/>
-            <GROUP id="{82E1B718-CB80-F039-60D1-86245712F3F3}" name="posix">
-              <FILE id="RlluGo" name="NetworkingUtils.cpp" compile="1" resource="0"
+            <GROUP id="{76875E65-9048-704C-8E80-015F14826FED}" name="posix">
+              <FILE id="d4bgnv" name="NetworkingUtils.cpp" compile="1" resource="0"
                     file="Source/OSC/oscpack_1_1_0/ip/posix/NetworkingUtils.cpp"/>
-              <FILE id="iGjDZL" name="UdpSocket.cpp" compile="1" resource="0" file="Source/OSC/oscpack_1_1_0/ip/posix/UdpSocket.cpp"/>
+              <FILE id="PBM0wt" name="UdpSocket.cpp" compile="1" resource="0" file="Source/OSC/oscpack_1_1_0/ip/posix/UdpSocket.cpp"/>
             </GROUP>
-            <FILE id="YERyPc" name="TimerListener.h" compile="0" resource="0" file="Source/OSC/oscpack_1_1_0/ip/TimerListener.h"/>
-            <FILE id="sats0T" name="UdpSocket.h" compile="0" resource="0" file="Source/OSC/oscpack_1_1_0/ip/UdpSocket.h"/>
-            <GROUP id="{1AEB51FB-205F-2BDA-53E8-0C89540D951C}" name="win32">
-              <FILE id="q1WmEk" name="NetworkingUtils.cpp" compile="1" resource="0"
+            <FILE id="cKa0nB" name="TimerListener.h" compile="0" resource="0" file="Source/OSC/oscpack_1_1_0/ip/TimerListener.h"/>
+            <FILE id="yeqMkV" name="UdpSocket.h" compile="0" resource="0" file="Source/OSC/oscpack_1_1_0/ip/UdpSocket.h"/>
+            <GROUP id="{0E836BE1-CB37-E5FF-5F5F-A25087E48D70}" name="win32">
+              <FILE id="U6I3sk" name="NetworkingUtils.cpp" compile="1" resource="0"
                     file="Source/OSC/oscpack_1_1_0/ip/win32/NetworkingUtils.cpp"/>
-              <FILE id="lpOkUY" name="UdpSocket.cpp" compile="1" resource="0" file="Source/OSC/oscpack_1_1_0/ip/win32/UdpSocket.cpp"/>
+              <FILE id="N3qCx6" name="UdpSocket.cpp" compile="1" resource="0" file="Source/OSC/oscpack_1_1_0/ip/win32/UdpSocket.cpp"/>
             </GROUP>
           </GROUP>
-          <FILE id="uwzVfp" name="LICENSE" compile="0" resource="1" file="Source/OSC/oscpack_1_1_0/LICENSE"/>
-          <FILE id="B7MWI2" name="make.MinGW32.bat" compile="0" resource="1"
-                file="Source/OSC/oscpack_1_1_0/make.MinGW32.bat"/>
-          <FILE id="o9Mfcj" name="Makefile" compile="0" resource="1" file="Source/OSC/oscpack_1_1_0/Makefile"/>
-          <GROUP id="{16D78EF6-7D97-D15F-C63B-0BB73DDA952F}" name="osc">
-            <FILE id="Jb7sJP" name="MessageMappingOscPacketListener.h" compile="0"
+          <GROUP id="{44108E9A-D4B4-1ABB-A227-6FC4C91E49DC}" name="osc">
+            <FILE id="WnrNpn" name="MessageMappingOscPacketListener.h" compile="0"
                   resource="0" file="Source/OSC/oscpack_1_1_0/osc/MessageMappingOscPacketListener.h"/>
-            <FILE id="Oh3Yvx" name="OscException.h" compile="0" resource="0" file="Source/OSC/oscpack_1_1_0/osc/OscException.h"/>
-            <FILE id="ymLQD9" name="OscHostEndianness.h" compile="0" resource="0"
+            <FILE id="FtLJjV" name="OscException.h" compile="0" resource="0" file="Source/OSC/oscpack_1_1_0/osc/OscException.h"/>
+            <FILE id="ZKKRRD" name="OscHostEndianness.h" compile="0" resource="0"
                   file="Source/OSC/oscpack_1_1_0/osc/OscHostEndianness.h"/>
-            <FILE id="tqsjmi" name="OscOutboundPacketStream.cpp" compile="1" resource="0"
+            <FILE id="a4rRrH" name="OscOutboundPacketStream.cpp" compile="1" resource="0"
                   file="Source/OSC/oscpack_1_1_0/osc/OscOutboundPacketStream.cpp"/>
-            <FILE id="EFNHga" name="OscOutboundPacketStream.h" compile="0" resource="0"
+            <FILE id="STZAxj" name="OscOutboundPacketStream.h" compile="0" resource="0"
                   file="Source/OSC/oscpack_1_1_0/osc/OscOutboundPacketStream.h"/>
-            <FILE id="hE9zPu" name="OscPacketListener.h" compile="0" resource="0"
+            <FILE id="oUGyct" name="OscPacketListener.h" compile="0" resource="0"
                   file="Source/OSC/oscpack_1_1_0/osc/OscPacketListener.h"/>
-            <FILE id="Q0TUjr" name="OscPrintReceivedElements.cpp" compile="1" resource="0"
+            <FILE id="jj8OSr" name="OscPrintReceivedElements.cpp" compile="1" resource="0"
                   file="Source/OSC/oscpack_1_1_0/osc/OscPrintReceivedElements.cpp"/>
-            <FILE id="fqSjp6" name="OscPrintReceivedElements.h" compile="0" resource="0"
+            <FILE id="e23p8v" name="OscPrintReceivedElements.h" compile="0" resource="0"
                   file="Source/OSC/oscpack_1_1_0/osc/OscPrintReceivedElements.h"/>
-            <FILE id="CZYtNd" name="OscReceivedElements.cpp" compile="1" resource="0"
+            <FILE id="BBLJtC" name="OscReceivedElements.cpp" compile="1" resource="0"
                   file="Source/OSC/oscpack_1_1_0/osc/OscReceivedElements.cpp"/>
-            <FILE id="LIpms6" name="OscReceivedElements.h" compile="0" resource="0"
+            <FILE id="bAqz3d" name="OscReceivedElements.h" compile="0" resource="0"
                   file="Source/OSC/oscpack_1_1_0/osc/OscReceivedElements.h"/>
-            <FILE id="ORwh22" name="OscTypes.cpp" compile="1" resource="0" file="Source/OSC/oscpack_1_1_0/osc/OscTypes.cpp"/>
-            <FILE id="T0OLAt" name="OscTypes.h" compile="0" resource="0" file="Source/OSC/oscpack_1_1_0/osc/OscTypes.h"/>
+            <FILE id="g0Ruol" name="OscTypes.cpp" compile="1" resource="0" file="Source/OSC/oscpack_1_1_0/osc/OscTypes.cpp"/>
+            <FILE id="b0bR4i" name="OscTypes.h" compile="0" resource="0" file="Source/OSC/oscpack_1_1_0/osc/OscTypes.h"/>
           </GROUP>
-          <FILE id="Va7Ixn" name="README" compile="0" resource="1" file="Source/OSC/oscpack_1_1_0/README"/>
-          <FILE id="cbcu0x" name="TODO" compile="0" resource="1" file="Source/OSC/oscpack_1_1_0/TODO"/>
         </GROUP>
-        <FILE id="c38Uxa" name="OSCSender.cpp" compile="1" resource="0" file="Source/OSC/OSCSender.cpp"/>
-        <FILE id="ULtCcg" name="OSCSender.h" compile="0" resource="0" file="Source/OSC/OSCSender.h"/>
+        <FILE id="drFBxD" name="OSCSender.cpp" compile="1" resource="0" file="Source/OSC/OSCSender.cpp"/>
+        <FILE id="vf2E4q" name="OSCSender.h" compile="0" resource="0" file="Source/OSC/OSCSender.h"/>
       </GROUP>
-      <FILE id="uCVtAQ" name="PluginEditor.cpp" compile="1" resource="0"
+      <FILE id="EN0mNh" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
-      <FILE id="ZH8FV9" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
-      <FILE id="pUD0TJ" name="PluginProcessor.cpp" compile="1" resource="0"
+      <FILE id="ftynzf" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="HnNsTE" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
-      <FILE id="O03r2Q" name="PluginProcessor.h" compile="0" resource="0"
+      <FILE id="H8OCkW" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
     </GROUP>
   </MAINGROUP>
@@ -157,13 +165,13 @@
   <JUCEOPTIONS JUCE_QUICKTIME="disabled"/>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" vstFolder="../SDKs/vstsdk2.4" postbuildCommand="&#13;&#10;# This script takes the build product and copies it to the AU, VST, and RTAS folders, depending on &#13;&#10;# which plugin types you've built&#13;&#10;&#13;&#10;original=$CONFIGURATION_BUILD_DIR/$FULL_PRODUCT_NAME&#13;&#10;&#13;&#10;# this looks inside the binary to detect which platforms are needed.. &#13;&#10;copyAU=&#96;nm -g &quot;$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH&quot; | grep -i 'AudioUnit' | wc -l&#96;&#13;&#10;copyVST=&#96;nm -g &quot;$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH&quot; | grep -i 'VSTPlugin' | wc -l&#96;&#13;&#10;copyRTAS=&#96;nm -g &quot;$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH&quot; | grep -i 'CProcess' | wc -l&#96;&#13;&#10;copyAAX=&#96;nm -g &quot;$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH&quot; | grep -i 'ACFStartup' | wc -l&#96;&#13;&#10;&#13;&#10;if [ $copyAU -gt 0 ]; then&#13;&#10;  echo &quot;Copying to AudioUnit folder...&quot;&#13;&#10;  AU=~/Library/Audio/Plug-Ins/Components/$PRODUCT_NAME.component&#13;&#10;  if [ -d &quot;$AU&quot; ]; then &#13;&#10;    rm -r &quot;$AU&quot;&#13;&#10;  fi&#13;&#10;&#13;&#10;  cp -r &quot;$original&quot; &quot;$AU&quot;&#13;&#10;  sed -i &quot;&quot; -e 's/TDMwPTul/BNDLPTul/g' &quot;$AU/Contents/PkgInfo&quot;&#13;&#10;  sed -i &quot;&quot; -e 's/TDMw/BNDL/g' &quot;$AU/Contents/$INFOPLIST_FILE&quot;&#13;&#10;&#13;&#10;  # Fix info.plist for AUs built with Xcode 3&#13;&#10;  if [ -f &quot;$DEVELOPER_DIR/Library/Developer/CoreAudio/AudioUnits/AUPublic/AUBase/AUPlugInDispatch.cpp&quot; ]; then&#13;&#10;    echo&#13;&#10;  else&#13;&#10;    echo &quot;Removing AudioComponents entry from Info.plist because this is not a new-format AU&quot;&#13;&#10;    /usr/libexec/PlistBuddy -c &quot;Delete AudioComponents&quot; &quot;$AU/Contents/Info.plist&quot;&#13;&#10;  fi&#13;&#10;fi&#13;&#10;&#13;&#10;if [ $copyVST -gt 0 ]; then&#13;&#10;  echo &quot;Copying to VST folder...&quot;&#13;&#10;  VST=~/Library/Audio/Plug-Ins/VST/$PRODUCT_NAME.vst&#13;&#10;  if [ -d &quot;$VST&quot; ]; then &#13;&#10;    rm -r &quot;$VST&quot;&#13;&#10;  fi&#13;&#10;&#13;&#10;  cp -r &quot;$original&quot; &quot;$VST&quot;&#13;&#10;  sed -i &quot;&quot; -e 's/TDMwPTul/BNDLPTul/g' &quot;$VST/Contents/PkgInfo&quot;&#13;&#10;  sed -i &quot;&quot; -e 's/TDMw/BNDL/g' &quot;$VST/Contents/$INFOPLIST_FILE&quot;&#13;&#10;fi&#13;&#10;&#13;&#10;if [ $copyRTAS -gt 0 ]; then&#13;&#10;  echo &quot;Copying to RTAS folder...&quot;&#13;&#10;  RTAS=/Library/Application\ Support/Digidesign/Plug-Ins/$PRODUCT_NAME.dpm&#13;&#10;  if [ -d &quot;$RTAS&quot; ]; then&#13;&#10;    rm -r &quot;$RTAS&quot;&#13;&#10;  fi&#13;&#10;&#13;&#10;  cp -r &quot;$original&quot; &quot;$RTAS&quot;&#13;&#10;fi&#13;&#10;&#13;&#10;if [ $copyAAX -gt 0 ]; then&#13;&#10;  echo &quot;Copying to AAX folder...&quot;&#13;&#10;&#13;&#10;  if [ -d &quot;/Applications/ProTools_3PDev/Plug-Ins&quot; ]; then&#13;&#10;    AAX1=&quot;/Applications/ProTools_3PDev/Plug-Ins/$PRODUCT_NAME.aaxplugin&quot;&#13;&#10;&#13;&#10;    if [ -d &quot;$AAX1&quot; ]; then&#13;&#10;      rm -r &quot;$AAX1&quot;&#13;&#10;    fi&#13;&#10;&#13;&#10;    cp -r &quot;$original&quot; &quot;$AAX1&quot;&#13;&#10;  fi&#13;&#10;&#13;&#10;  if [ -d &quot;/Library/Application Support/Avid/Audio/Plug-Ins&quot; ]; then&#13;&#10;    AAX2=&quot;/Library/Application Support/Avid/Audio/Plug-Ins/$PRODUCT_NAME.aaxplugin&quot;&#13;&#10;&#13;&#10;    if [ -d &quot;$AAX2&quot; ]; then&#13;&#10;      rm -r &quot;$AAX2&quot;&#13;&#10;    fi&#13;&#10;&#13;&#10;    cp -r &quot;$original&quot; &quot;$AAX2&quot;&#13;&#10;  fi&#13;&#10;fi&#13;&#10;"
-               extraLinkerFlags="-lspeexdsp" vst3Folder="../SDKs/VST3 SDK">
+               extraLinkerFlags="-lspeexdsp -lfftw3" vst3Folder="../SDKs/VST3 SDK">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="default" osxArchitecture="32BitUniversal"
-                       isDebug="1" optimisation="1" targetName="SoundAnalyser" headerPath="/usr/local/include"
+                       isDebug="1" optimisation="1" targetName="Sound Analyser" headerPath="/usr/local/include"
                        libraryPath="/usr/local/lib"/>
         <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="default" osxArchitecture="32BitUniversal"
-                       isDebug="0" optimisation="2" targetName="SoundAnalyser" libraryPath="/usr/local/lib"
+                       isDebug="0" optimisation="2" targetName="Sound Analyser" libraryPath="/usr/local/lib"
                        headerPath="/usr/local/include"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

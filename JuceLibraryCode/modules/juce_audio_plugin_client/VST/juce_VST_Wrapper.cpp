@@ -63,8 +63,10 @@
  #pragma clang diagnostic push
  #pragma clang diagnostic ignored "-Wconversion"
  #pragma clang diagnostic ignored "-Wshadow"
+ #pragma clang diagnostic ignored "-Wdeprecated-register"
  #pragma clang diagnostic ignored "-Wunused-parameter"
  #pragma clang diagnostic ignored "-Wdeprecated-writable-strings"
+ #pragma clang diagnostic ignored "-Wnon-virtual-dtor"
 #endif
 
 /*  These files come with the Steinberg VST SDK - to get them, you'll need to
@@ -83,6 +85,15 @@
 
 #if ! VST_2_4_EXTENSIONS
  #error "It looks like you're trying to include an out-of-date VSTSDK version - make sure you have at least version 2.4"
+#endif
+
+#ifndef JUCE_VST3_CAN_REPLACE_VST2
+ #define JUCE_VST3_CAN_REPLACE_VST2 1
+#endif
+
+#if JucePlugin_Build_VST3 && JUCE_VST3_CAN_REPLACE_VST2
+ #include <pluginterfaces/base/funknown.h>
+ namespace juce { extern Steinberg::FUID getJuceVST3ComponentIID(); }
 #endif
 
 #ifdef __clang__
@@ -391,6 +402,21 @@ public:
         {
             useNSView = true;
             return 0xbeef0000;
+        }
+       #endif
+
+        return 0;
+    }
+
+    VstIntPtr vendorSpecific (VstInt32 lArg, VstIntPtr lArg2, void* ptrArg, float floatArg) override
+    {
+        (void) lArg; (void) lArg2; (void) ptrArg; (void) floatArg;
+
+       #if JucePlugin_Build_VST3 && JUCE_VST3_CAN_REPLACE_VST2
+        if ((lArg == 'stCA' || lArg == 'stCa') && lArg2 == 'FUID' && ptrArg != nullptr)
+        {
+            memcpy (ptrArg, getJuceVST3ComponentIID(), 16);
+            return 1;
         }
        #endif
 
@@ -1025,7 +1051,8 @@ public:
                 Timer::callPendingTimersSynchronously();
 
                 for (int i = ComponentPeer::getNumPeers(); --i >= 0;)
-                    ComponentPeer::getPeer (i)->performAnyPendingRepaintsNow();
+                    if (ComponentPeer* p = ComponentPeer::getPeer(i))
+                        p->performAnyPendingRepaintsNow();
 
                 recursionCheck = false;
             }
@@ -1134,10 +1161,8 @@ public:
                 editorComp->addToDesktop (0, ptr);
                 hostWindow = (HWND) ptr;
               #elif JUCE_LINUX
-                editorComp->addToDesktop (0);
+                editorComp->addToDesktop (0, ptr);
                 hostWindow = (Window) ptr;
-                Window editorWnd = (Window) editorComp->getWindowHandle();
-                XReparentWindow (display, editorWnd, hostWindow, 0, 0);
               #else
                 hostWindow = attachComponentToWindowRef (editorComp, ptr, useNSView);
               #endif
