@@ -40,12 +40,19 @@ public:
 
     void timerCallback() override
     {
-        const float newLevel = (float) manager.getCurrentInputLevel();
-
-        if (std::abs (level - newLevel) > 0.005f)
+        if (isShowing())
         {
-            level = newLevel;
-            repaint();
+            const float newLevel = (float) manager.getCurrentInputLevel();
+
+            if (std::abs (level - newLevel) > 0.005f)
+            {
+                level = newLevel;
+                repaint();
+            }
+        }
+        else
+        {
+            level = 0;
         }
     }
 
@@ -68,11 +75,10 @@ class AudioDeviceSelectorComponent::MidiInputSelectorComponentListBox  : public 
                                                                          private ListBoxModel
 {
 public:
-    MidiInputSelectorComponentListBox (AudioDeviceManager& dm,
-                                       const String& noItemsMessage_)
+    MidiInputSelectorComponentListBox (AudioDeviceManager& dm, const String& noItems)
         : ListBox (String::empty, nullptr),
           deviceManager (dm),
-          noItemsMessage (noItemsMessage_)
+          noItemsMessage (noItems)
     {
         items = MidiInput::getDevices();
 
@@ -80,15 +86,12 @@ public:
         setOutlineThickness (1);
     }
 
-    int getNumRows()
+    int getNumRows() override
     {
         return items.size();
     }
 
-    void paintListBoxItem (int row,
-                           Graphics& g,
-                           int width, int height,
-                           bool rowIsSelected)
+    void paintListBoxItem (int row, Graphics& g, int width, int height, bool rowIsSelected) override
     {
         if (isPositiveAndBelow (row, items.size()))
         {
@@ -111,7 +114,7 @@ public:
         }
     }
 
-    void listBoxItemClicked (int row, const MouseEvent& e)
+    void listBoxItemClicked (int row, const MouseEvent& e) override
     {
         selectRow (row);
 
@@ -119,12 +122,12 @@ public:
             flipEnablement (row);
     }
 
-    void listBoxItemDoubleClicked (int row, const MouseEvent&)
+    void listBoxItemDoubleClicked (int row, const MouseEvent&) override
     {
         flipEnablement (row);
     }
 
-    void returnKeyPressed (int row)
+    void returnKeyPressed (int row) override
     {
         flipEnablement (row);
     }
@@ -352,7 +355,7 @@ public:
 
         if (error.isNotEmpty())
             AlertWindow::showMessageBoxAsync (AlertWindow::WarningIcon,
-                                              TRANS ("Error when trying to open audio device!"),
+                                              TRANS("Error when trying to open audio device!"),
                                               error);
     }
 
@@ -410,7 +413,7 @@ public:
                     addAndMakeVisible (outputChanList
                         = new ChannelSelectorListBox (setup, ChannelSelectorListBox::audioOutputType,
                                                       TRANS ("(no audio output channels found)")));
-                    outputChanLabel = new Label (String::empty, TRANS ("active output channels:"));
+                    outputChanLabel = new Label (String::empty, TRANS("Active output channels:"));
                     outputChanLabel->attachToComponent (outputChanList, true);
                 }
 
@@ -429,8 +432,8 @@ public:
                 {
                     addAndMakeVisible (inputChanList
                         = new ChannelSelectorListBox (setup, ChannelSelectorListBox::audioInputType,
-                                                      TRANS ("(no audio input channels found)")));
-                    inputChanLabel = new Label (String::empty, TRANS ("active input channels:"));
+                                                      TRANS("(no audio input channels found)")));
+                    inputChanLabel = new Label (String::empty, TRANS("Active input channels:"));
                     inputChanLabel->attachToComponent (inputChanList, true);
                 }
 
@@ -525,8 +528,8 @@ private:
 
         if (currentDevice != nullptr && currentDevice->hasControlPanel())
         {
-            addAndMakeVisible (showUIButton = new TextButton (TRANS ("show this device's control panel"),
-                                                              TRANS ("opens the device's own control panel")));
+            addAndMakeVisible (showUIButton = new TextButton (TRANS ("Show this device's control panel"),
+                                                              TRANS ("Opens the device's own control panel")));
             showUIButton->addListener (this);
         }
 
@@ -544,13 +547,13 @@ private:
                 addAndMakeVisible (outputDeviceDropDown);
 
                 outputDeviceLabel = new Label (String::empty,
-                                               type.hasSeparateInputsAndOutputs() ? TRANS ("output:")
-                                                                                  : TRANS ("device:"));
+                                               type.hasSeparateInputsAndOutputs() ? TRANS("Output:")
+                                                                                  : TRANS("Device:"));
                 outputDeviceLabel->attachToComponent (outputDeviceDropDown, true);
 
                 if (setup.maxNumOutputChannels > 0)
                 {
-                    addAndMakeVisible (testButton = new TextButton (TRANS ("Test")));
+                    addAndMakeVisible (testButton = new TextButton (TRANS("Test")));
                     testButton->addListener (this);
                 }
             }
@@ -571,7 +574,7 @@ private:
                 inputDeviceDropDown->addListener (this);
                 addAndMakeVisible (inputDeviceDropDown);
 
-                inputDeviceLabel = new Label (String::empty, TRANS ("input:"));
+                inputDeviceLabel = new Label (String::empty, TRANS("Input:"));
                 inputDeviceLabel->attachToComponent (inputDeviceDropDown, true);
 
                 addAndMakeVisible (inputLevelMeter
@@ -590,7 +593,7 @@ private:
         {
             addAndMakeVisible (sampleRateDropDown = new ComboBox (String::empty));
 
-            sampleRateLabel = new Label (String::empty, TRANS ("sample rate:"));
+            sampleRateLabel = new Label (String::empty, TRANS("Sample rate:"));
             sampleRateLabel->attachToComponent (sampleRateDropDown, true);
         }
         else
@@ -599,11 +602,11 @@ private:
             sampleRateDropDown->removeListener (this);
         }
 
-        const int numRates = currentDevice->getNumSampleRates();
+        const Array<double> rates (currentDevice->getAvailableSampleRates());
 
-        for (int i = 0; i < numRates; ++i)
+        for (int i = 0; i < rates.size(); ++i)
         {
-            const int rate = roundToInt (currentDevice->getSampleRate (i));
+            const int rate = roundToInt (rates[i]);
             sampleRateDropDown->addItem (String (rate) + " Hz", rate);
         }
 
@@ -617,7 +620,7 @@ private:
         {
             addAndMakeVisible (bufferSizeDropDown = new ComboBox (String::empty));
 
-            bufferSizeLabel = new Label (String::empty, TRANS ("audio buffer size:"));
+            bufferSizeLabel = new Label (String::empty, TRANS("Audio buffer size:"));
             bufferSizeLabel->attachToComponent (bufferSizeDropDown, true);
         }
         else
@@ -626,19 +629,16 @@ private:
             bufferSizeDropDown->removeListener (this);
         }
 
-        const int numBufferSizes = currentDevice->getNumBufferSizesAvailable();
+        const Array<int> bufferSizes (currentDevice->getAvailableBufferSizes());
+
         double currentRate = currentDevice->getCurrentSampleRate();
         if (currentRate == 0)
             currentRate = 48000.0;
 
-        for (int i = 0; i < numBufferSizes; ++i)
+        for (int i = 0; i < bufferSizes.size(); ++i)
         {
-            const int bs = currentDevice->getBufferSizeSamples (i);
-            bufferSizeDropDown->addItem (String (bs)
-                                          + " samples ("
-                                          + String (bs * 1000.0 / currentRate, 1)
-                                          + " ms)",
-                                         bs);
+            const int bs = bufferSizes[i];
+            bufferSizeDropDown->addItem (String (bs) + " samples (" + String (bs * 1000.0 / currentRate, 1) + " ms)", bs);
         }
 
         bufferSizeDropDown->setSelectedId (currentDevice->getCurrentBufferSizeSamples(), dontSendNotification);
@@ -936,7 +936,7 @@ AudioDeviceSelectorComponent::AudioDeviceSelectorComponent (AudioDeviceManager& 
         addAndMakeVisible (deviceTypeDropDown);
         deviceTypeDropDown->addListener (this);
 
-        deviceTypeDropDownLabel = new Label (String::empty, TRANS ("Audio device type:"));
+        deviceTypeDropDownLabel = new Label (String::empty, TRANS("Audio device type:"));
         deviceTypeDropDownLabel->setJustificationType (Justification::centredRight);
         deviceTypeDropDownLabel->attachToComponent (deviceTypeDropDown, true);
     }

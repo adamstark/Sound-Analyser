@@ -18,6 +18,8 @@ SoundAnalyserAudioProcessor::SoundAnalyserAudioProcessor() : analyserTree( Analy
     
     
     analyserTree.addListener(this);
+    
+    refreshFromTree();
 }
 
 //==============================================================================
@@ -26,28 +28,20 @@ SoundAnalyserAudioProcessor::~SoundAnalyserAudioProcessor()
 }
 
 //==============================================================================
-float SoundAnalyserAudioProcessor::booleanToFloat(bool input)
+void SoundAnalyserAudioProcessor::refreshFromTree()
 {
-    if (input)
+    analyser.setBufferSize(analyserTree[AnalysisModel::Ids::BufferSize]);
+    
+    analyser.setOSCPort(analyserTree[AnalysisModel::Ids::Port]);
+    
+    analyser.setIPAddress(analyserTree[AnalysisModel::Ids::IPAddress].toString().toStdString());
+    
+    
+    for (int i = 0;i < analyser.audioAnalyses.size();i++)
     {
-        return 1.0;
-    }
-    else
-    {
-        return 0.0;
-    }
-}
-
-//==============================================================================
-bool SoundAnalyserAudioProcessor::floatToBoolean(float input)
-{
-    if (input == 1.0)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
+        ValueTree tree = analyserTree.getChildWithName(analyser.audioAnalyses[i]->getIdentifier());
+        
+        analyser.audioAnalyses[i]->initialise(tree);
     }
 }
 
@@ -234,7 +228,6 @@ bool SoundAnalyserAudioProcessor::hasEditor() const
 //==============================================================================
 AudioProcessorEditor* SoundAnalyserAudioProcessor::createEditor()
 {
-    DBG("CREATE EDITOR CALLED");
  //   editor = new SoundAnalyserAudioProcessorEditor (this,analyserTree);
  
     return new SoundAnalyserAudioProcessorEditor (this,analyserTree);
@@ -244,70 +237,20 @@ AudioProcessorEditor* SoundAnalyserAudioProcessor::createEditor()
 //==============================================================================
 void SoundAnalyserAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
-    DBG("GET STATE INFORMATION CALLED");
+    ScopedPointer<XmlElement> xml = analyserTree.createXml();
     
-    DBG("ANALYSER TREE TYPE: " << analyserTree.getType().toString());
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
-    
-    /*
-
-    // Create an outer XML element..
-    XmlElement xml ("SoundAnalyserSettings");
-    
-    // add some attributes to it..
-    xml.setAttribute ("sendRMS", analyser.sendRMS);
-    xml.setAttribute ("sendPeak",analyser.sendPeak);
-    xml.setAttribute ("sendSpectralCentroid",analyser.sendSpectralCentroid);
-     */
-    
-    XmlElement xml(*analyserTree.createXml());
-        
     // then use this helper function to stuff it into the binary blob and return it..
-    copyXmlToBinary (xml, destData);
+    copyXmlToBinary (*xml, destData);
 }
 
 //==============================================================================
 void SoundAnalyserAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    DBG("SET STATE INFORMATION CALLED");
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
-    
-
     ScopedPointer<XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
     
-    ValueTree newTree = ValueTree::fromXml(*xmlState);
-    
-    DBG("NEW TREE TYPE: " << newTree.getType().toString() << " WITH " << newTree.getNumChildren() << " CHILDREN");
-    
-    analyserTree.copyPropertiesFrom(newTree, nullptr);
-
-    DBG("ANALYSER TREE TYPE: " << analyserTree.getType().toString() << " WITH " << analyserTree.getNumChildren() << " CHILDREN");
-    
-    analyserTree = newTree;
-    
-    DBG("ANALYSER TREE TYPE: " << analyserTree.getType().toString() << " WITH " << analyserTree.getNumChildren() << " CHILDREN");
-    
+    analyserTree = ValueTree::fromXml(*xmlState);
     
     refreshFromTree();
-    
-    //((SoundAnalyserAudioProcessorEditor*)editor)->setValueTree(analyserTree);
-    
-    /*
-    //newTree.fromXml(&xmlState);
-    
-    if (xmlState != nullptr)
-    {
-        // make sure that it's actually our type of XML object..
-        if (xmlState->hasTagName ("SoundAnalyserSettings"))
-        {            
-            analyser.sendRMS = (bool) xmlState->getBoolAttribute("sendRMS",analyser.sendRMS);
-            analyser.sendPeak = (bool) xmlState->getBoolAttribute("sendPeak",analyser.sendPeak);
-            analyser.sendSpectralCentroid = (bool) xmlState->getBoolAttribute("sendSpectralCentroid",analyser.sendSpectralCentroid);
-        }
-    }*/
 }
 
 //==============================================================================
@@ -331,6 +274,14 @@ void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhose
         else if (property == AnalysisModel::Ids::BufferSize)
         {
             analyser.setBufferSize(treeWhosePropertyHasChanged[property]);
+        }
+        else if (property == AnalysisModel::Ids::Port)
+        {
+            analyser.setOSCPort(treeWhosePropertyHasChanged[property]);
+        }
+        else if (property == AnalysisModel::Ids::IPAddress)
+        {
+            analyser.setIPAddress(treeWhosePropertyHasChanged[property].toString().toStdString());
         }
     }
     else
@@ -362,19 +313,16 @@ void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhose
                 }
             }
         }
-        // FFT numSamples
-        else if (property == AnalysisProperties::FFT::numSamplesToSend)
+        else // deal with custom properties here
         {
             for (int i = 0;i < analyser.audioAnalyses.size();i++)
             {
-                if (AnalysisTypes::FFT == analyser.audioAnalyses[i]->getIdentifier())
+                if (treeWhosePropertyHasChanged.getType() == analyser.audioAnalyses[i]->getIdentifier())
                 {
-                    int numSamples = treeWhosePropertyHasChanged[AnalysisProperties::FFT::numSamplesToSend];
-                    
-                    // set num samples to send
-                    ((FFTMagnitudeSpectrum*)analyser.audioAnalyses[i])->setNumFFTSamplesToSend(numSamples);
+                    analyser.audioAnalyses[i]->handleCustomPropertyChange(treeWhosePropertyHasChanged, property);
                 }
             }
+                
         }
         
         
@@ -384,7 +332,7 @@ void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhose
 //==============================================================================
 void SoundAnalyserAudioProcessor::valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded)
 {
-    DBG("ADDED NEW NODE IN PROCESSOR: " << childWhichHasBeenAdded.getType().toString())
+    refreshFromTree();
 }
 
 //==============================================================================
@@ -396,7 +344,6 @@ void SoundAnalyserAudioProcessor::valueTreeChildRemoved (ValueTree& parentTree, 
         {
             analyser.audioAnalyses[i]->send = false;
             analyser.audioAnalyses[i]->plot = false;
-            DBG("REMOVED ANALYSIS: " << analyser.audioAnalyses[i]->getIdentifier().toString());
         }
     }
 }

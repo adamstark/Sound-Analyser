@@ -180,6 +180,11 @@ public:
         release (bufferFromText (text));
     }
 
+    static inline int getReferenceCount (const CharPointerType text) noexcept
+    {
+        return bufferFromText (text)->refCount.get() + 1;
+    }
+
     //==============================================================================
     static CharPointerType makeUniqueWithByteSize (const CharPointerType text, size_t numBytes)
     {
@@ -259,6 +264,12 @@ void String::swapWith (String& other) noexcept
     std::swap (text, other.text);
 }
 
+void String::clear() noexcept
+{
+    StringHolder::release (text);
+    text = &(emptyString.text);
+}
+
 String& String::operator= (const String& other) noexcept
 {
     StringHolder::retain (other.text);
@@ -279,7 +290,7 @@ String& String::operator= (String&& other) noexcept
 }
 #endif
 
-inline String::PreallocationBytes::PreallocationBytes (const size_t numBytes_) : numBytes (numBytes_) {}
+inline String::PreallocationBytes::PreallocationBytes (const size_t num) noexcept : numBytes (num) {}
 
 String::String (const PreallocationBytes& preallocationSize)
     : text (StringHolder::createUninitialisedBytes (preallocationSize.numBytes + sizeof (CharPointerType::CharType)))
@@ -289,6 +300,11 @@ String::String (const PreallocationBytes& preallocationSize)
 void String::preallocateBytes (const size_t numBytesNeeded)
 {
     text = StringHolder::makeUniqueWithByteSize (text, numBytesNeeded + sizeof (CharPointerType::CharType));
+}
+
+int String::getReferenceCount() const noexcept
+{
+    return StringHolder::getReferenceCount (text);
 }
 
 //==============================================================================
@@ -307,6 +323,10 @@ String::String (const char* const t)
         you use UTF-8 with escape characters in your source code to represent extended characters,
         because there's no other way to represent these strings in a way that isn't dependent on
         the compiler, source code editor and platform.
+
+        Note that the Introjucer has a handy string literal generator utility that will convert
+        any unicode string to a valid C++ string literal, creating ascii escape sequences that will
+        work in any compiler.
     */
     jassert (t == nullptr || CharPointer_ASCII::isValidString (t, std::numeric_limits<int>::max()));
 }
@@ -326,6 +346,10 @@ String::String (const char* const t, const size_t maxChars)
         you use UTF-8 with escape characters in your source code to represent extended characters,
         because there's no other way to represent these strings in a way that isn't dependent on
         the compiler, source code editor and platform.
+
+        Note that the Introjucer has a handy string literal generator utility that will convert
+        any unicode string to a valid C++ string literal, creating ascii escape sequences that will
+        work in any compiler.
     */
     jassert (t == nullptr || CharPointer_ASCII::isValidString (t, (int) maxChars));
 }
@@ -419,7 +443,8 @@ namespace NumberToStringConverters
     {
         explicit StackArrayStream (char* d)
         {
-            imbue (std::locale::classic());
+            static const std::locale classicLocale (std::locale::classic());
+            imbue (classicLocale);
             setp (d, d + charsNeededForDouble);
         }
 
@@ -2397,6 +2422,28 @@ public:
             toks.addTokens ("x,'y,z',", ";,", "'");
             expectEquals (toks.size(), 3);
             expectEquals (toks.joinIntoString ("-"), String ("x-'y,z'-"));
+        }
+
+        {
+            beginTest ("var");
+
+            var v1 = 0;
+            var v2 = 0.1;
+            var v3 = "0.1";
+            var v4 = (int64) 0;
+            var v5 = 0.0;
+            expect (! v2.equals (v1));
+            expect (! v1.equals (v2));
+            expect (v2.equals (v3));
+            expect (v3.equals (v2));
+            expect (! v3.equals (v1));
+            expect (! v1.equals (v3));
+            expect (v1.equals (v4));
+            expect (v4.equals (v1));
+            expect (v5.equals (v4));
+            expect (v4.equals (v5));
+            expect (! v2.equals (v4));
+            expect (! v4.equals (v2));
         }
     }
 };

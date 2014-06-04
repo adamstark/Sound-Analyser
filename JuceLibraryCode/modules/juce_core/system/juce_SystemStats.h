@@ -58,6 +58,7 @@ public:
         MacOSX_10_6 = 0x1006,
         MacOSX_10_7 = 0x1007,
         MacOSX_10_8 = 0x1008,
+        MacOSX_10_9 = 0x1009,
 
         Win2000     = 0x4105,
         WinXP       = 0x4106,
@@ -117,7 +118,9 @@ public:
     static String getUserRegion();
 
     /** Returns the user's display language.
-        The return value is a 2 or 3 letter language code (ISO 639-1 or ISO 639-2)
+        The return value is a 2 or 3 letter language code (ISO 639-1 or ISO 639-2).
+        Note that depending on the OS and region, this may also be followed by a dash
+        and a sub-region code, e.g "en-GB"
     */
     static String getDisplayLanguage();
 

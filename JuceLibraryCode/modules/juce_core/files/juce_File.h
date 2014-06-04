@@ -361,6 +361,14 @@ public:
     */
     File getLinkedTarget() const;
 
+    /** Returns a unique identifier for the file, if one is available.
+
+        Depending on the OS and file-system, this may be a unix inode number or
+        a win32 file identifier, or 0 if it fails to find one. The number will
+        be unique on the filesystem, but not globally.
+    */
+    uint64 getFileIdentifier() const;
+
     //==============================================================================
     /** Returns the last modification time of this file.
 
@@ -741,7 +749,7 @@ public:
 
         @see revealToUser
     */
-    bool startAsProcess (const String& parameters = String::empty) const;
+    bool startAsProcess (const String& parameters = String()) const;
 
     /** Opens Finder, Explorer, or whatever the OS uses, to show the user this file's location.
         @see startAsProcess

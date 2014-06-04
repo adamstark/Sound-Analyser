@@ -69,13 +69,15 @@ public:
         if (newState.width  <= 0) newState.width  = 100;
         if (newState.height <= 0) newState.height = 100;
 
+        Point<float> viewboxXY;
+
         if (xml->hasAttribute ("viewBox"))
         {
             const String viewBoxAtt (xml->getStringAttribute ("viewBox"));
             String::CharPointerType viewParams (viewBoxAtt.getCharPointer());
-            Point<float> vxy, vwh;
+            Point<float> vwh;
 
-            if (parseCoords (viewParams, vxy, true)
+            if (parseCoords (viewParams, viewboxXY, true)
                  && parseCoords (viewParams, vwh, true)
                  && vwh.x > 0
                  && vwh.y > 0)
@@ -105,7 +107,7 @@ public:
                 }
 
                 newState.transform = RectanglePlacement (placementFlags)
-                                        .getTransformToFit (Rectangle<float> (vxy.x, vxy.y, vwh.x, vwh.y),
+                                        .getTransformToFit (Rectangle<float> (viewboxXY.x, viewboxXY.y, vwh.x, vwh.y),
                                                             Rectangle<float> (newState.width, newState.height))
                                         .followedBy (newState.transform);
             }
@@ -118,7 +120,10 @@ public:
 
         newState.parseSubElements (xml, *drawable);
 
-        drawable->setContentArea (RelativeRectangle (Rectangle<float> (newState.viewBoxW, newState.viewBoxH)));
+        drawable->setContentArea (RelativeRectangle (RelativeCoordinate (viewboxXY.x),
+                                                     RelativeCoordinate (viewboxXY.x + newState.viewBoxW),
+                                                     RelativeCoordinate (viewboxXY.y),
+                                                     RelativeCoordinate (viewboxXY.y + newState.viewBoxH)));
         drawable->resetBoundingBoxToContentArea();
 
         return drawable;
@@ -344,6 +349,11 @@ public:
             if (! carryOn)
                 break;
         }
+
+        // paths that finish back at their start position often seem to be
+        // left without a 'z', so need to be closed explicitly..
+        if (path.getCurrentPosition() == subpathStart)
+            path.closeSubPath();
     }
 
 private:
@@ -874,11 +884,11 @@ private:
 
     bool parseCoordsOrSkip (String::CharPointerType& s, Point<float>& p, const bool allowUnits) const
     {
-        const bool b = parseCoords (s, p, allowUnits);
-        if (! b)
-            ++s;
+        if (parseCoords (s, p, allowUnits))
+            return true;
 
-        return b;
+        if (! s.isEmpty()) ++s;
+        return false;
     }
 
     float getCoordLength (const String& s, const float sizeForProportions) const
@@ -944,7 +954,7 @@ private:
     }
 
     String getStyleAttribute (const XmlPath& xml, const String& attributeName,
-                              const String& defaultValue = String::empty) const
+                              const String& defaultValue = String()) const
     {
         if (xml->hasAttribute (attributeName))
             return xml->getStringAttribute (attributeName, defaultValue);
@@ -953,7 +963,7 @@ private:
 
         if (styleAtt.isNotEmpty())
         {
-            const String value (getAttributeFromStyleList (styleAtt, attributeName, String::empty));
+            const String value (getAttributeFromStyleList (styleAtt, attributeName, String()));
 
             if (value.isNotEmpty())
                 return value;
@@ -991,7 +1001,7 @@ private:
         if (xml.parent != nullptr)
             return getInheritedAttribute  (*xml.parent, attributeName);
 
-        return String::empty;
+        return String();
     }
 
     //==============================================================================
@@ -1144,7 +1154,7 @@ private:
             StringArray tokens;
             tokens.addTokens (t.fromFirstOccurrenceOf ("(", false, false)
                                .upToFirstOccurrenceOf (")", false, false),
-                              ", ", String::empty);
+                              ", ", "");
 
             tokens.removeEmptyStrings (true);
 

@@ -15,57 +15,47 @@
 class PeakEnergy : public AudioAnalysis
 {
 public:
+    
+    //==============================================================================
     PeakEnergy()
     {
         addressPattern = getCoreAddressPattern();
     }
     
-    float performAnalysis_f(std::vector<float> buffer)
+    //==============================================================================
+    String getName()
     {
-        // create variable with very small value to hold the peak value
-        float peak = -10000.0;
-        
-        // for each audio sample
-        for (int i = 0;i < buffer.size();i++)
-        {
-            // store the absolute value of the sample
-            float absSample = fabs(buffer[i]);
-            
-            // if the absolute value is larger than the peak
-            if (absSample > peak)
-            {
-                // the peak takes on the sample value
-                peak = absSample;
-            }
-        }
-        
-        // return the peak value
-        return peak;
+        return "Peak Energy";
     }
-        
+    
+    //==============================================================================
+    float performAnalysis_f(Gist<float> *g)
+    {
+        return g->peakEnergy();
+    }
+    
+    //==============================================================================
     std::string getCoreAddressPattern()
     {
         return "/peakEnergy";
     }
-    
-    void buildAddressPatternFromId(std::string idWithForwardSlash)
-    {
-        addressPattern = idWithForwardSlash.append(getCoreAddressPattern());
-    }
-    
+        
+    //==============================================================================
     Identifier getIdentifier()
     {
-        return AnalysisTypes::PeakEnergy;
+        return Identifier("PeakEnergy");
     }
     
+    //==============================================================================
     OutputType getOutputType()
     {
         return FloatOutput;
     }
     
+    //==============================================================================
     InputType getInputType()
     {
-        return AudioBufferInput;
+        return GistInput;
     }
 };
 

@@ -69,24 +69,7 @@ public:
     void setStateInformation (const void* data, int sizeInBytes);
     
     
-    void refreshFromTree()
-    {
-        analyser.setBufferSize(analyserTree[AnalysisModel::Ids::BufferSize]);
-        
-        for (int i = 0;i < analyser.audioAnalyses.size();i++)
-        {
-            ValueTree tree = analyserTree.getChildWithName(analyser.audioAnalyses[i]->getIdentifier());
-            
-            analyser.audioAnalyses[i]->send = tree[AnalysisProperties::send];
-            analyser.audioAnalyses[i]->plot = tree[AnalysisProperties::plot];
-            
-            if (tree.getType() == AnalysisTypes::FFT)
-            {
-                int numSamples = tree[AnalysisProperties::FFT::numSamplesToSend];
-                ((FFTMagnitudeSpectrum*)analyser.audioAnalyses[i])->setNumFFTSamplesToSend(numSamples);
-            }
-        }
-    }
+    void refreshFromTree();
     
     void valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property);
     void valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded);
@@ -99,20 +82,13 @@ public:
     {
         totalNumParams = 0
     };
-    
-    float booleanToFloat(bool input);
-    bool floatToBoolean(float input);
-    
+        
     ValueTree analyserTree;
     
     AudioAnalysisManager analyser;
     
 private:
         
-
-    
-    
-    
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SoundAnalyserAudioProcessor)
 };

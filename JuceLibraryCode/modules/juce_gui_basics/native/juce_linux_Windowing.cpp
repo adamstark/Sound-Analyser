@@ -617,15 +617,19 @@ public:
 
     LowLevelGraphicsContext* createLowLevelContext() override
     {
+        sendDataChangeMessage();
         return new LowLevelGraphicsSoftwareRenderer (Image (this));
     }
 
-    void initialiseBitmapData (Image::BitmapData& bitmap, int x, int y, Image::BitmapData::ReadWriteMode) override
+    void initialiseBitmapData (Image::BitmapData& bitmap, int x, int y, Image::BitmapData::ReadWriteMode mode) override
     {
         bitmap.data = imageData + x * pixelStride + y * lineStride;
         bitmap.pixelFormat = pixelFormat;
         bitmap.lineStride = lineStride;
         bitmap.pixelStride = pixelStride;
+
+        if (mode != Image::BitmapData::readOnly)
+            sendDataChangeMessage();
     }
 
     ImagePixelData* clone() override
@@ -1213,7 +1217,7 @@ public:
         }
     }
 
-    void textInputRequired (const Point<int>&) override {}
+    void textInputRequired (Point<int>, TextInputTarget&) override {}
 
     void repaint (const Rectangle<int>& area) override
     {
@@ -1323,6 +1327,7 @@ public:
 
             default:
                #if JUCE_USE_XSHM
+                if (XSHMHelpers::isShmAvailable())
                 {
                     ScopedXLock xlock;
                     if (event.xany.type == XShmGetEventBase (display))
@@ -1364,7 +1369,7 @@ public:
         const ModifierKeys oldMods (currentModifiers);
         bool keyPressed = false;
 
-        if ((sym & 0xff00) == 0xff00)
+        if ((sym & 0xff00) == 0xff00 || sym == XK_ISO_Left_Tab)
         {
             switch (sym)  // Translate keypad
             {
@@ -1898,7 +1903,8 @@ private:
                 for (const Rectangle<int>* i = originalRepaintRegion.begin(), * const e = originalRepaintRegion.end(); i != e; ++i)
                 {
                    #if JUCE_USE_XSHM
-                    ++shmPaintsPending;
+                    if (XSHMHelpers::isShmAvailable())
+                        ++shmPaintsPending;
                    #endif
 
                     static_cast<XBitmapImage*> (image.getPixelData())
@@ -3041,7 +3047,7 @@ void Desktop::Displays::findDisplays (float masterScale)
                                                                        screens[j].height) * masterScale;
                             d.isMain = (index == 0);
                             d.scale = masterScale;
-                            d.dpi = getDisplayDPI (index);
+                            d.dpi = getDisplayDPI (0); // (all screens share the same DPI)
 
                             displays.add (d);
                         }

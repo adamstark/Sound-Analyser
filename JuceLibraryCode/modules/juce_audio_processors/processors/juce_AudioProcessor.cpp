@@ -201,9 +201,10 @@ void AudioProcessor::updateHostDisplay()
             l->audioProcessorChanged (this);
 }
 
-String AudioProcessor::getParameterLabel (int) const        { return String::empty; }
-bool AudioProcessor::isParameterAutomatable (int) const     { return true; }
-bool AudioProcessor::isMetaParameter (int) const            { return false; }
+String AudioProcessor::getParameterLabel (int) const            { return String(); }
+bool AudioProcessor::isParameterOrientationInverted (int) const { return false; }
+bool AudioProcessor::isParameterAutomatable (int) const         { return true; }
+bool AudioProcessor::isMetaParameter (int) const                { return false; }
 
 void AudioProcessor::suspendProcessing (const bool shouldBeSuspended)
 {
@@ -266,7 +267,7 @@ void AudioProcessor::copyXmlToBinary (const XmlElement& xml, juce::MemoryBlock& 
         MemoryOutputStream out (destData, false);
         out.writeInt (magicXmlNumber);
         out.writeInt (0);
-        xml.writeToStream (out, String::empty, true, false);
+        xml.writeToStream (out, String(), true, false);
         out.writeByte (0);
     }
 

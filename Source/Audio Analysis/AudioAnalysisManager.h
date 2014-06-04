@@ -11,9 +11,10 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "OSCSender.h"
-#include "FFT.h"
 #include "AudioBuffer.h"
 #include <iostream>
+
+#include "Gist/Gist.h"
 
 #include "AudioAnalysis.h"
 #include "Analyses/RMS.h"
@@ -21,8 +22,9 @@
 #include "Analyses/ZeroCrossingRate.h"
 #include "Analyses/SpectralCentroid.h"
 #include "Analyses/SpectralDifference.h"
-#include "Analyses/StandardDeviation.h"
 #include "Analyses/FFTMagnitudeSpectrum.h"
+#include "Analyses/Pitch.h"
+#include "Analyses/MelFrequencyCepstralCoefficients.h"
 
 #include <speex/speex_resampler.h>
 
@@ -54,7 +56,7 @@ public:
         }
     }
     
-    Array<AudioAnalysis*> audioAnalyses;
+    OwnedArray<AudioAnalysis> audioAnalyses;
     
     OutputType currentAnalysisToPlotType;
     
@@ -67,7 +69,9 @@ public:
         audioBuffer.setBufferSize(bufferSize);
         
         // set up the fft
-        fft.setFrameLength(bufferSize);
+        //fft.setFrameLength(bufferSize);
+        
+        gist.setAudioFrameSize(bufferSize);
         
         // -----------------------------------------------
         // now for some analysis specific initialisations
@@ -76,15 +80,26 @@ public:
         fftMagnitudeSpectrum.setNumFFTSamplesToSend(bufferSize/2);
         
         // set the buffer size for the spectral difference
-        spectralDifference.setFrameSize(bufferSize);
+        //spectralDifference.setFrameSize(bufferSize);
     }
     
+    void setOSCPort(int oscPort)
+    {
+        osc.setPort(oscPort);
+    }
+    
+    void setIPAddress(std::string IPAddress)
+    {
+        osc.setIPAddress(IPAddress);
+    }
     
 private:
     
     int bufferSize;
     
     void updatePlotHistory(float newSample);
+    
+    void addAudioAnalysisAlgorithms();
     
     std::vector<float> resamplePlot(std::vector<float> v)
     {
@@ -155,26 +170,28 @@ private:
     
     /** allows osc to be sent to a specific ip address and port number */
     OSCSender osc;
-    
+        
     /** an object for calculating audio features */
    // AudioFeatures audioFeatures;
     
     AudioBuffer audioBuffer;
     
     /** an object for computing the fourier transform of audio frames */
-    FFT fft;
+    //FFT fft;
+
     
-    
-    RMS rms;
-    PeakEnergy peakEnergy;
-    ZeroCrossingRate zcr;
-    SpectralCentroid spectralCentroid;
-    SpectralDifference spectralDifference;
-    StandardDeviation standardDeviation;
+//    RMS rms;
+//    PeakEnergy peakEnergy;
+//    ZeroCrossingRate zcr;
+//    SpectralCentroid spectralCentroid;
+//    SpectralDifference spectralDifference;
+//    StandardDeviation standardDeviation;
+//    Pitch pitch;
+//    MelFrequencyCepstralCoefficients mfcc;
     
     FFTMagnitudeSpectrum fftMagnitudeSpectrum;
     
-    
+    Gist<float> gist;
 
 };
 

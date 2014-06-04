@@ -10,6 +10,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "../JuceLibraryCode/BinaryData.h"
 
 
 //==============================================================================
@@ -19,32 +20,55 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     // This is where our plugin's editor size is set.
     setSize (600, 500);
     
+    LookAndFeel::setDefaultLookAndFeel(&pluginLookAndFeel);
+    
+    //MemoryInputStream mis(BinaryData::TenorSansRegular_ttf, BinaryData::TenorSansRegular_ttfSize, false);
+    //Typeface::Ptr typeface = new CustomTypeface(mis);
+    
+    Font logoFont;//(typeface);
+    logoFont.setHeight(40);
+
+    
 
     
     newAnalysisButton.setButtonText("+");
     addAndMakeVisible(&newAnalysisButton);
     newAnalysisButton.addListener(this);
     
+    OSCPort.setColour(Label::ColourIds::textColourId, Colours::black);
+    OSCPort.setText(analyserTree[AnalysisModel::Ids::Port], dontSendNotification);
+    OSCPort.setEditable(true);
+    OSCPort.setColour(Label::ColourIds::backgroundColourId, Colours::white);
+    OSCPort.setColour(Label::ColourIds::outlineColourId, Colours::lightgrey);
+    addAndMakeVisible(&OSCPort);
     
+    IPAddressValue.setColour(Label::ColourIds::textColourId, Colours::black);
+    IPAddressValue.setText(analyserTree[AnalysisModel::Ids::Port], dontSendNotification);
+    IPAddressValue.setEditable(true);
+    IPAddressValue.setColour(Label::ColourIds::backgroundColourId, Colours::white);
+    IPAddressValue.setColour(Label::ColourIds::outlineColourId, Colours::lightgrey);
+    addAndMakeVisible(&IPAddressValue);
     
-    //analyserId.setText(analyserTree[AnalysisModel::Ids::AnalyserId], dontSendNotification);
-//    analyserId.setEditable(true);
-  //  analyserId.setColour(Label::ColourIds::backgroundColourId, Colours::white);
-   // analyserId.setColour(Label::ColourIds::outlineColourId, Colours::lightgrey);
-    analyserId.addItem("1", 1);
-    analyserId.addItem("2", 2);
-    analyserId.addItem("3", 3);
-    analyserId.addItem("4", 4);
-    analyserId.addItem("5", 5);
-    analyserId.addItem("6", 6);
-    analyserId.addItem("7", 7);
+    analyserId.setColour(Label::ColourIds::textColourId, Colours::black);
+    analyserId.setText(analyserTree[AnalysisModel::Ids::AnalyserId], dontSendNotification);
+    analyserId.setEditable(true);
+    analyserId.setColour(Label::ColourIds::backgroundColourId, Colours::white);
+    analyserId.setColour(Label::ColourIds::outlineColourId, Colours::lightgrey);
+    addAndMakeVisible(&analyserId);
     
+    pluginTitleLabel.setFont(logoFont);
+    pluginTitleLabel.setText("Sound Analyser",dontSendNotification);
+    addAndMakeVisible(&pluginTitleLabel);
     
     bufferSizeLabel.setText(String("Buffer Size: " + analyserTree[AnalysisModel::Ids::BufferSize].toString()), dontSendNotification);
     addAndMakeVisible(&bufferSizeLabel);
     
-    addAndMakeVisible(&analyserId);
     
+    IPAddressText.setText("IP Address:", dontSendNotification);
+    addAndMakeVisible(&IPAddressText);
+    
+    OSCPortText.setText("Port:", dontSendNotification);
+    addAndMakeVisible(&OSCPortText);
     
     analyserIdText.setText("Analyser Id:", dontSendNotification);
     addAndMakeVisible(&analyserIdText);
@@ -58,10 +82,11 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     analyserTree.addListener(this);
     
     analyserId.addListener(this);
+
+    OSCPort.addListener(this);
+    IPAddressValue.addListener(this);
     
     refreshFromTree();
-    
-    DBG("GUI CONSTRUCTOR CALLED");
     
     startTimer (50);
 }
@@ -80,8 +105,10 @@ void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
     // WHAT IF THE PROCESSOR IS WRITING TO THE PLOT HISTORY OR VECTOR?
     // DOESN'T SEEM TO HAPPEN BUT NEED TO MAKE SURE PERHAPS?
     
-    g.setColour (Colours::darkgrey);
-    g.fillAll (Colours::silver);
+    
+    PluginLookAndFeel::fillWithBackgroundTexture (g);
+    g.setColour (Colour::fromRGBA(56, 61, 68,245));
+    g.fillAll (Colour::fromRGBA(34, 34, 34,245));
     
     if (getProcessor()->analyser.currentAnalysisToPlotType == FloatOutput)
     {
@@ -114,7 +141,9 @@ void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
             int p1 = plotY + (plotHeight - ((previousValue/maxValue)*plotHeight));
             int p2 = plotY + (plotHeight - ((currentValue/maxValue)*plotHeight));
             
+            g.setColour(Colours::lightsteelblue);
             g.drawLine(plotX+i,p1,plotX+i+1,p2);
+            
             previousValue = currentValue;
         }
     
@@ -180,15 +209,27 @@ void SoundAnalyserAudioProcessorEditor::resized()
     
     for (int i = 0;i < analysisComponents.size();i++)
     {
-        analysisComponents[i]->setBounds(10,(plotY+plotHeight+10)+lastComponentY,analysisComponents[i]->getWidth(),analysisComponents[i]->getHeight());
+        analysisComponents[i]->setBounds(10,(plotY+plotHeight+25)+lastComponentY,analysisComponents[i]->getWidth(),analysisComponents[i]->getHeight());
         
         lastComponentY += analysisComponents[i]->getHeight();
     }
     
     newAnalysisButton.setBounds(10, getHeight()-60, 50, 50);
     
-    analyserIdText.setBounds(getWidth()-160, 10, 80, 20);
-    analyserId.setBounds(getWidth()-70, 10, 60, 20);
+    
+
+    
+    IPAddressText.setBounds(getWidth()-470, 10, 80, 20);
+    IPAddressValue.setBounds(getWidth()-380, 10, 90, 20);
+    
+    OSCPortText.setBounds(getWidth()-280, 10, 40, 20);
+    OSCPort.setBounds(getWidth()-230, 10, 40, 20);
+    
+    analyserIdText.setBounds(getWidth()-170, 10, 80, 20);
+    analyserId.setBounds(getWidth()-80, 10, 70, 20);
+    
+    float titleWidth = 280;
+    pluginTitleLabel.setBounds(getWidth()-titleWidth-10, getHeight()-60, titleWidth, 50);
 }
 
 //==============================================================================
@@ -207,12 +248,15 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
                        "Please slect a new device from the list below",
                        AlertWindow::NoIcon);
         
-        StringArray options = AnalysisModel::getAllAnalysisNames();
+        //StringArray options = AnalysisModel::getAllAnalysisNames();
+        StringArray options;
         
-//        for (int i = 0;i < Analyses::NumAnalyses;i++)
-//        {
-//            options.add(AnalysisModel::getAnalysisName(i));
-//        }
+        
+        
+        for (int i = 0;i < getProcessor()->analyser.audioAnalyses.size();i++)
+        {
+            options.add(getProcessor()->analyser.audioAnalyses[i]->getName());
+        }
         
 
         
@@ -226,9 +270,9 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
             // this is the item they chose in the drop-down list..
             const int optionIndexChosen = w.getComboBoxComponent ("option")->getSelectedItemIndex();
             
-
+            AudioAnalysis *chosenAnalysis = getProcessor()->analyser.audioAnalyses[optionIndexChosen];
             
-            AnalysisModel::addNewAnalysis(analyserTree,optionIndexChosen);
+            AnalysisModel::addNewAnalysis(analyserTree, chosenAnalysis->createAnalysisTree());
         }
     }
 }
@@ -236,14 +280,14 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::addAnalysis(ValueTree& analysisTree)
 {
-    // FFT
-    if (analysisTree.getType() == AnalysisTypes::FFT)
+
+    for (int i = 0;i < getProcessor()->analyser.audioAnalyses.size();i++)
     {
-        analysisComponents.add(new FFTComponent(analysisTree));
-    }
-    else // GENERIC
-    {
-        analysisComponents.add(new SimpleAnalysisComponent(analysisTree));
+        if (analysisTree.getType() == getProcessor()->analyser.audioAnalyses[i]->getIdentifier())
+        {
+            analysisComponents.add(getProcessor()->analyser.audioAnalyses[i]->getGUIComponent(analysisTree));
+
+        }
     }
     
     
@@ -257,6 +301,14 @@ void SoundAnalyserAudioProcessorEditor::addAnalysis(ValueTree& analysisTree)
 void SoundAnalyserAudioProcessorEditor::valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property)
 {
     if (property == AnalysisModel::Ids::AnalyserId)
+    {
+        refreshFromTree();
+    }
+    else if (property == AnalysisModel::Ids::IPAddress)
+    {
+        refreshFromTree();
+    }
+    else if (property == AnalysisModel::Ids::Port)
     {
         refreshFromTree();
     }
