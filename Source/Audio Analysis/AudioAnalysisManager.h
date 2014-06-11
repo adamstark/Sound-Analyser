@@ -10,7 +10,7 @@
 #define __SoundAnalyser__AudioAnalysisManager__
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "OSCSender.h"
+#include "../OSC/Osc.h"
 #include "AudioBuffer.h"
 #include <iostream>
 
@@ -90,7 +90,7 @@ public:
     
     void setIPAddress(std::string IPAddress)
     {
-        osc.setIPAddress(IPAddress);
+        osc.setIpAddress(IPAddress);
     }
     
 private:
@@ -169,25 +169,9 @@ private:
     }
     
     /** allows osc to be sent to a specific ip address and port number */
-    OSCSender osc;
-        
-    /** an object for calculating audio features */
-   // AudioFeatures audioFeatures;
-    
+    Osc osc;
+            
     AudioBuffer audioBuffer;
-    
-    /** an object for computing the fourier transform of audio frames */
-    //FFT fft;
-
-    
-//    RMS rms;
-//    PeakEnergy peakEnergy;
-//    ZeroCrossingRate zcr;
-//    SpectralCentroid spectralCentroid;
-//    SpectralDifference spectralDifference;
-//    StandardDeviation standardDeviation;
-//    Pitch pitch;
-//    MelFrequencyCepstralCoefficients mfcc;
     
     FFTMagnitudeSpectrum fftMagnitudeSpectrum;
     

@@ -14,7 +14,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "AudioAnalysisManager.h"
 #include "AnalysisModel.h"
-
+#include "OSC/Osc.h"
 
 //==============================================================================
 /**
@@ -88,7 +88,9 @@ public:
     AudioAnalysisManager analyser;
     
 private:
-        
+    
+    Osc oscTest;
+    
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SoundAnalyserAudioProcessor)
 };

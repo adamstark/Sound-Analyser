@@ -83,7 +83,7 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
                 
                 if (audioAnalyses[i]->send)
                 {
-                    osc.send(audioAnalyses[i]->addressPattern.c_str(), output);
+                    osc.sendMessage(audioAnalyses[i]->addressPattern.c_str(), output);
                 }
                 
                 if (audioAnalyses[i]->plot)
@@ -117,7 +117,7 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
                 
                 if (audioAnalyses[i]->send)
                 {
-                    osc.send(audioAnalyses[i]->addressPattern.c_str(), output);
+                    osc.sendMessage(audioAnalyses[i]->addressPattern.c_str(), output);
                 }
 
                 if (audioAnalyses[i]->plot)
