@@ -60,6 +60,11 @@ public:
      */
     std::vector<T> melFrequencyCepstralCoefficients(std::vector<T> magnitudeSpectrum);
     
+    /** Calculates the magnitude spectrum on a Mel scale
+     * @returns a vector containing the Mel spectrum
+     */
+    std::vector<T> melFrequencySpectrum(std::vector<T> magnitudeSpectrum);
+    
 private:
     /** Initialises the parts of the algorithm dependent on frame size, sampling frequency
      * and the number of coefficients
@@ -70,7 +75,7 @@ private:
      * @param inputSignal a vector containing the input signal
      * @returns a vector containing the DCT of the input signal
      */
-    std::vector<T> discreteCosineTransform(std::vector<double> inputSignal);
+    std::vector<T> discreteCosineTransform(std::vector<T> inputSignal);
     
     /** Calculates the triangular filters used in the algorithm. These will be different depending
      * upon the frame size, sampling frequency and number of coefficients and so should be re-calculated

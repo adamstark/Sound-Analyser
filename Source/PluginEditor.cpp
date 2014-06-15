@@ -60,6 +60,13 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     pluginTitleLabel.setText("Sound Analyser",dontSendNotification);
     addAndMakeVisible(&pluginTitleLabel);
     
+    //String version = JucePlugin_VersionString;
+    
+    pluginVersionLabel.setFont(Font(10));
+    pluginVersionLabel.setText(JucePlugin_VersionString , dontSendNotification);
+    pluginVersionLabel.setColour(Label::ColourIds::textColourId, Colours::lightgrey);
+    addAndMakeVisible(pluginVersionLabel);
+    
     bufferSizeLabel.setText(String("Buffer Size: " + analyserTree[AnalysisModel::Ids::BufferSize].toString()), dontSendNotification);
     addAndMakeVisible(&bufferSizeLabel);
     
@@ -230,6 +237,8 @@ void SoundAnalyserAudioProcessorEditor::resized()
     
     float titleWidth = 280;
     pluginTitleLabel.setBounds(getWidth()-titleWidth-10, getHeight()-60, titleWidth, 50);
+    
+    pluginVersionLabel.setBounds(getWidth()-50, getHeight()-15, 40, 10);
 }
 
 //==============================================================================

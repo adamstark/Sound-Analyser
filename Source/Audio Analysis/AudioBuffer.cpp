@@ -9,7 +9,7 @@
 #include "AudioBuffer.h"
 
 //==============================================================================
-AudioBuffer::AudioBuffer(int bufferSize_)
+AudioBuffer::AudioBuffer(int bufferSize_) : bufferReady(false), numSamplesCollected(0)
 {
 
 }
@@ -31,7 +31,9 @@ void AudioBuffer::setBufferSize(int bufferSize_)
 
 //==============================================================================
 void AudioBuffer::addNewSamplesToBuffer(float *samples,int numSamples)
-{    
+{
+    bufferReady = false;
+    
     // if the number of new samples does not
     // exceed the buffer length
     if (numSamples <= bufferSize)
@@ -49,6 +51,14 @@ void AudioBuffer::addNewSamplesToBuffer(float *samples,int numSamples)
             buffer[k] = samples[j];
             j++;
         }
+        
+        numSamplesCollected += numSamples;
+        
+        if (numSamplesCollected >= bufferSize)
+        {
+            bufferReady = true;
+            numSamplesCollected = 0;
+        }
     }
     else // otherwise we have more samples than our buffer can hold
     {
@@ -57,6 +67,8 @@ void AudioBuffer::addNewSamplesToBuffer(float *samples,int numSamples)
         {
             buffer[k] = samples[numSamples-bufferSize+k];
         }
+        
+        bufferReady = true;
     }
 }
 

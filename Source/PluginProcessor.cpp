@@ -197,7 +197,7 @@ void SoundAnalyserAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiB
     // audio processing...
     for (int channel = 0; channel < getNumInputChannels(); ++channel)
     {
-        float* channelData = buffer.getSampleData (channel);
+        float* channelData = buffer.getWritePointer (channel);
         
         if (channel == 0)
         {

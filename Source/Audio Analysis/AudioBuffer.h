@@ -26,9 +26,16 @@ public:
     
     std::vector<float> buffer;
     
+    bool isReady()
+    {
+        return bufferReady;
+    }
+    
 private:
     int bufferSize;
     
+    bool bufferReady;
+    int numSamplesCollected;
     
 };
 

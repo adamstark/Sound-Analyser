@@ -115,6 +115,7 @@ void Osc::disconnect()
     if (datagramSocket != nullptr && datagramSocket->isConnected())
     {
         datagramSocket->close();
+        DBG("DISCONNECTED");
     }
 }
 

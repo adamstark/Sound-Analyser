@@ -14,17 +14,19 @@
 #include "AudioBuffer.h"
 #include <iostream>
 
-#include "Gist/Gist.h"
+#include "../Libraries/Gist/src/Gist.h"
 
 #include "AudioAnalysis.h"
-#include "Analyses/RMS.h"
-#include "Analyses/PeakEnergy.h"
-#include "Analyses/ZeroCrossingRate.h"
-#include "Analyses/SpectralCentroid.h"
-#include "Analyses/SpectralDifference.h"
-#include "Analyses/FFTMagnitudeSpectrum.h"
-#include "Analyses/Pitch.h"
-#include "Analyses/MelFrequencyCepstralCoefficients.h"
+#include "../Modules/RMS.h"
+#include "../Modules/PeakEnergy.h"
+#include "../Modules/ZeroCrossingRate.h"
+#include "../Modules/SpectralCentroid.h"
+#include "../Modules/SpectralDifference.h"
+#include "../Modules/FFTMagnitudeSpectrum.h"
+#include "../Modules/Pitch.h"
+#include "../Modules/MelFrequencyCepstralCoefficients.h"
+#include "../Modules/MelFrequencySpectrum.h"
+#include "../Modules/SP_Chromagram.h"
 
 #include <speex/speex_resampler.h>
 

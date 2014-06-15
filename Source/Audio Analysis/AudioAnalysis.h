@@ -13,7 +13,7 @@
 #include <string>
 #include "AnalysisModel.h"
 #include "../GUI/SimpleAnalysisComponent.h"
-#include "Gist/Gist.h"
+#include "../Libraries/Gist/src/Gist.h"
 
 enum InputType
 {

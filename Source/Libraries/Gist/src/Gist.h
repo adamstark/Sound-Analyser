@@ -181,6 +181,14 @@ public:
     
     //=========================== MFCCs =============================
 
+    /** Calculates the Mel Frequency Spectrum
+     * @returns the Mel spectrum as a vector
+     */
+    std::vector<T> melFrequencySpectrum()
+    {
+        return mfcc.melFrequencySpectrum(magnitudeSpectrum);
+    }
+    
     /** Calculates the Mel Frequency Cepstral Coefficients
      * @returns the MFCCs as a vector
      */

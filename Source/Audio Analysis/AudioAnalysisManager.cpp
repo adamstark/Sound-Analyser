@@ -40,7 +40,8 @@ void AudioAnalysisManager::addAudioAnalysisAlgorithms()
     audioAnalyses.add(new SpectralDifference(bufferSize));
     audioAnalyses.add(new FFTMagnitudeSpectrum());
     audioAnalyses.add(new Pitch());
-    audioAnalyses.add(new MelFrequencyCepstralCoefficients());
+    audioAnalyses.add(new MelFrequencySpectrum());
+    audioAnalyses.add(new SP_Chromagram(bufferSize));
 }
 
 //==============================================================================
@@ -48,85 +49,89 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
 {
     // add new audio frame to our larger buffer
     audioBuffer.addNewSamplesToBuffer(buffer,numSamples);
-    
-    gist.processAudioFrame(audioBuffer.buffer);
-    
-    // calculate the FFT
-    //fft.performFFT(audioBuffer.buffer);
-    
-    
-    for (int i = 0;i < audioAnalyses.size();i++)
+        
+    if (audioBuffer.isReady())
     {
-        if (audioAnalyses[i]->send || audioAnalyses[i]->plot)
+    
+        gist.processAudioFrame(audioBuffer.buffer);
+        
+        // calculate the FFT
+        //fft.performFFT(audioBuffer.buffer);
+        
+        
+        for (int i = 0;i < audioAnalyses.size();i++)
         {
-            if (audioAnalyses[i]->getOutputType() == FloatOutput)
+            if (audioAnalyses[i]->send || audioAnalyses[i]->plot)
             {
-            
-                float output;
+                if (audioAnalyses[i]->getOutputType() == FloatOutput)
+                {
                 
-                if (audioAnalyses[i]->getInputType() == AudioBufferInput)
-                {
-                    output = audioAnalyses[i]->performAnalysis_f(audioBuffer.buffer);
-                }
-                else if (audioAnalyses[i]->getInputType() == MagnitudeSpectrumInput)
-                {
-                    output = audioAnalyses[i]->performAnalysis_f(gist.getMagnitudeSpectrum());
-                }
-                else if (audioAnalyses[i]->getInputType() == GistInput)
-                {
-                    output = audioAnalyses[i]->performAnalysis_f(&gist);
-                }
-                else
-                {
-                    output = 0.0; // failsafe!
-                }
-                
-                if (audioAnalyses[i]->send)
-                {
-                    osc.sendMessage(audioAnalyses[i]->addressPattern.c_str(), output);
-                }
-                
-                if (audioAnalyses[i]->plot)
-                {
-                    updatePlotHistory(output);
-                }
+                    float output;
+                    
+                    if (audioAnalyses[i]->getInputType() == AudioBufferInput)
+                    {
+                        output = audioAnalyses[i]->performAnalysis_f(audioBuffer.buffer);
+                    }
+                    else if (audioAnalyses[i]->getInputType() == MagnitudeSpectrumInput)
+                    {
+                        output = audioAnalyses[i]->performAnalysis_f(gist.getMagnitudeSpectrum());
+                    }
+                    else if (audioAnalyses[i]->getInputType() == GistInput)
+                    {
+                        output = audioAnalyses[i]->performAnalysis_f(&gist);
+                    }
+                    else
+                    {
+                        output = 0.0; // failsafe!
+                    }
+                    
+                    if (audioAnalyses[i]->send)
+                    {
+                        osc.sendMessage(audioAnalyses[i]->addressPattern.c_str(), output);
+                    }
+                    
+                    if (audioAnalyses[i]->plot)
+                    {
+                        updatePlotHistory(output);
+                    }
 
-            }
-            else if (audioAnalyses[i]->getOutputType() == VectorOutput)
-            {
-                std::vector<float> output;
-                
-                if (audioAnalyses[i]->getInputType() == AudioBufferInput)
-                {
-                    output = audioAnalyses[i]->performAnalysis_v(audioBuffer.buffer);
                 }
-                else if (audioAnalyses[i]->getInputType() == MagnitudeSpectrumInput)
+                else if (audioAnalyses[i]->getOutputType() == VectorOutput)
                 {
-                    output = audioAnalyses[i]->performAnalysis_v(gist.getMagnitudeSpectrum());
-                }
-                else if (audioAnalyses[i]->getInputType() == GistInput)
-                {
-                    output = audioAnalyses[i]->performAnalysis_v(&gist);
-                }
-                else
-                {
-                    // failsafe!
-                    output.resize(1);
-                    output[0] = 0.0;
-                }
-                
-                if (audioAnalyses[i]->send)
-                {
-                    osc.sendMessage(audioAnalyses[i]->addressPattern.c_str(), output);
-                }
+                    std::vector<float> output;
+                    
+                    if (audioAnalyses[i]->getInputType() == AudioBufferInput)
+                    {
+                        output = audioAnalyses[i]->performAnalysis_v(audioBuffer.buffer);
+                    }
+                    else if (audioAnalyses[i]->getInputType() == MagnitudeSpectrumInput)
+                    {
+                        output = audioAnalyses[i]->performAnalysis_v(gist.getMagnitudeSpectrum());
+                    }
+                    else if (audioAnalyses[i]->getInputType() == GistInput)
+                    {
+                        output = audioAnalyses[i]->performAnalysis_v(&gist);
+                    }
+                    else
+                    {
+                        // failsafe!
+                        output.resize(1);
+                        output[0] = 0.0;
+                    }
+                    
+                    if (audioAnalyses[i]->send)
+                    {
+                        osc.sendMessage(audioAnalyses[i]->addressPattern.c_str(), output);
+                    }
 
-                if (audioAnalyses[i]->plot)
-                {
-                    updateVectorPlot(output);
+                    if (audioAnalyses[i]->plot)
+                    {
+                        updateVectorPlot(output);
+                    }
                 }
+                
+                
             }
-            
-            
         }
     }
     

@@ -128,6 +128,7 @@ private:
     Label bufferSizeLabel;
     
     Label pluginTitleLabel;
+    Label pluginVersionLabel;
     
     PluginLookAndFeel pluginLookAndFeel;
     

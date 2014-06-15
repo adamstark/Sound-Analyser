@@ -10,7 +10,7 @@
 #define SoundAnalyser_FFTMagnitudeSpectrum_h
 
 #include "AudioAnalysis.h"
-#include "../../GUI/FFTComponent.h"
+#include "../GUI/FFTComponent.h"
 #include <cmath>
 
 class FFTMagnitudeSpectrum : public AudioAnalysis
