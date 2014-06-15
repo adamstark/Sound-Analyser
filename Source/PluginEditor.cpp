@@ -67,8 +67,16 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     pluginVersionLabel.setColour(Label::ColourIds::textColourId, Colours::lightgrey);
     addAndMakeVisible(pluginVersionLabel);
     
-    bufferSizeLabel.setText(String("Buffer Size: " + analyserTree[AnalysisModel::Ids::BufferSize].toString()), dontSendNotification);
-    addAndMakeVisible(&bufferSizeLabel);
+    
+    bufferSizeValue.setEditable(true);
+    bufferSizeValue.setText(analyserTree[AnalysisModel::Ids::BufferSize].toString(), dontSendNotification);
+    bufferSizeValue.setColour(Label::ColourIds::textColourId, Colours::black);
+    bufferSizeValue.setColour(Label::ColourIds::backgroundColourId, Colours::white);
+    bufferSizeValue.setColour(Label::ColourIds::outlineColourId, Colours::lightgrey);
+    addAndMakeVisible(&bufferSizeValue);
+    
+    bufferSizeText.setText("Buffer Size: ", dontSendNotification);
+    addAndMakeVisible(&bufferSizeText);
     
     
     IPAddressText.setText("IP Address:", dontSendNotification);
@@ -85,13 +93,14 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     plotY = 40;
     
 
-
+    
     analyserTree.addListener(this);
     
     analyserId.addListener(this);
 
     OSCPort.addListener(this);
     IPAddressValue.addListener(this);
+    bufferSizeValue.addListener(this);
     
     refreshFromTree();
     
@@ -210,7 +219,8 @@ void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::resized()
 {
-    bufferSizeLabel.setBounds(10, 10, 120, 20);
+    bufferSizeText.setBounds(10, 10, 80, 20);
+    bufferSizeValue.setBounds(90,10,40,20);
     
     int lastComponentY = 0;
     
@@ -323,7 +333,7 @@ void SoundAnalyserAudioProcessorEditor::valueTreePropertyChanged (ValueTree& tre
     }
     else if (property == AnalysisModel::Ids::BufferSize)
     {
-        bufferSizeLabel.setText(String("Buffer Size: " + analyserTree[AnalysisModel::Ids::BufferSize].toString()), dontSendNotification);
+        bufferSizeValue.setText(analyserTree[AnalysisModel::Ids::BufferSize].toString(), dontSendNotification);
     }
 }
 

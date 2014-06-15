@@ -20,6 +20,8 @@ public:
     PeakEnergy()
     {
         addressPattern = getCoreAddressPattern();
+        
+        peakEnergyOutputValue = 0.0;
     }
     
     //==============================================================================
@@ -29,9 +31,15 @@ public:
     }
     
     //==============================================================================
-    float performAnalysis_f(Gist<float> *g)
+    void performAnalysis(std::vector<float> audioFrame)
     {
-        return g->peakEnergy();
+        peakEnergyOutputValue = tdf.peakEnergy(audioFrame);
+    }
+    
+    //==============================================================================
+    float getAnalysisResultAsFloat()
+    {
+        return peakEnergyOutputValue;
     }
     
     //==============================================================================
@@ -55,8 +63,14 @@ public:
     //==============================================================================
     InputType getInputType()
     {
-        return GistInput;
+        return AudioBufferInput;
     }
+    
+private:
+    
+    CoreTimeDomainFeatures<float> tdf;
+    
+    float peakEnergyOutputValue;
 };
 
 #endif /* defined(__SoundAnalyser__PeakEnergy__) */

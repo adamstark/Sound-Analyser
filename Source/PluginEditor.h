@@ -90,6 +90,10 @@ public:
         {
             analyserTree.setProperty(AnalysisModel::Ids::IPAddress, IPAddressValue.getText(),nullptr);
         }
+        else if (labelThatHasChanged == &bufferSizeValue)
+        {
+            AnalysisModel::setBufferSize(analyserTree,bufferSizeValue.getTextValue().getValue());
+        }
     }
     
     void textEditorTextChanged (TextEditor& textEditor)
@@ -125,7 +129,10 @@ private:
     Label IPAddressText;
     
     Label analyserIdText;
-    Label bufferSizeLabel;
+    
+    
+    Label bufferSizeText;
+    Label bufferSizeValue;
     
     Label pluginTitleLabel;
     Label pluginVersionLabel;

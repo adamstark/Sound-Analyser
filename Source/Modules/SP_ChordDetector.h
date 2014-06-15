@@ -1,23 +1,24 @@
 //
-//  SP_Chromagram.h
+//  SP_ChordDetector.h
 //  Sound Analyser
 //
 //  Created by Adam Stark on 15/06/2014.
 //
 //
 
-#ifndef Sound_Analyser_SP_Chromagram_h
-#define Sound_Analyser_SP_Chromagram_h
+#ifndef Sound_Analyser_SP_ChordDetector_h
+#define Sound_Analyser_SP_ChordDetector_h
 
-#include "AudioAnalysis.h"
+#include "../Audio Analysis/AudioAnalysis.h"
 #include "../Libraries/Stark-Plumbley/Chromagram.h"
+#include "../Libraries/Stark-Plumbley/ChordDetector.h"
 
-class SP_Chromagram : public AudioAnalysis 
+class SP_ChordDetector : public AudioAnalysis
 {
 public:
     
     //==============================================================================
-    SP_Chromagram(int frameSize,int samplingFrequency) : chroma(frameSize,samplingFrequency)
+    SP_ChordDetector(int frameSize,int samplingFrequency) : chroma(frameSize,samplingFrequency)
     {
         addressPattern = getCoreAddressPattern();
     }
@@ -25,7 +26,7 @@ public:
     //==============================================================================
     String getName()
     {
-        return "Chromagram";
+        return "Chord Detector";
     }
     
     //==============================================================================
@@ -42,18 +43,13 @@ public:
     }
     
     //==============================================================================
-    std::vector<float> getAnalysisResultAsVector()
+    float getAnalysisResultAsFloat()
     {
         std::vector<double> chromagram = chroma.getChromagram();
         
-        std::vector<float> chromaFloat(12);
+        chord.detectChord(chromagram);
         
-        for (int i = 0;i < 12;i++)
-        {
-            chromaFloat[i] = (float) chromagram[i];
-        }
-        
-        return chromaFloat;
+        return (float) chord.rootNote;
     }
     
     //==============================================================================
@@ -77,19 +73,19 @@ public:
     //==============================================================================
     std::string getCoreAddressPattern()
     {
-        return "/chromagram";
+        return "/chordDetector";
     }
     
     //==============================================================================
     Identifier getIdentifier()
     {
-        return Identifier("SP_Chromagram");
+        return Identifier("SP_ChordDetector");
     }
     
     //==============================================================================
     OutputType getOutputType()
     {
-        return VectorOutput;
+        return FloatOutput;
     }
     
     //==============================================================================
@@ -101,7 +97,7 @@ public:
 private:
     
     Chromagram chroma;
+    ChordDetector chord;
 };
-
 
 #endif

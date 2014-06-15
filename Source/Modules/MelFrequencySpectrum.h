@@ -16,7 +16,7 @@ class MelFrequencySpectrum : public AudioAnalysis
 public:
     
     //==============================================================================
-    MelFrequencySpectrum()
+    MelFrequencySpectrum(int frameSize,int samplingFrequency) : mfcc(frameSize,samplingFrequency)
     {
         addressPattern = getCoreAddressPattern();
     }
@@ -28,11 +28,29 @@ public:
     }
     
     //==============================================================================
-    std::vector<float> performAnalysis_v(Gist<float> *g)
+    void performAnalysis(std::vector<float> magnitudeSpectrum)
     {
-        return g->melFrequencySpectrum();
+        mfccOutput = mfcc.melFrequencySpectrum(magnitudeSpectrum);
     }
     
+    //==============================================================================
+    std::vector<float> getAnalysisResultAsVector()
+    {
+        return mfccOutput;
+    }
+    
+    //==============================================================================
+    void setSamplingFrequency(int fs)
+    {
+        mfcc.setSamplingFrequency(44100);
+    }
+    
+    //==============================================================================
+    void setInputAudioFrameSize(int frameSize)
+    {
+        mfcc.setFrameSize(frameSize);
+    }
+        
     //==============================================================================
     std::string getCoreAddressPattern()
     {
@@ -54,8 +72,13 @@ public:
     //==============================================================================
     InputType getInputType()
     {
-        return GistInput;
+        return MagnitudeSpectrumInput;
     }
+    
+private:
+    
+    MFCC<float> mfcc;
+    std::vector<float> mfccOutput;
 };
 
 #endif /* defined(__Sound_Analyser__MelFrequencySpectrum__) */

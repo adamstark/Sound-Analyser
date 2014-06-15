@@ -17,7 +17,7 @@ class ZeroCrossingRate : public AudioAnalysis
 public:
     
     //==============================================================================
-    ZeroCrossingRate()
+    ZeroCrossingRate() : zcrOutputValue(0.0)
     {
         addressPattern = getCoreAddressPattern();
     }
@@ -29,9 +29,15 @@ public:
     }
     
     //==============================================================================
-    float performAnalysis_f(Gist<float> *g)
+    void performAnalysis(std::vector<float> audioFrame)
     {
-        return g->zeroCrossingRate();
+        zcrOutputValue = tdf.zeroCrossingRate(audioFrame);
+    }
+    
+    //==============================================================================
+    float getAnalysisResultAsFloat()
+    {
+        return zcrOutputValue;
     }
     
     //==============================================================================
@@ -55,8 +61,13 @@ public:
     //==============================================================================
     InputType getInputType()
     {
-        return GistInput;
+        return AudioBufferInput;
     }
+    
+private:
+    
+    float zcrOutputValue;
+    CoreTimeDomainFeatures<float> tdf;
 };
 
 

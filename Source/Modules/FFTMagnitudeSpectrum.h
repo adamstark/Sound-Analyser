@@ -33,33 +33,35 @@ public:
     }
     
     //==============================================================================
-    std::vector<float> performAnalysis_v(std::vector<float> magnitudeSpectrum)
+    void performAnalysis(std::vector<float> magnitudeSpectrum)
     {
-        std::vector<float> newSpec;
+        magnitudeSpectrumResult.resize(numSamplesToSend);
         
-        newSpec.resize(numSamplesToSend);
-        
-        if (newSpec.size() <= magnitudeSpectrum.size())
+        if (magnitudeSpectrumResult.size() <= magnitudeSpectrum.size())
         {
-            for (int i = 0;i < newSpec.size();i++)
+            for (int i = 0;i < magnitudeSpectrumResult.size();i++)
             {
-                newSpec[i] = magnitudeSpectrum[i];
+                magnitudeSpectrumResult[i] = magnitudeSpectrum[i];
             }
         }
         else // <--- THIS SHOULDN'T HAPPEN
         {
             for (int i = 0;i < magnitudeSpectrum.size();i++)
             {
-                newSpec[i] = magnitudeSpectrum[i];
+                magnitudeSpectrumResult[i] = magnitudeSpectrum[i];
             }
-        
-            for (int i = magnitudeSpectrum.size();i < newSpec.size();i++)
+            
+            for (int i = magnitudeSpectrum.size();i < magnitudeSpectrumResult.size();i++)
             {
-                newSpec[i] = 0.0;
+                magnitudeSpectrumResult[i] = 0.0;
             }
         }
-        
-        return newSpec;
+    }
+    
+    //==============================================================================
+    std::vector<float> getAnalysisResultAsVector()
+    {
+        return magnitudeSpectrumResult;
     }
     
     //==============================================================================
@@ -97,6 +99,8 @@ public:
         // extra properties for FFT
         tree.setProperty(AnalysisProperties::FFT::numSamplesToSend, 512, nullptr);
 
+        magSpecTree = tree;
+        
         return tree;
     }
     
@@ -131,6 +135,18 @@ public:
         return MagnitudeSpectrumInput;
     }
     
+    //==============================================================================
+    void setInputAudioFrameSize(int frameSize)
+    {
+        // if our number of samples to send parameter is larger
+        // than the number of magnitude spectrum samples, then
+        // automatically adjust
+        if ((frameSize/2) < numSamplesToSend)
+        {
+            magSpecTree.setProperty(AnalysisProperties::FFT::numSamplesToSend, frameSize/2, nullptr);
+        }
+    }
+    
     //===============================================================================
     void setNumFFTSamplesToSend(int numSamples)
     {
@@ -138,7 +154,12 @@ public:
     }
     
 private:
+    
+    ValueTree magSpecTree;
+    
     int numSamplesToSend;
+    
+    std::vector<float> magnitudeSpectrumResult;
 };
 
 #endif

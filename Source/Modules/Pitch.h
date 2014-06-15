@@ -16,7 +16,7 @@ class Pitch : public AudioAnalysis
 public:
     
     //==============================================================================
-    Pitch()
+    Pitch(int frameSize, int sampleRate) : yin(sampleRate), pitchOutputValue(0.0)
     {
         addressPattern = getCoreAddressPattern();
     }
@@ -28,11 +28,29 @@ public:
     }
     
     //==============================================================================
-    float performAnalysis_f(Gist<float> *g)
+    void performAnalysis(std::vector<float> audioFrame)
     {
-        return g->pitchYin();
+        pitchOutputValue = yin.pitchYin(audioFrame);
     }
     
+    //==============================================================================
+    float getAnalysisResultAsFloat()
+    {
+        return pitchOutputValue;
+    }
+    
+    //==============================================================================
+    void setSamplingFrequency(int fs)
+    {
+        yin.setSamplingFrequency(fs);
+    }
+    
+    //==============================================================================
+    void setInputAudioFrameSize(int frameSize)
+    {
+
+    }
+        
     //==============================================================================
     std::string getCoreAddressPattern()
     {
@@ -54,8 +72,14 @@ public:
     //==============================================================================
     InputType getInputType()
     {
-        return GistInput;
+        return AudioBufferInput;
     }
+    
+private:
+    
+    Yin<float> yin;
+    
+    float pitchOutputValue;
 };
 
 #endif

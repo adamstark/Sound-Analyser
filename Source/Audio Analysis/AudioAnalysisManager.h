@@ -24,9 +24,9 @@
 #include "../Modules/SpectralDifference.h"
 #include "../Modules/FFTMagnitudeSpectrum.h"
 #include "../Modules/Pitch.h"
-#include "../Modules/MelFrequencyCepstralCoefficients.h"
 #include "../Modules/MelFrequencySpectrum.h"
 #include "../Modules/SP_Chromagram.h"
+#include "../Modules/SP_ChordDetector.h"
 
 #include <speex/speex_resampler.h>
 
@@ -70,19 +70,15 @@ public:
         // initialise the audio buffer
         audioBuffer.setBufferSize(bufferSize);
         
-        // set up the fft
-        //fft.setFrameLength(bufferSize);
-        
         gist.setAudioFrameSize(bufferSize);
         
         // -----------------------------------------------
         // now for some analysis specific initialisations
         
-        // set the number of samples for the fft magnitude spectrum
-        fftMagnitudeSpectrum.setNumFFTSamplesToSend(bufferSize/2);
-        
-        // set the buffer size for the spectral difference
-        //spectralDifference.setFrameSize(bufferSize);
+        for (int i = 0;i < audioAnalyses.size();i++)
+        {
+            audioAnalyses[i]->setInputAudioFrameSize(bufferSize);
+        }
     }
     
     void setOSCPort(int oscPort)
@@ -123,14 +119,12 @@ private:
         
         int err = 0;
         
-        //resampler = speex_resampler_init(nb_channels, input_rate, output_rate, quality, &err);
         resampler = speex_resampler_init(1, (spx_uint32_t) v.size(), 512, 0, &err);
         
         
         spx_uint32_t inLen = (spx_uint32_t) v.size();
         spx_uint32_t outLen = (spx_uint32_t) 512;
         
-        //err = speex_resampler_process_int(resampler, channelID, in, &in_length, out, &out_length);
         err = speex_resampler_process_float(resampler, 0, inF, &inLen, outF, &outLen);
         
         
@@ -174,8 +168,6 @@ private:
     Osc osc;
             
     AudioBuffer audioBuffer;
-    
-    FFTMagnitudeSpectrum fftMagnitudeSpectrum;
     
     Gist<float> gist;
 

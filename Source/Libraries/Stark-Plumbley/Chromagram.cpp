@@ -22,12 +22,12 @@
 #include "Chromagram.h"
 
 //==================================================================================
-Chromagram::Chromagram(int frameSize,int fs) : referenceFrequency(130.81278265), bufferSize(8192), hopSize(2048), numHarmonics(2), numOctaves(2), numBinsToSearch(2)
+Chromagram::Chromagram(int frameSize,int fs) : referenceFrequency(130.81278265), bufferSize(8192), numHarmonics(2), numOctaves(2), numBinsToSearch(2)
 {
     // calculate note frequencies
     for (int i = 0;i < 12;i++)
     {
-        noteFrequencies[i] = referenceFrequency*pow(2,(((double) i)/12));
+        noteFrequencies[i] = referenceFrequency*pow(2,(((float) i)/12));
     }
     
     // set up FFT
@@ -63,7 +63,7 @@ Chromagram::Chromagram(int frameSize,int fs) : referenceFrequency(130.81278265),
     numSamplesSinceLastCalculation = 0;
     
     // set chroma calculation interval (in samples at the input audio sampling frequency)
-    chromaCalculationInterval = 8192;
+    chromaCalculationInterval = 4096;
     
     // initialise chroma ready variable
     chromaReady = false;
@@ -179,15 +179,13 @@ void Chromagram::calculateChromagram()
             
             for (int harmonic = 1;harmonic <= numHarmonics;harmonic++)
             {
-                double oct = (double) octave;
-                double h = (double) harmonic;
-                int centerBin = round((noteFrequencies[n]*oct*h)/divisorRatio);
+                int centerBin = round((noteFrequencies[n]*octave*harmonic)/divisorRatio);
                 int minBin = centerBin - (numBinsToSearch*harmonic);
                 int maxBin = centerBin + (numBinsToSearch*harmonic);
                 
                 double maxVal = 0.0;
                 
-                for (int k = minBin;k <= maxBin;k++)
+                for (int k = minBin;k < maxBin;k++)
                 {
                     if (magnitudeSpectrum[k] > maxVal)
                     {
@@ -234,8 +232,8 @@ void Chromagram::downSampleFrame(std::vector<double> inputAudioFrame)
 {
     std::vector<double> filteredFrame(inputAudioFrameSize);
     
-    double b0,b1,b2,a1,a2;
-    double x_1,x_2,y_1,y_2;
+    float b0,b1,b2,a1,a2;
+    float x_1,x_2,y_1,y_2;
     
     b0 = 0.2929;
     b1 = 0.5858;

@@ -35,18 +35,24 @@ void AudioAnalysisManager::addAudioAnalysisAlgorithms()
 {
     audioAnalyses.add(new RMS());
     audioAnalyses.add(new PeakEnergy());
-    audioAnalyses.add(new ZeroCrossingRate());
     audioAnalyses.add(new SpectralCentroid());
+    audioAnalyses.add(new ZeroCrossingRate());
     audioAnalyses.add(new SpectralDifference(bufferSize));
     audioAnalyses.add(new FFTMagnitudeSpectrum());
-    audioAnalyses.add(new Pitch());
-    audioAnalyses.add(new MelFrequencySpectrum());
-    audioAnalyses.add(new SP_Chromagram(bufferSize));
+    audioAnalyses.add(new Pitch(bufferSize,44100));
+    audioAnalyses.add(new MelFrequencySpectrum(bufferSize,44100));
+    audioAnalyses.add(new SP_Chromagram(bufferSize,44100));
+    audioAnalyses.add(new SP_ChordDetector(bufferSize,44100));
 }
 
 //==============================================================================
 void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
 {
+    if (numSamples != AnalysisModel::currentHostFrameSize)
+    {
+        AnalysisModel::currentHostFrameSize = numSamples;
+    }
+    
     // add new audio frame to our larger buffer
     audioBuffer.addNewSamplesToBuffer(buffer,numSamples);
         
@@ -66,35 +72,37 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
                 if (audioAnalyses[i]->getOutputType() == FloatOutput)
                 {
                 
-                    float output;
+                    float output = 0.0;
                     
                     if (audioAnalyses[i]->getInputType() == AudioBufferInput)
                     {
-                        output = audioAnalyses[i]->performAnalysis_f(audioBuffer.buffer);
+                        audioAnalyses[i]->performAnalysis(audioBuffer.buffer);
                     }
                     else if (audioAnalyses[i]->getInputType() == MagnitudeSpectrumInput)
                     {
-                        output = audioAnalyses[i]->performAnalysis_f(gist.getMagnitudeSpectrum());
+                        audioAnalyses[i]->performAnalysis(gist.getMagnitudeSpectrum());
                     }
-                    else if (audioAnalyses[i]->getInputType() == GistInput)
-                    {
-                        output = audioAnalyses[i]->performAnalysis_f(&gist);
-                    }
-                    else
-                    {
-                        output = 0.0; // failsafe!
-                    }
-                    
-                    if (audioAnalyses[i]->send)
-                    {
-                        osc.sendMessage(audioAnalyses[i]->addressPattern.c_str(), output);
-                    }
-                    
-                    if (audioAnalyses[i]->plot)
-                    {
-                        updatePlotHistory(output);
-                    }
+//                    else if (audioAnalyses[i]->getInputType() == GistInput)
+//                    {
+//                        output = audioAnalyses[i]->performAnalysis_f(&gist);
+//                    }
 
+                    
+                    if (audioAnalyses[i]->resultReady())
+                    {
+                        output = audioAnalyses[i]->getAnalysisResultAsFloat();
+                        
+                        if (audioAnalyses[i]->send)
+                        {
+                            osc.sendMessage(audioAnalyses[i]->addressPattern.c_str(), output);
+                        }
+                        
+                        if (audioAnalyses[i]->plot)
+                        {
+                            updatePlotHistory(output);
+                        }
+                        
+                    }
                 }
                 else if (audioAnalyses[i]->getOutputType() == VectorOutput)
                 {
@@ -102,16 +110,16 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
                     
                     if (audioAnalyses[i]->getInputType() == AudioBufferInput)
                     {
-                        output = audioAnalyses[i]->performAnalysis_v(audioBuffer.buffer);
+                       audioAnalyses[i]->performAnalysis(audioBuffer.buffer);
                     }
                     else if (audioAnalyses[i]->getInputType() == MagnitudeSpectrumInput)
                     {
-                        output = audioAnalyses[i]->performAnalysis_v(gist.getMagnitudeSpectrum());
+                        audioAnalyses[i]->performAnalysis(gist.getMagnitudeSpectrum());
                     }
-                    else if (audioAnalyses[i]->getInputType() == GistInput)
-                    {
-                        output = audioAnalyses[i]->performAnalysis_v(&gist);
-                    }
+//                    else if (audioAnalyses[i]->getInputType() == GistInput)
+//                    {
+//                        output = audioAnalyses[i]->performAnalysis_v(&gist);
+//                    }
                     else
                     {
                         // failsafe!
@@ -119,14 +127,19 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
                         output[0] = 0.0;
                     }
                     
-                    if (audioAnalyses[i]->send)
+                    if (audioAnalyses[i]->resultReady())
                     {
-                        osc.sendMessage(audioAnalyses[i]->addressPattern.c_str(), output);
-                    }
+                        output = audioAnalyses[i]->getAnalysisResultAsVector();
+                        
+                        if (audioAnalyses[i]->send)
+                        {
+                            osc.sendMessage(audioAnalyses[i]->addressPattern.c_str(), output);
+                        }
 
-                    if (audioAnalyses[i]->plot)
-                    {
-                        updateVectorPlot(output);
+                        if (audioAnalyses[i]->plot)
+                        {
+                            updateVectorPlot(output);
+                        }
                     }
                 }
                 

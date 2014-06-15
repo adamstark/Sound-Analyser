@@ -21,6 +21,8 @@ const Identifier AnalysisProperties::plot("Plot");
 const Identifier AnalysisProperties::name("Name");
 const Identifier AnalysisProperties::FFT::numSamplesToSend("NumSamplesToSend");
 
+int AnalysisModel::currentHostFrameSize = DEFAULT_BUFFER_SIZE;
+
 //==============================================================================
 AnalysisModel::AnalysisModel()
 {

@@ -9,7 +9,7 @@
 #ifndef __SoundAnalyser__RMS__
 #define __SoundAnalyser__RMS__
 
-#include "AudioAnalysis.h"
+#include "../Audio Analysis/AudioAnalysis.h"
 #include <cmath>
 
 class RMS : public AudioAnalysis
@@ -17,7 +17,7 @@ class RMS : public AudioAnalysis
 public:
     
     //==============================================================================
-    RMS()
+    RMS() : RMSOutputValue(0.0)
     {
         addressPattern = getCoreAddressPattern();
     }
@@ -28,12 +28,18 @@ public:
         return "Root Mean Square (RMS)";
     }
     
-    //==============================================================================    
-    float performAnalysis_f(Gist<float> *g)
+    //==============================================================================
+    void performAnalysis(std::vector<float> audioFrame)
     {
-        return g->rootMeanSquare();
+        RMSOutputValue = tdf.rootMeanSquare(audioFrame);
     }
     
+    //==============================================================================
+    float getAnalysisResultAsFloat()
+    {
+        return RMSOutputValue;
+    }
+        
     //==============================================================================
     std::string getCoreAddressPattern()
     {        
@@ -55,8 +61,14 @@ public:
     //==============================================================================
     InputType getInputType()
     {
-        return GistInput;
+        return AudioBufferInput;
     }
+    
+private:
+    
+    CoreTimeDomainFeatures<float> tdf;
+    
+    float RMSOutputValue;
 };
 
 #endif /* defined(__SoundAnalyser__RMS__) */

@@ -18,8 +18,7 @@
 enum InputType
 {
     AudioBufferInput,
-    MagnitudeSpectrumInput,
-    GistInput
+    MagnitudeSpectrumInput
 };
 
 enum OutputType
@@ -54,6 +53,36 @@ public:
     
     virtual std::string getCoreAddressPattern() = 0;
     
+    virtual void performAnalysis(std::vector<float> buffer) = 0;
+    
+    //==============================================================================
+    virtual float getAnalysisResultAsFloat()
+    {
+        return 0;
+    }
+    
+    virtual std::vector<float> getAnalysisResultAsVector()
+    {
+        std::vector<float> v;
+        
+        return v;
+    }
+
+    virtual bool resultReady()
+    {
+        return true;
+    }
+    
+    virtual void setSamplingFrequency(int fs)
+    {
+        
+    }
+    
+    virtual void setInputAudioFrameSize(int frameSize)
+    {
+        
+    }
+    
     //==============================================================================
     // override this if you have extra parameters for
     // the analysis algorithm you are developing as you
@@ -79,6 +108,7 @@ public:
         addressPattern = idWithForwardSlash.append(getCoreAddressPattern());
     }
     
+    /*
     virtual float performAnalysis_f(Gist<float> *g)
     {
         return 0.0;
@@ -102,6 +132,14 @@ public:
         
         return v;
     }
+     */
+    
+
+    
+    
+
+    
+    
     
     virtual ValueTree createAnalysisTree()
     {

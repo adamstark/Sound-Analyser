@@ -517,7 +517,6 @@
 		6A55F8D5872663DF1DEA115E /* juce_MultiDocumentPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_MultiDocumentPanel.h; path = ../../JuceLibraryCode/modules/juce_gui_basics/layout/juce_MultiDocumentPanel.h; sourceTree = SOURCE_ROOT; };
 		6A7BC6ACC9CF127529E9BBC4 /* juce_LocalisedStrings.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_LocalisedStrings.cpp; path = ../../JuceLibraryCode/modules/juce_core/text/juce_LocalisedStrings.cpp; sourceTree = SOURCE_ROOT; };
 		6B0112F7B89DB66D15543EF7 /* juce_audio_processors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_audio_processors.h; path = ../../JuceLibraryCode/modules/juce_audio_processors/juce_audio_processors.h; sourceTree = SOURCE_ROOT; };
-		6B4B27C4818334153708831A /* MelFrequencyCepstralCoefficients.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MelFrequencyCepstralCoefficients.h; path = ../../Source/Modules/MelFrequencyCepstralCoefficients.h; sourceTree = SOURCE_ROOT; };
 		6B86934C95DAF3A4B90A0F20 /* juce_CharacterFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_CharacterFunctions.h; path = ../../JuceLibraryCode/modules/juce_core/text/juce_CharacterFunctions.h; sourceTree = SOURCE_ROOT; };
 		6BDE178102816B1AF07DB0AE /* juce_audio_plugin_client.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_audio_plugin_client.h; path = ../../JuceLibraryCode/modules/juce_audio_plugin_client/juce_audio_plugin_client.h; sourceTree = SOURCE_ROOT; };
 		6C0789A0DCBAA9C174FFC615 /* juce_PluginListComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_PluginListComponent.h; path = ../../JuceLibraryCode/modules/juce_audio_processors/scanning/juce_PluginListComponent.h; sourceTree = SOURCE_ROOT; };
@@ -975,6 +974,7 @@
 		E27D9E31D7D0CA6E1B0203EA /* juce_ListenerList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_ListenerList.h; path = ../../JuceLibraryCode/modules/juce_events/broadcasters/juce_ListenerList.h; sourceTree = SOURCE_ROOT; };
 		E2C6013349043BBE5B7150A9 /* juce_MidiMessageSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_MidiMessageSequence.h; path = ../../JuceLibraryCode/modules/juce_audio_basics/midi/juce_MidiMessageSequence.h; sourceTree = SOURCE_ROOT; };
 		E2D8A96B506342F0EF825661 /* juce_win32_QuickTimeMovieComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_win32_QuickTimeMovieComponent.cpp; path = ../../JuceLibraryCode/modules/juce_video/native/juce_win32_QuickTimeMovieComponent.cpp; sourceTree = SOURCE_ROOT; };
+		E3215EBB194E00F000D95DAB /* SP_ChordDetector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SP_ChordDetector.h; path = ../../Source/Modules/SP_ChordDetector.h; sourceTree = "<group>"; };
 		E340D5EB194DB8C40089B607 /* SP_Chromagram.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SP_Chromagram.h; path = ../../Source/Modules/SP_Chromagram.h; sourceTree = "<group>"; };
 		E36E4B1503DB5C1FA11BCF42 /* juce_ResizableBorderComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_ResizableBorderComponent.h; path = ../../JuceLibraryCode/modules/juce_gui_basics/layout/juce_ResizableBorderComponent.h; sourceTree = SOURCE_ROOT; };
 		E3EEF7756AA6D261AE14227A /* juce_BasicNativeHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_BasicNativeHeaders.h; path = ../../JuceLibraryCode/modules/juce_core/native/juce_BasicNativeHeaders.h; sourceTree = SOURCE_ROOT; };
@@ -1780,7 +1780,6 @@
 			isa = PBXGroup;
 			children = (
 				E7A6BC3D2BF80FDD0E9C8850 /* FFTMagnitudeSpectrum.h */,
-				6B4B27C4818334153708831A /* MelFrequencyCepstralCoefficients.h */,
 				79ADA6240B866707098D1947 /* MelFrequencySpectrum.h */,
 				CBE256EEFC85B886FCE4A622 /* PeakEnergy.h */,
 				3BFB51559B90CCA792DB20F5 /* Pitch.h */,
@@ -1789,6 +1788,7 @@
 				FECEAA145B1517F1B2149B27 /* SpectralDifference.h */,
 				A47F95EC6C2C40F05E48C5F3 /* ZeroCrossingRate.h */,
 				E340D5EB194DB8C40089B607 /* SP_Chromagram.h */,
+				E3215EBB194E00F000D95DAB /* SP_ChordDetector.h */,
 			);
 			name = Modules;
 			sourceTree = "<group>";

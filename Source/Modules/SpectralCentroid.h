@@ -19,7 +19,7 @@ class SpectralCentroid : public AudioAnalysis
 public:
     
     //==============================================================================
-    SpectralCentroid()
+    SpectralCentroid() : spectralCentroidOutputValue(0.0)
     {
         addressPattern = getCoreAddressPattern();
     }
@@ -30,12 +30,18 @@ public:
         return "Spectral Centroid";
     }
     
-    //==============================================================================    
-    float performAnalysis_f(Gist<float> *g)
+    //==============================================================================
+    void performAnalysis(std::vector<float> magnitudeSpectrum)
     {
-        return g->spectralCentroid();
+        spectralCentroidOutputValue = fdf.spectralCentroid(magnitudeSpectrum);
     }
     
+    //==============================================================================
+    float getAnalysisResultAsFloat()
+    {
+        return spectralCentroidOutputValue;
+    }
+        
     //==============================================================================
     std::string getCoreAddressPattern()
     {
@@ -57,8 +63,14 @@ public:
     //==============================================================================
     InputType getInputType()
     {
-        return GistInput;
+        return MagnitudeSpectrumInput;
     }
+    
+private:
+    
+    CoreFrequencyDomainFeatures<float> fdf;
+    
+    float spectralCentroidOutputValue;
 };
 
 #endif

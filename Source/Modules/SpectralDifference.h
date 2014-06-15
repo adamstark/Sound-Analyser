@@ -14,7 +14,7 @@ class SpectralDifference : public AudioAnalysis
 public:
     
     //==============================================================================
-    SpectralDifference(int frameSize)
+    SpectralDifference(int frameSize) : spectralDifferenceOutputValue(0.0), odf(frameSize)
     {
         addressPattern = getCoreAddressPattern();
     }
@@ -25,10 +25,16 @@ public:
         return "Spectral Difference";
     }
         
-    //==============================================================================    
-    float performAnalysis_f(Gist<float> *g)
+    //==============================================================================
+    void performAnalysis(std::vector<float> magnitudeSpectrum)
     {
-        return g->spectralDifference();
+        spectralDifferenceOutputValue = odf.spectralDifference(magnitudeSpectrum);
+    }
+    
+    //==============================================================================
+    float getAnalysisResultAsFloat()
+    {
+        return spectralDifferenceOutputValue;
     }
     
     //==============================================================================
@@ -52,8 +58,13 @@ public:
     //==============================================================================
     InputType getInputType()
     {
-        return GistInput;
+        return MagnitudeSpectrumInput;
     }
+    
+private:
+    
+    float spectralDifferenceOutputValue;
+    OnsetDetectionFunction<float> odf;
 
 };
 
