@@ -16,7 +16,7 @@ public:
     //==============================================================================
     SpectralDifference(int frameSize) : spectralDifferenceOutputValue(0.0), odf(frameSize)
     {
-        addressPattern = getCoreAddressPattern();
+
     }
     
     //==============================================================================

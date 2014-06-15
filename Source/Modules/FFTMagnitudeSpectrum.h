@@ -19,9 +19,7 @@ public:
     
     //==============================================================================
     FFTMagnitudeSpectrum()
-    {
-        addressPattern = getCoreAddressPattern();
-        
+    {        
         // initialise
         numSamplesToSend = 512;
     }
@@ -106,7 +104,7 @@ public:
     
     //==============================================================================
     /** overriding this as we have a custom GUI */
-    virtual Component* getGUIComponent(ValueTree& analysisTree)
+    Component* getGUIComponent(ValueTree& analysisTree)
     {
         return new FFTComponent(analysisTree);
     }

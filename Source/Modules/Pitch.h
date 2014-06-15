@@ -18,7 +18,7 @@ public:
     //==============================================================================
     Pitch(int frameSize, int sampleRate) : yin(sampleRate), pitchOutputValue(0.0)
     {
-        addressPattern = getCoreAddressPattern();
+
     }
     
     //==============================================================================

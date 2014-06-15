@@ -82,10 +82,6 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
                     {
                         audioAnalyses[i]->performAnalysis(gist.getMagnitudeSpectrum());
                     }
-//                    else if (audioAnalyses[i]->getInputType() == GistInput)
-//                    {
-//                        output = audioAnalyses[i]->performAnalysis_f(&gist);
-//                    }
 
                     
                     if (audioAnalyses[i]->resultReady())
@@ -116,10 +112,6 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
                     {
                         audioAnalyses[i]->performAnalysis(gist.getMagnitudeSpectrum());
                     }
-//                    else if (audioAnalyses[i]->getInputType() == GistInput)
-//                    {
-//                        output = audioAnalyses[i]->performAnalysis_v(&gist);
-//                    }
                     else
                     {
                         // failsafe!

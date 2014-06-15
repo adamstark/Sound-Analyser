@@ -21,7 +21,7 @@ public:
     //==============================================================================
     SpectralCentroid() : spectralCentroidOutputValue(0.0)
     {
-        addressPattern = getCoreAddressPattern();
+
     }
     
     //==============================================================================

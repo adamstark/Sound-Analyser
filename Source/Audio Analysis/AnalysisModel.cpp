@@ -20,6 +20,7 @@ const Identifier AnalysisProperties::send("Send");
 const Identifier AnalysisProperties::plot("Plot");
 const Identifier AnalysisProperties::name("Name");
 const Identifier AnalysisProperties::FFT::numSamplesToSend("NumSamplesToSend");
+const Identifier AnalysisProperties::MelFrequencySpectrum::numBins("NumBins");
 
 int AnalysisModel::currentHostFrameSize = DEFAULT_BUFFER_SIZE;
 

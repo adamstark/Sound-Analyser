@@ -20,7 +20,7 @@ public:
     //==============================================================================
     SP_ChordDetector(int frameSize,int samplingFrequency) : chroma(frameSize,samplingFrequency)
     {
-        addressPattern = getCoreAddressPattern();
+
     }
     
     //==============================================================================

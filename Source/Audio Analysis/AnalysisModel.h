@@ -25,6 +25,10 @@ struct AnalysisProperties
         static const Identifier numSamplesToSend;
     };
     
+    struct MelFrequencySpectrum {
+        static const Identifier numBins;
+    };
+    
 };
 
 class AnalysisModel {

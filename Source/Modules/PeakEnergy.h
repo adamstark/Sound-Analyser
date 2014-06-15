@@ -18,9 +18,7 @@ public:
     
     //==============================================================================
     PeakEnergy()
-    {
-        addressPattern = getCoreAddressPattern();
-        
+    {        
         peakEnergyOutputValue = 0.0;
     }
     

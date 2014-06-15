@@ -19,7 +19,7 @@ public:
     //==============================================================================
     SP_Chromagram(int frameSize,int samplingFrequency) : chroma(frameSize,samplingFrequency)
     {
-        addressPattern = getCoreAddressPattern();
+
     }
     
     //==============================================================================

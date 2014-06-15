@@ -108,38 +108,6 @@ public:
         addressPattern = idWithForwardSlash.append(getCoreAddressPattern());
     }
     
-    /*
-    virtual float performAnalysis_f(Gist<float> *g)
-    {
-        return 0.0;
-    }
-    
-    virtual std::vector<float> performAnalysis_v(Gist<float> *g)
-    {
-        std::vector<float> v;
-        
-        return v;
-    }
-    
-    virtual float performAnalysis_f(std::vector<float> buffer)
-    {
-        return 0.0;
-    }
-    
-    virtual std::vector<float> performAnalysis_v(std::vector<float> buffer)
-    {
-        std::vector<float> v;
-        
-        return v;
-    }
-     */
-    
-
-    
-    
-
-    
-    
     
     virtual ValueTree createAnalysisTree()
     {
