@@ -122,6 +122,18 @@ public:
     }
     
     //==============================================================================
+    Identifier getCollectionIdentifier()
+    {
+        return Identifier("Gist");
+    }
+    
+    //==============================================================================
+    String getCollectionName()
+    {
+        return "Gist";
+    }
+    
+    //==============================================================================
     OutputType getOutputType()
     {
         return VectorOutput;

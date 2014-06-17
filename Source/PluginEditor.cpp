@@ -267,32 +267,61 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
                        "Please slect a new device from the list below",
                        AlertWindow::NoIcon);
         
-        //StringArray options = AnalysisModel::getAllAnalysisNames();
         StringArray options;
         
         
+        //Rectangle<int> bounds(button.getX()+ parent.getX(), button.getY()+ parent.getY(), button.getWidth() ,0);
+        
+        //OwnedArray<AudioAnalysis> *analyses = &getProcessor()->analyser.audioAnalyses;
+        
+        
+        //CallOutBox::launchAsynchronously (new AnalysisSelectionComponent(analyserTree,&getProcessor()->analyser), getScreenBounds(),this);
+        
+        ScopedPointer<AnalysisSelectionComponent> analysisSelector;
+        
+        analysisSelector = new AnalysisSelectionComponent(analyserTree,&getProcessor()->analyser);
+        
+        //w.setSize(500, 400);
+//        w.addChildComponent(new AnalysisSelectionComponent(analyserTree,&getProcessor()->analyser));
+        //w.addAndMakeVisible(analysisSelector);
+        w.addCustomComponent(analysisSelector);
+        //w.
+        //w.setBounds(0,0,500,400);
+        
+        w.addButton ("ok",     1, KeyPress (KeyPress::returnKey, 0, 0));
+        w.addButton ("cancel", 0, KeyPress (KeyPress::escapeKey, 0, 0));
+        w.setColour(AlertWindow::ColourIds::backgroundColourId, Colours::grey);
+        
+        /*
         
         for (int i = 0;i < getProcessor()->analyser.audioAnalyses.size();i++)
         {
             options.add(getProcessor()->analyser.audioAnalyses[i]->getName());
         }
         
-
+        
         
         w.addComboBox ("option", options, "some options");
-        
-        w.addButton ("ok",     1, KeyPress (KeyPress::returnKey, 0, 0));
-        w.addButton ("cancel", 0, KeyPress (KeyPress::escapeKey, 0, 0));
+         */
         
         if (w.runModalLoop() != 0) // is they picked 'ok'
         {
+            const int optionIndexChosen = analysisSelector->getSelectedAnalysis();
+            
+            if (optionIndexChosen >= 0)
+            {
+                AudioAnalysis *chosenAnalysis = getProcessor()->analyser.audioAnalyses[optionIndexChosen];
+                
+                AnalysisModel::addNewAnalysis(analyserTree, chosenAnalysis->createAnalysisTree());
+            }
+            
+            /*
             // this is the item they chose in the drop-down list..
             const int optionIndexChosen = w.getComboBoxComponent ("option")->getSelectedItemIndex();
             
-            AudioAnalysis *chosenAnalysis = getProcessor()->analyser.audioAnalyses[optionIndexChosen];
-            
-            AnalysisModel::addNewAnalysis(analyserTree, chosenAnalysis->createAnalysisTree());
+                         */
         }
+         
     }
 }
 

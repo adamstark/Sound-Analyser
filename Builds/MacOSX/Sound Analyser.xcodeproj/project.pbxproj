@@ -84,6 +84,8 @@
 		DAA9ACEEADBD4F5A787F0AC2 /* juce_RTAS_DigiCode2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6E12961FFB85DA2AF80925C7 /* juce_RTAS_DigiCode2.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		E039145805254260B526B32C /* AUCarbonViewBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA5834BA1D29E6F5A8270FA1 /* AUCarbonViewBase.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		E12CFFEA87D25EB6DF25A3CC /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D9E3E916A97F43EE0939AF /* AudioToolbox.framework */; };
+		E3422E3E194F59B0003F0EDB /* AnalysisSelectionComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3422E3C194F59B0003F0EDB /* AnalysisSelectionComponent.cpp */; };
+		E3422E41194F5B99003F0EDB /* ItemListComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3422E3F194F5B99003F0EDB /* ItemListComponent.cpp */; };
 		E3610EFD194E51BB005BB3F3 /* MelFreqSpecComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3610EFB194E51BB005BB3F3 /* MelFreqSpecComponent.cpp */; };
 		E83BA22B2BEBBFBA5C9B8525 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2433F57B310BD804836D706 /* CoreAudio.framework */; };
 		EAB112A5B438E1E13BD4FD41 /* ChordDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7BEB805428CA2C6D6FD3E02D /* ChordDetector.cpp */; };
@@ -976,6 +978,10 @@
 		E27D9E31D7D0CA6E1B0203EA /* juce_ListenerList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_ListenerList.h; path = ../../JuceLibraryCode/modules/juce_events/broadcasters/juce_ListenerList.h; sourceTree = SOURCE_ROOT; };
 		E2C6013349043BBE5B7150A9 /* juce_MidiMessageSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_MidiMessageSequence.h; path = ../../JuceLibraryCode/modules/juce_audio_basics/midi/juce_MidiMessageSequence.h; sourceTree = SOURCE_ROOT; };
 		E2D8A96B506342F0EF825661 /* juce_win32_QuickTimeMovieComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_win32_QuickTimeMovieComponent.cpp; path = ../../JuceLibraryCode/modules/juce_video/native/juce_win32_QuickTimeMovieComponent.cpp; sourceTree = SOURCE_ROOT; };
+		E3422E3C194F59B0003F0EDB /* AnalysisSelectionComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AnalysisSelectionComponent.cpp; path = ../../Source/GUI/AnalysisSelectionComponent.cpp; sourceTree = "<group>"; };
+		E3422E3D194F59B0003F0EDB /* AnalysisSelectionComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnalysisSelectionComponent.h; path = ../../Source/GUI/AnalysisSelectionComponent.h; sourceTree = "<group>"; };
+		E3422E3F194F5B99003F0EDB /* ItemListComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ItemListComponent.cpp; path = ../../Source/GUI/ItemListComponent.cpp; sourceTree = "<group>"; };
+		E3422E40194F5B99003F0EDB /* ItemListComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemListComponent.h; path = ../../Source/GUI/ItemListComponent.h; sourceTree = "<group>"; };
 		E3610EFB194E51BB005BB3F3 /* MelFreqSpecComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MelFreqSpecComponent.cpp; path = ../../Source/GUI/MelFreqSpecComponent.cpp; sourceTree = "<group>"; };
 		E3610EFC194E51BB005BB3F3 /* MelFreqSpecComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MelFreqSpecComponent.h; path = ../../Source/GUI/MelFreqSpecComponent.h; sourceTree = "<group>"; };
 		E36E4B1503DB5C1FA11BCF42 /* juce_ResizableBorderComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_ResizableBorderComponent.h; path = ../../JuceLibraryCode/modules/juce_gui_basics/layout/juce_ResizableBorderComponent.h; sourceTree = SOURCE_ROOT; };
@@ -3111,6 +3117,10 @@
 				C75F5A9F0F9DCD694941B43E /* PluginLookAndFeel.h */,
 				1B5095F732BEB09373DFF4AC /* SimpleAnalysisComponent.cpp */,
 				E007CE0BA527C9E5A7C74E2D /* SimpleAnalysisComponent.h */,
+				E3422E3C194F59B0003F0EDB /* AnalysisSelectionComponent.cpp */,
+				E3422E3D194F59B0003F0EDB /* AnalysisSelectionComponent.h */,
+				E3422E3F194F5B99003F0EDB /* ItemListComponent.cpp */,
+				E3422E40194F5B99003F0EDB /* ItemListComponent.h */,
 			);
 			name = GUI;
 			sourceTree = "<group>";
@@ -3293,11 +3303,13 @@
 				6D9716AD98038DC7B105157A /* juce_RTAS_DigiCode1.cpp in Sources */,
 				DAA9ACEEADBD4F5A787F0AC2 /* juce_RTAS_DigiCode2.cpp in Sources */,
 				3E345BB07410DC58E3121892 /* juce_RTAS_DigiCode3.cpp in Sources */,
+				E3422E3E194F59B0003F0EDB /* AnalysisSelectionComponent.cpp in Sources */,
 				6E03E8C4A2EFBE0BD5982C78 /* juce_RTAS_MacUtilities.mm in Sources */,
 				52A9C62B4046EB63AC9AD4D7 /* juce_RTAS_Wrapper.cpp in Sources */,
 				0D33CD774C501538175CBFC8 /* juce_video.mm in Sources */,
 				75A050C874240B717DA3CD0D /* juce_VST3_Wrapper.cpp in Sources */,
 				235237DDC2BA1C077AB0946D /* juce_VST3_Wrapper.mm in Sources */,
+				E3422E41194F5B99003F0EDB /* ItemListComponent.cpp in Sources */,
 				5AB660A6AA95E534ACE4DC55 /* juce_VST_Wrapper.cpp in Sources */,
 				C7DB4C1ECC84CB38C26B7691 /* juce_VST_Wrapper.mm in Sources */,
 			);

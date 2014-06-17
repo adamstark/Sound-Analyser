@@ -49,6 +49,10 @@ public:
     
     virtual Identifier getIdentifier() = 0;
     
+    virtual Identifier getCollectionIdentifier() = 0;
+    
+    virtual String getCollectionName() = 0;
+    
     virtual String getName() = 0;
     
     virtual std::string getCoreAddressPattern() = 0;

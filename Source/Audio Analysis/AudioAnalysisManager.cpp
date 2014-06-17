@@ -33,16 +33,23 @@ AudioAnalysisManager::AudioAnalysisManager(int bufferSize_) : bufferSize(bufferS
 //==============================================================================
 void AudioAnalysisManager::addAudioAnalysisAlgorithms()
 {
-    audioAnalyses.add(new RMS());
-    audioAnalyses.add(new PeakEnergy());
-    audioAnalyses.add(new SpectralCentroid());
-    audioAnalyses.add(new ZeroCrossingRate());
-    audioAnalyses.add(new SpectralDifference(bufferSize));
+    // please add new audio analyses in a group, per collection, and then in alphabetical order
+    // by name as this is how they will appear on the selection dialog
+    
+    // GIST
     audioAnalyses.add(new FFTMagnitudeSpectrum());
-    audioAnalyses.add(new Pitch(bufferSize,44100));
     audioAnalyses.add(new MelFrequencySpectrum(bufferSize,44100));
-    audioAnalyses.add(new SP_Chromagram(bufferSize,44100));
+    audioAnalyses.add(new PeakEnergy());
+    audioAnalyses.add(new Pitch(bufferSize,44100));
+    audioAnalyses.add(new RMS());
+    audioAnalyses.add(new SpectralCentroid());
+    audioAnalyses.add(new SpectralDifference(bufferSize));
+    audioAnalyses.add(new ZeroCrossingRate());
+    
+    // QMUL
     audioAnalyses.add(new SP_ChordDetector(bufferSize,44100));
+    audioAnalyses.add(new SP_Chromagram(bufferSize,44100));
+
 }
 
 //==============================================================================

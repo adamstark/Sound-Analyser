@@ -87,6 +87,18 @@ public:
     }
     
     //==============================================================================
+    Identifier getCollectionIdentifier()
+    {
+        return Identifier("C4DMQMUL");
+    }
+    
+    //==============================================================================
+    String getCollectionName()
+    {
+        return "Queen Mary University of London";
+    }
+    
+    //==============================================================================
     OutputType getOutputType()
     {
         return VectorOutput;
