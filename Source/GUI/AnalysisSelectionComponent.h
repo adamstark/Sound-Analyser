@@ -41,8 +41,33 @@ public:
         
         addAndMakeVisible(&collectionList);
         addAndMakeVisible(&analysisList);
-                
+
+        Font f(14,Font::bold);
+        analysisNameLabel.setFont(f);
+        
+        technicalDescriptionLabel.setFont(12);
+        simpleDescriptionLabel.setFont(12);
+        
+        technicalDescriptionLabel.setMinimumHorizontalScale(1.0);
+        simpleDescriptionLabel.setMinimumHorizontalScale(1.0);
+        
+        simpleDescriptionLabel.setJustificationType(Justification::topLeft);
+        technicalDescriptionLabel.setJustificationType(Justification::topLeft);
+        
+        
         addAndMakeVisible(&analysisNameLabel);
+        addAndMakeVisible(&authorNameLabel);
+        addAndMakeVisible(&addressPatternLabel);
+        addAndMakeVisible(&technicalDescriptionLabel);
+        addAndMakeVisible(&simpleDescriptionLabel);
+        
+        
+        
+        
+        //technicalDescription.setMultiLine(true);
+        //technicalDescription.setText("Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah ",dontSendNotification);
+//        technicalDescription.setEnabled(false);
+
         
         
         fillSelectionLists();
@@ -51,8 +76,6 @@ public:
     void fillSelectionLists()
     {
         StringArray collectionNames;
-        
-        
         
         // -----------------------------------------
         // create category list
@@ -124,6 +147,12 @@ public:
         return found;
     }
     
+    void paint(Graphics& g)
+    {
+        //g.fillAll(Colour::fromRGB(29, 114, 239));
+        g.fillAll(Colours::royalblue);
+    }
+    
     int getSelectedAnalysis()
     {
         int selectedCollection = collectionList.getSelectedRow();
@@ -154,11 +183,20 @@ public:
             int selectedIndex = analysisList.getSelectedRow();
 
             String name = analysisItems[currentCollection][selectedIndex].analysis->getName();
+            String addressPattern = analysisItems[currentCollection][selectedIndex].analysis->addressPattern;
+            String author = analysisItems[currentCollection][selectedIndex].analysis->getAuthorString();
+            String simpleDes = analysisItems[currentCollection][selectedIndex].analysis->getSimpleDescription();
+            String technicalDes = analysisItems[currentCollection][selectedIndex].analysis->getTechnicalDescription();
             
             analysisNameLabel.setText(name, dontSendNotification);
+            authorNameLabel.setText(author, dontSendNotification);
+            addressPatternLabel.setText(addressPattern, dontSendNotification);
+            simpleDescriptionLabel.setText(simpleDes,dontSendNotification);
+            technicalDescriptionLabel.setText(technicalDes,dontSendNotification);
         }
         else if (source == &collectionList)
         {
+            analysisList.selectRow(0);
             setAnalysisList(collectionList.getSelectedRow());
         }
     }
@@ -182,15 +220,25 @@ public:
     
     void resized()
     {
-        collectionList.setBounds(10,40,150,getHeight()-40-10);
+        collectionList.setBounds(10,10,150,getHeight()-20);
         
         analysisList.setBounds(collectionList.getBounds().translated(160, 0));
         
-        analysisNameLabel.setBounds(330,40,160,20);
+        analysisNameLabel.setBounds(330,10,160,20);
+        
+        authorNameLabel.setBounds(330,50,160,20);
+        
+        addressPatternLabel.setBounds(330,80,160,20);
+        
+        simpleDescriptionLabel.setBounds(330,120,160,80);
+        technicalDescriptionLabel.setBounds(330,210,160,80);
+        
+
     }
 
 private:
     
+    AudioAnalysisManager *analyser;
     ValueTree analyserTree;
     
     Array<CollectionItem> collections;
@@ -201,7 +249,15 @@ private:
     
     Label analysisNameLabel;
     
-    AudioAnalysisManager *analyser;
+    Label authorNameLabel;
+    Label addressPatternLabel;
+    
+
+    Label technicalDescriptionLabel;
+    Label simpleDescriptionLabel;
+    
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AnalysisSelectionComponent)
 };
 
 #endif /* defined(__Sound_Analyser__AnalysisSelectionComponent__) */

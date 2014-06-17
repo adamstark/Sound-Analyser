@@ -65,6 +65,24 @@ public:
     }
     
     //==============================================================================
+    String getAuthorString()
+    {
+        return "Adam Stark";
+    }
+    
+    //==============================================================================
+    String getTechnicalDescription()
+    {
+        return "The average signal energy observed in each audio frame";
+    }
+    
+    //==============================================================================
+    String getSimpleDescription()
+    {
+        return "An indication of signal energy or loudness";
+    }
+    
+    //==============================================================================
     OutputType getOutputType()
     {
         return FloatOutput;
@@ -81,6 +99,8 @@ private:
     CoreTimeDomainFeatures<float> tdf;
     
     float RMSOutputValue;
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (RMS)
 };
 
 #endif /* defined(__SoundAnalyser__RMS__) */

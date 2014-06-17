@@ -62,6 +62,24 @@ public:
     }
     
     //==============================================================================
+    String getAuthorString()
+    {
+        return "Adam Stark";
+    }
+    
+    //==============================================================================
+    String getTechnicalDescription()
+    {
+        return "The sum of the absolute value of the bin-wise difference between consecutive magnitude spectra";
+    }
+    
+    //==============================================================================
+    String getSimpleDescription()
+    {
+        return "A feature showing peaks whenever there are sharp changes in a sound, e.g. at the start of notes";
+    }
+    
+    //==============================================================================
     OutputType getOutputType()
     {
         return FloatOutput;
@@ -77,6 +95,8 @@ private:
     
     float spectralDifferenceOutputValue;
     OnsetDetectionFunction<float> odf;
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SpectralDifference)
 
 };
 

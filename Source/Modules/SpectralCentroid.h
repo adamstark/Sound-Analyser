@@ -67,6 +67,24 @@ public:
     }
     
     //==============================================================================
+    String getAuthorString()
+    {
+        return "Adam Stark";
+    }
+    
+    //==============================================================================
+    String getTechnicalDescription()
+    {
+        return "The centre of mass of the magnitude spectrum";
+    }
+    
+    //==============================================================================
+    String getSimpleDescription()
+    {
+        return "A feature correlated with the brightness of a sound";
+    }
+    
+    //==============================================================================
     OutputType getOutputType()
     {
         return FloatOutput;
@@ -83,6 +101,8 @@ private:
     CoreFrequencyDomainFeatures<float> fdf;
     
     float spectralCentroidOutputValue;
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SpectralCentroid)
 };
 
 #endif

@@ -76,6 +76,25 @@ public:
     }
     
     //==============================================================================
+    String getAuthorString()
+    {
+        return "Adam Stark";
+    }
+    
+    //==============================================================================
+    String getTechnicalDescription()
+    {
+        return "An implementation of the Yin pitch detection algorithm by de Cheveigne and Kawahara (2002). Output in Hz.";
+    }
+    
+    //==============================================================================
+    String getSimpleDescription()
+    {
+        return "An estimation of the pitch in Hz of a sound - for use on monophonic signals only";
+    }
+
+    
+    //==============================================================================
     OutputType getOutputType()
     {
         return FloatOutput;
@@ -92,6 +111,8 @@ private:
     Yin<float> yin;
     
     float pitchOutputValue;
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pitch)
 };
 
 #endif

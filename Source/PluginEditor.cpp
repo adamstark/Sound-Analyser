@@ -290,7 +290,7 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
         
         w.addButton ("ok",     1, KeyPress (KeyPress::returnKey, 0, 0));
         w.addButton ("cancel", 0, KeyPress (KeyPress::escapeKey, 0, 0));
-        w.setColour(AlertWindow::ColourIds::backgroundColourId, Colours::grey);
+        w.setColour(AlertWindow::ColourIds::backgroundColourId, Colours::lightblue);
         
         /*
         

@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <vector>
+#include "../../JuceLibraryCode/JuceHeader.h"
 
 class AudioBuffer {
     
@@ -26,16 +27,15 @@ public:
     
     std::vector<float> buffer;
     
-    bool isReady()
-    {
-        return bufferReady;
-    }
+    bool isReady();
     
 private:
     int bufferSize;
     
     bool bufferReady;
     int numSamplesCollected;
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AudioBuffer)
     
 };
 

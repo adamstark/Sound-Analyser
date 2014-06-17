@@ -65,6 +65,24 @@ public:
     }
     
     //==============================================================================
+    String getAuthorString()
+    {
+        return "Adam Stark";
+    }
+    
+    //==============================================================================
+    String getTechnicalDescription()
+    {
+        return "The count of zero crossings in each observed frame";
+    }
+    
+    //==============================================================================
+    String getSimpleDescription()
+    {
+        return "A feature giving an indication of the brightness of a sound";
+    }
+    
+    //==============================================================================
     OutputType getOutputType()
     {
         return FloatOutput;
@@ -80,6 +98,8 @@ private:
     
     float zcrOutputValue;
     CoreTimeDomainFeatures<float> tdf;
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ZeroCrossingRate)
 };
 
 

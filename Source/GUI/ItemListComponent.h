@@ -60,6 +60,8 @@ public:
 private:
     
     StringArray listItems;
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ItemListComponent)
 };
 
 #endif /* defined(__Sound_Analyser__ItemListComponent__) */

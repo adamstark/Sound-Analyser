@@ -42,6 +42,8 @@ private:
     std::string currentIP;
     
     ScopedPointer<DatagramSocket> datagramSocket;
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Osc)
 };
 
 #endif /* defined(__Sound_Analyser__Osc__) */

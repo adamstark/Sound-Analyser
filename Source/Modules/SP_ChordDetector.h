@@ -91,7 +91,25 @@ public:
     //==============================================================================
     String getCollectionName()
     {
-        return "Queen Mary University of London";
+        return "Queen Mary Univ. of London";
+    }
+    
+    //==============================================================================
+    String getAuthorString()
+    {
+        return "Adam Stark & Mark Plumbley";
+    }
+    
+    //==============================================================================
+    String getTechnicalDescription()
+    {
+        return "The root note from the chord detection algorithm presented by Stark and Plumbley (2009)";
+    }
+    
+    //==============================================================================
+    String getSimpleDescription()
+    {
+        return "An estimation of the root note (C, C#, D, etc) of the input audio signal";
     }
     
     //==============================================================================
@@ -110,6 +128,8 @@ private:
     
     Chromagram chroma;
     ChordDetector chord;
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SP_ChordDetector)
 };
 
 #endif

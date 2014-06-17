@@ -95,7 +95,25 @@ public:
     //==============================================================================
     String getCollectionName()
     {
-        return "Queen Mary University of London";
+        return "Queen Mary Univ. of London";
+    }
+    
+    //==============================================================================
+    String getAuthorString()
+    {
+        return "Adam Stark & Mark Plumbley";
+    }
+    
+    //==============================================================================
+    String getTechnicalDescription()
+    {
+        return "The chromagram from the real-time chord detection algorithm presented by Stark and Plumbley (2009)";
+    }
+    
+    //==============================================================================
+    String getSimpleDescription()
+    {
+        return "A 12-element vector, indicating how much energy there is in each pitch class - how much 'C', how much 'C#', etc";
     }
     
     //==============================================================================
@@ -113,6 +131,8 @@ public:
 private:
     
     Chromagram chroma;
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SP_Chromagram)
 };
 
 

@@ -181,6 +181,9 @@ void SoundAnalyserAudioProcessor::prepareToPlay (double sampleRate, int samplesP
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+    
+    analyser.setSamplingFrequency((int) sampleRate);
+    analyser.setHostFrameSize(samplesPerBlock);
 }
 
 //==============================================================================

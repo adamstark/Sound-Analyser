@@ -55,6 +55,12 @@ public:
     
     virtual String getName() = 0;
     
+    virtual String getAuthorString() = 0;
+    
+    virtual String getTechnicalDescription() = 0;
+    
+    virtual String getSimpleDescription() = 0;
+    
     virtual std::string getCoreAddressPattern() = 0;
     
     virtual void performAnalysis(std::vector<float> buffer) = 0;

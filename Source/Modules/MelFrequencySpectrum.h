@@ -124,6 +124,24 @@ public:
     }
     
     //==============================================================================
+    String getAuthorString()
+    {
+        return "Adam Stark";
+    }
+    
+    //==============================================================================
+    String getTechnicalDescription()
+    {
+        return "The magnitude spectrum mapped on to a Mel scale using a bank of triangular filters.";
+    }
+    
+    //==============================================================================
+    String getSimpleDescription()
+    {
+        return "A feature showing you how energy is distributed across the frequency range, on a scale related to human perception";
+    }
+    
+    //==============================================================================
     OutputType getOutputType()
     {
         return VectorOutput;
@@ -141,6 +159,8 @@ private:
     std::vector<float> mfccOutput;
     
     int numBins;
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MelFrequencySpectrum)
 };
 
 #endif /* defined(__Sound_Analyser__MelFrequencySpectrum__) */

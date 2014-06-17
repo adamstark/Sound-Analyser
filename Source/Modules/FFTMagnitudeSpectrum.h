@@ -134,6 +134,24 @@ public:
     }
     
     //==============================================================================
+    String getAuthorString()
+    {
+        return "Adam Stark";
+    }
+    
+    //==============================================================================
+    String getTechnicalDescription()
+    {
+        return "The magnitude spectrum calculated from the Fourier transform. The number of samples to display can be set via the user interface.";
+    }
+    
+    //==============================================================================
+    String getSimpleDescription()
+    {
+        return "A feature showing you how energy is distributed across the frequency range, on a linear scale";
+    }
+    
+    //==============================================================================
     OutputType getOutputType()
     {
         return VectorOutput;
@@ -170,6 +188,8 @@ private:
     int numSamplesToSend;
     
     std::vector<float> magnitudeSpectrumResult;
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FFTMagnitudeSpectrum)
 };
 
 #endif

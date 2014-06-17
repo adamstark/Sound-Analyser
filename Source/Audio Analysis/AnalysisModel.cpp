@@ -71,5 +71,27 @@ void AnalysisModel::removeAnalysis(ValueTree analysisTree)
     mainTree.removeChild(analysisTree, nullptr);
 }
 
+//==============================================================================
+void AnalysisModel::setBufferSize(ValueTree analyserTree,int bufferSize)
+{
+    if (bufferSize >= currentHostFrameSize)
+    {
+        analyserTree.setProperty(Ids::BufferSize, bufferSize, nullptr);
+        
+    }
+    else
+    {
+        int currentBufferSize = analyserTree[Ids::BufferSize];
+        
+        if (currentBufferSize != currentHostFrameSize)
+        {
+            analyserTree.setProperty(Ids::BufferSize, currentHostFrameSize, nullptr);
+        }
+        else
+        {
+            analyserTree.sendPropertyChangeMessage(Ids::BufferSize);
+        }
+    }
+}
 
 

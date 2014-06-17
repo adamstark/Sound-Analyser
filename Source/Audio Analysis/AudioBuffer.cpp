@@ -77,3 +77,9 @@ int AudioBuffer::getBufferSize()
 {
     return bufferSize;
 }
+
+//==============================================================================
+bool AudioBuffer::isReady()
+{
+    return bufferReady;
+}

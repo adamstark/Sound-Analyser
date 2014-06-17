@@ -43,27 +43,7 @@ public:
     
     static void removeAnalysis(ValueTree analysisTree);
     
-    static void setBufferSize(ValueTree analyserTree,int bufferSize)
-    {
-        if (bufferSize >= currentHostFrameSize)
-        {
-            analyserTree.setProperty(Ids::BufferSize, bufferSize, nullptr);
-
-        }
-        else
-        {
-            int currentBufferSize = analyserTree[Ids::BufferSize];
-            
-            if (currentBufferSize != currentHostFrameSize)
-            {
-                analyserTree.setProperty(Ids::BufferSize, currentHostFrameSize, nullptr);
-            }
-            else
-            {
-                analyserTree.sendPropertyChangeMessage(Ids::BufferSize);
-            }
-        } 
-    }
+    static void setBufferSize(ValueTree analyserTree,int bufferSize);
     
     static int currentHostFrameSize;
     
