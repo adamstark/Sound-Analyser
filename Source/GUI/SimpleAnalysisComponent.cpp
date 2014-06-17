@@ -68,3 +68,80 @@ void SimpleAnalysisComponent::paint(Graphics& g)
 {
    // g.fillAll(Colours::silver);
 }
+
+//==============================================================================
+void SimpleAnalysisComponent::buttonClicked (Button* button)
+{
+    if (button == &sendButton)
+    {
+        bool state = sendButton.getToggleState();
+        
+        if (state == true)
+        {
+            analysisTree.setProperty(AnalysisProperties::send, 0, nullptr);
+        }
+        else
+        {
+            analysisTree.setProperty(AnalysisProperties::send, 1, nullptr);
+        }
+    }
+    else if (button == &plotButton)
+    {
+        bool state = plotButton.getToggleState();
+        
+        if (state == true)
+        {
+            analysisTree.setProperty(AnalysisProperties::plot, 0, nullptr);
+        }
+        else
+        {
+            AnalysisModel::turnOffAllPlotting(analysisTree);
+            analysisTree.setProperty(AnalysisProperties::plot, 1, nullptr);
+        }
+    }
+    else if (button == &removeButton)
+    {
+        AnalysisModel::removeAnalysis(analysisTree);
+    }
+}
+
+//==============================================================================
+void SimpleAnalysisComponent::valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property)
+{
+    if (treeWhosePropertyHasChanged == analysisTree)
+    {
+        if (property == AnalysisProperties::send)
+        {
+            sendButton.setToggleState(analysisTree[AnalysisProperties::send],dontSendNotification);
+        }
+        else if (property == AnalysisProperties::plot)
+        {
+            plotButton.setToggleState(analysisTree[AnalysisProperties::plot], dontSendNotification);
+        }
+        
+        resized();
+    }
+}
+//==============================================================================
+void SimpleAnalysisComponent::valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded)
+{
+
+}
+
+//==============================================================================
+void SimpleAnalysisComponent::valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved)
+{
+
+}
+
+//==============================================================================
+void SimpleAnalysisComponent::valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved)
+{
+
+}
+
+//==============================================================================
+void SimpleAnalysisComponent::valueTreeParentChanged (ValueTree& treeWhoseParentHasChanged)
+{
+
+}

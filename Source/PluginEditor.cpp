@@ -115,6 +115,38 @@ SoundAnalyserAudioProcessorEditor::~SoundAnalyserAudioProcessorEditor()
 }
 
 //==============================================================================
+void SoundAnalyserAudioProcessorEditor::setValueTree(ValueTree tree)
+{
+    analyserTree.removeListener(this);
+    
+    analyserTree = tree;
+    
+    analyserTree.addListener(this);
+    
+    refreshFromTree();
+}
+
+//==============================================================================
+void SoundAnalyserAudioProcessorEditor::refreshFromTree()
+{
+    analysisComponents.clear();
+    
+    for (int i = 0;i < analyserTree.getNumChildren();i++)
+    {
+        ValueTree analysisTree = analyserTree.getChild(i);
+        
+        addAnalysis(analysisTree);
+    }
+    
+    analyserId.setText(analyserTree[AnalysisModel::Ids::AnalyserId],dontSendNotification);
+    
+    OSCPort.setText(analyserTree[AnalysisModel::Ids::Port],dontSendNotification);
+    IPAddressValue.setText(analyserTree[AnalysisModel::Ids::IPAddress],dontSendNotification);
+    
+    resized();
+}
+
+//==============================================================================
 void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
 {
     // FIX!!!!!! - DO WE HAVE A THREADING PROBLEM HERE?
@@ -252,6 +284,12 @@ void SoundAnalyserAudioProcessorEditor::resized()
 }
 
 //==============================================================================
+SoundAnalyserAudioProcessor* SoundAnalyserAudioProcessorEditor::getProcessor() const
+{
+    return static_cast <SoundAnalyserAudioProcessor*> (getAudioProcessor());
+}
+
+//==============================================================================
 void SoundAnalyserAudioProcessorEditor::timerCallback()
 {
     repaint();
@@ -323,6 +361,35 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
         }
          
     }
+}
+
+//==============================================================================
+void SoundAnalyserAudioProcessorEditor::labelTextChanged (Label* labelThatHasChanged)
+{
+    if (labelThatHasChanged == &analyserId)
+    {
+        analyserTree.setProperty(AnalysisModel::Ids::AnalyserId, analyserId.getText(), nullptr);
+    }
+    else if (labelThatHasChanged == &OSCPort)
+    {
+        analyserTree.setProperty(AnalysisModel::Ids::Port, OSCPort.getText(),nullptr);
+    }
+    else if (labelThatHasChanged == &IPAddressValue)
+    {
+        analyserTree.setProperty(AnalysisModel::Ids::IPAddress, IPAddressValue.getText(),nullptr);
+    }
+    else if (labelThatHasChanged == &bufferSizeValue)
+    {
+        AnalysisModel::setBufferSize(analyserTree,bufferSizeValue.getTextValue().getValue());
+    }
+}
+
+//==============================================================================
+void SoundAnalyserAudioProcessorEditor::textEditorTextChanged (TextEditor& textEditor)
+{
+    
+    analyserTree.setProperty(AnalysisModel::Ids::AnalyserId, textEditor.getText(), nullptr);
+    
 }
 
 //==============================================================================

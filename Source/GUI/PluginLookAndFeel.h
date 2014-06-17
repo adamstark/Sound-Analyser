@@ -30,10 +30,7 @@ public:
         setColour (Slider::ColourIds::thumbColourId, Colours::royalblue);
         setColour (Slider::trackColourId,               Colour::fromRGBA(255, 255, 255, 200));
         
-        setColour (Slider::rotarySliderFillColourId,Colours::aqua);
-        
-        
-        
+        setColour (Slider::rotarySliderFillColourId,Colours::aqua);   
     }
     
     

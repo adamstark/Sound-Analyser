@@ -30,87 +30,38 @@ public:
     ~SoundAnalyserAudioProcessorEditor();
 
     //==============================================================================
-    // This is just a standard Juce paint method...
     void paint (Graphics& g);
     
     void resized();
     
-    void setValueTree(ValueTree tree)
-    {
-        analyserTree.removeListener(this);
-        
-        analyserTree = tree;
-        
-        analyserTree.addListener(this);
-        
-        refreshFromTree();
-    }
+    void setValueTree(ValueTree tree);
     
-    void refreshFromTree()
-    {
-        analysisComponents.clear();
-                
-        for (int i = 0;i < analyserTree.getNumChildren();i++)
-        {
-            ValueTree analysisTree = analyserTree.getChild(i);
-            
-            addAnalysis(analysisTree);
-        }
-        
-        analyserId.setText(analyserTree[AnalysisModel::Ids::AnalyserId],dontSendNotification);
-
-        OSCPort.setText(analyserTree[AnalysisModel::Ids::Port],dontSendNotification);
-        IPAddressValue.setText(analyserTree[AnalysisModel::Ids::IPAddress],dontSendNotification);
-        
-        resized();
-    }
+    void refreshFromTree();
     
     void addAnalysis(ValueTree& analysisTree);
     
+    //==============================================================================
     void buttonClicked (Button* button);
     
+    //==============================================================================
     void timerCallback();
     
+    //==============================================================================
     void valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property);
     void valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded);
     void valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved);
     void valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved);
     void valueTreeParentChanged (ValueTree& treeWhoseParentHasChanged);
     
-    void labelTextChanged (Label* labelThatHasChanged)
-    {
-        if (labelThatHasChanged == &analyserId)
-        {
-            analyserTree.setProperty(AnalysisModel::Ids::AnalyserId, analyserId.getText(), nullptr);
-        }
-        else if (labelThatHasChanged == &OSCPort)
-        {
-            analyserTree.setProperty(AnalysisModel::Ids::Port, OSCPort.getText(),nullptr);
-        }
-        else if (labelThatHasChanged == &IPAddressValue)
-        {
-            analyserTree.setProperty(AnalysisModel::Ids::IPAddress, IPAddressValue.getText(),nullptr);
-        }
-        else if (labelThatHasChanged == &bufferSizeValue)
-        {
-            AnalysisModel::setBufferSize(analyserTree,bufferSizeValue.getTextValue().getValue());
-        }
-    }
+    //==============================================================================
+    void labelTextChanged (Label* labelThatHasChanged);
     
-    void textEditorTextChanged (TextEditor& textEditor)
-    {
-
-        analyserTree.setProperty(AnalysisModel::Ids::AnalyserId, textEditor.getText(), nullptr);
-
-    }
-    
+    //==============================================================================
+    void textEditorTextChanged (TextEditor& textEditor);
     
 private:
     
-    SoundAnalyserAudioProcessor* getProcessor() const
-    {
-        return static_cast <SoundAnalyserAudioProcessor*> (getAudioProcessor());
-    }
+    SoundAnalyserAudioProcessor* getProcessor() const;
     
     ValueTree analyserTree;
     
