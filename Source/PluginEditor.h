@@ -16,7 +16,7 @@
 #include "AnalysisModel.h"
 #include "GUI/PluginLookAndFeel.h"
 #include "GUI/SimpleAnalysisComponent.h"
-#include "GUI/FFTComponent.h"
+//#include "GUI/FFTComponent.h"
 #include "GUI/AnalysisSelectionComponent.h"
 
 

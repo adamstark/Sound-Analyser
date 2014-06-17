@@ -17,6 +17,11 @@ class SimpleAnalysisComponent : public Component, public Button::Listener, publi
 public:
     SimpleAnalysisComponent(ValueTree& analysisTree_);
     
+    virtual ~SimpleAnalysisComponent()
+    {
+        
+    }
+    
     void refreshFromTree();
     
     //======================================================================
@@ -33,8 +38,18 @@ public:
     void valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved);
     void valueTreeParentChanged (ValueTree& treeWhoseParentHasChanged);
    
+    //======================================================================
+    virtual void customComponentPropertyChange(ValueTree& treeWhosePropertyHasChanged, const Identifier& property);
+    virtual void customComponentResized();
+    virtual void customComponentRefreshFromTree();
+    
+protected:
+    
+    ValueTree analysisTree;
     
 private:
+    
+    
     
     Label analysisName;
     TextButton sendButton;
@@ -42,7 +57,7 @@ private:
     
     TextButton removeButton;
     
-    ValueTree analysisTree;
+    
     
     //======================================================================//
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleAnalysisComponent)

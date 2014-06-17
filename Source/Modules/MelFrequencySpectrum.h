@@ -10,7 +10,7 @@
 #define __Sound_Analyser__MelFrequencySpectrum__
 
 #include "AudioAnalysis.h"
-#include "../GUI/MelFreqSpecComponent.h"
+#include "../GUI/Custom Analysis Components/MelFreqSpecComponent.h"
 
 class MelFrequencySpectrum : public AudioAnalysis
 {

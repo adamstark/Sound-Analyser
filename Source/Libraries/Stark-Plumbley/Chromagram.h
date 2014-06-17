@@ -101,6 +101,9 @@ private:
     std::vector<double> downsampledInputAudioFrame;
     std::vector<double> chromagram;
     
+    double referenceFrequency;
+    double noteFrequencies[12];
+    
     int bufferSize;
     int samplingFrequency;
     int inputAudioFrameSize;
@@ -113,10 +116,7 @@ private:
     int numSamplesSinceLastCalculation;
     int chromaCalculationInterval;
     bool chromaReady;
-    
-    double referenceFrequency;
-    double noteFrequencies[12];
-    
+
     fftw_plan p;
 	fftw_complex *complexOut;
     fftw_complex *complexIn;

@@ -11,6 +11,7 @@
 //==============================================================================
 SimpleAnalysisComponent::SimpleAnalysisComponent(ValueTree& analysisTree_) : analysisTree(analysisTree_)
 {
+
     setSize (580, 30);
     
     
@@ -49,6 +50,8 @@ void SimpleAnalysisComponent::refreshFromTree()
     sendButton.setToggleState(analysisTree[AnalysisProperties::send],dontSendNotification);
     plotButton.setToggleState(analysisTree[AnalysisProperties::plot], dontSendNotification);
     
+    customComponentRefreshFromTree();
+    
     resized();
 }
 
@@ -60,8 +63,10 @@ void SimpleAnalysisComponent::resized()
     
     sendButton.setBounds(280,0,40,20);
     plotButton.setBounds(340, 0, 40, 20);
-        
+
+    customComponentResized();
 }
+
 
 //==============================================================================
 void SimpleAnalysisComponent::paint(Graphics& g)
@@ -119,6 +124,9 @@ void SimpleAnalysisComponent::valueTreePropertyChanged (ValueTree& treeWhoseProp
             plotButton.setToggleState(analysisTree[AnalysisProperties::plot], dontSendNotification);
         }
         
+        customComponentPropertyChange(treeWhosePropertyHasChanged,property);
+        
+        
         resized();
     }
 }
@@ -144,4 +152,22 @@ void SimpleAnalysisComponent::valueTreeChildOrderChanged (ValueTree& parentTreeW
 void SimpleAnalysisComponent::valueTreeParentChanged (ValueTree& treeWhoseParentHasChanged)
 {
 
+}
+
+//==============================================================================
+void SimpleAnalysisComponent::customComponentPropertyChange(ValueTree& treeWhosePropertyHasChanged, const Identifier& property)
+{
+    
+}
+
+//==============================================================================
+void SimpleAnalysisComponent::customComponentResized()
+{
+    
+}
+
+//==============================================================================
+void SimpleAnalysisComponent::customComponentRefreshFromTree()
+{
+    
 }
