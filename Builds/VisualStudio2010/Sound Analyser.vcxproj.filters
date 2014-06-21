@@ -1761,7 +1761,13 @@
     <ClInclude Include="..\..\Source\Modules\SpectralCentroid.h">
       <Filter>Sound Analyser\Source\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Modules\SpectralCrest.h">
+      <Filter>Sound Analyser\Source\Modules</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Modules\SpectralDifference.h">
+      <Filter>Sound Analyser\Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Modules\SpectralFlatness.h">
       <Filter>Sound Analyser\Source\Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Modules\ZeroCrossingRate.h">
@@ -3152,8 +3158,8 @@
     <None Include="..\..\Source\Libraries\Gist\LICENSE.txt">
       <Filter>Sound Analyser\Source\Libraries\Gist</Filter>
     </None>
-    <None Include="..\..\Source\Libraries\Gist\README.md">
-      <Filter>Sound Analyser\Source\Libraries\Gist</Filter>
+    <None Include="..\..\Source\Libraries\Stark-Plumbley\LICENSE.txt">
+      <Filter>Sound Analyser\Source\Libraries\Stark-Plumbley</Filter>
     </None>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_basics\juce_module_info">
       <Filter>Juce Modules\juce_audio_basics</Filter>

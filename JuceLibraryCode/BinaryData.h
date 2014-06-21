@@ -15,8 +15,8 @@ namespace BinaryData
     extern const char*   LICENSE_txt;
     const int            LICENSE_txtSize = 32006;
 
-    extern const char*   README_md;
-    const int            README_mdSize = 865;
+    extern const char*   LICENSE_txt2;
+    const int            LICENSE_txt2Size = 32004;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

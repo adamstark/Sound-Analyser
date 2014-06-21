@@ -13,117 +13,120 @@
   <MAINGROUP id="VsHW7o" name="Sound Analyser">
     <GROUP id="{0F5E9544-A7EE-7AC3-489A-8BF69D05E6FB}" name="Source">
       <GROUP id="{5855A183-D5A6-41E2-2853-4D2D0B7D04EC}" name="Audio Analysis">
-        <FILE id="JO9M6S" name="AnalysisModel.cpp" compile="1" resource="0"
+        <FILE id="lUQbM4" name="AnalysisModel.cpp" compile="1" resource="0"
               file="Source/Audio Analysis/AnalysisModel.cpp"/>
-        <FILE id="KiUSNg" name="AnalysisModel.h" compile="0" resource="0" file="Source/Audio Analysis/AnalysisModel.h"/>
-        <FILE id="p5w6cu" name="AudioAnalysis.cpp" compile="1" resource="0"
+        <FILE id="d24F4l" name="AnalysisModel.h" compile="0" resource="0" file="Source/Audio Analysis/AnalysisModel.h"/>
+        <FILE id="VfD2gR" name="AudioAnalysis.cpp" compile="1" resource="0"
               file="Source/Audio Analysis/AudioAnalysis.cpp"/>
-        <FILE id="lInSI7" name="AudioAnalysis.h" compile="0" resource="0" file="Source/Audio Analysis/AudioAnalysis.h"/>
-        <FILE id="HBocZr" name="AudioAnalysisManager.cpp" compile="1" resource="0"
+        <FILE id="p8XtMR" name="AudioAnalysis.h" compile="0" resource="0" file="Source/Audio Analysis/AudioAnalysis.h"/>
+        <FILE id="Hnflf9" name="AudioAnalysisManager.cpp" compile="1" resource="0"
               file="Source/Audio Analysis/AudioAnalysisManager.cpp"/>
-        <FILE id="sj7Z5X" name="AudioAnalysisManager.h" compile="0" resource="0"
+        <FILE id="nlkL8s" name="AudioAnalysisManager.h" compile="0" resource="0"
               file="Source/Audio Analysis/AudioAnalysisManager.h"/>
-        <FILE id="pyXVzj" name="AudioBuffer.cpp" compile="1" resource="0" file="Source/Audio Analysis/AudioBuffer.cpp"/>
-        <FILE id="kqxFOO" name="AudioBuffer.h" compile="0" resource="0" file="Source/Audio Analysis/AudioBuffer.h"/>
+        <FILE id="ro40Sk" name="AudioBuffer.cpp" compile="1" resource="0" file="Source/Audio Analysis/AudioBuffer.cpp"/>
+        <FILE id="K8bngY" name="AudioBuffer.h" compile="0" resource="0" file="Source/Audio Analysis/AudioBuffer.h"/>
       </GROUP>
       <GROUP id="{D4AAB6E1-C1DC-EA71-4428-CD61C0EE9884}" name="Binary Data">
-        <FILE id="En1h9J" name="tex2.png" compile="0" resource="1" file="Source/Binary Data/tex2.png"/>
+        <FILE id="wQ2s5H" name="tex2.png" compile="0" resource="1" file="Source/Binary Data/tex2.png"/>
       </GROUP>
       <GROUP id="{CBED0502-5EEF-C98B-8E69-65652E239DBC}" name="GUI">
-        <FILE id="uTGAWW" name="AnalysisSelectionComponent.cpp" compile="1"
+        <FILE id="DfJ4TI" name="AnalysisSelectionComponent.cpp" compile="1"
               resource="0" file="Source/GUI/AnalysisSelectionComponent.cpp"/>
-        <FILE id="E28PpG" name="AnalysisSelectionComponent.h" compile="0" resource="0"
+        <FILE id="z1ivhn" name="AnalysisSelectionComponent.h" compile="0" resource="0"
               file="Source/GUI/AnalysisSelectionComponent.h"/>
         <GROUP id="{7B29F2D9-CDC2-B171-03B7-17F28F4B096D}" name="Custom Analysis Components">
-          <FILE id="jNjiMU" name="FFTComponent.cpp" compile="1" resource="0"
+          <FILE id="Yi8qVz" name="FFTComponent.cpp" compile="1" resource="0"
                 file="Source/GUI/Custom Analysis Components/FFTComponent.cpp"/>
-          <FILE id="CZ7Y8s" name="FFTComponent.h" compile="0" resource="0" file="Source/GUI/Custom Analysis Components/FFTComponent.h"/>
-          <FILE id="NLkzk1" name="MelFreqSpecComponent.cpp" compile="1" resource="0"
+          <FILE id="gbTlVn" name="FFTComponent.h" compile="0" resource="0" file="Source/GUI/Custom Analysis Components/FFTComponent.h"/>
+          <FILE id="A2fNAt" name="MelFreqSpecComponent.cpp" compile="1" resource="0"
                 file="Source/GUI/Custom Analysis Components/MelFreqSpecComponent.cpp"/>
-          <FILE id="huPhOP" name="MelFreqSpecComponent.h" compile="0" resource="0"
+          <FILE id="J9Vz7j" name="MelFreqSpecComponent.h" compile="0" resource="0"
                 file="Source/GUI/Custom Analysis Components/MelFreqSpecComponent.h"/>
         </GROUP>
-        <FILE id="sXRNWR" name="ItemListComponent.cpp" compile="1" resource="0"
+        <FILE id="qj5caH" name="ItemListComponent.cpp" compile="1" resource="0"
               file="Source/GUI/ItemListComponent.cpp"/>
-        <FILE id="rzL2Er" name="ItemListComponent.h" compile="0" resource="0"
+        <FILE id="PA9rqf" name="ItemListComponent.h" compile="0" resource="0"
               file="Source/GUI/ItemListComponent.h"/>
-        <FILE id="Il8bkV" name="PluginLookAndFeel.cpp" compile="1" resource="0"
+        <FILE id="h9dfdS" name="PluginLookAndFeel.cpp" compile="1" resource="0"
               file="Source/GUI/PluginLookAndFeel.cpp"/>
-        <FILE id="KRjEWZ" name="PluginLookAndFeel.h" compile="0" resource="0"
+        <FILE id="j8EDkY" name="PluginLookAndFeel.h" compile="0" resource="0"
               file="Source/GUI/PluginLookAndFeel.h"/>
-        <FILE id="DODeHn" name="SimpleAnalysisComponent.cpp" compile="1" resource="0"
+        <FILE id="X3AIbJ" name="SimpleAnalysisComponent.cpp" compile="1" resource="0"
               file="Source/GUI/SimpleAnalysisComponent.cpp"/>
-        <FILE id="vIeMjR" name="SimpleAnalysisComponent.h" compile="0" resource="0"
+        <FILE id="oB9crx" name="SimpleAnalysisComponent.h" compile="0" resource="0"
               file="Source/GUI/SimpleAnalysisComponent.h"/>
       </GROUP>
       <GROUP id="{FB834CE9-7A95-DB3B-0690-A30F3B971E19}" name="Libraries">
         <GROUP id="{7AA69A81-6527-5B90-CD5F-123B52D7597C}" name="Gist">
-          <FILE id="GbgvID" name="LICENSE.txt" compile="0" resource="1" file="Source/Libraries/Gist/LICENSE.txt"/>
-          <FILE id="tQLv1m" name="README.md" compile="0" resource="1" file="Source/Libraries/Gist/README.md"/>
-          <GROUP id="{754B6659-D4EA-17CD-47F1-B7DDFAA314D9}" name="src">
-            <GROUP id="{D16E8098-172E-4162-BC75-0B630346D550}" name="core">
-              <FILE id="Yg5O8J" name="CoreFrequencyDomainFeatures.cpp" compile="1"
+          <FILE id="QvU0l8" name="LICENSE.txt" compile="0" resource="1" file="Source/Libraries/Gist/LICENSE.txt"/>
+          <GROUP id="{BADD803A-49E9-DEB2-71BD-73228847F86C}" name="src">
+            <GROUP id="{CB7ABC3B-D9C0-F745-DFF4-31025DCC29CB}" name="core">
+              <FILE id="Okoc8W" name="CoreFrequencyDomainFeatures.cpp" compile="1"
                     resource="0" file="Source/Libraries/Gist/src/core/CoreFrequencyDomainFeatures.cpp"/>
-              <FILE id="XomIBp" name="CoreFrequencyDomainFeatures.h" compile="0"
+              <FILE id="Qbf6Ct" name="CoreFrequencyDomainFeatures.h" compile="0"
                     resource="0" file="Source/Libraries/Gist/src/core/CoreFrequencyDomainFeatures.h"/>
-              <FILE id="O1dkLx" name="CoreTimeDomainFeatures.cpp" compile="1" resource="0"
+              <FILE id="TUtdxe" name="CoreTimeDomainFeatures.cpp" compile="1" resource="0"
                     file="Source/Libraries/Gist/src/core/CoreTimeDomainFeatures.cpp"/>
-              <FILE id="GtZTSv" name="CoreTimeDomainFeatures.h" compile="0" resource="0"
+              <FILE id="dXpWlf" name="CoreTimeDomainFeatures.h" compile="0" resource="0"
                     file="Source/Libraries/Gist/src/core/CoreTimeDomainFeatures.h"/>
             </GROUP>
-            <FILE id="V0GyNb" name="Gist.h" compile="0" resource="0" file="Source/Libraries/Gist/src/Gist.h"/>
-            <GROUP id="{9B9C9BCA-38DF-8F08-7290-2895CEB4AF2A}" name="mfcc">
-              <FILE id="fTHJFi" name="MFCC.cpp" compile="1" resource="0" file="Source/Libraries/Gist/src/mfcc/MFCC.cpp"/>
-              <FILE id="zxGKt4" name="MFCC.h" compile="0" resource="0" file="Source/Libraries/Gist/src/mfcc/MFCC.h"/>
+            <FILE id="TAAy6T" name="Gist.h" compile="0" resource="0" file="Source/Libraries/Gist/src/Gist.h"/>
+            <GROUP id="{F63ED84B-1584-388C-D5EC-E2E15E105DC7}" name="mfcc">
+              <FILE id="zIKn97" name="MFCC.cpp" compile="1" resource="0" file="Source/Libraries/Gist/src/mfcc/MFCC.cpp"/>
+              <FILE id="GyDPUj" name="MFCC.h" compile="0" resource="0" file="Source/Libraries/Gist/src/mfcc/MFCC.h"/>
             </GROUP>
-            <GROUP id="{44EC6523-9797-6B80-D64A-D20F89E1F1C6}" name="onset-detection-functions">
-              <FILE id="orJiHf" name="OnsetDetectionFunction.cpp" compile="1" resource="0"
+            <GROUP id="{4A43CA14-9137-3167-9D02-FDD689F200D6}" name="onset-detection-functions">
+              <FILE id="VRzM8B" name="OnsetDetectionFunction.cpp" compile="1" resource="0"
                     file="Source/Libraries/Gist/src/onset-detection-functions/OnsetDetectionFunction.cpp"/>
-              <FILE id="Y6DwyQ" name="OnsetDetectionFunction.h" compile="0" resource="0"
+              <FILE id="NEgIGr" name="OnsetDetectionFunction.h" compile="0" resource="0"
                     file="Source/Libraries/Gist/src/onset-detection-functions/OnsetDetectionFunction.h"/>
             </GROUP>
-            <GROUP id="{329C6CA6-04EA-6D02-0C9D-85F89B0E3FD1}" name="pitch">
-              <FILE id="rFwMvl" name="Yin.cpp" compile="1" resource="0" file="Source/Libraries/Gist/src/pitch/Yin.cpp"/>
-              <FILE id="VWousP" name="Yin.h" compile="0" resource="0" file="Source/Libraries/Gist/src/pitch/Yin.h"/>
+            <GROUP id="{5F02AC96-9FF2-B1C0-202D-C92C81F2BDEF}" name="pitch">
+              <FILE id="LMEeye" name="Yin.cpp" compile="1" resource="0" file="Source/Libraries/Gist/src/pitch/Yin.cpp"/>
+              <FILE id="p6p1DC" name="Yin.h" compile="0" resource="0" file="Source/Libraries/Gist/src/pitch/Yin.h"/>
             </GROUP>
           </GROUP>
         </GROUP>
         <GROUP id="{0838A4BE-364E-86A3-B2AF-48C56E39E2C6}" name="Stark-Plumbley">
-          <FILE id="PlVOrP" name="ChordDetector.cpp" compile="1" resource="0"
+          <FILE id="XXtIHH" name="ChordDetector.cpp" compile="1" resource="0"
                 file="Source/Libraries/Stark-Plumbley/ChordDetector.cpp"/>
-          <FILE id="MKzzSc" name="ChordDetector.h" compile="0" resource="0" file="Source/Libraries/Stark-Plumbley/ChordDetector.h"/>
-          <FILE id="Jvhy0a" name="Chromagram.cpp" compile="1" resource="0" file="Source/Libraries/Stark-Plumbley/Chromagram.cpp"/>
-          <FILE id="YUMwq2" name="Chromagram.h" compile="0" resource="0" file="Source/Libraries/Stark-Plumbley/Chromagram.h"/>
+          <FILE id="dSVgmP" name="ChordDetector.h" compile="0" resource="0" file="Source/Libraries/Stark-Plumbley/ChordDetector.h"/>
+          <FILE id="TC0cku" name="Chromagram.cpp" compile="1" resource="0" file="Source/Libraries/Stark-Plumbley/Chromagram.cpp"/>
+          <FILE id="Tz9leO" name="Chromagram.h" compile="0" resource="0" file="Source/Libraries/Stark-Plumbley/Chromagram.h"/>
+          <FILE id="RQM4Q3" name="LICENSE.txt" compile="0" resource="1" file="Source/Libraries/Stark-Plumbley/LICENSE.txt"/>
         </GROUP>
       </GROUP>
       <GROUP id="{81C1BB9D-960D-0688-3122-046634E1AC4B}" name="Modules">
-        <FILE id="SztiMv" name="FFTMagnitudeSpectrum.h" compile="0" resource="0"
+        <FILE id="af2Lny" name="FFTMagnitudeSpectrum.h" compile="0" resource="0"
               file="Source/Modules/FFTMagnitudeSpectrum.h"/>
-        <FILE id="F9Vlb0" name="MelFrequencySpectrum.h" compile="0" resource="0"
+        <FILE id="rcDDJX" name="MelFrequencySpectrum.h" compile="0" resource="0"
               file="Source/Modules/MelFrequencySpectrum.h"/>
-        <FILE id="LH90l5" name="PeakEnergy.h" compile="0" resource="0" file="Source/Modules/PeakEnergy.h"/>
-        <FILE id="l4kYsk" name="Pitch.h" compile="0" resource="0" file="Source/Modules/Pitch.h"/>
-        <FILE id="KyAhyh" name="RMS.h" compile="0" resource="0" file="Source/Modules/RMS.h"/>
-        <FILE id="L0T2K1" name="SP_ChordDetector.h" compile="0" resource="0"
+        <FILE id="xQerox" name="PeakEnergy.h" compile="0" resource="0" file="Source/Modules/PeakEnergy.h"/>
+        <FILE id="tZ4dBQ" name="Pitch.h" compile="0" resource="0" file="Source/Modules/Pitch.h"/>
+        <FILE id="YHhcdX" name="RMS.h" compile="0" resource="0" file="Source/Modules/RMS.h"/>
+        <FILE id="qoEGe7" name="SP_ChordDetector.h" compile="0" resource="0"
               file="Source/Modules/SP_ChordDetector.h"/>
-        <FILE id="z5tsoV" name="SP_Chromagram.h" compile="0" resource="0" file="Source/Modules/SP_Chromagram.h"/>
-        <FILE id="XeoWK2" name="SpectralCentroid.h" compile="0" resource="0"
+        <FILE id="OBZrhE" name="SP_Chromagram.h" compile="0" resource="0" file="Source/Modules/SP_Chromagram.h"/>
+        <FILE id="J2XgZA" name="SpectralCentroid.h" compile="0" resource="0"
               file="Source/Modules/SpectralCentroid.h"/>
-        <FILE id="JNCMED" name="SpectralDifference.h" compile="0" resource="0"
+        <FILE id="EkyOVV" name="SpectralCrest.h" compile="0" resource="0" file="Source/Modules/SpectralCrest.h"/>
+        <FILE id="xKU89J" name="SpectralDifference.h" compile="0" resource="0"
               file="Source/Modules/SpectralDifference.h"/>
-        <FILE id="VO2vGN" name="ZeroCrossingRate.h" compile="0" resource="0"
+        <FILE id="gOQoYc" name="SpectralFlatness.h" compile="0" resource="0"
+              file="Source/Modules/SpectralFlatness.h"/>
+        <FILE id="tGdNNg" name="ZeroCrossingRate.h" compile="0" resource="0"
               file="Source/Modules/ZeroCrossingRate.h"/>
       </GROUP>
       <GROUP id="{41C45F51-C548-1407-FC03-67C049C7F986}" name="OSC">
-        <FILE id="NB9nXL" name="Osc.cpp" compile="1" resource="0" file="Source/OSC/Osc.cpp"/>
-        <FILE id="W2HCzQ" name="Osc.h" compile="0" resource="0" file="Source/OSC/Osc.h"/>
+        <FILE id="CKWkrJ" name="Osc.cpp" compile="1" resource="0" file="Source/OSC/Osc.cpp"/>
+        <FILE id="lXqLCb" name="Osc.h" compile="0" resource="0" file="Source/OSC/Osc.h"/>
       </GROUP>
-      <FILE id="VBzxRz" name="PluginEditor.cpp" compile="1" resource="0"
+      <FILE id="mxrXED" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
-      <FILE id="q1dLiN" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
-      <FILE id="QKRGyT" name="PluginProcessor.cpp" compile="1" resource="0"
+      <FILE id="xgQrVr" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="Eyaj72" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
-      <FILE id="Wn5Xic" name="PluginProcessor.h" compile="0" resource="0"
+      <FILE id="TK8QVP" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
     </GROUP>
   </MAINGROUP>

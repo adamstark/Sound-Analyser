@@ -1307,7 +1307,9 @@
     <ClInclude Include="..\..\Source\Modules\SP_ChordDetector.h"/>
     <ClInclude Include="..\..\Source\Modules\SP_Chromagram.h"/>
     <ClInclude Include="..\..\Source\Modules\SpectralCentroid.h"/>
+    <ClInclude Include="..\..\Source\Modules\SpectralCrest.h"/>
     <ClInclude Include="..\..\Source\Modules\SpectralDifference.h"/>
+    <ClInclude Include="..\..\Source\Modules\SpectralFlatness.h"/>
     <ClInclude Include="..\..\Source\Modules\ZeroCrossingRate.h"/>
     <ClInclude Include="..\..\Source\OSC\Osc.h"/>
     <ClInclude Include="..\..\Source\PluginEditor.h"/>
@@ -1772,7 +1774,7 @@
   <ItemGroup>
     <None Include="..\..\Source\Binary Data\tex2.png"/>
     <None Include="..\..\Source\Libraries\Gist\LICENSE.txt"/>
-    <None Include="..\..\Source\Libraries\Gist\README.md"/>
+    <None Include="..\..\Source\Libraries\Stark-Plumbley\LICENSE.txt"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_basics\juce_module_info"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_devices\juce_module_info"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_formats\juce_module_info"/>

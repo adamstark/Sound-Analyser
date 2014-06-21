@@ -59,7 +59,9 @@ void AudioAnalysisManager::addAudioAnalysisAlgorithms()
     audioAnalyses.add(new Pitch(bufferSize,DEFAULT_SAMPLING_FREQUENCY));
     audioAnalyses.add(new RMS());
     audioAnalyses.add(new SpectralCentroid());
+    audioAnalyses.add(new SpectralCrest());
     audioAnalyses.add(new SpectralDifference(bufferSize));
+    audioAnalyses.add(new SpectralFlatness());
     audioAnalyses.add(new ZeroCrossingRate());
     
     // QMUL

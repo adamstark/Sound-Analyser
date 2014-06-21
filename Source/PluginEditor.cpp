@@ -80,6 +80,15 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     pluginVersionLabel.setColour(Label::ColourIds::textColourId, Colours::lightgrey);
     addAndMakeVisible(pluginVersionLabel);
     
+    addAndMakeVisible(&bufferSizeComboBox);
+    
+    bufferSizeComboBox.addItem("64", 1);
+    bufferSizeComboBox.addItem("128", 2);
+    bufferSizeComboBox.addItem("256", 3);
+    bufferSizeComboBox.addItem("512", 4);
+    bufferSizeComboBox.addItem("1024", 5);
+    bufferSizeComboBox.addItem("2048", 6);
+    bufferSizeComboBox.addItem("4096", 7);
     
     bufferSizeValue.setEditable(true);
     bufferSizeValue.setText(analyserTree[AnalysisModel::Ids::BufferSize].toString(), dontSendNotification);
@@ -106,7 +115,7 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     plotY = 40;
     
 
-    
+    bufferSizeComboBox.addListener(this);
     analyserTree.addListener(this);
     
     analyserId.addListener(this);
@@ -156,17 +165,18 @@ void SoundAnalyserAudioProcessorEditor::refreshFromTree()
     OSCPort.setText(analyserTree[AnalysisModel::Ids::Port],dontSendNotification);
     IPAddressValue.setText(analyserTree[AnalysisModel::Ids::IPAddress],dontSendNotification);
     
+    
+    int currentBufferSize = analyserTree[AnalysisModel::Ids::BufferSize];
+    
+    bufferSizeComboBox.setSelectedItemIndex(getIndexFromBufferSize(currentBufferSize));
+
+    
     resized();
 }
 
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
 {
-    // FIX!!!!!! - DO WE HAVE A THREADING PROBLEM HERE?
-    // WHAT IF THE PROCESSOR IS WRITING TO THE PLOT HISTORY OR VECTOR?
-    // DOESN'T SEEM TO HAPPEN BUT NEED TO MAKE SURE PERHAPS?
-    
-    
     PluginLookAndFeel::fillWithBackgroundTexture (g);
     g.setColour (Colour::fromRGBA(56, 61, 68,245));
     g.fillAll (Colour::fromRGBA(34, 34, 34,245));
@@ -214,11 +224,8 @@ void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
         int N = getProcessor()->analyser.vectorPlot.size();
         int plotWidth = 512;
         
-        //int plotX = (getWidth()- N)/2;
         int plotX = (getWidth() - plotWidth) / 2;
         
-        
-        //g.fillRect(plotX, plotY, N, plotHeight);
         g.fillRect(plotX,plotY, plotWidth,plotHeight);
         
         g.setColour(Colours::greenyellow);
@@ -247,7 +254,6 @@ void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
             int x2 = (i+1)*round(512.0/((double)N-1.));
             
             g.drawLine(plotX+x1,p1,plotX+x2,p2);
-            //g.drawLine(plotX+i,p1,plotX+i+1,p2);
 
             previousValue = currentValue;
         }
@@ -264,8 +270,9 @@ void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::resized()
 {
-    bufferSizeText.setBounds(10, 10, 80, 20);
-    bufferSizeValue.setBounds(90,10,40,20);
+    bufferSizeText.setBounds(10, 10, 70, 20);
+   // bufferSizeValue.setBounds(90,10,40,20);
+    bufferSizeComboBox.setBounds(80, 10, 60, 20);
     
     int lastComponentY = 0;
     
@@ -281,11 +288,11 @@ void SoundAnalyserAudioProcessorEditor::resized()
     
 
     
-    IPAddressText.setBounds(getWidth()-470, 10, 80, 20);
-    IPAddressValue.setBounds(getWidth()-380, 10, 90, 20);
+    IPAddressText.setBounds(getWidth()-450, 10, 80, 20);
+    IPAddressValue.setBounds(getWidth()-360, 10, 90, 20);
     
-    OSCPortText.setBounds(getWidth()-280, 10, 40, 20);
-    OSCPort.setBounds(getWidth()-230, 10, 40, 20);
+    OSCPortText.setBounds(getWidth()-260, 10, 40, 20);
+    OSCPort.setBounds(getWidth()-210, 10, 40, 20);
     
     analyserIdText.setBounds(getWidth()-170, 10, 80, 20);
     analyserId.setBounds(getWidth()-80, 10, 70, 20);
@@ -317,45 +324,19 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
         AlertWindow w ("Add new analysis..",
                        "Please slect a new device from the list below",
                        AlertWindow::NoIcon);
-        
-        StringArray options;
-        
-        
-        //Rectangle<int> bounds(button.getX()+ parent.getX(), button.getY()+ parent.getY(), button.getWidth() ,0);
-        
-        //OwnedArray<AudioAnalysis> *analyses = &getProcessor()->analyser.audioAnalyses;
-        
-        
-        //CallOutBox::launchAsynchronously (new AnalysisSelectionComponent(analyserTree,&getProcessor()->analyser), getScreenBounds(),this);
-        
+                
         ScopedPointer<AnalysisSelectionComponent> analysisSelector;
         
         analysisSelector = new AnalysisSelectionComponent(analyserTree,&getProcessor()->analyser);
         
-        //w.setSize(500, 400);
-//        w.addChildComponent(new AnalysisSelectionComponent(analyserTree,&getProcessor()->analyser));
-        //w.addAndMakeVisible(analysisSelector);
         w.addCustomComponent(analysisSelector);
-        //w.
-        //w.setBounds(0,0,500,400);
         
         w.addButton ("ok",     1, KeyPress (KeyPress::returnKey, 0, 0));
         w.addButton ("cancel", 0, KeyPress (KeyPress::escapeKey, 0, 0));
-        w.setColour(AlertWindow::ColourIds::backgroundColourId, Colours::lightblue);
+        w.setColour(AlertWindow::ColourIds::backgroundColourId, Colours::lightgrey);
         
-        /*
-        
-        for (int i = 0;i < getProcessor()->analyser.audioAnalyses.size();i++)
-        {
-            options.add(getProcessor()->analyser.audioAnalyses[i]->getName());
-        }
-        
-        
-        
-        w.addComboBox ("option", options, "some options");
-         */
-        
-        if (w.runModalLoop() != 0) // is they picked 'ok'
+    
+        if (w.runModalLoop() != 0) // if they picked 'ok'
         {
             const int optionIndexChosen = analysisSelector->getSelectedAnalysis();
             
@@ -365,12 +346,6 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
                 
                 AnalysisModel::addNewAnalysis(analyserTree, chosenAnalysis->createAnalysisTree());
             }
-            
-            /*
-            // this is the item they chose in the drop-down list..
-            const int optionIndexChosen = w.getComboBoxComponent ("option")->getSelectedItemIndex();
-            
-                         */
         }
          
     }
@@ -442,7 +417,9 @@ void SoundAnalyserAudioProcessorEditor::valueTreePropertyChanged (ValueTree& tre
     }
     else if (property == AnalysisModel::Ids::BufferSize)
     {
-        bufferSizeValue.setText(analyserTree[AnalysisModel::Ids::BufferSize].toString(), dontSendNotification);
+        int newBufferSize = analyserTree[property];
+        
+        bufferSizeComboBox.setSelectedItemIndex(getIndexFromBufferSize(newBufferSize));
     }
 }
 

@@ -31,12 +31,23 @@
 #include "GUI/SimpleAnalysisComponent.h"
 #include "GUI/AnalysisSelectionComponent.h"
 
+enum BufferSizeValues
+{
+    BufferSize64,
+    BufferSize128,
+    BufferSize256,
+    BufferSize512,
+    BufferSize1024,
+    BufferSize2048,
+    BufferSize4096,
+    NumBufferSizes
+};
 
 
 //==============================================================================
 /**
 */
-class SoundAnalyserAudioProcessorEditor  : public AudioProcessorEditor, public Button::Listener, public Timer, public ValueTree::Listener, public Label::Listener {
+class SoundAnalyserAudioProcessorEditor  : public AudioProcessorEditor, public Button::Listener, public Timer, public ValueTree::Listener, public Label::Listener, ComboBox::Listener {
 public:
     SoundAnalyserAudioProcessorEditor (SoundAnalyserAudioProcessor* ownerFilter, ValueTree analyserTree_);
     ~SoundAnalyserAudioProcessorEditor();
@@ -67,6 +78,59 @@ public:
     
     //==============================================================================
     void labelTextChanged (Label* labelThatHasChanged);
+    
+    void comboBoxChanged (ComboBox* comboBoxThatHasChanged)
+    {
+        if (comboBoxThatHasChanged == &bufferSizeComboBox)
+        {
+            int selectedItem = bufferSizeComboBox.getSelectedItemIndex();
+                        
+            AnalysisModel::setBufferSize(analyserTree,getBufferSizeFromIndex(selectedItem));
+        }
+    }
+    
+    int getBufferSizeFromIndex(int index)
+    {
+        int minBufferSize = 64;
+        
+        return minBufferSize * pow(2,index);
+    }
+    
+    int getIndexFromBufferSize(int bufferSize)
+    {
+        if (bufferSize == 64)
+        {
+            return BufferSize64;
+        }
+        else if (bufferSize == 128)
+        {
+            return BufferSize128;
+        }
+        else if (bufferSize == 256)
+        {
+            return BufferSize256;
+        }
+        else if (bufferSize == 512)
+        {
+            return BufferSize512;
+        }
+        else if (bufferSize == 1024)
+        {
+            return BufferSize1024;
+        }
+        else if (bufferSize == 2048)
+        {
+            return BufferSize2048;
+        }
+        else if (bufferSize == 4096)
+        {
+            return BufferSize4096;
+        }
+        else
+        {
+            return BufferSize64;
+        }
+    }
     
     //==============================================================================
     void textEditorTextChanged (TextEditor& textEditor);
@@ -102,6 +166,8 @@ private:
     
     Label bufferSizeText;
     Label bufferSizeValue;
+    
+    ComboBox bufferSizeComboBox;
     
     Label pluginTitleLabel;
     Label pluginVersionLabel;

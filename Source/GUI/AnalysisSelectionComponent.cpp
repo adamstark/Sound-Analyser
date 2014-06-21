@@ -37,21 +37,50 @@ AnalysisSelectionComponent::AnalysisSelectionComponent(ValueTree& analyserTree_,
     Font f(14,Font::bold);
     analysisNameLabel.setFont(f);
     
-    technicalDescriptionLabel.setFont(12);
-    simpleDescriptionLabel.setFont(12);
+    technicalDescriptionText.setFont(12);
+    simpleDescriptionText.setFont(12);
     
-    technicalDescriptionLabel.setMinimumHorizontalScale(1.0);
-    simpleDescriptionLabel.setMinimumHorizontalScale(1.0);
+    technicalDescriptionText.setMinimumHorizontalScale(1.0);
+    simpleDescriptionText.setMinimumHorizontalScale(1.0);
     
-    simpleDescriptionLabel.setJustificationType(Justification::topLeft);
-    technicalDescriptionLabel.setJustificationType(Justification::topLeft);
+    simpleDescriptionText.setJustificationType(Justification::topLeft);
+    technicalDescriptionText.setJustificationType(Justification::topLeft);
     
+    addressPatternLabel.setText("Address Pattern:", dontSendNotification);
+    addressPatternLabel.setFont(Font(11,Font::bold));
+    
+    authorNameLabel.setText("Written by:", dontSendNotification);
+    authorNameLabel.setFont(Font(11,Font::bold));
+    
+    technicalDescriptionLabel.setText("Technical Description:", dontSendNotification);
+    technicalDescriptionLabel.setFont(Font(11,Font::bold));
+    
+    simpleDescriptionLabel.setText("Simple Description:", dontSendNotification);
+    simpleDescriptionLabel.setFont(Font(11,Font::bold));
+    
+    collectionLabel.setText("Collection:", dontSendNotification);
+    collectionLabel.setFont(Font(11,Font::bold));
+    
+    authorNameText.setFont(Font(11));
+    addressPatternText.setFont(Font(11));
+    technicalDescriptionText.setFont(Font(11));
+    simpleDescriptionText.setFont(Font(11));
+
+    collectionText.setFont(Font(10,Font::italic));
     
     addAndMakeVisible(&analysisNameLabel);
+    
     addAndMakeVisible(&authorNameLabel);
     addAndMakeVisible(&addressPatternLabel);
     addAndMakeVisible(&technicalDescriptionLabel);
     addAndMakeVisible(&simpleDescriptionLabel);
+    addAndMakeVisible(&collectionLabel);
+    
+    addAndMakeVisible(&authorNameText);
+    addAndMakeVisible(&addressPatternText);
+    addAndMakeVisible(&technicalDescriptionText);
+    addAndMakeVisible(&simpleDescriptionText);
+    addAndMakeVisible(&collectionText);
     
     
     fillSelectionLists();
@@ -136,7 +165,6 @@ bool AnalysisSelectionComponent::collectionInArray(Identifier col)
 //==============================================================================
 void AnalysisSelectionComponent::paint(Graphics& g)
 {
-    //g.fillAll(Colour::fromRGB(29, 114, 239));
     g.fillAll(Colours::royalblue);
 }
 
@@ -175,12 +203,14 @@ void AnalysisSelectionComponent::changeListenerCallback (ChangeBroadcaster* sour
         String author = analysisItems[currentCollection][selectedIndex].analysis->getAuthorString();
         String simpleDes = analysisItems[currentCollection][selectedIndex].analysis->getSimpleDescription();
         String technicalDes = analysisItems[currentCollection][selectedIndex].analysis->getTechnicalDescription();
+        String currentCollectionName = analysisItems[currentCollection][selectedIndex].analysis->getCollectionName();
         
         analysisNameLabel.setText(name, dontSendNotification);
-        authorNameLabel.setText(author, dontSendNotification);
-        addressPatternLabel.setText(addressPattern, dontSendNotification);
-        simpleDescriptionLabel.setText(simpleDes,dontSendNotification);
-        technicalDescriptionLabel.setText(technicalDes,dontSendNotification);
+        authorNameText.setText(author, dontSendNotification);
+        addressPatternText.setText(addressPattern, dontSendNotification);
+        simpleDescriptionText.setText(simpleDes,dontSendNotification);
+        technicalDescriptionText.setText(technicalDes,dontSendNotification);
+        collectionText.setText(currentCollectionName, dontSendNotification);
     }
     else if (source == &collectionList)
     {
@@ -211,10 +241,19 @@ void AnalysisSelectionComponent::resized()
     
     analysisNameLabel.setBounds(320,10,175,20);
     
-    authorNameLabel.setBounds(320,50,175,20);
+    collectionLabel.setBounds(315, 40, 175, 20);
+    collectionText.setBounds(325,55,175,20);
     
-    addressPatternLabel.setBounds(320,80,175,20);
+    authorNameLabel.setBounds(315,75, 175, 20);
+    authorNameText.setBounds(325,90,175, 20);
     
-    simpleDescriptionLabel.setBounds(320,120,175,80);
-    technicalDescriptionLabel.setBounds(320,210,175,80);
+    addressPatternLabel.setBounds(315, 110, 175, 20);
+    addressPatternText.setBounds(325,125,175,20);
+    
+    simpleDescriptionLabel.setBounds(315,145,175,20);
+    simpleDescriptionText.setBounds(325,160,175,60);
+    
+    technicalDescriptionLabel.setBounds(315, 220, 175, 20);
+    technicalDescriptionText.setBounds(325,235,175,60);
+
 }

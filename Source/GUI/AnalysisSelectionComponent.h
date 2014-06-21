@@ -75,10 +75,19 @@ private:
     Label analysisNameLabel;
     
     Label authorNameLabel;
+    Label authorNameText;
+    
+    Label addressPatternText;
     Label addressPatternLabel;
     
+    Label technicalDescriptionText;
     Label technicalDescriptionLabel;
+    
+    Label simpleDescriptionText;
     Label simpleDescriptionLabel;
+    
+    Label collectionLabel;
+    Label collectionText;
     
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AnalysisSelectionComponent)
