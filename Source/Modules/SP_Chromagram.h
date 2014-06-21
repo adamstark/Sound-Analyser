@@ -1,10 +1,25 @@
-//
-//  SP_Chromagram.h
-//  Sound Analyser
-//
-//  Created by Adam Stark on 15/06/2014.
-//
-//
+//=======================================================================
+/** @file SP_Chromagram.h
+ *  @brief The Stark and Plumbley Chromagram extraction algorithm module
+ *  @author Adam Stark
+ *  @copyright Copyright (C) 2014  Adam Stark
+ *
+ * This file is part of Sound Analyser.
+ *
+ * Sound Analyser is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Sound Analyser is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Sound Analyser.  If not, see <http://www.gnu.org/licenses/>.
+ */
+//=======================================================================
 
 #ifndef Sound_Analyser_SP_Chromagram_h
 #define Sound_Analyser_SP_Chromagram_h
