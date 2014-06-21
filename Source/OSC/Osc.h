@@ -30,32 +30,56 @@
 #define ADDRESS "127.0.0.1"
 #define PORT 7000
 
+//=======================================================================
+/** A class for constructing and sending OSC messages */
 class Osc
 {
     
 public:
     
+    /** Constructor */
     Osc();
     
+    /** Destructor */
     ~Osc();
     
-    void sendMessage(std::string address,float v);
+    /** Send a single float as an OSC message
+     * @param address the address pattern 
+     * @param value the floating point value to send
+     */
+    void sendMessage(std::string address,float value);
     
+    /** Send a vector of floats as an OSC message
+     * @param address the address pattern
+     * @param values the vector of floats to send
+     */
     void sendMessage(std::string address,std::vector<float> values);
 
+    /** Connect to the current port and IP address */
     void connect();
     
+    /** Disconnect from the current port and IP address */
     void disconnect();
     
+    /** Set the port to send data to
+     * @param port the port number to send data to
+     */
     void setPort(int port);
     
+    /** Set the IP address to send data to
+     * @param ipAddress the IP address to send data to
+     */
     void setIpAddress(std::string ipAddress);
     
 private:
     
+    /** The current port */
     int currentPort;
+    
+    /** The current IP Address */
     std::string currentIP;
     
+    /** A datagram socket to send data on */
     ScopedPointer<DatagramSocket> datagramSocket;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Osc)

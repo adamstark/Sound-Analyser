@@ -42,7 +42,7 @@ Osc::~Osc()
 }
 
 //==============================================================================
-void Osc::sendMessage(std::string address,float v)
+void Osc::sendMessage(std::string address,float value)
 {
     address += '\0';
     
@@ -62,7 +62,7 @@ void Osc::sendMessage(std::string address,float v)
     
     char a[sizeof(float)];
     
-    memcpy(a, &v, sizeof(float));
+    memcpy(a, &value, sizeof(float));
     
     address += a[3];
     address += a[2];
@@ -116,11 +116,11 @@ void Osc::connect()
     
     if(datagramSocket->connect (currentIP.c_str(), currentPort))
     {
-        DBG("CONNECTED");
+        // THEN WE CONNECTED SUCCESSFULLY
     }
     else
     {
-        DBG("NOT CONNECTED");
+        DBG("ERROR CONNECTING");
     }
 }
 
@@ -130,22 +130,27 @@ void Osc::disconnect()
     if (datagramSocket != nullptr && datagramSocket->isConnected())
     {
         datagramSocket->close();
-        DBG("DISCONNECTED");
     }
 }
 
 //==============================================================================
 void Osc::setPort(int port)
 {
-    currentPort = port;
+    if (currentPort != port)
+    {
+        currentPort = port;
     
-    connect();
+        connect();
+    }
 }
 
 //==============================================================================
 void Osc::setIpAddress(std::string ipAddress)
 {
-    currentIP = ipAddress;
+    if (ipAddress != currentIP)
+    {
+        currentIP = ipAddress;
     
-    connect();
+        connect();
+    }
 }

@@ -30,18 +30,21 @@
 #include "../GUI/SimpleAnalysisComponent.h"
 #include "../Libraries/Gist/src/Gist.h"
 
+//=======================================================================
 enum InputType
 {
     AudioBufferInput,
     MagnitudeSpectrumInput
 };
 
+//=======================================================================
 enum OutputType
 {
     FloatOutput,
     VectorOutput
 };
 
+//=======================================================================
 class AudioAnalysis
 {
 public:

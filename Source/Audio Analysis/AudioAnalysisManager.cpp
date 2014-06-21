@@ -48,6 +48,7 @@ AudioAnalysisManager::AudioAnalysisManager(int bufferSize_) : bufferSize(bufferS
 //==============================================================================
 void AudioAnalysisManager::addAudioAnalysisAlgorithms()
 {
+    // !!!
     // please add new audio analyses in a group, per collection, and then in alphabetical order
     // by name as this is how they will appear on the selection dialog
     
@@ -77,10 +78,6 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
     {
     
         gist.processAudioFrame(audioBuffer.buffer);
-        
-        // calculate the FFT
-        //fft.performFFT(audioBuffer.buffer);
-        
         
         for (int i = 0;i < audioAnalyses.size();i++)
         {
@@ -170,6 +167,18 @@ void AudioAnalysisManager::updatePlotHistory(float newSample)
     }
     
     plotHistory[N-1] = newSample;
+}
+
+//==============================================================================
+void AudioAnalysisManager::clearPlotHistory()
+{
+    int N = plotHistory.size();
+    
+    for (int i = 0; i < N;i++)
+    {
+        plotHistory[i] = 0;
+    }
+
 }
 
 //==============================================================================

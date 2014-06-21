@@ -67,7 +67,7 @@ const String SoundAnalyserAudioProcessor::getName() const
 //==============================================================================
 int SoundAnalyserAudioProcessor::getNumParameters()
 {
-    return totalNumParams;
+    return 0;
 }
 
 //==============================================================================
@@ -328,6 +328,9 @@ void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhose
                     }
                 }
             }
+            
+            // clear the plot history 
+            analyser.clearPlotHistory();
         }
         else // deal with custom properties here
         {

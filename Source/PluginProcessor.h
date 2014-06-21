@@ -27,7 +27,6 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Audio Analysis/AudioAnalysisManager.h"
 #include "Audio Analysis/AnalysisModel.h"
-#include "OSC/Osc.h"
 
 //==============================================================================
 /**
@@ -81,28 +80,21 @@ public:
     void getStateInformation (MemoryBlock& destData);
     void setStateInformation (const void* data, int sizeInBytes);
     
-    
+    //==============================================================================
     void refreshFromTree();
     
+    //==============================================================================
     void valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property);
     void valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded);
     void valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved);
     void valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved);
     void valueTreeParentChanged (ValueTree& treeWhoseParentHasChanged);
     
-    
-    enum Parameters
-    {
-        totalNumParams = 0
-    };
-        
     ValueTree analyserTree;
     
     AudioAnalysisManager analyser;
     
 private:
-    
-    Osc oscTest;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SoundAnalyserAudioProcessor)
