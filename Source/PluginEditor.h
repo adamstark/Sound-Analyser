@@ -13,7 +13,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
-#include "AnalysisModel.h"
+#include "Audio Analysis/AnalysisModel.h"
 #include "GUI/PluginLookAndFeel.h"
 #include "GUI/SimpleAnalysisComponent.h"
 //#include "GUI/FFTComponent.h"
@@ -63,6 +63,11 @@ private:
     
     SoundAnalyserAudioProcessor* getProcessor() const;
     
+	double round(double val)
+	{
+		return floor(val + 0.5);
+	}
+
     ValueTree analyserTree;
     
     OwnedArray<Component> analysisComponents;

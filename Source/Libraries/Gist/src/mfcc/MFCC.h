@@ -24,8 +24,9 @@
 #ifndef __GIST__MFCC__
 #define __GIST__MFCC__
 
+#define _USE_MATH_DEFINES
 #include <vector>
-#include <math.h>
+#include <cmath>
 
 /** Template class for calculating Mel Frequency Cepstral Coefficients
  * Instantiations of the class should be of either 'float' or

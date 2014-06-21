@@ -12,8 +12,8 @@
 #define __PLUGINPROCESSOR_H_FF438757__
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "AudioAnalysisManager.h"
-#include "AnalysisModel.h"
+#include "Audio Analysis/AudioAnalysisManager.h"
+#include "Audio Analysis/AnalysisModel.h"
 #include "OSC/Osc.h"
 
 //==============================================================================

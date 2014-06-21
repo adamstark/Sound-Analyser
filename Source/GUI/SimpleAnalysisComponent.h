@@ -10,7 +10,7 @@
 #define __Gluver__MappingComponent__
 
 #include "../../JuceLibraryCode/JuceHeader.h"
-#include "AnalysisModel.h"
+#include "../Audio Analysis/AnalysisModel.h"
 
 class SimpleAnalysisComponent : public Component, public Button::Listener, public ValueTree::Listener {
     

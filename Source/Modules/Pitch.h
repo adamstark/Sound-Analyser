@@ -9,7 +9,7 @@
 #ifndef SoundAnalyser_PitchYin_h
 #define SoundAnalyser_PitchYin_h
 
-#include "AudioAnalysis.h"
+#include "../Audio Analysis/AudioAnalysis.h"
 
 class Pitch : public AudioAnalysis
 {

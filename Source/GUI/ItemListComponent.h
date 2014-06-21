@@ -10,7 +10,7 @@
 #define __Sound_Analyser__ItemListComponent__
 
 #include "../../JuceLibraryCode/JuceHeader.h"
-#include "AnalysisModel.h"
+#include "../Audio Analysis/AnalysisModel.h"
 
 class ItemListComponent : public ListBox, ListBoxModel, public ChangeBroadcaster
 {

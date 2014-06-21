@@ -22,6 +22,7 @@
 #ifndef __CHROMAGRAM_H
 #define __CHROMAGRAM_H
 
+#define _USE_MATH_DEFINES
 #include "fftw3.h"
 #include <math.h>
 #include <vector>
@@ -94,6 +95,11 @@ private:
 	void downSampleFrame(std::vector<double> inputAudioFrame);
 
     void makeHammingWindow();
+
+	double round(double val)
+	{
+		return floor(val + 0.5);
+	}
     
     std::vector<double> window;
     std::vector<double> buffer;
