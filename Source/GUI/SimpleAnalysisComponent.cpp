@@ -116,7 +116,7 @@ void SimpleAnalysisComponent::buttonClicked (Button* button)
         }
         else
         {
-            AnalysisModel::turnOffAllPlotting(analysisTree);
+            AnalysisModel::turnOffAllPlotting(analysisTree.getParent());
             analysisTree.setProperty(AnalysisProperties::plot, 1, nullptr);
         }
     }

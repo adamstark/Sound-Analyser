@@ -28,6 +28,11 @@
 #include "../../JuceLibraryCode/JuceHeader.h"
 #include "../Audio Analysis/AnalysisModel.h"
 
+/** A generic GUI component for AudioAnalysis modules. 
+ 
+    Extend this class to create a custom component. 
+ 
+*/
 class SimpleAnalysisComponent : public Component, public Button::Listener, public ValueTree::Listener {
     
 public:
@@ -65,15 +70,11 @@ protected:
     
 private:
     
-    
-    
     Label analysisName;
     TextButton sendButton;
     TextButton plotButton;
     
     TextButton removeButton;
-    
-    
     
     //======================================================================//
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleAnalysisComponent)

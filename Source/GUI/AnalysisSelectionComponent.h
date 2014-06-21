@@ -26,8 +26,6 @@
 
 #include "../../JuceLibraryCode/JuceHeader.h"
 #include "ItemListComponent.h"
-//#include "AnalysisModel.h"
-//#include "../Audio Analysis/AudioAnalysis.h"
 #include "../Audio Analysis/AudioAnalysisManager.h"
 
 class AnalysisSelectionComponent : public Component, public ChangeListener
@@ -79,7 +77,6 @@ private:
     Label authorNameLabel;
     Label addressPatternLabel;
     
-
     Label technicalDescriptionLabel;
     Label simpleDescriptionLabel;
     

@@ -21,18 +21,15 @@
  */
 //=======================================================================
 
-#ifndef __SoundAnalyser__AudioAnalysisManager__
-#define __SoundAnalyser__AudioAnalysisManager__
+#ifndef _SOUNDANALYSER_AUDIOANALYSISMANAGER_
+#define _SOUNDANALYSER_AUDIOANALYSISMANAGER_
 
+//=======================================================================
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "../OSC/Osc.h"
 #include "AudioBuffer.h"
-#include <iostream>
-
-#include "../Libraries/Gist/src/Gist.h"
-
 #include "AudioAnalysis.h"
-
+#include "../Libraries/Gist/src/Gist.h"
 #include <speex/speex_resampler.h>
 
 //=======================================================================

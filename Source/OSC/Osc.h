@@ -24,9 +24,11 @@
 #ifndef __Sound_Analyser__Osc__
 #define __Sound_Analyser__Osc__
 
+//=======================================================================
 #include "../../JuceLibraryCode/JuceHeader.h"
 #include <vector>
 
+//=======================================================================
 #define ADDRESS "127.0.0.1"
 #define PORT 7000
 

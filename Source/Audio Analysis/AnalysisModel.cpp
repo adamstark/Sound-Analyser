@@ -68,13 +68,11 @@ void AnalysisModel::addNewAnalysis(ValueTree analyserTree, ValueTree newNode)
 }
 
 //==============================================================================
-void AnalysisModel::turnOffAllPlotting(ValueTree analysisTree)
+void AnalysisModel::turnOffAllPlotting(ValueTree analyserTree)
 {
-    ValueTree mainTree = analysisTree.getParent();
-    
-    for (int i = 0;i < mainTree.getNumChildren();i++)
+    for (int i = 0;i < analyserTree.getNumChildren();i++)
     {
-        mainTree.getChild(i).setProperty(AnalysisProperties::plot, 0, nullptr);
+        analyserTree.getChild(i).setProperty(AnalysisProperties::plot, 0, nullptr);
     }
 }
 
