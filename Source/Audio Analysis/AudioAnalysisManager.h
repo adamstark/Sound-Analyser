@@ -30,7 +30,6 @@
 #include "AudioBuffer.h"
 #include "AudioAnalysis.h"
 #include "../Libraries/Gist/src/Gist.h"
-#include <speex/speex_resampler.h>
 
 //=======================================================================
 // import all audio analysis modules

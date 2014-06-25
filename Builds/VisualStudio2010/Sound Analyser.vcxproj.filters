@@ -41,6 +41,21 @@
     <Filter Include="Sound Analyser\Source\Libraries\Gist\src\pitch">
       <UniqueIdentifier>{819F72D7-D14B-7141-E6CC-BD9D20C2E236}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sound Analyser\Source\Libraries\kiss_fft130">
+      <UniqueIdentifier>{D6231AF7-1226-FA88-4936-003AE9F9626E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound Analyser\Source\Libraries\speex">
+      <UniqueIdentifier>{B930E69B-2F39-E307-46F0-69BBF611970A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound Analyser\Source\Libraries\speex\include">
+      <UniqueIdentifier>{2F606C0C-CB96-B284-2CC6-996AE011B06D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound Analyser\Source\Libraries\speex\include\speex">
+      <UniqueIdentifier>{CD2F6757-33AD-20F4-FF28-D73D4D1F6405}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound Analyser\Source\Libraries\speex\libspeex">
+      <UniqueIdentifier>{2C52B970-65B4-CE0A-2C61-758DA535586E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Sound Analyser\Source\Libraries\Stark-Plumbley">
       <UniqueIdentifier>{4DC67549-BBA5-827B-FAA4-B790B68E2BB7}</UniqueIdentifier>
     </Filter>
@@ -411,6 +426,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Libraries\Gist\src\pitch\Yin.cpp">
       <Filter>Sound Analyser\Source\Libraries\Gist\src\pitch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Libraries\kiss_fft130\kiss_fft.c">
+      <Filter>Sound Analyser\Source\Libraries\kiss_fft130</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Libraries\speex\libspeex\resample.c">
+      <Filter>Sound Analyser\Source\Libraries\speex\libspeex</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Libraries\Stark-Plumbley\ChordDetector.cpp">
       <Filter>Sound Analyser\Source\Libraries\Stark-Plumbley</Filter>
@@ -1730,6 +1751,30 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Libraries\Gist\src\pitch\Yin.h">
       <Filter>Sound Analyser\Source\Libraries\Gist\src\pitch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Libraries\kiss_fft130\_kiss_fft_guts.h">
+      <Filter>Sound Analyser\Source\Libraries\kiss_fft130</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Libraries\kiss_fft130\kiss_fft.h">
+      <Filter>Sound Analyser\Source\Libraries\kiss_fft130</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Libraries\kiss_fft130\kissfft.hh">
+      <Filter>Sound Analyser\Source\Libraries\kiss_fft130</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Libraries\speex\include\speex\speex_resampler.h">
+      <Filter>Sound Analyser\Source\Libraries\speex\include\speex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Libraries\speex\libspeex\arch.h">
+      <Filter>Sound Analyser\Source\Libraries\speex\libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Libraries\speex\libspeex\config.h">
+      <Filter>Sound Analyser\Source\Libraries\speex\libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Libraries\speex\libspeex\os_support.h">
+      <Filter>Sound Analyser\Source\Libraries\speex\libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Libraries\speex\libspeex\stack_alloc.h">
+      <Filter>Sound Analyser\Source\Libraries\speex\libspeex</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Libraries\Stark-Plumbley\ChordDetector.h">
       <Filter>Sound Analyser\Source\Libraries\Stark-Plumbley</Filter>
@@ -3157,6 +3202,21 @@
     </None>
     <None Include="..\..\Source\Libraries\Gist\LICENSE.txt">
       <Filter>Sound Analyser\Source\Libraries\Gist</Filter>
+    </None>
+    <None Include="..\..\Source\Libraries\kiss_fft130\COPYING">
+      <Filter>Sound Analyser\Source\Libraries\kiss_fft130</Filter>
+    </None>
+    <None Include="..\..\Source\Libraries\kiss_fft130\README">
+      <Filter>Sound Analyser\Source\Libraries\kiss_fft130</Filter>
+    </None>
+    <None Include="..\..\Source\Libraries\speex\AUTHORS">
+      <Filter>Sound Analyser\Source\Libraries\speex</Filter>
+    </None>
+    <None Include="..\..\Source\Libraries\speex\COPYING">
+      <Filter>Sound Analyser\Source\Libraries\speex</Filter>
+    </None>
+    <None Include="..\..\Source\Libraries\speex\README">
+      <Filter>Sound Analyser\Source\Libraries\speex</Filter>
     </None>
     <None Include="..\..\Source\Libraries\Stark-Plumbley\LICENSE.txt">
       <Filter>Sound Analyser\Source\Libraries\Stark-Plumbley</Filter>

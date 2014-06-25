@@ -22,6 +22,7 @@
 //=======================================================================
 
 #include "AudioAnalysisManager.h"
+#include "../Libraries/speex/include/speex/speex_resampler.h"
 
 //==============================================================================
 AudioAnalysisManager::AudioAnalysisManager(int bufferSize_) : bufferSize(bufferSize_), audioBuffer(bufferSize), gist(bufferSize,DEFAULT_SAMPLING_FREQUENCY)

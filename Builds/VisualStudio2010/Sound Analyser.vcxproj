@@ -62,6 +62,7 @@
       <WarningLevel>Level4</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>-DUSE_KISS_FFT %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -76,7 +77,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <LargeAddressAware>true</LargeAddressAware>
-      <AdditionalOptions>-lspeexdsp -lfftw3 /FORCE:multiple %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/FORCE:multiple %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -107,6 +108,7 @@
       <WarningLevel>Level4</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>-DUSE_KISS_FFT %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -122,7 +124,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <LargeAddressAware>true</LargeAddressAware>
-      <AdditionalOptions>-lspeexdsp -lfftw3 /FORCE:multiple %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/FORCE:multiple %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -148,6 +150,8 @@
     <ClCompile Include="..\..\Source\Libraries\Gist\src\mfcc\MFCC.cpp"/>
     <ClCompile Include="..\..\Source\Libraries\Gist\src\onset-detection-functions\OnsetDetectionFunction.cpp"/>
     <ClCompile Include="..\..\Source\Libraries\Gist\src\pitch\Yin.cpp"/>
+    <ClCompile Include="..\..\Source\Libraries\kiss_fft130\kiss_fft.c"/>
+    <ClCompile Include="..\..\Source\Libraries\speex\libspeex\resample.c"/>
     <ClCompile Include="..\..\Source\Libraries\Stark-Plumbley\ChordDetector.cpp"/>
     <ClCompile Include="..\..\Source\Libraries\Stark-Plumbley\Chromagram.cpp"/>
     <ClCompile Include="..\..\Source\OSC\Osc.cpp"/>
@@ -1297,6 +1301,14 @@
     <ClInclude Include="..\..\Source\Libraries\Gist\src\mfcc\MFCC.h"/>
     <ClInclude Include="..\..\Source\Libraries\Gist\src\onset-detection-functions\OnsetDetectionFunction.h"/>
     <ClInclude Include="..\..\Source\Libraries\Gist\src\pitch\Yin.h"/>
+    <ClInclude Include="..\..\Source\Libraries\kiss_fft130\_kiss_fft_guts.h"/>
+    <ClInclude Include="..\..\Source\Libraries\kiss_fft130\kiss_fft.h"/>
+    <ClInclude Include="..\..\Source\Libraries\kiss_fft130\kissfft.hh"/>
+    <ClInclude Include="..\..\Source\Libraries\speex\include\speex\speex_resampler.h"/>
+    <ClInclude Include="..\..\Source\Libraries\speex\libspeex\arch.h"/>
+    <ClInclude Include="..\..\Source\Libraries\speex\libspeex\config.h"/>
+    <ClInclude Include="..\..\Source\Libraries\speex\libspeex\os_support.h"/>
+    <ClInclude Include="..\..\Source\Libraries\speex\libspeex\stack_alloc.h"/>
     <ClInclude Include="..\..\Source\Libraries\Stark-Plumbley\ChordDetector.h"/>
     <ClInclude Include="..\..\Source\Libraries\Stark-Plumbley\Chromagram.h"/>
     <ClInclude Include="..\..\Source\Modules\FFTMagnitudeSpectrum.h"/>
@@ -1774,6 +1786,11 @@
   <ItemGroup>
     <None Include="..\..\Source\Binary Data\tex2.png"/>
     <None Include="..\..\Source\Libraries\Gist\LICENSE.txt"/>
+    <None Include="..\..\Source\Libraries\kiss_fft130\COPYING"/>
+    <None Include="..\..\Source\Libraries\kiss_fft130\README"/>
+    <None Include="..\..\Source\Libraries\speex\AUTHORS"/>
+    <None Include="..\..\Source\Libraries\speex\COPYING"/>
+    <None Include="..\..\Source\Libraries\speex\README"/>
     <None Include="..\..\Source\Libraries\Stark-Plumbley\LICENSE.txt"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_basics\juce_module_info"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_devices\juce_module_info"/>
