@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="NGUErU" name="Sound Analyser" projectType="audioplug" version="0.1.2"
+<JUCERPROJECT id="NGUErU" name="Sound Analyser" projectType="audioplug" version="1.0.0"
               bundleIdentifier="com.adamstark.SoundAnalyser" includeBinaryInAppConfig="1"
               buildVST="1" buildAU="1" pluginName="Sound Analyser" pluginDesc="Sound Analyser"
               pluginManufacturer="Adam Stark" pluginManufacturerCode="Asta"
@@ -9,7 +9,8 @@
               pluginEditorRequiresKeys="1" pluginAUExportPrefix="SoundAnalyserAU"
               pluginRTASCategory="" aaxIdentifier="com.adamstark.SoundAnalyser"
               pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="3.1.0"
-              companyName="Adam Stark" buildVST3="1" buildRTAS="0" buildAAX="0">
+              companyName="Adam Stark" buildVST3="1" buildRTAS="0" buildAAX="0"
+              companyWebsite="http://www.adamstark.co.uk">
   <MAINGROUP id="VsHW7o" name="Sound Analyser">
     <GROUP id="{0F5E9544-A7EE-7AC3-489A-8BF69D05E6FB}" name="Source">
       <GROUP id="{5855A183-D5A6-41E2-2853-4D2D0B7D04EC}" name="Audio Analysis">
