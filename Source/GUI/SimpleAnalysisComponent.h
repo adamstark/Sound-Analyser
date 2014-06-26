@@ -1,89 +1,72 @@
-//
-//  MappingComponent.h
-//  Gluver
-//
-//  Created by Adam Stark on 19/06/2013.
-//
-//
+//=======================================================================
+/** @file SimpleAnalysisComponent.h
+ *  @brief The basic component for an audio analysis module. Can be extended
+ * to create custom components
+ *  @author Adam Stark
+ *  @copyright Copyright (C) 2014  Adam Stark
+ *
+ * This file is part of Sound Analyser.
+ *
+ * Sound Analyser is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Sound Analyser is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Sound Analyser.  If not, see <http://www.gnu.org/licenses/>.
+ */
+//=======================================================================
 
 #ifndef __Gluver__MappingComponent__
 #define __Gluver__MappingComponent__
 
 #include "../../JuceLibraryCode/JuceHeader.h"
-#include "AnalysisModel.h"
+#include "../Audio Analysis/AnalysisModel.h"
 
+/** A generic GUI component for AudioAnalysis modules. 
+ 
+    Extend this class to create a custom component. 
+ 
+*/
 class SimpleAnalysisComponent : public Component, public Button::Listener, public ValueTree::Listener {
     
 public:
     SimpleAnalysisComponent(ValueTree& analysisTree_);
-    ~SimpleAnalysisComponent()
+    
+    virtual ~SimpleAnalysisComponent()
     {
-
+        
     }
     
     void refreshFromTree();
     
+    //======================================================================
     void resized();
     void paint(Graphics& g);
     
-    /** Called when the button is clicked. */
-    void buttonClicked (Button* button)
-    {
-        if (button == &sendButton)
-        {
-            bool state = sendButton.getToggleState();
-            
-            if (state == true)
-            {
-                analysisTree.setProperty(AnalysisProperties::send, 0, nullptr);
-            }
-            else
-            {
-                analysisTree.setProperty(AnalysisProperties::send, 1, nullptr);
-            }
-        }
-        else if (button == &plotButton)
-        {
-            bool state = plotButton.getToggleState();
-            
-            if (state == true)
-            {
-                analysisTree.setProperty(AnalysisProperties::plot, 0, nullptr);
-            }
-            else
-            {
-                AnalysisModel::turnOffAllPlotting(analysisTree);
-                analysisTree.setProperty(AnalysisProperties::plot, 1, nullptr);
-            }
-        }
-        else if (button == &removeButton)
-        {
-            AnalysisModel::removeAnalysis(analysisTree);
-        }
-    }
+    //======================================================================
+    void buttonClicked (Button* button);
     
-    void valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property)
-    {
-        if (treeWhosePropertyHasChanged == analysisTree)
-        {
-            if (property == AnalysisProperties::send)
-            {
-                sendButton.setToggleState(analysisTree[AnalysisProperties::send],dontSendNotification);
-            }
-            else if (property == AnalysisProperties::plot)
-            {
-                plotButton.setToggleState(analysisTree[AnalysisProperties::plot], dontSendNotification);
-            }
-            
-            resized();
-        }
-    }
-    
-    void valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded) { }
-    void valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved) { }
-    void valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved) { }
-    void valueTreeParentChanged (ValueTree& treeWhoseParentHasChanged) { }
+    //======================================================================
+    void valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property);
+    void valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded);
+    void valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved);
+    void valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved);
+    void valueTreeParentChanged (ValueTree& treeWhoseParentHasChanged);
    
+    //======================================================================
+    virtual void customComponentPropertyChange(ValueTree& treeWhosePropertyHasChanged, const Identifier& property);
+    virtual void customComponentResized();
+    virtual void customComponentRefreshFromTree();
+    
+protected:
+    
+    ValueTree analysisTree;
     
 private:
     
@@ -92,8 +75,6 @@ private:
     TextButton plotButton;
     
     TextButton removeButton;
-    
-    ValueTree analysisTree;
     
     //======================================================================//
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleAnalysisComponent)

@@ -1,198 +1,147 @@
-//
-//  AudioAnalysisManager.h
-//  SoundAnalyser
-//
-//  Created by Adam Stark on 19/05/2013.
-//
-//
+//=======================================================================
+/** @file AudioAnalysisManager.h
+ *  @brief A class to manage audio input and all audio analysis modules
+ *  @author Adam Stark
+ *  @copyright Copyright (C) 2014  Adam Stark
+ *
+ * This file is part of Sound Analyser.
+ *
+ * Sound Analyser is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Sound Analyser is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Sound Analyser.  If not, see <http://www.gnu.org/licenses/>.
+ */
+//=======================================================================
 
-#ifndef __SoundAnalyser__AudioAnalysisManager__
-#define __SoundAnalyser__AudioAnalysisManager__
+#ifndef _SOUNDANALYSER_AUDIOANALYSISMANAGER_
+#define _SOUNDANALYSER_AUDIOANALYSISMANAGER_
 
+//=======================================================================
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "OSCSender.h"
+#include "../OSC/Osc.h"
 #include "AudioBuffer.h"
-#include <iostream>
-
-#include "Gist/Gist.h"
-
 #include "AudioAnalysis.h"
-#include "Analyses/RMS.h"
-#include "Analyses/PeakEnergy.h"
-#include "Analyses/ZeroCrossingRate.h"
-#include "Analyses/SpectralCentroid.h"
-#include "Analyses/SpectralDifference.h"
-#include "Analyses/FFTMagnitudeSpectrum.h"
-#include "Analyses/Pitch.h"
-#include "Analyses/MelFrequencyCepstralCoefficients.h"
+#include "../Libraries/Gist/src/Gist.h"
 
-#include <speex/speex_resampler.h>
+//=======================================================================
+// import all audio analysis modules
+#include "../Modules/RMS.h"
+#include "../Modules/PeakEnergy.h"
+#include "../Modules/ZeroCrossingRate.h"
+#include "../Modules/SpectralCentroid.h"
+#include "../Modules/SpectralCrest.h"
+#include "../Modules/SpectralDifference.h"
+#include "../Modules/SpectralFlatness.h"
+#include "../Modules/FFTMagnitudeSpectrum.h"
+#include "../Modules/Pitch.h"
+#include "../Modules/MelFrequencySpectrum.h"
+#include "../Modules/SP_Chromagram.h"
+#include "../Modules/SP_ChordDetector.h"
 
+#define DEFAULT_SAMPLING_FREQUENCY 44100
 
+//=======================================================================
+/** A class to manage audio input and all audio analysis modules
+ */
 class AudioAnalysisManager {
 
 public:
-    /** constructor */
+    /** Constructor */
     AudioAnalysisManager(int bufferSize_);
     
-    /** passes the audio buffer through a number of analysis algorithms 
+    /** Passes the audio buffer through a number of analysis algorithms
      * @param buffer the audio buffer containing the audio samples
      * @param numSamples the number of audio samples in the buffer
      */
     void analyseAudio(float* buffer,int numSamples);
-                
-    std::vector<float> plotHistory;
-    std::vector<float> vectorPlot;
+
+    /** Sets the analyser Id string, which will be prepended to all
+     * OSC messages
+     * @param analyserId the analyser Id
+     */
+    void setAnalyserIdString(std::string analyserId);
     
-    void setAnalyserIdString(std::string analyserId)
-    {
-        std::string idWithSlash("/");
-        
-        idWithSlash = idWithSlash.append(analyserId);
-        
-        for (int i = 0;i < audioAnalyses.size();i++)
-        {
-            audioAnalyses[i]->buildAddressPatternFromId(idWithSlash);
-        }
-    }
+    /** Set the audio buffer size to be used for audio analysis. Note that this is
+     * not (necessarily) the host audio frame size as the AudioAnalysisManager will 
+     * use an AudioBuffer object to manage audio buffer sizes
+     * @param bufferSize_ the new audio buffer size to use
+     */
+    void setBufferSize(int bufferSize_);
     
+    /** Sets the network port to be used for sending OSC messages
+     * @param oscPort the port to send OSC messages to
+     */
+    void setOSCPort(int oscPort);
+    
+    /** Sets the IP address to be used
+     * @param IPAddress the new IP address
+     */
+    void setIPAddress(std::string IPAddress);
+    
+    /** Update the AudioAnalysisManager with the host sampling frequency
+     * @param fs the sampling frequency
+     */
+    void setSamplingFrequency(int fs);
+    
+    /** Update the AudioAnalysisManager with the host audio frame size
+     * @param frameSize the audio frame size of the host
+     */
+    void setHostFrameSize(int frameSize);
+    
+    /** Resets the plotHistory to zeros */
+    void clearPlotHistory();
+    
+    /** An array of AudioAnalysis objects */
     OwnedArray<AudioAnalysis> audioAnalyses;
     
+    /** The current audio analysis plot type */
     OutputType currentAnalysisToPlotType;
     
-    void setBufferSize(int bufferSize_)
-    {
-        // store the buffer size
-        bufferSize = bufferSize_;
-        
-        // initialise the audio buffer
-        audioBuffer.setBufferSize(bufferSize);
-        
-        // set up the fft
-        //fft.setFrameLength(bufferSize);
-        
-        gist.setAudioFrameSize(bufferSize);
-        
-        // -----------------------------------------------
-        // now for some analysis specific initialisations
-        
-        // set the number of samples for the fft magnitude spectrum
-        fftMagnitudeSpectrum.setNumFFTSamplesToSend(bufferSize/2);
-        
-        // set the buffer size for the spectral difference
-        //spectralDifference.setFrameSize(bufferSize);
-    }
+    /** A vector containing time domain data to be plotted in the plug-in GUI */
+    std::vector<float> plotHistory;
     
-    void setOSCPort(int oscPort)
-    {
-        osc.setPort(oscPort);
-    }
-    
-    void setIPAddress(std::string IPAddress)
-    {
-        osc.setIPAddress(IPAddress);
-    }
+    /** A vector containing the data to be plotted for an audio analysis algorithm that returns vectors */
+    std::vector<float> vectorPlot;
     
 private:
-    
-    int bufferSize;
-    
+ 
+    /** Add a new sample to the plot history
+     * @param newSample the new sample to add to the plot history
+     */
     void updatePlotHistory(float newSample);
     
+    /** Register all audio analysis algorithms that will be available in the plug-in */
     void addAudioAnalysisAlgorithms();
     
-    std::vector<float> resamplePlot(std::vector<float> v)
-    {
-        std::vector<float> resampledSignal;
-        resampledSignal.resize(512);
-        
-        float *inF;
-        inF = new float[v.size()];
-        float *outF;
-        outF = new float[v.size()];
-        
-        for (int i = 0;i < v.size();i++)
-        {
-            inF[i] = (float) v[i];
-        }
-        
-        SpeexResamplerState *resampler;
-        
-        
-        int err = 0;
-        
-        //resampler = speex_resampler_init(nb_channels, input_rate, output_rate, quality, &err);
-        resampler = speex_resampler_init(1, (spx_uint32_t) v.size(), 512, 0, &err);
-        
-        
-        spx_uint32_t inLen = (spx_uint32_t) v.size();
-        spx_uint32_t outLen = (spx_uint32_t) 512;
-        
-        //err = speex_resampler_process_int(resampler, channelID, in, &in_length, out, &out_length);
-        err = speex_resampler_process_float(resampler, 0, inF, &inLen, outF, &outLen);
-        
-        
-        
-        for (int i = 0;i < resampledSignal.size();i++)
-        {
-            resampledSignal[i] = outF[i];
-        }
-        
-        delete [] inF;
-        delete [] outF;
-        
-        speex_resampler_destroy(resampler);
-        
-        return resampledSignal;
-    }
+    /** Resamples a vector to the correct length for plotting */
+    std::vector<float> resamplePlot(std::vector<float> v);
     
-    void updateVectorPlot(std::vector<float> v)
-    {
-        // if the vector is less than or equal to the
-        // length of our plot window then we can just
-        // use it as is
-        if (v.size() <= 512)
-        {
-            vectorPlot.resize(v.size());
-            
-            for (int i = 0;i < v.size();i++)
-            {
-                vectorPlot[i] = v[i];
-            }
-        }
-        else // otherwise, we have to downsample
-        {
-            vectorPlot.resize(512);
-            
-            vectorPlot = resamplePlot(v);
-        }
-    }
+    /** Updates the vector plot with the latest vector result */
+    void updateVectorPlot(std::vector<float> v);
+    
+    /** The audio buffer size used by the plug-in to calculate audio analyses */
+    int bufferSize;
     
     /** allows osc to be sent to a specific ip address and port number */
-    OSCSender osc;
-        
-    /** an object for calculating audio features */
-   // AudioFeatures audioFeatures;
+    Osc osc;
     
+    /** An AudioBuffer object to manage audio buffers when new audio frames are received from the host */
     AudioBuffer audioBuffer;
     
-    /** an object for computing the fourier transform of audio frames */
-    //FFT fft;
-
-    
-//    RMS rms;
-//    PeakEnergy peakEnergy;
-//    ZeroCrossingRate zcr;
-//    SpectralCentroid spectralCentroid;
-//    SpectralDifference spectralDifference;
-//    StandardDeviation standardDeviation;
-//    Pitch pitch;
-//    MelFrequencyCepstralCoefficients mfcc;
-    
-    FFTMagnitudeSpectrum fftMagnitudeSpectrum;
-    
+    /** An instance of the gist audio analysis library */
     Gist<float> gist;
-
+    
+    //=======================================================================
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioAnalysisManager)
+    //=======================================================================
 };
 
 #endif /* defined(__SoundAnalyser__AudioAnalysisManager__) */

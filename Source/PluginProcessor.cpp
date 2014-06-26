@@ -1,12 +1,25 @@
-/*
-  ==============================================================================
-
-    This file was auto-generated!
-
-    It contains the basic startup code for a Juce application.
-
-  ==============================================================================
-*/
+//=======================================================================
+/** @file PluginProcessor.cpp
+ *  @brief The top level audio processing class for the Sound Analyser
+ *  @author Adam Stark
+ *  @copyright Copyright (C) 2014  Adam Stark
+ *
+ * This file is part of Sound Analyser.
+ *
+ * Sound Analyser is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Sound Analyser is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Sound Analyser.  If not, see <http://www.gnu.org/licenses/>.
+ */
+//=======================================================================
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
@@ -54,7 +67,7 @@ const String SoundAnalyserAudioProcessor::getName() const
 //==============================================================================
 int SoundAnalyserAudioProcessor::getNumParameters()
 {
-    return totalNumParams;
+    return 0;
 }
 
 //==============================================================================
@@ -181,6 +194,9 @@ void SoundAnalyserAudioProcessor::prepareToPlay (double sampleRate, int samplesP
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+    
+    analyser.setSamplingFrequency((int) sampleRate);
+    analyser.setHostFrameSize(samplesPerBlock);
 }
 
 //==============================================================================
@@ -197,7 +213,7 @@ void SoundAnalyserAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiB
     // audio processing...
     for (int channel = 0; channel < getNumInputChannels(); ++channel)
     {
-        float* channelData = buffer.getSampleData (channel);
+        float* channelData = buffer.getWritePointer (channel);
         
         if (channel == 0)
         {
@@ -312,6 +328,9 @@ void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhose
                     }
                 }
             }
+            
+            // clear the plot history 
+            analyser.clearPlotHistory();
         }
         else // deal with custom properties here
         {
