@@ -96,7 +96,7 @@
       <HeaderFileName/>
     </Midl>
     <ClCompile>
-      <Optimization>MinSpace</Optimization>
+      <Optimization>Full</Optimization>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JuceLibraryCode\modules;c:\SDKs\VST2.4 SDK;c:\SDKs\VST3 SDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;JUCER_VS2010_78A501D=1;JUCE_APP_VERSION=0.1.2;JUCE_APP_VERSION_HEX=0x102;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -151,7 +151,7 @@
     <ClCompile Include="..\..\Source\Libraries\Gist\src\onset-detection-functions\OnsetDetectionFunction.cpp"/>
     <ClCompile Include="..\..\Source\Libraries\Gist\src\pitch\Yin.cpp"/>
     <ClCompile Include="..\..\Source\Libraries\kiss_fft130\kiss_fft.c"/>
-    <ClCompile Include="..\..\Source\Libraries\speex\libspeex\resample.c"/>
+    <ClCompile Include="..\..\Source\Libraries\speex\libspeex\resample.cpp"/>
     <ClCompile Include="..\..\Source\Libraries\Stark-Plumbley\ChordDetector.cpp"/>
     <ClCompile Include="..\..\Source\Libraries\Stark-Plumbley\Chromagram.cpp"/>
     <ClCompile Include="..\..\Source\OSC\Osc.cpp"/>

@@ -430,7 +430,7 @@
     <ClCompile Include="..\..\Source\Libraries\kiss_fft130\kiss_fft.c">
       <Filter>Sound Analyser\Source\Libraries\kiss_fft130</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Libraries\speex\libspeex\resample.c">
+    <ClCompile Include="..\..\Source\Libraries\speex\libspeex\resample.cpp">
       <Filter>Sound Analyser\Source\Libraries\speex\libspeex</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Libraries\Stark-Plumbley\ChordDetector.cpp">
