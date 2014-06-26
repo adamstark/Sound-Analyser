@@ -93,7 +93,7 @@ public:
     {
         int minBufferSize = 64;
         
-        return minBufferSize * pow(2,index);
+        return minBufferSize * powl(2,index);
     }
     
     int getIndexFromBufferSize(int bufferSize)

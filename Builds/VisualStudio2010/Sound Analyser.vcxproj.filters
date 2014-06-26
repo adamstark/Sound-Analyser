@@ -1764,6 +1764,9 @@
     <ClInclude Include="..\..\Source\Libraries\speex\include\speex\speex_resampler.h">
       <Filter>Sound Analyser\Source\Libraries\speex\include\speex</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Libraries\speex\include\speex\speex_types.h">
+      <Filter>Sound Analyser\Source\Libraries\speex\include\speex</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Libraries\speex\libspeex\arch.h">
       <Filter>Sound Analyser\Source\Libraries\speex\libspeex</Filter>
     </ClInclude>

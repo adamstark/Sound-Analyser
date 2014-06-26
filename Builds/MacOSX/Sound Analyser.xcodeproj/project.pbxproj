@@ -733,6 +733,7 @@
 		9F6B874EF910EDE906D429E5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_PropertyComponent.h"; path = "../../JuceLibraryCode/modules/juce_gui_basics/properties/juce_PropertyComponent.h"; sourceTree = "SOURCE_ROOT"; };
 		A00F57EF3F2ABDBEE8F30573 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_ResizableEdgeComponent.cpp"; path = "../../JuceLibraryCode/modules/juce_gui_basics/layout/juce_ResizableEdgeComponent.cpp"; sourceTree = "SOURCE_ROOT"; };
 		A0356BFC20D427212F7062E5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "juce_RTAS_MacUtilities.mm"; path = "../../JuceLibraryCode/modules/juce_audio_plugin_client/RTAS/juce_RTAS_MacUtilities.mm"; sourceTree = "SOURCE_ROOT"; };
+		A058DDAA04E13E73058DE08B = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "speex_types.h"; path = "../../Source/Libraries/speex/include/speex/speex_types.h"; sourceTree = "SOURCE_ROOT"; };
 		A060219D6858AE9005311265 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_android_JNIHelpers.h"; path = "../../JuceLibraryCode/modules/juce_core/native/juce_android_JNIHelpers.h"; sourceTree = "SOURCE_ROOT"; };
 		A07E602C6EB2E2517485FD80 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_PreferencesPanel.h"; path = "../../JuceLibraryCode/modules/juce_gui_extra/misc/juce_PreferencesPanel.h"; sourceTree = "SOURCE_ROOT"; };
 		A0EF2488BF09DF9888207D43 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_linux_Midi.cpp"; path = "../../JuceLibraryCode/modules/juce_audio_devices/native/juce_linux_Midi.cpp"; sourceTree = "SOURCE_ROOT"; };
@@ -1178,7 +1179,8 @@
 					275BC422FE3189A6C2F76948,
 					23A8B0A40197C26218204BFF, ); name = "kiss_fft130"; sourceTree = "<group>"; };
 		48D33B5A41033D4B5E408491 = {isa = PBXGroup; children = (
-					CCA8BE92FADBEEF8FCCB9611, ); name = speex; sourceTree = "<group>"; };
+					CCA8BE92FADBEEF8FCCB9611,
+					A058DDAA04E13E73058DE08B, ); name = speex; sourceTree = "<group>"; };
 		10130076578AC5F55C8F950D = {isa = PBXGroup; children = (
 					48D33B5A41033D4B5E408491, ); name = include; sourceTree = "<group>"; };
 		692D0C7896055E73060C1042 = {isa = PBXGroup; children = (

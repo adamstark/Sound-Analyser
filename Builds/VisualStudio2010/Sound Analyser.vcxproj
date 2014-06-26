@@ -1305,6 +1305,7 @@
     <ClInclude Include="..\..\Source\Libraries\kiss_fft130\kiss_fft.h"/>
     <ClInclude Include="..\..\Source\Libraries\kiss_fft130\kissfft.hh"/>
     <ClInclude Include="..\..\Source\Libraries\speex\include\speex\speex_resampler.h"/>
+    <ClInclude Include="..\..\Source\Libraries\speex\include\speex\speex_types.h"/>
     <ClInclude Include="..\..\Source\Libraries\speex\libspeex\arch.h"/>
     <ClInclude Include="..\..\Source\Libraries\speex\libspeex\config.h"/>
     <ClInclude Include="..\..\Source\Libraries\speex\libspeex\os_support.h"/>

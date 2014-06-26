@@ -43,7 +43,7 @@ AudioAnalysisManager.h
 Version History
 ---------------
 
-=== 1.0 ===
+=== 1.0.0 ===
 
 The first version of Sound Analyser
 
@@ -51,14 +51,28 @@ The first version of Sound Analyser
 Dependencies
 ------------
 
-The plug-in depends on a number of libraries. The following will need to be linked at compile time:
-
-* FFTW ([http://fftw.org/](http://fftw.org/))
-* Speex ([http://www.speex.org/](http://www.speex.org/))
-
-And the following are included in the project source:
+The plug-in depends on a number of libraries:
 
 * JUCE ([http://www.juce.com/](http://www.juce.com/))
+* Speex [just the resampling part] ([http://www.speex.org/](http://www.speex.org/))
+
+And, for the FFT, either:
+
+* FFTW ([http://fftw.org/](http://fftw.org/))
+
+or
+
+* Kiss FFT ([http://kissfft.sourceforge.net/](http://kissfft.sourceforge.net/))
+
+
+Note on compiler flags:
+
+* To use FFTW, add the flag -DUSE_FFTW
+* To use KISS FFT add the flag -DUSE_KISS_FFT
+* (Don't add them both together!)
+
+
+
 
 License
 -------
