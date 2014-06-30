@@ -49,6 +49,7 @@ void SoundAnalyserAudioProcessor::refreshFromTree()
     
     analyser.setIPAddress(analyserTree[AnalysisModel::Ids::IPAddress].toString().toStdString());
     
+    analyser.setAnalyserIdString(analyserTree[AnalysisModel::Ids::AnalyserId].toString().toStdString());
     
     for (int i = 0;i < analyser.audioAnalyses.size();i++)
     {
