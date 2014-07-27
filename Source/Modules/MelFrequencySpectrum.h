@@ -77,6 +77,8 @@ public:
         // this property is unique to Mel Frequency Spectrum
         numBins = analysisTree[AnalysisProperties::MelFrequencySpectrum::numBins];
         
+        // set the number of coefficients in the mfcc object
+        mfcc.setNumCoefficients(numBins);
     }
     
     //==============================================================================
