@@ -43,9 +43,15 @@ AudioAnalysisManager.h
 Version History
 ---------------
 
-=== 1.0.0 ===
+=== 1.0.1 === (27th July 2014)
 
-The first version of Sound Analyser
+* Fixed bug where Analyser Id was not saved
+* Fixed bug where Mel-frequency spectrum did not reload the number of coefficients to send
+
+
+=== 1.0.0 === (26th June 2014)
+
+* The first version of Sound Analyser
 
 
 Dependencies
