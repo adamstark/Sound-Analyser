@@ -19,7 +19,7 @@ Sound Analyser is written and maintained by Adam Stark. The plug-in allows audio
 Sound Analyser Website
 ----------------------
 
-* [http://www.adamstark.co.uk](http://www.adamstark.co.uk)
+* [http://www.adamstark.co.uk/sound-analyser](http://www.adamstark.co.uk/sound-analyser)
 
 
 Academic Papers

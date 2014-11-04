@@ -165,7 +165,7 @@ double SoundAnalyserAudioProcessor::getTailLengthSeconds() const
 //==============================================================================
 int SoundAnalyserAudioProcessor::getNumPrograms()
 {
-    return 0;
+    return 1;
 }
 
 //==============================================================================
