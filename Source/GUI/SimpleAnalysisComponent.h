@@ -33,7 +33,10 @@
     Extend this class to create a custom component. 
  
 */
-class SimpleAnalysisComponent : public Component, public Button::Listener, public ValueTree::Listener {
+class SimpleAnalysisComponent :     public Component,
+                                    public Button::Listener,
+                                    public ValueTree::Listener
+{
     
 public:
     SimpleAnalysisComponent(ValueTree& analysisTree_);
@@ -46,17 +49,20 @@ public:
     void refreshFromTree();
     
     //======================================================================
+    // Component
     void resized();
     void paint(Graphics& g);
     
     //======================================================================
+    // Button::Listener
     void buttonClicked (Button* button);
     
     //======================================================================
+    // ValueTree::Listener
     void valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property);
     void valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded);
-    void valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved);
-    void valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved);
+    void valueTreeChildRemoved (ValueTree& parentTree,ValueTree& childWhichHasBeenRemoved,int indexFromWhichChildWasRemoved);
+    void valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved,int oldIndex, int newIndex);
     void valueTreeParentChanged (ValueTree& treeWhoseParentHasChanged);
    
     //======================================================================

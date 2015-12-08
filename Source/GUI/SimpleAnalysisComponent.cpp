@@ -153,13 +153,13 @@ void SimpleAnalysisComponent::valueTreeChildAdded (ValueTree& parentTree, ValueT
 }
 
 //==============================================================================
-void SimpleAnalysisComponent::valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved)
+void SimpleAnalysisComponent::valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved, int indexFromWhichChildWasRemoved)
 {
 
 }
 
 //==============================================================================
-void SimpleAnalysisComponent::valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved)
+void SimpleAnalysisComponent::valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved,int oldIndex, int newIndex)
 {
 
 }

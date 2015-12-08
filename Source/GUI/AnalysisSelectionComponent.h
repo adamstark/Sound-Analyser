@@ -45,13 +45,13 @@ public:
         AudioAnalysis *analysis;
     };
     
-    AnalysisSelectionComponent(ValueTree& analyserTree_,AudioAnalysisManager *analyser_);
+    AnalysisSelectionComponent (ValueTree& analyserTree_,AudioAnalysisManager *analyser_);
     
     void fillSelectionLists();
     
-    bool collectionInArray(Identifier col);
+    bool collectionInArray (Identifier col);
     
-    void paint(Graphics& g);
+    void paint (Graphics& g);
     
     int getSelectedAnalysis();
     

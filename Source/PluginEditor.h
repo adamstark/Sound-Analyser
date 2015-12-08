@@ -47,95 +47,63 @@ enum BufferSizeValues
 //==============================================================================
 /**
 */
-class SoundAnalyserAudioProcessorEditor  : public AudioProcessorEditor, public Button::Listener, public Timer, public ValueTree::Listener, public Label::Listener, ComboBox::Listener {
+class SoundAnalyserAudioProcessorEditor :   public AudioProcessorEditor,
+                                            public Button::Listener,
+                                            public Timer,
+                                            public ValueTree::Listener,
+                                            public Label::Listener,
+                                            public ComboBox::Listener
+{
 public:
+    
+    //==============================================================================
     SoundAnalyserAudioProcessorEditor (SoundAnalyserAudioProcessor* ownerFilter, ValueTree analyserTree_);
     ~SoundAnalyserAudioProcessorEditor();
-
+    
     //==============================================================================
-    void paint (Graphics& g);
-    
-    void resized();
-    
-    void setValueTree(ValueTree tree);
+    void setValueTree (ValueTree tree);
     
     void refreshFromTree();
     
-    void addAnalysis(ValueTree& analysisTree);
+    void addAnalysis (ValueTree& analysisTree);
     
     //==============================================================================
+    // Component
+    void paint (Graphics& g);
+    void resized();
+    
+    //==============================================================================
+    // Button::Listener
     void buttonClicked (Button* button);
     
     //==============================================================================
+    // Timer
     void timerCallback();
     
     //==============================================================================
+    // ValueTree::Listener
     void valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property);
     void valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded);
-    void valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved);
-    void valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved);
+    void valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved, int indexFromWhichChildWasRemoved);
+    void valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved, int oldIndex, int newIndex);
     void valueTreeParentChanged (ValueTree& treeWhoseParentHasChanged);
     
     //==============================================================================
+    // Label::Listener
     void labelTextChanged (Label* labelThatHasChanged);
     
-    void comboBoxChanged (ComboBox* comboBoxThatHasChanged)
-    {
-        if (comboBoxThatHasChanged == &bufferSizeComboBox)
-        {
-            int selectedItem = bufferSizeComboBox.getSelectedItemIndex();
-                        
-            AnalysisModel::setBufferSize(analyserTree,getBufferSizeFromIndex(selectedItem));
-        }
-    }
-    
-    int getBufferSizeFromIndex(int index)
-    {
-        int minBufferSize = 64;
-        
-        return minBufferSize * powl(2,index);
-    }
-    
-    int getIndexFromBufferSize(int bufferSize)
-    {
-        if (bufferSize == 64)
-        {
-            return BufferSize64;
-        }
-        else if (bufferSize == 128)
-        {
-            return BufferSize128;
-        }
-        else if (bufferSize == 256)
-        {
-            return BufferSize256;
-        }
-        else if (bufferSize == 512)
-        {
-            return BufferSize512;
-        }
-        else if (bufferSize == 1024)
-        {
-            return BufferSize1024;
-        }
-        else if (bufferSize == 2048)
-        {
-            return BufferSize2048;
-        }
-        else if (bufferSize == 4096)
-        {
-            return BufferSize4096;
-        }
-        else
-        {
-            return BufferSize64;
-        }
-    }
+    //==============================================================================
+    // ComboBox::Listener
+    void comboBoxChanged (ComboBox* comboBoxThatHasChanged);
     
     //==============================================================================
     void textEditorTextChanged (TextEditor& textEditor);
     
 private:
+    
+    int getBufferSizeFromIndex(int index);
+    
+    int getIndexFromBufferSize(int bufferSize);
     
     SoundAnalyserAudioProcessor* getProcessor() const;
     

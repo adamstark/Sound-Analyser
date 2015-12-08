@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
+   Copyright (c) 2015 - ROLI Ltd.
 
    Permission is granted to use this software under the terms of either:
    a) the GPL v2 (or any later version)
@@ -38,7 +38,8 @@ AudioProcessor::AudioProcessor()
       numOutputChannels (0),
       latencySamples (0),
       suspended (false),
-      nonRealtime (false)
+      nonRealtime (false),
+      processingPrecision (singlePrecision)
 {
 }
 
@@ -48,7 +49,7 @@ AudioProcessor::~AudioProcessor()
     // that it refers to is deleted..
     jassert (activeEditor == nullptr);
 
-   #if JUCE_DEBUG
+   #if JUCE_DEBUG && ! JUCE_DISABLE_AUDIOPROCESSOR_BEGIN_END_GESTURE_CHECKING
     // This will fail if you've called beginParameterChangeGesture() for one
     // or more parameters without having made a corresponding call to endParameterChangeGesture...
     jassert (changingParams.countNumberOfSetBits() == 0);
@@ -118,19 +119,6 @@ void AudioProcessor::setParameterNotifyingHost (const int parameterIndex,
     sendParamChangeMessageToListeners (parameterIndex, newValue);
 }
 
-String AudioProcessor::getParameterName (int parameterIndex, int maximumStringLength)
-{
-    return getParameterName (parameterIndex).substring (0, maximumStringLength);
-}
-
-String AudioProcessor::getParameterText (int parameterIndex, int maximumStringLength)
-{
-    return getParameterText (parameterIndex).substring (0, maximumStringLength);
-}
-
-int AudioProcessor::getParameterNumSteps (int /*parameterIndex*/)        { return 0x7fffffff; }
-float AudioProcessor::getParameterDefaultValue (int /*parameterIndex*/)  { return 0.0f; }
-
 AudioProcessorListener* AudioProcessor::getListenerLocked (const int index) const noexcept
 {
     const ScopedLock sl (listenerLock);
@@ -155,7 +143,7 @@ void AudioProcessor::beginParameterChangeGesture (int parameterIndex)
 {
     if (isPositiveAndBelow (parameterIndex, getNumParameters()))
     {
-       #if JUCE_DEBUG
+       #if JUCE_DEBUG && ! JUCE_DISABLE_AUDIOPROCESSOR_BEGIN_END_GESTURE_CHECKING
         // This means you've called beginParameterChangeGesture twice in succession without a matching
         // call to endParameterChangeGesture. That might be fine in most hosts, but better to avoid doing it.
         jassert (! changingParams [parameterIndex]);
@@ -176,9 +164,9 @@ void AudioProcessor::endParameterChangeGesture (int parameterIndex)
 {
     if (isPositiveAndBelow (parameterIndex, getNumParameters()))
     {
-       #if JUCE_DEBUG
+       #if JUCE_DEBUG && ! JUCE_DISABLE_AUDIOPROCESSOR_BEGIN_END_GESTURE_CHECKING
         // This means you've called endParameterChangeGesture without having previously called
-        // endParameterChangeGesture. That might be fine in most hosts, but better to keep the
+        // beginParameterChangeGesture. That might be fine in most hosts, but better to keep the
         // calls matched correctly.
         jassert (changingParams [parameterIndex]);
         changingParams.clearBit (parameterIndex);
@@ -201,10 +189,133 @@ void AudioProcessor::updateHostDisplay()
             l->audioProcessorChanged (this);
 }
 
-String AudioProcessor::getParameterLabel (int) const            { return String(); }
-bool AudioProcessor::isParameterOrientationInverted (int) const { return false; }
-bool AudioProcessor::isParameterAutomatable (int) const         { return true; }
-bool AudioProcessor::isMetaParameter (int) const                { return false; }
+const OwnedArray<AudioProcessorParameter>& AudioProcessor::getParameters() const noexcept
+{
+    return managedParameters;
+}
+
+int AudioProcessor::getNumParameters()
+{
+    return managedParameters.size();
+}
+
+float AudioProcessor::getParameter (int index)
+{
+    if (AudioProcessorParameter* p = getParamChecked (index))
+        return p->getValue();
+
+    return 0;
+}
+
+void AudioProcessor::setParameter (int index, float newValue)
+{
+    if (AudioProcessorParameter* p = getParamChecked (index))
+        p->setValue (newValue);
+}
+
+float AudioProcessor::getParameterDefaultValue (int index)
+{
+    if (AudioProcessorParameter* p = managedParameters[index])
+        return p->getDefaultValue();
+
+    return 0;
+}
+
+const String AudioProcessor::getParameterName (int index)
+{
+    if (AudioProcessorParameter* p = getParamChecked (index))
+        return p->getName (512);
+
+    return String();
+}
+
+String AudioProcessor::getParameterName (int index, int maximumStringLength)
+{
+    if (AudioProcessorParameter* p = managedParameters[index])
+        return p->getName (maximumStringLength);
+
+    return getParameterName (index).substring (0, maximumStringLength);
+}
+
+const String AudioProcessor::getParameterText (int index)
+{
+    return getParameterText (index, 1024);
+}
+
+String AudioProcessor::getParameterText (int index, int maximumStringLength)
+{
+    if (AudioProcessorParameter* p = managedParameters[index])
+        return p->getText (p->getValue(), maximumStringLength);
+
+    return getParameterText (index).substring (0, maximumStringLength);
+}
+
+int AudioProcessor::getParameterNumSteps (int index)
+{
+    if (AudioProcessorParameter* p = managedParameters[index])
+        return p->getNumSteps();
+
+    return AudioProcessor::getDefaultNumParameterSteps();
+}
+
+int AudioProcessor::getDefaultNumParameterSteps() noexcept
+{
+    return 0x7fffffff;
+}
+
+String AudioProcessor::getParameterLabel (int index) const
+{
+    if (AudioProcessorParameter* p = managedParameters[index])
+        return p->getLabel();
+
+    return String();
+}
+
+bool AudioProcessor::isParameterAutomatable (int index) const
+{
+    if (AudioProcessorParameter* p = managedParameters[index])
+        return p->isAutomatable();
+
+    return true;
+}
+
+bool AudioProcessor::isParameterOrientationInverted (int index) const
+{
+    if (AudioProcessorParameter* p = managedParameters[index])
+        return p->isOrientationInverted();
+
+    return false;
+}
+
+bool AudioProcessor::isMetaParameter (int index) const
+{
+    if (AudioProcessorParameter* p = managedParameters[index])
+        return p->isMetaParameter();
+
+    return false;
+}
+
+AudioProcessorParameter* AudioProcessor::getParamChecked (int index) const noexcept
+{
+    AudioProcessorParameter* p = managedParameters[index];
+
+    // If you hit this, then you're either trying to access parameters that are out-of-range,
+    // or you're not using addParameter and the managed parameter list, but have failed
+    // to override some essential virtual methods and implement them appropriately.
+    jassert (p != nullptr);
+    return p;
+}
+
+void AudioProcessor::addParameter (AudioProcessorParameter* p)
+{
+    p->processor = this;
+    p->parameterIndex = managedParameters.size();
+    managedParameters.add (p);
+
+    // if you're using parameter objects, then you must not override the
+    // deprecated getNumParameters() method!
+    jassert (getNumParameters() == AudioProcessor::getNumParameters());
+}
 
 void AudioProcessor::suspendProcessing (const bool shouldBeSuspended)
 {
@@ -213,7 +324,33 @@ void AudioProcessor::suspendProcessing (const bool shouldBeSuspended)
 }
 
 void AudioProcessor::reset() {}
-void AudioProcessor::processBlockBypassed (AudioSampleBuffer&, MidiBuffer&) {}
+void AudioProcessor::processBlockBypassed (AudioBuffer<float>&, MidiBuffer&) {}
+void AudioProcessor::processBlockBypassed (AudioBuffer<double>&, MidiBuffer&) {}
+
+void AudioProcessor::processBlock (AudioBuffer<double>& buffer, MidiBuffer& midiMessages)
+{
+    ignoreUnused (buffer, midiMessages);
+
+    // If you hit this assertion then either the caller called the double
+    // precision version of processBlock on a processor which does not support it
+    // (i.e. supportsDoublePrecisionProcessing() returns false), or the implementation
+    // of the AudioProcessor forgot to override the double precision version of this method
+    jassertfalse;
+}
+
+void AudioProcessor::setProcessingPrecision (ProcessingPrecision precision) noexcept
+{
+    // If you hit this assertion then you're trying to use double precision
+    // processing on a processor which does not support it!
+    jassert (precision != doublePrecision || supportsDoublePrecisionProcessing());
+
+    processingPrecision = precision;
+}
+
+bool AudioProcessor::supportsDoublePrecisionProcessing() const
+{
+    return false;
+}
 
 //==============================================================================
 void AudioProcessor::editorBeingDeleted (AudioProcessorEditor* const editor) noexcept
@@ -231,9 +368,6 @@ AudioProcessorEditor* AudioProcessor::createEditorIfNeeded()
 
     AudioProcessorEditor* const ed = createEditor();
 
-    // You must make your hasEditor() method return a consistent result!
-    jassert (hasEditor() == (ed != nullptr));
-
     if (ed != nullptr)
     {
         // you must give your editor comp a size before returning it..
@@ -242,6 +376,9 @@ AudioProcessorEditor* AudioProcessor::createEditorIfNeeded()
         const ScopedLock sl (callbackLock);
         activeEditor = ed;
     }
+
+    // You must make your hasEditor() method return a consistent result!
+    jassert (hasEditor() == (ed != nullptr));
 
     return ed;
 }
@@ -294,6 +431,47 @@ XmlElement* AudioProcessor::getXmlFromBinary (const void* data, const int sizeIn
 //==============================================================================
 void AudioProcessorListener::audioProcessorParameterChangeGestureBegin (AudioProcessor*, int) {}
 void AudioProcessorListener::audioProcessorParameterChangeGestureEnd   (AudioProcessor*, int) {}
+
+//==============================================================================
+AudioProcessorParameter::AudioProcessorParameter() noexcept
+    : processor (nullptr), parameterIndex (-1)
+{}
+
+AudioProcessorParameter::~AudioProcessorParameter() {}
+
+void AudioProcessorParameter::setValueNotifyingHost (float newValue)
+{
+    // This method can't be used until the parameter has been attached to a processor!
+    jassert (processor != nullptr && parameterIndex >= 0);
+
+    return processor->setParameterNotifyingHost (parameterIndex, newValue);
+}
+
+void AudioProcessorParameter::beginChangeGesture()
+{
+    // This method can't be used until the parameter has been attached to a processor!
+    jassert (processor != nullptr && parameterIndex >= 0);
+
+    processor->beginParameterChangeGesture (parameterIndex);
+}
+
+void AudioProcessorParameter::endChangeGesture()
+{
+    // This method can't be used until the parameter has been attached to a processor!
+    jassert (processor != nullptr && parameterIndex >= 0);
+
+    processor->endParameterChangeGesture (parameterIndex);
+}
+
+bool AudioProcessorParameter::isOrientationInverted() const { return false; }
+bool AudioProcessorParameter::isAutomatable() const         { return true; }
+bool AudioProcessorParameter::isMetaParameter() const       { return false; }
+int AudioProcessorParameter::getNumSteps() const            { return AudioProcessor::getDefaultNumParameterSteps(); }
+
+String AudioProcessorParameter::getText (float value, int /*maximumStringLength*/) const
+{
+    return String (value, 2);
+}
 
 //==============================================================================
 bool AudioPlayHead::CurrentPositionInfo::operator== (const CurrentPositionInfo& other) const noexcept

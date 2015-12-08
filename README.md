@@ -19,7 +19,7 @@ Sound Analyser is written and maintained by Adam Stark. The plug-in allows audio
 Sound Analyser Website
 ----------------------
 
-* [http://www.adamstark.co.uk](http://www.adamstark.co.uk)
+* [http://www.adamstark.co.uk/sound-analyser](http://www.adamstark.co.uk/sound-analyser)
 
 
 Academic Papers
@@ -42,6 +42,12 @@ AudioAnalysisManager.h
 
 Version History
 ---------------
+
+=== 1.0.2 === (8th December 2015)
+
+* Updated project to use JUCE 4.02
+* Replaced OSC implementation with JUCE OSC classes
+* Some stylistic tweaks
 
 === 1.0.1 === (27th July 2014)
 

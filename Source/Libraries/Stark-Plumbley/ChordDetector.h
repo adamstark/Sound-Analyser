@@ -52,7 +52,7 @@ public:
     /** Detects the chord from a chromagram. This is the array interface
      * @param chroma an array of length 12 containing the chromagram
      */
-    void detectChord(double *chroma);
+    void detectChord(double* chroma);
 	
     /** The root note of the detected chord */
 	int rootNote;
@@ -68,9 +68,9 @@ private:
 
 	void classifyChromagram();
 	
-	double calculateChordScore(double *chroma,double *chordProfile,double biasToUse, double N);
+	double calculateChordScore(double* chroma,double* chordProfile,double biasToUse, double N);
 
-	int minimumIndex(double *array,int length);
+	int minimumIndex(double* array,int length);
 
 	double chromagram[12];
 	double chordProfiles[108][12];

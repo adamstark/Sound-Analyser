@@ -401,6 +401,62 @@ void SoundAnalyserAudioProcessorEditor::addAnalysis(ValueTree& analysisTree)
 }
 
 //==============================================================================
+void SoundAnalyserAudioProcessorEditor::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
+{
+    if (comboBoxThatHasChanged == &bufferSizeComboBox)
+    {
+        int selectedItem = bufferSizeComboBox.getSelectedItemIndex();
+        
+        AnalysisModel::setBufferSize(analyserTree,getBufferSizeFromIndex(selectedItem));
+    }
+}
+
+//==============================================================================
+int SoundAnalyserAudioProcessorEditor::getBufferSizeFromIndex(int index)
+{
+    int minBufferSize = 64;
+    
+    return minBufferSize * powl(2,index);
+}
+
+//==============================================================================
+int SoundAnalyserAudioProcessorEditor::getIndexFromBufferSize(int bufferSize)
+{
+    if (bufferSize == 64)
+    {
+        return BufferSize64;
+    }
+    else if (bufferSize == 128)
+    {
+        return BufferSize128;
+    }
+    else if (bufferSize == 256)
+    {
+        return BufferSize256;
+    }
+    else if (bufferSize == 512)
+    {
+        return BufferSize512;
+    }
+    else if (bufferSize == 1024)
+    {
+        return BufferSize1024;
+    }
+    else if (bufferSize == 2048)
+    {
+        return BufferSize2048;
+    }
+    else if (bufferSize == 4096)
+    {
+        return BufferSize4096;
+    }
+    else
+    {
+        return BufferSize64;
+    }
+}
+
+//==============================================================================
 void SoundAnalyserAudioProcessorEditor::valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property)
 {
     if (property == AnalysisModel::Ids::AnalyserId)
@@ -430,13 +486,14 @@ void SoundAnalyserAudioProcessorEditor::valueTreeChildAdded (ValueTree& parentTr
 }
 
 //==============================================================================
-void SoundAnalyserAudioProcessorEditor::valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved)
+void SoundAnalyserAudioProcessorEditor::valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved, int indexFromWhichChildWasRemoved)
+
 {
     refreshFromTree();
 }
 
 //==============================================================================
-void SoundAnalyserAudioProcessorEditor::valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved)
+void SoundAnalyserAudioProcessorEditor::valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved, int oldIndex, int newIndex)
 {
     
 }

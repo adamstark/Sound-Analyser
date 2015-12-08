@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
+   Copyright (c) 2015 - ROLI Ltd.
 
    Permission is granted to use this software under the terms of either:
    a) the GPL v2 (or any later version)
@@ -63,15 +63,36 @@
  #endif
 #elif JUCE_MAC
  #if defined (MAC_OS_X_VERSION_10_7) && (MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_7)
-  #define JUCE_OPENGL3  1
+  #define JUCE_OPENGL3 1
   #include <OpenGL/gl3.h>
   #include <OpenGL/gl3ext.h>
  #else
   #include <OpenGL/gl.h>
-  #include "OpenGL/glext.h"
+  #include <OpenGL/glext.h>
  #endif
 #elif JUCE_ANDROID
+ #include <android/native_window.h>
+ #include <android/native_window_jni.h>
  #include <GLES2/gl2.h>
+ #include <EGL/egl.h>
+#endif
+
+#if GL_ES_VERSION_3_0
+ #define JUCE_OPENGL3 1
+#endif
+
+//=============================================================================
+/** This macro is a helper for use in GLSL shader code which needs to compile on both OpenGL 2.1 and OpenGL 3.0.
+    It's mandatory in OpenGL 3.0 to specify the GLSL version.
+*/
+#if JUCE_OPENGL3
+ #if JUCE_OPENGL_ES
+  #define JUCE_GLSL_VERSION "#version 300 es"
+ #else
+  #define JUCE_GLSL_VERSION "#version 150"
+ #endif
+#else
+ #define JUCE_GLSL_VERSION ""
 #endif
 
 //=============================================================================
@@ -107,11 +128,12 @@ class OpenGLTexture;
 class OpenGLFrameBuffer;
 class OpenGLShaderProgram;
 
+#include "geometry/juce_Quaternion.h"
+#include "geometry/juce_Matrix3D.h"
+#include "geometry/juce_Vector3D.h"
+#include "geometry/juce_Draggable3DOrientation.h"
 #include "native/juce_MissingGLDefinitions.h"
 #include "opengl/juce_OpenGLHelpers.h"
-#include "opengl/juce_Quaternion.h"
-#include "opengl/juce_Matrix3D.h"
-#include "opengl/juce_Draggable3DOrientation.h"
 #include "opengl/juce_OpenGLPixelFormat.h"
 #include "native/juce_OpenGLExtensions.h"
 #include "opengl/juce_OpenGLRenderer.h"
@@ -123,7 +145,7 @@ class OpenGLShaderProgram;
 #include "opengl/juce_OpenGLRenderer.h"
 #include "opengl/juce_OpenGLShaderProgram.h"
 #include "opengl/juce_OpenGLTexture.h"
-#include "opengl/juce_Vector3D.h"
+#include "utils/juce_OpenGLAppComponent.h"
 
 }
 

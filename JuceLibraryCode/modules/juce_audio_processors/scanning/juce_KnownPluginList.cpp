@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
+   Copyright (c) 2015 - ROLI Ltd.
 
    Permission is granted to use this software under the terms of either:
    a) the GPL v2 (or any later version)
@@ -46,7 +46,7 @@ PluginDescription* KnownPluginList::getTypeForFile (const String& fileOrIdentifi
 PluginDescription* KnownPluginList::getTypeForIdentifierString (const String& identifierString) const
 {
     for (int i = 0; i < types.size(); ++i)
-        if (types.getUnchecked(i)->createIdentifierString() == identifierString)
+        if (types.getUnchecked(i)->matchesIdentifierString (identifierString))
             return types.getUnchecked(i);
 
     return nullptr;
@@ -263,6 +263,7 @@ struct PluginSorter
             case KnownPluginList::sortByManufacturer:       diff = first->manufacturerName.compareNatural (second->manufacturerName); break;
             case KnownPluginList::sortByFormat:             diff = first->pluginFormatName.compare (second->pluginFormatName); break;
             case KnownPluginList::sortByFileSystemLocation: diff = lastPathPart (first->fileOrIdentifier).compare (lastPathPart (second->fileOrIdentifier)); break;
+            case KnownPluginList::sortByInfoUpdateTime:     diff = compare (first->lastInfoUpdateTime, second->lastInfoUpdateTime); break;
             default: break;
         }
 
@@ -276,6 +277,14 @@ private:
     static String lastPathPart (const String& path)
     {
         return path.replaceCharacter ('\\', '/').upToLastOccurrenceOf ("/", false, false);
+    }
+
+    static int compare (Time a, Time b) noexcept
+    {
+        if (a < b)   return -1;
+        if (b < a)   return 1;
+
+        return 0;
     }
 
     const KnownPluginList::SortMethod method;
