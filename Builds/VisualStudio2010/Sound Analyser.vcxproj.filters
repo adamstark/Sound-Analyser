@@ -62,9 +62,6 @@
     <Filter Include="Sound Analyser\Source\Modules">
       <UniqueIdentifier>{43D27D0A-F4A3-135A-8AF8-8DB6A62C217E}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sound Analyser\Source\OSC">
-      <UniqueIdentifier>{8D5A3F4A-5DC7-55E1-9D35-6E6057B612E2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Juce Modules">
       <UniqueIdentifier>{422C46B7-0467-2DB0-BF3C-16DFCAFD69AC}</UniqueIdentifier>
     </Filter>

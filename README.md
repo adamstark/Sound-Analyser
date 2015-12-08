@@ -43,6 +43,12 @@ AudioAnalysisManager.h
 Version History
 ---------------
 
+=== 1.0.2 === (8th December 2015)
+
+* Updated project to use JUCE 4.02
+* Replaced OSC implementation with JUCE OSC classes
+* Some stylistic tweaks
+
 === 1.0.1 === (27th July 2014)
 
 * Fixed bug where Analyser Id was not saved
