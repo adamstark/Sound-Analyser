@@ -25,7 +25,7 @@
 #include "../Libraries/speex/include/speex/speex_resampler.h"
 
 //==============================================================================
-AudioAnalysisManager::AudioAnalysisManager(int bufferSize_) : bufferSize(bufferSize_), audioBuffer(bufferSize), gist(bufferSize,DEFAULT_SAMPLING_FREQUENCY)
+AudioAnalysisManager::AudioAnalysisManager(int bufferSize_) : bufferSize(bufferSize_), audioBuffer(bufferSize), gist(bufferSize,DEFAULT_SAMPLING_FREQUENCY), port(8000), ipAddress("127.0.0.1")
 {
     setBufferSize(bufferSize);
     
@@ -107,7 +107,11 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
                         
                         if (audioAnalyses[i]->send)
                         {
-                            osc.sendMessage(audioAnalyses[i]->addressPattern.c_str(), output);
+                            OSCMessage m(OSCAddressPattern(audioAnalyses[i]->addressPattern));
+                            
+                            m.addFloat32(output);
+                            
+                            osc.send(m);
                         }
                         
                         if (audioAnalyses[i]->plot)
@@ -142,7 +146,14 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
                         
                         if (audioAnalyses[i]->send)
                         {
-                            osc.sendMessage(audioAnalyses[i]->addressPattern.c_str(), output);
+                            OSCMessage m(OSCAddressPattern(audioAnalyses[i]->addressPattern));
+                            
+                            for (int i = 0;i < output.size();i++)
+                            {
+                                m.addFloat32(output[i]);
+                            }
+                            
+                            osc.send(m);
                         }
 
                         if (audioAnalyses[i]->plot)
@@ -220,13 +231,15 @@ void AudioAnalysisManager::setBufferSize(int bufferSize_)
 //==============================================================================
 void AudioAnalysisManager::setOSCPort(int oscPort)
 {
-    osc.setPort(oscPort);
+    port = oscPort;
+    osc.connect(ipAddress, port);
 }
 
 //==============================================================================
-void AudioAnalysisManager::setIPAddress(std::string IPAddress)
+void AudioAnalysisManager::setIPAddress(std::string remoteHostIPAddress)
 {
-    osc.setIpAddress(IPAddress);
+    ipAddress = remoteHostIPAddress;
+    osc.connect(ipAddress, port);
 }
 
 //==============================================================================
@@ -250,9 +263,9 @@ std::vector<float> AudioAnalysisManager::resamplePlot(std::vector<float> v)
     std::vector<float> resampledSignal;
     resampledSignal.resize(512);
     
-    float *inF;
+    float* inF;
     inF = new float[v.size()];
-    float *outF;
+    float* outF;
     outF = new float[v.size()];
     
     for (int i = 0;i < v.size();i++)

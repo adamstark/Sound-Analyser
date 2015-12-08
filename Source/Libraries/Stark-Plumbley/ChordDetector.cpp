@@ -38,7 +38,7 @@ void ChordDetector::detectChord(std::vector<double> chroma)
 }
 
 //=======================================================================
-void ChordDetector::detectChord(double *chroma)
+void ChordDetector::detectChord(double* chroma)
 {
 	for (int i = 0;i < 12;i++)
 	{
@@ -201,7 +201,7 @@ void ChordDetector::classifyChromagram()
 }
 
 //=======================================================================
-double ChordDetector::calculateChordScore(double *chroma,double *chordProfile,double biasToUse, double N)
+double ChordDetector::calculateChordScore(double* chroma,double* chordProfile,double biasToUse, double N)
 {
 	double sum = 0;
 	double delta;
@@ -217,7 +217,7 @@ double ChordDetector::calculateChordScore(double *chroma,double *chordProfile,do
 }
 
 //=======================================================================
-int ChordDetector::minimumIndex(double *array,int arrayLength)
+int ChordDetector::minimumIndex(double* array,int arrayLength)
 {
 	double minValue = 100000;
 	int minIndex = 0;

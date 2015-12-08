@@ -92,7 +92,7 @@ Chromagram::~Chromagram()
 }
 
 //==================================================================================
-void Chromagram::processAudioFrame(double *inputAudioFrame)
+void Chromagram::processAudioFrame(double* inputAudioFrame)
 {
     // create a vector
     std::vector<double> v;

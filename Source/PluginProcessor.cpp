@@ -245,10 +245,7 @@ bool SoundAnalyserAudioProcessor::hasEditor() const
 //==============================================================================
 AudioProcessorEditor* SoundAnalyserAudioProcessor::createEditor()
 {
- //   editor = new SoundAnalyserAudioProcessorEditor (this,analyserTree);
- 
     return new SoundAnalyserAudioProcessorEditor (this,analyserTree);
-  //  return editor;
 }
 
 //==============================================================================
@@ -356,7 +353,7 @@ void SoundAnalyserAudioProcessor::valueTreeChildAdded (ValueTree& parentTree, Va
 }
 
 //==============================================================================
-void SoundAnalyserAudioProcessor::valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved)
+void SoundAnalyserAudioProcessor::valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved, int indexFromWhichChildWasRemoved)
 {
     for (int i = 0;i < analyser.audioAnalyses.size();i++)
     {
@@ -369,7 +366,7 @@ void SoundAnalyserAudioProcessor::valueTreeChildRemoved (ValueTree& parentTree, 
 }
 
 //==============================================================================
-void SoundAnalyserAudioProcessor::valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved)
+void SoundAnalyserAudioProcessor::valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved, int oldIndex, int newIndex)
 {
     
 }

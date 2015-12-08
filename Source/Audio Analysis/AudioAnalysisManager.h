@@ -26,8 +26,7 @@
 
 //=======================================================================
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "../OSC/Osc.h"
-#include "AudioBuffer.h"
+#include "AudioAnalysisBuffer.h"
 #include "AudioAnalysis.h"
 #include "../Libraries/Gist/src/Gist.h"
 
@@ -84,7 +83,7 @@ public:
     /** Sets the IP address to be used
      * @param IPAddress the new IP address
      */
-    void setIPAddress(std::string IPAddress);
+    void setIPAddress(std::string remoteHostIPAddress);
     
     /** Update the AudioAnalysisManager with the host sampling frequency
      * @param fs the sampling frequency
@@ -131,13 +130,19 @@ private:
     int bufferSize;
     
     /** allows osc to be sent to a specific ip address and port number */
-    Osc osc;
+    OSCSender osc;
     
-    /** An AudioBuffer object to manage audio buffers when new audio frames are received from the host */
-    AudioBuffer audioBuffer;
+    /** An AudioAnalysisBuffer object to manage audio buffers when new audio frames are received from the host */
+    AudioAnalysisBuffer audioBuffer;
     
     /** An instance of the gist audio analysis library */
     Gist<float> gist;
+    
+    /** The port to send to */
+    int port;
+    
+    /** The remote host IP address to send to */
+    String ipAddress;
     
     //=======================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioAnalysisManager)

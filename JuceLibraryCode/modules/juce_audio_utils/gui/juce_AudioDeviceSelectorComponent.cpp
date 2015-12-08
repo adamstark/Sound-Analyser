@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
+   Copyright (c) 2015 - ROLI Ltd.
 
    Permission is granted to use this software under the terms of either:
    a) the GPL v2 (or any later version)
@@ -80,10 +80,14 @@ public:
           deviceManager (dm),
           noItemsMessage (noItems)
     {
-        items = MidiInput::getDevices();
-
+        updateDevices();
         setModel (this);
         setOutlineThickness (1);
+    }
+
+    void updateDevices()
+    {
+        items = MidiInput::getDevices();
     }
 
     int getNumRows() override
@@ -291,25 +295,31 @@ public:
                 r.removeFromTop (space);
             }
 
-            r.removeFromTop (space * 2);
-            Rectangle<int> buttons (r.removeFromTop (h));
+            r.removeFromTop (space);
 
-            if (showUIButton != nullptr)
+            if (showUIButton != nullptr || resetDeviceButton != nullptr)
             {
-                showUIButton->setVisible (advancedSettingsVisible);
-                showUIButton->changeWidthToFitText (h);
-                showUIButton->setBounds (buttons.removeFromLeft (showUIButton->getWidth()));
-                buttons.removeFromLeft (space);
+                Rectangle<int> buttons (r.removeFromTop (h));
+
+                if (showUIButton != nullptr)
+                {
+                    showUIButton->setVisible (advancedSettingsVisible);
+                    showUIButton->changeWidthToFitText (h);
+                    showUIButton->setBounds (buttons.removeFromLeft (showUIButton->getWidth()));
+                    buttons.removeFromLeft (space);
+                }
+
+                if (resetDeviceButton != nullptr)
+                {
+                    resetDeviceButton->setVisible (advancedSettingsVisible);
+                    resetDeviceButton->changeWidthToFitText (h);
+                    resetDeviceButton->setBounds (buttons.removeFromLeft (resetDeviceButton->getWidth()));
+                }
+
+                r.removeFromTop (space);
             }
 
-            if (resetDeviceButton != nullptr)
-            {
-                resetDeviceButton->setVisible (advancedSettingsVisible);
-                resetDeviceButton->changeWidthToFitText (h);
-                resetDeviceButton->setBounds (buttons.removeFromLeft (showUIButton->getWidth()));
-            }
-
-            setSize (getWidth(), r.getHeight());
+            setSize (getWidth(), r.getY());
         }
         else
         {
@@ -488,6 +498,7 @@ public:
                 inputDeviceDropDown->setSelectedId (-1, dontSendNotification);
         }
 
+        sendLookAndFeelChange();
         resized();
         setSize (getWidth(), getLowestY() + 4);
     }
@@ -1004,11 +1015,19 @@ AudioDeviceSelectorComponent::AudioDeviceSelectorComponent (AudioDeviceManager& 
         midiInputsLabel = new Label (String::empty, TRANS ("Active MIDI inputs:"));
         midiInputsLabel->setJustificationType (Justification::topRight);
         midiInputsLabel->attachToComponent (midiInputsList, true);
+
+        if (BluetoothMidiDevicePairingDialogue::isAvailable())
+        {
+            addAndMakeVisible (bluetoothButton = new TextButton (TRANS("Bluetooth MIDI"),
+                                                                 TRANS("Scan for bluetooth MIDI devices")));
+            bluetoothButton->addListener (this);
+        }
     }
     else
     {
         midiInputsList = nullptr;
         midiInputsLabel = nullptr;
+        bluetoothButton = nullptr;
     }
 
     if (showMidiOutputSelector)
@@ -1027,6 +1046,7 @@ AudioDeviceSelectorComponent::AudioDeviceSelectorComponent (AudioDeviceManager& 
 
     deviceManager.addChangeListener (this);
     updateAllControls();
+    startTimer (1000);
 }
 
 AudioDeviceSelectorComponent::~AudioDeviceSelectorComponent()
@@ -1066,8 +1086,24 @@ void AudioDeviceSelectorComponent::resized()
         r.removeFromTop (space);
     }
 
+    if (bluetoothButton != nullptr)
+    {
+        bluetoothButton->setBounds (r.removeFromTop (24));
+        r.removeFromTop (space);
+    }
+
     if (midiOutputSelector != nullptr)
         midiOutputSelector->setBounds (r.removeFromTop (itemHeight));
+}
+
+void AudioDeviceSelectorComponent::timerCallback()
+{
+    // TODO
+    // unfortunately, the AudioDeviceManager only gives us changeListenerCallbacks
+    // if an audio device has changed, but not if a MIDI device has changed.
+    // This needs to be implemented properly. Until then, we use a workaround
+    // where we update the whole component once per second on a timer callback.
+    updateAllControls();
 }
 
 void AudioDeviceSelectorComponent::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
@@ -1080,7 +1116,7 @@ void AudioDeviceSelectorComponent::comboBoxChanged (ComboBox* comboBoxThatHasCha
 
             deviceManager.setCurrentAudioDeviceType (type->getTypeName(), true);
 
-            updateAllControls(); // needed in case the type hasn't actally changed
+            updateAllControls(); // needed in case the type hasn't actually changed
         }
     }
     else if (comboBoxThatHasChanged == midiOutputSelector)
@@ -1126,6 +1162,7 @@ void AudioDeviceSelectorComponent::updateAllControls()
 
     if (midiInputsList != nullptr)
     {
+        midiInputsList->updateDevices();
         midiInputsList->updateContent();
         midiInputsList->repaint();
     }
@@ -1151,4 +1188,10 @@ void AudioDeviceSelectorComponent::updateAllControls()
     }
 
     resized();
+}
+
+void AudioDeviceSelectorComponent::buttonClicked (Button* btn)
+{
+    if (bluetoothButton == btn)
+        BluetoothMidiDevicePairingDialogue::open();
 }

@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
+   Copyright (c) 2015 - ROLI Ltd.
 
    Permission is granted to use this software under the terms of either:
    a) the GPL v2 (or any later version)
@@ -102,9 +102,7 @@ public:
         lineLength = 0;
         lineLengthWithoutNewLines = 0;
 
-        String::CharPointerType t (line.getCharPointer());
-
-        for (;;)
+        for (String::CharPointerType t (line.getCharPointer());;)
         {
             const juce_wchar c = t.getAndAdvance();
 
@@ -242,16 +240,16 @@ CodeDocument::Position::Position() noexcept
 }
 
 CodeDocument::Position::Position (const CodeDocument& ownerDocument,
-                                  const int line_, const int indexInLine_) noexcept
-    : owner (const_cast <CodeDocument*> (&ownerDocument)),
-      characterPos (0), line (line_),
-      indexInLine (indexInLine_), positionMaintained (false)
+                                  const int lineNum, const int index) noexcept
+    : owner (const_cast<CodeDocument*> (&ownerDocument)),
+      characterPos (0), line (lineNum),
+      indexInLine (index), positionMaintained (false)
 {
-    setLineAndIndex (line_, indexInLine_);
+    setLineAndIndex (lineNum, index);
 }
 
 CodeDocument::Position::Position (const CodeDocument& ownerDocument, const int characterPos_) noexcept
-    : owner (const_cast <CodeDocument*> (&ownerDocument)),
+    : owner (const_cast<CodeDocument*> (&ownerDocument)),
       positionMaintained (false)
 {
     setPosition (characterPos_);
@@ -809,21 +807,21 @@ public:
     {
     }
 
-    bool perform()
+    bool perform() override
     {
         owner.currentActionIndex++;
         owner.insert (text, insertPos, false);
         return true;
     }
 
-    bool undo()
+    bool undo() override
     {
         owner.currentActionIndex--;
         owner.remove (insertPos, insertPos + text.length(), false);
         return true;
     }
 
-    int getSizeInUnits()        { return text.length() + 32; }
+    int getSizeInUnits() override        { return text.length() + 32; }
 
 private:
     CodeDocument& owner;
@@ -858,7 +856,7 @@ void CodeDocument::insert (const String& text, const int insertPos, const bool u
             }
 
             maximumLineLength = -1;
-            Array <CodeDocumentLine*> newLines;
+            Array<CodeDocumentLine*> newLines;
             CodeDocumentLine::createLines (newLines, textInsideOriginalLine);
             jassert (newLines.size() > 0);
 
@@ -904,21 +902,21 @@ public:
     {
     }
 
-    bool perform()
+    bool perform() override
     {
         owner.currentActionIndex++;
         owner.remove (startPos, endPos, false);
         return true;
     }
 
-    bool undo()
+    bool undo() override
     {
         owner.currentActionIndex--;
         owner.insert (removedText, startPos, false);
         return true;
     }
 
-    int getSizeInUnits()    { return (endPos - startPos) + 32; }
+    int getSizeInUnits() override    { return (endPos - startPos) + 32; }
 
 private:
     CodeDocument& owner;

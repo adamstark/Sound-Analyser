@@ -56,7 +56,7 @@ public:
      * the length indicated by the input audio frame size passed to the constructor
      * @see setInputAudioFrameSize
      */
-    void processAudioFrame(double *inputAudioFrame);
+    void processAudioFrame(double* inputAudioFrame);
     
     /** Process a single audio frame. This will determine whether enough samples
      * have been accumulated and if so, will calculate the chromagram

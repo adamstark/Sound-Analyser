@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
+   Copyright (c) 2015 - ROLI Ltd.
 
    Permission is granted to use this software under the terms of either:
    a) the GPL v2 (or any later version)
@@ -48,6 +48,14 @@ protected:
     AudioProcessor();
 
 public:
+    //==============================================================================
+    enum ProcessingPrecision
+    {
+        singlePrecision,
+        doublePrecision
+    };
+
+    //==============================================================================
     /** Destructor. */
     virtual ~AudioProcessor();
 
@@ -106,6 +114,9 @@ public:
         Your code must be able to cope with variable-sized blocks, or you're going to get
         clicks and crashes!
 
+        Also note that some hosts will occasionally decide to pass a buffer containing
+        zero samples, so make sure that your algorithm can deal with that!
+
         If the filter is receiving a midi input, then the midiMessages array will be filled
         with the midi messages for this block. Each message's timestamp will indicate the
         message's time, as a number of samples from the start of the block.
@@ -122,8 +133,62 @@ public:
         processBlock() method to send out an asynchronous message. You could also use
         the AsyncUpdater class in a similar way.
     */
-    virtual void processBlock (AudioSampleBuffer& buffer,
+    virtual void processBlock (AudioBuffer<float>& buffer,
                                MidiBuffer& midiMessages) = 0;
+
+    /** Renders the next block.
+
+        When this method is called, the buffer contains a number of channels which is
+        at least as great as the maximum number of input and output channels that
+        this filter is using. It will be filled with the filter's input data and
+        should be replaced with the filter's output.
+
+        So for example if your filter has 2 input channels and 4 output channels, then
+        the buffer will contain 4 channels, the first two being filled with the
+        input data. Your filter should read these, do its processing, and replace
+        the contents of all 4 channels with its output.
+
+        Or if your filter has 5 inputs and 2 outputs, the buffer will have 5 channels,
+        all filled with data, and your filter should overwrite the first 2 of these
+        with its output. But be VERY careful not to write anything to the last 3
+        channels, as these might be mapped to memory that the host assumes is read-only!
+
+        Note that if you have more outputs than inputs, then only those channels that
+        correspond to an input channel are guaranteed to contain sensible data - e.g.
+        in the case of 2 inputs and 4 outputs, the first two channels contain the input,
+        but the last two channels may contain garbage, so you should be careful not to
+        let this pass through without being overwritten or cleared.
+
+        Also note that the buffer may have more channels than are strictly necessary,
+        but you should only read/write from the ones that your filter is supposed to
+        be using.
+
+        The number of samples in these buffers is NOT guaranteed to be the same for every
+        callback, and may be more or less than the estimated value given to prepareToPlay().
+        Your code must be able to cope with variable-sized blocks, or you're going to get
+        clicks and crashes!
+
+        Also note that some hosts will occasionally decide to pass a buffer containing
+        zero samples, so make sure that your algorithm can deal with that!
+
+        If the filter is receiving a midi input, then the midiMessages array will be filled
+        with the midi messages for this block. Each message's timestamp will indicate the
+        message's time, as a number of samples from the start of the block.
+
+        Any messages left in the midi buffer when this method has finished are assumed to
+        be the filter's midi output. This means that your filter should be careful to
+        clear any incoming messages from the array if it doesn't want them to be passed-on.
+
+        Be very careful about what you do in this callback - it's going to be called by
+        the audio thread, so any kind of interaction with the UI is absolutely
+        out of the question. If you change a parameter in here and need to tell your UI to
+        update itself, the best way is probably to inherit from a ChangeBroadcaster, let
+        the UI components register as listeners, and then call sendChangeMessage() inside the
+        processBlock() method to send out an asynchronous message. You could also use
+        the AsyncUpdater class in a similar way.
+    */
+    virtual void processBlock (AudioBuffer<double>& buffer,
+                               MidiBuffer& midiMessages);
 
     /** Renders the next block when the processor is being bypassed.
         The default implementation of this method will pass-through any incoming audio, but
@@ -133,18 +198,72 @@ public:
         Another use for this method would be to cross-fade or morph between the wet (not bypassed)
         and dry (bypassed) signals.
     */
-    virtual void processBlockBypassed (AudioSampleBuffer& buffer,
+    virtual void processBlockBypassed (AudioBuffer<float>& buffer,
                                        MidiBuffer& midiMessages);
+
+    /** Renders the next block when the processor is being bypassed.
+        The default implementation of this method will pass-through any incoming audio, but
+        you may override this method e.g. to add latency compensation to the data to match
+        the processor's latency characteristics. This will avoid situations where bypassing
+        will shift the signal forward in time, possibly creating pre-echo effects and odd timings.
+        Another use for this method would be to cross-fade or morph between the wet (not bypassed)
+        and dry (bypassed) signals.
+    */
+    virtual void processBlockBypassed (AudioBuffer<double>& buffer,
+                                       MidiBuffer& midiMessages);
+
+    //==============================================================================
+    /** Returns true if the Audio processor supports double precision floating point processing.
+        The default implementation will always return false.
+        If you return true here then you must override the double precision versions
+        of processBlock. Additionally, you must call getProcessingPrecision() in
+        your prepareToPlay method to determine the precision with which you need to
+        allocate your internal buffers.
+        @see getProcessingPrecision, setProcessingPrecision
+    */
+    virtual bool supportsDoublePrecisionProcessing() const;
+
+    /** Returns the precision-mode of the processor.
+        Depending on the result of this method you MUST call the corresponding version
+        of processBlock. The default processing precision is single precision.
+        @see setProcessingPrecision, supportsDoublePrecisionProcessing
+    */
+    ProcessingPrecision getProcessingPrecision() const noexcept         { return processingPrecision; }
+
+    /** Returns true if the current precision is set to doublePrecision. */
+    bool isUsingDoublePrecision() const noexcept                        { return processingPrecision == doublePrecision; }
+
+    /** Changes the processing precision of the receiver. A client of the AudioProcessor
+        calls this function to indicate which version of processBlock (single or double
+        precision) it intends to call. The client MUST call this function before calling
+        the prepareToPlay method so that the receiver can do any necessary allocations
+        in the prepareToPlay() method. An implementation of prepareToPlay() should call
+        getProcessingPrecision() to determine with which precision it should allocate
+        it's internal buffers.
+
+        Note that setting the processing precision to double floating point precision
+        on a receiver which does not support double precision processing (i.e.
+        supportsDoublePrecisionProcessing() returns false) will result in an assertion.
+
+        @see getProcessingPrecision, supportsDoublePrecisionProcessing
+    */
+    void setProcessingPrecision (ProcessingPrecision precision) noexcept;
 
     //==============================================================================
     /** Returns the current AudioPlayHead object that should be used to find
         out the state and position of the playhead.
 
-        You can call this from your processBlock() method, and use the AudioPlayHead
-        object to get the details about the time of the start of the block currently
-        being processed.
+        You can ONLY call this from your processBlock() method! Calling it at other
+        times will produce undefined behaviour, as the host may not have any context
+        in which a time would make sense, and some hosts will almost certainly have
+        multithreading issues if it's not called on the audio thread.
 
-        If the host hasn't supplied a playhead object, this will return nullptr.
+        The AudioPlayHead object that is returned can be used to get the details about
+        the time of the start of the block currently being processed. But do not
+        store this pointer or use it outside of the current audio callback, because
+        the host may delete or re-use it.
+
+        If the host can't or won't provide any time info, this will return nullptr.
     */
     AudioPlayHead* getPlayHead() const noexcept                 { return playHead; }
 
@@ -289,9 +408,9 @@ public:
         filter will return an empty buffer, but won't block the audio thread like it would
         do if you use the getCallbackLock() critical section to synchronise access.
 
-        If you're going to use this, your processBlock() method must call isSuspended() and
-        check whether it's suspended or not. If it is, then it should skip doing any real
-        processing, either emitting silence or passing the input through unchanged.
+        Any code that calls processBlock() should call isSuspended() before doing so, and
+        if the processor is suspended, it should avoid the call and emit silence or
+        whatever is appropriate.
 
         @see getCallbackLock
     */
@@ -325,7 +444,7 @@ public:
     /** Called by the host to tell this processor whether it's being used in a non-realtime
         capacity for offline rendering or bouncing.
     */
-    void setNonRealtime (bool isNonRealtime) noexcept;
+    virtual void setNonRealtime (bool isNonRealtime) noexcept;
 
     //==============================================================================
     /** Creates the filter's UI.
@@ -376,11 +495,18 @@ public:
     //==============================================================================
     /** This must return the correct value immediately after the object has been
         created, and mustn't change the number of parameters later.
-    */
-    virtual int getNumParameters() = 0;
 
-    /** Returns the name of a particular parameter. */
-    virtual const String getParameterName (int parameterIndex) = 0;
+        NOTE! This method will eventually be deprecated! It's recommended that you use the
+        AudioProcessorParameter class instead to manage your parameters.
+    */
+    virtual int getNumParameters();
+
+    /** Returns the name of a particular parameter.
+
+        NOTE! This method will eventually be deprecated! It's recommended that you use the
+        AudioProcessorParameter class instead to manage your parameters.
+    */
+    virtual const String getParameterName (int parameterIndex);
 
     /** Called by the host to find out the value of one of the filter's parameters.
 
@@ -389,11 +515,11 @@ public:
         This could be called quite frequently, so try to make your code efficient.
         It's also likely to be called by non-UI threads, so the code in here should
         be thread-aware.
-    */
-    virtual float getParameter (int parameterIndex) = 0;
 
-    /** Returns the value of a parameter as a text string. */
-    virtual const String getParameterText (int parameterIndex) = 0;
+        NOTE! This method will eventually be deprecated! It's recommended that you use the
+        AudioProcessorParameter class instead to manage your parameters.
+    */
+    virtual float getParameter (int parameterIndex);
 
     /** Returns the name of a parameter as a text string with a preferred maximum length.
         If you want to provide customised short versions of your parameter names that
@@ -401,8 +527,17 @@ public:
         devices or mixing desks) then you should implement this method.
         If you don't override it, the default implementation will call getParameterText(int),
         and truncate the result.
+
+        NOTE! This method will eventually be deprecated! It's recommended that you use
+        AudioProcessorParameter::getName() instead.
     */
     virtual String getParameterName (int parameterIndex, int maximumStringLength);
+
+    /** Returns the value of a parameter as a text string.
+        NOTE! This method will eventually be deprecated! It's recommended that you use
+        AudioProcessorParameter::getText() instead.
+    */
+    virtual const String getParameterText (int parameterIndex);
 
     /** Returns the value of a parameter as a text string with a preferred maximum length.
         If you want to provide customised short versions of your parameter values that
@@ -410,29 +545,53 @@ public:
         devices or mixing desks) then you should implement this method.
         If you don't override it, the default implementation will call getParameterText(int),
         and truncate the result.
+
+        NOTE! This method will eventually be deprecated! It's recommended that you use
+        AudioProcessorParameter::getText() instead.
     */
     virtual String getParameterText (int parameterIndex, int maximumStringLength);
 
     /** Returns the number of discrete steps that this parameter can represent.
-        The default return value if you don't implement this method is 0x7fffffff.
+        The default return value if you don't implement this method is
+        AudioProcessor::getDefaultNumParameterSteps().
         If your parameter is boolean, then you may want to make this return 2.
         The value that is returned may or may not be used, depending on the host.
+
+        NOTE! This method will eventually be deprecated! It's recommended that you use
+        AudioProcessorParameter::getNumSteps() instead.
     */
     virtual int getParameterNumSteps (int parameterIndex);
+
+    /** Returns the default number of steps for a parameter.
+
+        NOTE! This method will eventually be deprecated! It's recommended that you use
+        AudioProcessorParameter::getNumSteps() instead.
+        @see getParameterNumSteps
+    */
+    static int getDefaultNumParameterSteps() noexcept;
 
     /** Returns the default value for the parameter.
         By default, this just returns 0.
         The value that is returned may or may not be used, depending on the host.
+
+        NOTE! This method will eventually be deprecated! It's recommended that you use
+        AudioProcessorParameter::getDefaultValue() instead.
     */
     virtual float getParameterDefaultValue (int parameterIndex);
 
     /** Some plugin types may be able to return a label string for a
         parameter's units.
+
+        NOTE! This method will eventually be deprecated! It's recommended that you use
+        AudioProcessorParameter::getLabel() instead.
     */
     virtual String getParameterLabel (int index) const;
 
     /** This can be overridden to tell the host that particular parameters operate in the
         reverse direction. (Not all plugin formats or hosts will actually use this information).
+
+        NOTE! This method will eventually be deprecated! It's recommended that you use
+        AudioProcessorParameter::isOrientationInverted() instead.
     */
     virtual bool isParameterOrientationInverted (int index) const;
 
@@ -448,8 +607,11 @@ public:
         won't be able to automate your parameters properly.
 
         The value passed will be between 0 and 1.0.
+
+        NOTE! This method will eventually be deprecated! It's recommended that you use
+        AudioProcessorParameter::setValue() instead.
     */
-    virtual void setParameter (int parameterIndex, float newValue) = 0;
+    virtual void setParameter (int parameterIndex, float newValue);
 
     /** Your filter can call this when it needs to change one of its parameters.
 
@@ -460,11 +622,17 @@ public:
         Note that to make sure the host correctly handles automation, you should call
         the beginParameterChangeGesture() and endParameterChangeGesture() methods to
         tell the host when the user has started and stopped changing the parameter.
+
+        NOTE! This method will eventually be deprecated! It's recommended that you use
+        AudioProcessorParameter::setValueNotifyingHost() instead.
     */
     void setParameterNotifyingHost (int parameterIndex, float newValue);
 
     /** Returns true if the host can automate this parameter.
         By default, this returns true for all parameters.
+
+        NOTE! This method will eventually be deprecated! It's recommended that you use
+        AudioProcessorParameter::isAutomatable() instead.
     */
     virtual bool isParameterAutomatable (int parameterIndex) const;
 
@@ -472,6 +640,9 @@ public:
         A meta-parameter is a parameter that changes other params. It is used
         by some hosts (e.g. AudioUnit hosts).
         By default this returns false.
+
+        NOTE! This method will eventually be deprecated! It's recommended that you use
+        AudioProcessorParameter::isMetaParameter() instead.
     */
     virtual bool isMetaParameter (int parameterIndex) const;
 
@@ -482,6 +653,9 @@ public:
         it may use this information to help it record automation.
 
         If you call this, it must be matched by a later call to endParameterChangeGesture().
+
+        NOTE! This method will eventually be deprecated! It's recommended that you use
+        AudioProcessorParameter::beginChangeGesture() instead.
     */
     void beginParameterChangeGesture (int parameterIndex);
 
@@ -491,6 +665,9 @@ public:
         it may use this information to help it record automation.
 
         A call to this method must follow a call to beginParameterChangeGesture().
+
+        NOTE! This method will eventually be deprecated! It's recommended that you use
+        AudioProcessorParameter::endChangeGesture() instead.
     */
     void endParameterChangeGesture (int parameterIndex);
 
@@ -500,6 +677,16 @@ public:
         etc, has changed, and that it should update itself.
     */
     void updateHostDisplay();
+
+    //==============================================================================
+    /** Adds a parameter to the list.
+        The parameter object will be managed and deleted automatically by the list
+        when no longer needed.
+    */
+    void addParameter (AudioProcessorParameter*);
+
+    /** Returns the current list of parameters. */
+    const OwnedArray<AudioProcessorParameter>& getParameters() const noexcept;
 
     //==============================================================================
     /** Returns the number of preset programs the filter supports.
@@ -654,10 +841,14 @@ private:
     double sampleRate;
     int blockSize, numInputChannels, numOutputChannels, latencySamples;
     bool suspended, nonRealtime;
+    ProcessingPrecision processingPrecision;
     CriticalSection callbackLock, listenerLock;
     String inputSpeakerArrangement, outputSpeakerArrangement;
 
-   #if JUCE_DEBUG
+    OwnedArray<AudioProcessorParameter> managedParameters;
+    AudioProcessorParameter* getParamChecked (int) const noexcept;
+
+   #if JUCE_DEBUG && ! JUCE_DISABLE_AUDIOPROCESSOR_BEGIN_END_GESTURE_CHECKING
     BigInteger changingParams;
    #endif
 
