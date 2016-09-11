@@ -25,18 +25,18 @@
 
 //===========================================================
 template <class T>
-Yin<T>::Yin(int samplingFrequency)
+Yin<T>::Yin (int samplingFrequency)
 {
-    setSamplingFrequency(samplingFrequency);
-    
-    setMaxFrequency(1500);
+    fs = samplingFrequency;
+        
+    setMaxFrequency (1500);
     
     prevPeriodEstimate = 1.0;
 }
 
 //===========================================================
 template <class T>
-void Yin<T>::setSamplingFrequency(int samplingFrequency)
+void Yin<T>::setSamplingFrequency (int samplingFrequency)
 {
     int oldFs = fs;
     
@@ -47,7 +47,7 @@ void Yin<T>::setSamplingFrequency(int samplingFrequency)
 
 //===========================================================
 template <class T>
-void Yin<T>::setMaxFrequency(T maxFreq)
+void Yin<T>::setMaxFrequency (T maxFreq)
 {
     T minPeriodFloating;
     
@@ -60,23 +60,22 @@ void Yin<T>::setMaxFrequency(T maxFreq)
 
     minPeriodFloating = ((T) fs) / maxFreq;
     
-    minPeriod = (int) ceil(minPeriodFloating);
+    minPeriod = (int) ceil (minPeriodFloating);
 }
 
 //===========================================================
 template <class T>
-T Yin<T>::pitchYin(std::vector<T> frame)
+T Yin<T>::pitchYin (std::vector<T> frame)
 {
     unsigned long period;
     T fPeriod;
     
     // steps 1, 2 and 3 of the Yin algorithm
     // get the difference function ("delta")
-    //std::vector<T> delta = cumulativeMeanNormalisedDifferenceFunction(&frame[0],frame.size());
-    cumulativeMeanNormalisedDifferenceFunction(&frame[0],frame.size());
+    cumulativeMeanNormalisedDifferenceFunction (&frame[0],frame.size());
     
     // first, see if the previous period estimate has a minima
-    long continuityPeriod = searchForOtherRecentMinima(delta);
+    long continuityPeriod = searchForOtherRecentMinima (delta);
     
     // if there is no minima at the previous period estimate
     if (continuityPeriod == -1)
@@ -91,10 +90,10 @@ T Yin<T>::pitchYin(std::vector<T> frame)
     }
     
     // check that we can interpolate (i.e. that period isn't first or last element)
-    if ((period > 0) && (period < (delta.size()-1)))
+    if ((period > 0) && (period < (delta.size() - 1)))
     {
         // parabolic interpolation
-        fPeriod = parabolicInterpolation(period,delta[period-1],delta[period],delta[period+1]);
+        fPeriod = parabolicInterpolation (period,delta[period-1],delta[period],delta[period+1]);
     }
     else // if no interpolation is possible
     {
@@ -105,12 +104,12 @@ T Yin<T>::pitchYin(std::vector<T> frame)
     // store the previous period estimate for later
     prevPeriodEstimate = fPeriod;
     
-    return periodToPitch(fPeriod);
+    return periodToPitch (fPeriod);
 }
 
 //===========================================================
 template <class T>
-void Yin<T>::cumulativeMeanNormalisedDifferenceFunction(T *frame,unsigned long numSamples)
+void Yin<T>::cumulativeMeanNormalisedDifferenceFunction (T* frame,unsigned long numSamples)
 {
     T cumulativeSum = 0.0;
     
@@ -151,19 +150,19 @@ void Yin<T>::cumulativeMeanNormalisedDifferenceFunction(T *frame,unsigned long n
 
 //===========================================================
 template <class T>
-unsigned long Yin<T>::getPeriodCandidate(std::vector<T> delta)
+unsigned long Yin<T>::getPeriodCandidate (std::vector<T> delta)
 {
     unsigned long minPeriod = 30;
     unsigned long period;
     
     T thresh = 0.1;
     
-    std::vector<unsigned long> candidates;
+    bool periodCandidateFound = false;
     
     T minVal = 100000;
     unsigned long minInd = 0;
     
-    for (unsigned long i = minPeriod;i < (delta.size()-1);i++)
+    for (unsigned long i = minPeriod; i < (delta.size() - 1); i++)
     {
         if (delta[i] < minVal)
         {
@@ -175,18 +174,19 @@ unsigned long Yin<T>::getPeriodCandidate(std::vector<T> delta)
         {
             if ((delta[i] < delta[i-1]) && (delta[i] < delta[i+1]))
             {
-                candidates.push_back(i);
+                // we have found a minimum below the threshold, and because we
+                // look for them in order, this is the first one, so we accept it
+                // as the candidate period (i.e. the minimum period), and break the loop
+                period = i;
+                periodCandidateFound = true;
+                break;
             }
         }
     }
     
-    if (candidates.size() == 0)
+    if (! periodCandidateFound)
     {
         period = minInd;
-    }
-    else
-    {
-        period = candidates[0];
     }
     
     return period;
@@ -194,7 +194,7 @@ unsigned long Yin<T>::getPeriodCandidate(std::vector<T> delta)
 
 //===========================================================
 template <class T>
-T Yin<T>::parabolicInterpolation(unsigned long period,T y1,T y2,T y3)
+T Yin<T>::parabolicInterpolation (unsigned long period,T y1,T y2,T y3)
 {
     // if all elements are the same, our interpolation algorithm
     // will end up with a divide-by-zero, so just return the original
@@ -213,7 +213,7 @@ T Yin<T>::parabolicInterpolation(unsigned long period,T y1,T y2,T y3)
 
 //===========================================================
 template <class T>
-long Yin<T>::searchForOtherRecentMinima(std::vector<T> delta)
+long Yin<T>::searchForOtherRecentMinima (std::vector<T> delta)
 {
     long newMinima = -1;
     
@@ -238,7 +238,7 @@ long Yin<T>::searchForOtherRecentMinima(std::vector<T> delta)
 
 //===========================================================
 template <class T>
-T Yin<T>::periodToPitch(T period)
+T Yin<T>::periodToPitch (T period)
 {
     return ((T) fs) / period;
 }

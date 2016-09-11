@@ -24,9 +24,10 @@
 #ifndef __Sound_Analyser__AnalysisSelectionComponent__
 #define __Sound_Analyser__AnalysisSelectionComponent__
 
+#include "../Audio Analysis/AudioAnalysisManager.h"
 #include "../../JuceLibraryCode/JuceHeader.h"
 #include "ItemListComponent.h"
-#include "../Audio Analysis/AudioAnalysisManager.h"
+
 
 class AnalysisSelectionComponent : public Component, public ChangeListener
 {

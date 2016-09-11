@@ -28,7 +28,7 @@
 #include <string>
 #include "AnalysisModel.h"
 #include "../GUI/SimpleAnalysisComponent.h"
-#include "../Libraries/Gist/src/Gist.h"
+
 
 //=======================================================================
 /** The InputType for the audio analysis module.

@@ -22,11 +22,11 @@
  */
 //=======================================================================
 
-#ifndef __Gluver__MappingComponent__
-#define __Gluver__MappingComponent__
+#ifndef _SOUNDANALYSER_SIMPLEANALYSISCOMPONENT_
+#define _SOUNDANALYSER_SIMPLEANALYSISCOMPONENT_
 
-#include "../../JuceLibraryCode/JuceHeader.h"
 #include "../Audio Analysis/AnalysisModel.h"
+#include "../../JuceLibraryCode/JuceHeader.h"
 
 /** A generic GUI component for AudioAnalysis modules. 
  

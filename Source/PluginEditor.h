@@ -24,12 +24,12 @@
 #ifndef __PLUGINEDITOR_H_EA17EABC__
 #define __PLUGINEDITOR_H_EA17EABC__
 
-#include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
 #include "Audio Analysis/AnalysisModel.h"
 #include "GUI/PluginLookAndFeel.h"
 #include "GUI/SimpleAnalysisComponent.h"
 #include "GUI/AnalysisSelectionComponent.h"
+#include "../JuceLibraryCode/JuceHeader.h"
 
 enum BufferSizeValues
 {

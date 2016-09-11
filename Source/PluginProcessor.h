@@ -24,9 +24,10 @@
 #ifndef __PLUGINPROCESSOR_H_FF438757__
 #define __PLUGINPROCESSOR_H_FF438757__
 
-#include "../JuceLibraryCode/JuceHeader.h"
 #include "Audio Analysis/AudioAnalysisManager.h"
 #include "Audio Analysis/AnalysisModel.h"
+#include "../JuceLibraryCode/JuceHeader.h"
+
 
 //==============================================================================
 /**
