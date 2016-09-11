@@ -23,20 +23,23 @@
 
 #include "AnalysisModel.h"
 
+//==============================================================================
 // instantiate static variables
-const Identifier AnalysisModel::Ids::SOUNDANALYSER("SoundAnalyser");
-const Identifier AnalysisModel::Ids::AnalyserId("AnalyserId");
-const Identifier AnalysisModel::Ids::BufferSize("BufferSize");
-const Identifier AnalysisModel::Ids::Port("Port");
-const Identifier AnalysisModel::Ids::IPAddress("IPAddress");
+const Identifier AnalysisModel::Ids::SOUNDANALYSER ("SoundAnalyser");
+const Identifier AnalysisModel::Ids::AnalyserId ("AnalyserId");
+const Identifier AnalysisModel::Ids::BufferSize ("BufferSize");
+const Identifier AnalysisModel::Ids::Port ("Port");
+const Identifier AnalysisModel::Ids::IPAddress ("IPAddress");
 
+//==============================================================================
 // Analysis Properties
-const Identifier AnalysisProperties::send("Send");
-const Identifier AnalysisProperties::plot("Plot");
-const Identifier AnalysisProperties::name("Name");
-const Identifier AnalysisProperties::FFT::numSamplesToSend("NumSamplesToSend");
-const Identifier AnalysisProperties::MelFrequencySpectrum::numBins("NumBins");
+const Identifier AnalysisProperties::send ("Send");
+const Identifier AnalysisProperties::plot ("Plot");
+const Identifier AnalysisProperties::name ("Name");
+const Identifier AnalysisProperties::FFT::numSamplesToSend ("NumSamplesToSend");
+const Identifier AnalysisProperties::MelFrequencySpectrum::numBins ("NumBins");
 
+//==============================================================================
 int AnalysisModel::currentHostFrameSize = DEFAULT_BUFFER_SIZE;
 
 //==============================================================================
@@ -50,46 +53,43 @@ ValueTree AnalysisModel::createAnalyserTree()
 {
     ValueTree analyserTree(Ids::SOUNDANALYSER);
     
-    analyserTree.setProperty(Ids::AnalyserId,1,nullptr);
-    
-    analyserTree.setProperty(Ids::BufferSize,DEFAULT_BUFFER_SIZE,nullptr);
-    
-    analyserTree.setProperty(Ids::Port,DEFAULT_OSC_PORT,nullptr);
-    
-    analyserTree.setProperty(Ids::IPAddress, "127.0.0.1", nullptr);
+    analyserTree.setProperty (Ids::AnalyserId, 1, nullptr);
+    analyserTree.setProperty (Ids::BufferSize, DEFAULT_BUFFER_SIZE, nullptr);
+    analyserTree.setProperty (Ids::Port, DEFAULT_OSC_PORT, nullptr);
+    analyserTree.setProperty (Ids::IPAddress, "127.0.0.1", nullptr);
     
     return analyserTree;
 }
 
 //==============================================================================
-void AnalysisModel::addNewAnalysis(ValueTree analyserTree, ValueTree newNode)
+void AnalysisModel::addNewAnalysis (ValueTree analyserTree, ValueTree newNode)
 {  
-    analyserTree.addChild(newNode, -1, nullptr);
+    analyserTree.addChild (newNode, -1, nullptr);
 }
 
 //==============================================================================
-void AnalysisModel::turnOffAllPlotting(ValueTree analyserTree)
+void AnalysisModel::turnOffAllPlotting (ValueTree analyserTree)
 {
-    for (int i = 0;i < analyserTree.getNumChildren();i++)
+    for (int i = 0;i < analyserTree.getNumChildren(); i++)
     {
-        analyserTree.getChild(i).setProperty(AnalysisProperties::plot, 0, nullptr);
+        analyserTree.getChild(i).setProperty (AnalysisProperties::plot, 0, nullptr);
     }
 }
 
 //==============================================================================
-void AnalysisModel::removeAnalysis(ValueTree analysisTree)
+void AnalysisModel::removeAnalysis (ValueTree analysisTree)
 {
     ValueTree mainTree = analysisTree.getParent();
     
-    mainTree.removeChild(analysisTree, nullptr);
+    mainTree.removeChild (analysisTree, nullptr);
 }
 
 //==============================================================================
-void AnalysisModel::setBufferSize(ValueTree analyserTree,int bufferSize)
+void AnalysisModel::setBufferSize (ValueTree analyserTree, int bufferSize)
 {
     if (bufferSize >= currentHostFrameSize)
     {
-        analyserTree.setProperty(Ids::BufferSize, bufferSize, nullptr);
+        analyserTree.setProperty (Ids::BufferSize, bufferSize, nullptr);
         
     }
     else
@@ -98,11 +98,11 @@ void AnalysisModel::setBufferSize(ValueTree analyserTree,int bufferSize)
         
         if (currentBufferSize != currentHostFrameSize)
         {
-            analyserTree.setProperty(Ids::BufferSize, currentHostFrameSize, nullptr);
+            analyserTree.setProperty (Ids::BufferSize, currentHostFrameSize, nullptr);
         }
         else
         {
-            analyserTree.sendPropertyChangeMessage(Ids::BufferSize);
+            analyserTree.sendPropertyChangeMessage (Ids::BufferSize);
         }
     }
 }

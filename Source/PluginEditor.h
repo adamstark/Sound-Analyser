@@ -19,6 +19,7 @@
 #include "GUI/AnalysisSelectionComponent.h"
 #include "../JuceLibraryCode/JuceHeader.h"
 
+//==============================================================================
 enum BufferSizeValues
 {
     BufferSize64,
@@ -87,14 +88,16 @@ private:
     
     SoundAnalyserAudioProcessor& processor;
     
+    //==============================================================================
     int getBufferSizeFromIndex(int index);
     int getIndexFromBufferSize(int bufferSize);
     SoundAnalyserAudioProcessor* getProcessor() const;
-    double round(double val)
+    double round (double val)
     {
-        return floor(val + 0.5);
+        return floor (val + 0.5);
     }
     
+    //==============================================================================
     ValueTree analyserTree;
     OwnedArray<Component> analysisComponents;
     TextButton newAnalysisButton;

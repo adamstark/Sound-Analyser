@@ -32,7 +32,7 @@ class MelFrequencySpectrum : public AudioAnalysis
 public:
     
     //==============================================================================
-    MelFrequencySpectrum(int frameSize,int samplingFrequency) : mfcc(frameSize,samplingFrequency)
+    MelFrequencySpectrum (int frameSize,int samplingFrequency) : mfcc (frameSize,samplingFrequency)
     {
         numBins = 13;
     }
@@ -44,7 +44,7 @@ public:
     }
     
     //==============================================================================
-    void performAnalysis(std::vector<float> magnitudeSpectrum)
+    void performAnalysis (std::vector<float> magnitudeSpectrum)
     {
         mfccOutput = mfcc.melFrequencySpectrum(magnitudeSpectrum);
     }
@@ -62,7 +62,7 @@ public:
     }
     
     //==============================================================================
-    void setInputAudioFrameSize(int frameSize)
+    void setInputAudioFrameSize (int frameSize)
     {
         mfcc.setFrameSize(frameSize);
     }

@@ -41,7 +41,7 @@ public:
     }
         
     //==============================================================================
-    void performAnalysis(std::vector<float> magnitudeSpectrum)
+    void performAnalysis (std::vector<float> magnitudeSpectrum)
     {
         spectralDifferenceOutputValue = odf.spectralDifference(magnitudeSpectrum);
     }

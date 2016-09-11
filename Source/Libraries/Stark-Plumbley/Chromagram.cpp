@@ -143,7 +143,7 @@ void Chromagram::processAudioFrame(std::vector<double> inputAudioFrame)
 }
 
 //==================================================================================
-void Chromagram::setInputAudioFrameSize(int frameSize)
+void Chromagram::setInputAudioFrameSize (int frameSize)
 {
     inputAudioFrameSize = frameSize;
     

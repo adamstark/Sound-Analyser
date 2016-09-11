@@ -34,7 +34,7 @@ class SpectralCentroid : public AudioAnalysis
 public:
     
     //==============================================================================
-    SpectralCentroid() : spectralCentroidOutputValue(0.0)
+    SpectralCentroid() : spectralCentroidOutputValue (0.0)
     {
 
     }
@@ -46,7 +46,7 @@ public:
     }
     
     //==============================================================================
-    void performAnalysis(std::vector<float> magnitudeSpectrum)
+    void performAnalysis (std::vector<float> magnitudeSpectrum)
     {
         spectralCentroidOutputValue = fdf.spectralCentroid(magnitudeSpectrum);
     }

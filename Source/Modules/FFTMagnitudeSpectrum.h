@@ -46,9 +46,9 @@ public:
     }
     
     //==============================================================================
-    void performAnalysis(std::vector<float> magnitudeSpectrum)
+    void performAnalysis (std::vector<float> magnitudeSpectrum)
     {
-        magnitudeSpectrumResult.resize(numSamplesToSend);
+        magnitudeSpectrumResult.resize (numSamplesToSend);
         
         if (magnitudeSpectrumResult.size() <= magnitudeSpectrum.size())
         {
@@ -79,14 +79,13 @@ public:
     
     //==============================================================================
     /** overriding initialise here as we have extra fields! */
-    void initialise(ValueTree &analysisTree)
+    void initialise (ValueTree &analysisTree)
     {
         send = analysisTree[AnalysisProperties::send];
         plot = analysisTree[AnalysisProperties::plot];
         
         // this property is unique to FFT
         numSamplesToSend = analysisTree[AnalysisProperties::FFT::numSamplesToSend];
-
     }
     
     //==============================================================================
@@ -179,7 +178,7 @@ public:
     }
     
     //==============================================================================
-    void setInputAudioFrameSize(int frameSize)
+    void setInputAudioFrameSize (int frameSize)
     {
         // if our number of samples to send parameter is larger
         // than the number of magnitude spectrum samples, then

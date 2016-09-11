@@ -137,7 +137,7 @@ public:
      
      @see getInputType()
      */
-    virtual void performAnalysis(std::vector<float> buffer) = 0;
+    virtual void performAnalysis (std::vector<float> buffer) = 0;
     
     //==============================================================================
     
@@ -170,12 +170,12 @@ public:
     }
     
     /** Override this function if your AudioAnalysis object needs to do something specific when the sampling frequency changes */
-    virtual void setSamplingFrequency(int fs)
+    virtual void setSamplingFrequency (int fs)
     {
         
     }
     /** Override this function if your AudioAnalysis object needs to do something specific when the host input audio frame size changes */    
-    virtual void setInputAudioFrameSize(int frameSize)
+    virtual void setInputAudioFrameSize (int frameSize)
     {
         
     }
@@ -188,11 +188,11 @@ public:
      */
     virtual ValueTree createAnalysisTree()
     {
-        ValueTree tree(getIdentifier());
+        ValueTree tree (getIdentifier());
         
-        tree.setProperty(AnalysisProperties::send, 0, nullptr);
-        tree.setProperty(AnalysisProperties::plot, 0, nullptr);
-        tree.setProperty(AnalysisProperties::name, getName(), nullptr);
+        tree.setProperty (AnalysisProperties::send, 0, nullptr);
+        tree.setProperty (AnalysisProperties::plot, 0, nullptr);
+        tree.setProperty (AnalysisProperties::name, getName(), nullptr);
         
         return tree;
     }
@@ -205,7 +205,7 @@ public:
         @param analysisTree a ValueTree node representing the audio analysis module
      
      */
-    virtual void initialise(ValueTree &analysisTree)
+    virtual void initialise (ValueTree &analysisTree)
     {        
         send = analysisTree[AnalysisProperties::send];
         plot = analysisTree[AnalysisProperties::plot];
@@ -218,7 +218,7 @@ public:
         @param tree the valueTree that has had a property change
         @param property the property that has changed
      */
-    virtual void handleCustomPropertyChange(ValueTree& tree, const Identifier& property)
+    virtual void handleCustomPropertyChange (ValueTree& tree, const Identifier& property)
     {
         
     }
@@ -230,17 +230,17 @@ public:
      
         @param analysisTree the audio analysis tree for the module
      */
-    virtual Component* getGUIComponent(ValueTree& analysisTree)
+    virtual Component* getGUIComponent (ValueTree& analysisTree)
     {
-        return new SimpleAnalysisComponent(analysisTree);
+        return new SimpleAnalysisComponent (analysisTree);
     }
     
     /** Constructs the full OSC address pattern from the analyser ID and the module address pattern
      * @param idWithForwardSlash the identifier of the analyser, with a leading forward slash
      */
-    void buildAddressPatternFromId(std::string idWithForwardSlash)
+    void buildAddressPatternFromId (std::string idWithForwardSlash)
     {
-        addressPattern = idWithForwardSlash.append(getCoreAddressPattern());
+        addressPattern = idWithForwardSlash.append (getCoreAddressPattern());
     }
     
     /** Indicates whether the module should update the plotting vectors */

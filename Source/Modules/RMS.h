@@ -44,7 +44,7 @@ public:
     }
     
     //==============================================================================
-    void performAnalysis(std::vector<float> audioFrame)
+    void performAnalysis (std::vector<float> audioFrame)
     {
         RMSOutputValue = tdf.rootMeanSquare(audioFrame);
     }

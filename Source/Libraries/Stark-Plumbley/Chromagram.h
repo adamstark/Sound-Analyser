@@ -69,7 +69,7 @@ public:
     /** Sets the input audio frame size
      * @param frameSize the input audio frame size
      */
-    void setInputAudioFrameSize(int frameSize);
+    void setInputAudioFrameSize (int frameSize);
     
     /** Set the sampling frequency of the input audio
      * @param fs the sampling frequency in Hz

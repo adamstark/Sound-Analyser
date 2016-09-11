@@ -61,23 +61,23 @@ public:
      * @param analyserTree the analyser tree node
      * @param newNode the tree node representing the new audio analysis module 
      */
-    static void addNewAnalysis(ValueTree analyserTree, ValueTree newNode);
+    static void addNewAnalysis (ValueTree analyserTree, ValueTree newNode);
     
     /** Sets plotting to false for all modules on the analyserTree
      * @param analyserTree the main application tree
      */
-    static void turnOffAllPlotting(ValueTree analyserTree);
+    static void turnOffAllPlotting (ValueTree analyserTree);
     
     /** Removes an analysis module from the main tree
      * @param analysisTree the node to remove
      */
-    static void removeAnalysis(ValueTree analysisTree);
+    static void removeAnalysis (ValueTree analysisTree);
     
     /** Sets the buffer size to be used in the plug-in
      * @param analyserTree the main application tree
      * @param bufferSize the new buffer size
      */
-    static void setBufferSize(ValueTree analyserTree,int bufferSize);
+    static void setBufferSize (ValueTree analyserTree,int bufferSize);
     
     /** Holds the current host frame size */
     static int currentHostFrameSize;
@@ -101,7 +101,7 @@ private:
     
     
     //======================================================================//
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AnalysisModel);
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AnalysisModel);
     //======================================================================//
 };
 

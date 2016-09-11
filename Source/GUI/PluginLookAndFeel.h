@@ -32,16 +32,16 @@ public:
     PluginLookAndFeel()
     {
         // labels
-        setColour(Label::textColourId, Colours::white);
+        setColour (Label::textColourId, Colours::white);
         
         // buttons
-        setColour (TextButton::buttonColourId, Colour::fromRGB(29, 114, 239));
-        setColour(TextButton::textColourOffId, Colours::white);
+        setColour (TextButton::buttonColourId, Colour::fromRGB (29, 114, 239));
+        setColour (TextButton::textColourOffId, Colours::white);
         setColour (TextButton::ColourIds::buttonOnColourId, Colours::aquamarine);
         
         // sliders
         setColour (Slider::ColourIds::thumbColourId, Colours::royalblue);
-        setColour (Slider::trackColourId,               Colour::fromRGBA(255, 255, 255, 200));
+        setColour (Slider::trackColourId, Colour::fromRGBA (255, 255, 255, 200));
         
         setColour (Slider::rotarySliderFillColourId,Colours::aqua);   
     }

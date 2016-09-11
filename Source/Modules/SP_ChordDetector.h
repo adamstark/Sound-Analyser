@@ -45,7 +45,7 @@ public:
     }
     
     //==============================================================================
-    void performAnalysis(std::vector<float> audioFrame)
+    void performAnalysis (std::vector<float> audioFrame)
     {
         std::vector<double> doublePrecisionBuffer(audioFrame.size());
         
@@ -80,7 +80,7 @@ public:
     }
     
     //==============================================================================
-    void setInputAudioFrameSize(int frameSize)
+    void setInputAudioFrameSize (int frameSize)
     {
         chroma.setInputAudioFrameSize(frameSize);
     }

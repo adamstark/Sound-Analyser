@@ -31,7 +31,7 @@ class Pitch : public AudioAnalysis
 public:
     
     //==============================================================================
-    Pitch(int frameSize, int sampleRate) : yin(sampleRate), pitchOutputValue(0.0)
+    Pitch (int frameSize, int sampleRate) : yin (sampleRate), pitchOutputValue (0.0)
     {
 
     }
@@ -43,7 +43,7 @@ public:
     }
     
     //==============================================================================
-    void performAnalysis(std::vector<float> audioFrame)
+    void performAnalysis (std::vector<float> audioFrame)
     {
         pitchOutputValue = yin.pitchYin(audioFrame);
     }
@@ -61,7 +61,7 @@ public:
     }
     
     //==============================================================================
-    void setInputAudioFrameSize(int frameSize)
+    void setInputAudioFrameSize (int frameSize)
     {
 
     }
