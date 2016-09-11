@@ -1,29 +1,17 @@
-//=======================================================================
-/** @file PluginEditor.h
- *  @brief The top level GUI class for the Sound Analyser
- *  @author Adam Stark
- *  @copyright Copyright (C) 2014  Adam Stark
- *
- * This file is part of Sound Analyser.
- *
- * Sound Analyser is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Sound Analyser is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Sound Analyser.  If not, see <http://www.gnu.org/licenses/>.
- */
-//======================================================================
+/*
+  ==============================================================================
 
-#ifndef __PLUGINEDITOR_H_EA17EABC__
-#define __PLUGINEDITOR_H_EA17EABC__
+    This file was auto-generated!
 
+    It contains the basic framework code for a JUCE plugin editor.
+
+  ==============================================================================
+*/
+
+#ifndef PLUGINEDITOR_H_INCLUDED
+#define PLUGINEDITOR_H_INCLUDED
+
+#include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
 #include "Audio Analysis/AnalysisModel.h"
 #include "GUI/PluginLookAndFeel.h"
@@ -43,7 +31,6 @@ enum BufferSizeValues
     NumBufferSizes
 };
 
-
 //==============================================================================
 /**
 */
@@ -55,96 +42,81 @@ class SoundAnalyserAudioProcessorEditor :   public AudioProcessorEditor,
                                             public ComboBox::Listener
 {
 public:
-    
-    //==============================================================================
-    SoundAnalyserAudioProcessorEditor (SoundAnalyserAudioProcessor* ownerFilter, ValueTree analyserTree_);
+    SoundAnalyserAudioProcessorEditor (SoundAnalyserAudioProcessor& p, ValueTree& tree);
     ~SoundAnalyserAudioProcessorEditor();
-    
+
+
     //==============================================================================
     void setValueTree (ValueTree tree);
-    
     void refreshFromTree();
-    
     void addAnalysis (ValueTree& analysisTree);
     
     //==============================================================================
     // Component
-    void paint (Graphics& g);
-    void resized();
+    void paint (Graphics&) override;
+    void resized() override;
     
     //==============================================================================
     // Button::Listener
-    void buttonClicked (Button* button);
+    void buttonClicked (Button* button) override;
     
     //==============================================================================
     // Timer
-    void timerCallback();
+    void timerCallback() override;
     
     //==============================================================================
     // ValueTree::Listener
-    void valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property);
-    void valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded);
-    void valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved, int indexFromWhichChildWasRemoved);
-    void valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved, int oldIndex, int newIndex);
-    void valueTreeParentChanged (ValueTree& treeWhoseParentHasChanged);
+    void valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property) override;
+    void valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded) override;
+    void valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved, int indexFromWhichChildWasRemoved) override;
+    void valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved, int oldIndex, int newIndex) override;
+    void valueTreeParentChanged (ValueTree& treeWhoseParentHasChanged) override;
     
     //==============================================================================
     // Label::Listener
-    void labelTextChanged (Label* labelThatHasChanged);
+    void labelTextChanged (Label* labelThatHasChanged) override;
     
     //==============================================================================
     // ComboBox::Listener
-    void comboBoxChanged (ComboBox* comboBoxThatHasChanged);
+    void comboBoxChanged (ComboBox* comboBoxThatHasChanged) override;
     
     //==============================================================================
     void textEditorTextChanged (TextEditor& textEditor);
     
 private:
     
+    SoundAnalyserAudioProcessor& processor;
+    
     int getBufferSizeFromIndex(int index);
-    
     int getIndexFromBufferSize(int bufferSize);
-    
     SoundAnalyserAudioProcessor* getProcessor() const;
+    double round(double val)
+    {
+        return floor(val + 0.5);
+    }
     
-	double round(double val)
-	{
-		return floor(val + 0.5);
-	}
-
     ValueTree analyserTree;
-    
     OwnedArray<Component> analysisComponents;
-    
     TextButton newAnalysisButton;
-    
     int plotX, plotY, plotHeight;
     
     Label analyserId;
-    
-    
     Label OSCPort;
     Label OSCPortText;
-    
     Label IPAddressValue;
     Label IPAddressText;
-    
     Label analyserIdText;
-    
-    
     Label bufferSizeText;
     Label bufferSizeValue;
-    
-    ComboBox bufferSizeComboBox;
-    
     Label pluginTitleLabel;
     Label pluginVersionLabel;
+    
+    ComboBox bufferSizeComboBox;
     
     PluginLookAndFeel pluginLookAndFeel;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SoundAnalyserAudioProcessorEditor)
-    
 };
 
 
-#endif  // __PLUGINEDITOR_H_EA17EABC__
+#endif  // PLUGINEDITOR_H_INCLUDED

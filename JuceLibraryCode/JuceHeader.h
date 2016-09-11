@@ -10,8 +10,8 @@
 
 */
 
-#ifndef __APPHEADERFILE_NGUERU__
-#define __APPHEADERFILE_NGUERU__
+#ifndef __APPHEADERFILE_PAKIFU__
+#define __APPHEADERFILE_PAKIFU__
 
 #include "AppConfig.h"
 
@@ -20,7 +20,6 @@
 #include <juce_audio_formats/juce_audio_formats.h>
 #include <juce_audio_plugin_client/juce_audio_plugin_client.h>
 #include <juce_audio_processors/juce_audio_processors.h>
-#include <juce_audio_utils/juce_audio_utils.h>
 #include <juce_core/juce_core.h>
 #include <juce_cryptography/juce_cryptography.h>
 #include <juce_data_structures/juce_data_structures.h>
@@ -44,9 +43,9 @@
 namespace ProjectInfo
 {
     const char* const  projectName    = "Sound Analyser";
-    const char* const  versionString  = "1.0.2";
-    const int          versionNumber  = 0x10002;
+    const char* const  versionString  = "1.0.3.alpha1";
+    const int          versionNumber  = 0x1000300;
 }
 #endif
 
-#endif   // __APPHEADERFILE_NGUERU__
+#endif   // __APPHEADERFILE_PAKIFU__

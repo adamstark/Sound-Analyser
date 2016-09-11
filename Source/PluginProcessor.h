@@ -1,39 +1,25 @@
-//=======================================================================
-/** @file PluginProcessor.h
- *  @brief The top level audio processing class for the Sound Analyser
- *  @author Adam Stark
- *  @copyright Copyright (C) 2014  Adam Stark
- *
- * This file is part of Sound Analyser.
- *
- * Sound Analyser is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Sound Analyser is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Sound Analyser.  If not, see <http://www.gnu.org/licenses/>.
- */
-//======================================================================
+/*
+  ==============================================================================
 
-#ifndef __PLUGINPROCESSOR_H_FF438757__
-#define __PLUGINPROCESSOR_H_FF438757__
+    This file was auto-generated!
 
+    It contains the basic framework code for a JUCE plugin processor.
+
+  ==============================================================================
+*/
+
+#ifndef PLUGINPROCESSOR_H_INCLUDED
+#define PLUGINPROCESSOR_H_INCLUDED
+
+#include "../JuceLibraryCode/JuceHeader.h"
 #include "Audio Analysis/AudioAnalysisManager.h"
 #include "Audio Analysis/AnalysisModel.h"
-#include "../JuceLibraryCode/JuceHeader.h"
-
 
 //==============================================================================
 /**
 */
-class SoundAnalyserAudioProcessor : public AudioProcessor,
-                                    public ValueTree::Listener
+class SoundAnalyserAudioProcessor  :    public AudioProcessor,
+                                        public ValueTree::Listener
 {
 public:
     //==============================================================================
@@ -41,65 +27,57 @@ public:
     ~SoundAnalyserAudioProcessor();
 
     //==============================================================================
-    void prepareToPlay (double sampleRate, int samplesPerBlock);
-    void releaseResources();
+    void prepareToPlay (double sampleRate, int samplesPerBlock) override;
+    void releaseResources() override;
 
-    void processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages);
+   #ifndef JucePlugin_PreferredChannelConfigurations
+    bool setPreferredBusArrangement (bool isInput, int bus, const AudioChannelSet& preferredSet) override;
+   #endif
 
-    //==============================================================================
-    AudioProcessorEditor* createEditor();
-    bool hasEditor() const;
-
-    //==============================================================================
-    const String getName() const;
-
-    int getNumParameters();
-
-    float getParameter (int index);
-    void setParameter (int index, float newValue);
-
-    const String getParameterName (int index);
-    const String getParameterText (int index);
-
-    const String getInputChannelName (int channelIndex) const;
-    const String getOutputChannelName (int channelIndex) const;
-    bool isInputChannelStereoPair (int index) const;
-    bool isOutputChannelStereoPair (int index) const;
-
-    bool acceptsMidi() const;
-    bool producesMidi() const;
-    bool silenceInProducesSilenceOut() const;
-    double getTailLengthSeconds() const;
+    void processBlock (AudioSampleBuffer&, MidiBuffer&) override;
 
     //==============================================================================
-    int getNumPrograms();
-    int getCurrentProgram();
-    void setCurrentProgram (int index);
-    const String getProgramName (int index);
-    void changeProgramName (int index, const String& newName);
+    AudioProcessorEditor* createEditor() override;
+    bool hasEditor() const override;
 
     //==============================================================================
-    void getStateInformation (MemoryBlock& destData);
-    void setStateInformation (const void* data, int sizeInBytes);
+    const String getName() const override;
+
+    bool acceptsMidi() const override;
+    bool producesMidi() const override;
+    double getTailLengthSeconds() const override;
+
+    //==============================================================================
+    int getNumPrograms() override;
+    int getCurrentProgram() override;
+    void setCurrentProgram (int index) override;
+    const String getProgramName (int index) override;
+    void changeProgramName (int index, const String& newName) override;
+
+    //==============================================================================
+    void getStateInformation (MemoryBlock& destData) override;
+    void setStateInformation (const void* data, int sizeInBytes) override;
+    
     
     //==============================================================================
-    void refreshFromTree();
-    
-    //==============================================================================
-    void valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property);
-    void valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded);
-    void valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved, int indexFromWhichChildWasRemoved);
-    void valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved, int oldIndex, int newIndex);
-    void valueTreeParentChanged (ValueTree& treeWhoseParentHasChanged);
+    // ValueTree::Listener
+    void valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property) override;
+    void valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded) override;
+    void valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved, int indexFromWhichChildWasRemoved) override;
+    void valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved, int oldIndex, int newIndex) override;
+    void valueTreeParentChanged (ValueTree& treeWhoseParentHasChanged) override;
     
     ValueTree analyserTree;
-    
     AudioAnalysisManager analyser;
     
 private:
     
     //==============================================================================
+    void refreshFromTree();
+    
+    //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SoundAnalyserAudioProcessor)
 };
 
-#endif  // __PLUGINPROCESSOR_H_FF438757__
+
+#endif  // PLUGINPROCESSOR_H_INCLUDED

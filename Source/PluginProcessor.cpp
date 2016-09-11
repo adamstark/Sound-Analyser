@@ -1,37 +1,23 @@
-//=======================================================================
-/** @file PluginProcessor.cpp
- *  @brief The top level audio processing class for the Sound Analyser
- *  @author Adam Stark
- *  @copyright Copyright (C) 2014  Adam Stark
- *
- * This file is part of Sound Analyser.
- *
- * Sound Analyser is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Sound Analyser is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Sound Analyser.  If not, see <http://www.gnu.org/licenses/>.
- */
-//=======================================================================
+/*
+  ==============================================================================
+
+    This file was auto-generated!
+
+    It contains the basic framework code for a JUCE plugin processor.
+
+  ==============================================================================
+*/
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
 
 //==============================================================================
-SoundAnalyserAudioProcessor::SoundAnalyserAudioProcessor() : analyserTree( AnalysisModel::createAnalyserTree()), analyser(analyserTree[AnalysisModel::Ids::BufferSize])
+SoundAnalyserAudioProcessor::SoundAnalyserAudioProcessor()
+ :  analyserTree (AnalysisModel::createAnalyserTree()),
+    analyser (analyserTree[AnalysisModel::Ids::BufferSize])
 {
-    
-    
-    analyserTree.addListener(this);
-    
+    analyserTree.addListener (this);
     refreshFromTree();
 }
 
@@ -43,21 +29,18 @@ SoundAnalyserAudioProcessor::~SoundAnalyserAudioProcessor()
 //==============================================================================
 void SoundAnalyserAudioProcessor::refreshFromTree()
 {
-    analyser.setBufferSize(analyserTree[AnalysisModel::Ids::BufferSize]);
-    
-    analyser.setOSCPort(analyserTree[AnalysisModel::Ids::Port]);
-    
-    analyser.setIPAddress(analyserTree[AnalysisModel::Ids::IPAddress].toString().toStdString());
-    
-    analyser.setAnalyserIdString(analyserTree[AnalysisModel::Ids::AnalyserId].toString().toStdString());
+    analyser.setBufferSize (analyserTree[AnalysisModel::Ids::BufferSize]);
+    analyser.setOSCPort (analyserTree[AnalysisModel::Ids::Port]);
+    analyser.setIPAddress (analyserTree[AnalysisModel::Ids::IPAddress].toString().toStdString());
+    analyser.setAnalyserIdString (analyserTree[AnalysisModel::Ids::AnalyserId].toString().toStdString());
     
     for (int i = 0;i < analyser.audioAnalyses.size();i++)
     {
-        ValueTree tree = analyserTree.getChildWithName(analyser.audioAnalyses[i]->getIdentifier());
-        
-        analyser.audioAnalyses[i]->initialise(tree);
+        ValueTree tree = analyserTree.getChildWithName (analyser.audioAnalyses[i]->getIdentifier());
+        analyser.audioAnalyses[i]->initialise (tree);
     }
 }
+
 
 //==============================================================================
 const String SoundAnalyserAudioProcessor::getName() const
@@ -65,72 +48,6 @@ const String SoundAnalyserAudioProcessor::getName() const
     return JucePlugin_Name;
 }
 
-//==============================================================================
-int SoundAnalyserAudioProcessor::getNumParameters()
-{
-    return 0;
-}
-
-//==============================================================================
-float SoundAnalyserAudioProcessor::getParameter (int index)
-{
-    switch (index)
-    {
-        default: return 0.0f;
-    }
-}
-
-//==============================================================================
-void SoundAnalyserAudioProcessor::setParameter (int index, float newValue)
-{
-    switch (index)
-    {
-        default:            break;
-    }
-}
-
-//==============================================================================
-const String SoundAnalyserAudioProcessor::getParameterName (int index)
-{
-    switch (index)
-    {
-        default:            break;
-    }
-    
-    return String::empty;
-}
-
-//==============================================================================
-const String SoundAnalyserAudioProcessor::getParameterText (int index)
-{
-    return String (getParameter (index), 2);
-}
-
-//==============================================================================
-const String SoundAnalyserAudioProcessor::getInputChannelName (int channelIndex) const
-{
-    return String (channelIndex + 1);
-}
-
-//==============================================================================
-const String SoundAnalyserAudioProcessor::getOutputChannelName (int channelIndex) const
-{
-    return String (channelIndex + 1);
-}
-
-//==============================================================================
-bool SoundAnalyserAudioProcessor::isInputChannelStereoPair (int index) const
-{
-    return true;
-}
-
-//==============================================================================
-bool SoundAnalyserAudioProcessor::isOutputChannelStereoPair (int index) const
-{
-    return true;
-}
-
-//==============================================================================
 bool SoundAnalyserAudioProcessor::acceptsMidi() const
 {
    #if JucePlugin_WantsMidiInput
@@ -140,7 +57,6 @@ bool SoundAnalyserAudioProcessor::acceptsMidi() const
    #endif
 }
 
-//==============================================================================
 bool SoundAnalyserAudioProcessor::producesMidi() const
 {
    #if JucePlugin_ProducesMidiOutput
@@ -150,42 +66,31 @@ bool SoundAnalyserAudioProcessor::producesMidi() const
    #endif
 }
 
-//==============================================================================
-bool SoundAnalyserAudioProcessor::silenceInProducesSilenceOut() const
-{
-    return false;
-}
-
-//==============================================================================
 double SoundAnalyserAudioProcessor::getTailLengthSeconds() const
 {
     return 0.0;
 }
 
-//==============================================================================
 int SoundAnalyserAudioProcessor::getNumPrograms()
 {
-    return 1;
+    return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
+                // so this should be at least 1, even if you're not really implementing programs.
 }
 
-//==============================================================================
 int SoundAnalyserAudioProcessor::getCurrentProgram()
 {
     return 0;
 }
 
-//==============================================================================
 void SoundAnalyserAudioProcessor::setCurrentProgram (int index)
 {
 }
 
-//==============================================================================
 const String SoundAnalyserAudioProcessor::getProgramName (int index)
 {
-    return String::empty;
+    return String();
 }
 
-//==============================================================================
 void SoundAnalyserAudioProcessor::changeProgramName (int index, const String& newName)
 {
 }
@@ -193,46 +98,64 @@ void SoundAnalyserAudioProcessor::changeProgramName (int index, const String& ne
 //==============================================================================
 void SoundAnalyserAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
-    
-    analyser.setSamplingFrequency((int) sampleRate);
-    analyser.setHostFrameSize(samplesPerBlock);
+    analyser.setSamplingFrequency ((int) sampleRate);
+    analyser.setHostFrameSize (samplesPerBlock);
 }
 
-//==============================================================================
 void SoundAnalyserAudioProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
 }
 
-//==============================================================================
+#ifndef JucePlugin_PreferredChannelConfigurations
+bool SoundAnalyserAudioProcessor::setPreferredBusArrangement (bool isInput, int bus, const AudioChannelSet& preferredSet)
+{
+    // Reject any bus arrangements that are not compatible with your plugin
+
+    const int numChannels = preferredSet.size();
+
+   #if JucePlugin_IsMidiEffect
+    if (numChannels != 0)
+        return false;
+   #elif JucePlugin_IsSynth
+    if (isInput || (numChannels != 1 && numChannels != 2))
+        return false;
+   #else
+    if (numChannels != 1 && numChannels != 2)
+        return false;
+
+    if (! AudioProcessor::setPreferredBusArrangement (! isInput, bus, preferredSet))
+        return false;
+   #endif
+
+    return AudioProcessor::setPreferredBusArrangement (isInput, bus, preferredSet);
+}
+#endif
+
+
 void SoundAnalyserAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    for (int channel = 0; channel < getNumInputChannels(); ++channel)
+    const int totalNumInputChannels  = getTotalNumInputChannels();
+    const int totalNumOutputChannels = getTotalNumOutputChannels();
+
+    // In case we have more outputs than inputs, this code clears any output
+    // channels that didn't contain input data, (because these aren't
+    // guaranteed to be empty - they may contain garbage).
+    // This is here to avoid people getting screaming feedback
+    // when they first compile a plugin, but obviously you don't need to keep
+    // this code if your algorithm always overwrites all the output channels.
+    for (int i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+        buffer.clear (i, 0, buffer.getNumSamples());
+
+    for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         float* channelData = buffer.getWritePointer (channel);
         
         if (channel == 0)
         {
-            analyser.analyseAudio(channelData, buffer.getNumSamples());
+            analyser.analyseAudio (channelData, buffer.getNumSamples());
         }
-
-        // ..do something to the data...
-    }
-
-    
-    
-    
-    // In case we have more outputs than inputs, we'll clear any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    for (int i = getNumInputChannels(); i < getNumOutputChannels(); ++i)
-    {
-        buffer.clear (i, 0, buffer.getNumSamples());
     }
 }
 
@@ -245,15 +168,13 @@ bool SoundAnalyserAudioProcessor::hasEditor() const
 //==============================================================================
 AudioProcessorEditor* SoundAnalyserAudioProcessor::createEditor()
 {
-    return new SoundAnalyserAudioProcessorEditor (this,analyserTree);
+    return new SoundAnalyserAudioProcessorEditor (*this, analyserTree);
 }
 
 //==============================================================================
 void SoundAnalyserAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
     ScopedPointer<XmlElement> xml = analyserTree.createXml();
-    
-    // then use this helper function to stuff it into the binary blob and return it..
     copyXmlToBinary (*xml, destData);
 }
 
@@ -261,9 +182,7 @@ void SoundAnalyserAudioProcessor::getStateInformation (MemoryBlock& destData)
 void SoundAnalyserAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     ScopedPointer<XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
-    
-    analyserTree = ValueTree::fromXml(*xmlState);
-    
+    analyserTree = ValueTree::fromXml (*xmlState);
     refreshFromTree();
 }
 
@@ -282,20 +201,20 @@ void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhose
         // analyser ID property
         if (property == AnalysisModel::Ids::AnalyserId)
         {
-            analyser.setAnalyserIdString(treeWhosePropertyHasChanged[property].toString().toStdString());
+            analyser.setAnalyserIdString (treeWhosePropertyHasChanged[property].toString().toStdString());
         }
         // buffer size property
         else if (property == AnalysisModel::Ids::BufferSize)
         {
-            analyser.setBufferSize(treeWhosePropertyHasChanged[property]);
+            analyser.setBufferSize (treeWhosePropertyHasChanged[property]);
         }
         else if (property == AnalysisModel::Ids::Port)
         {
-            analyser.setOSCPort(treeWhosePropertyHasChanged[property]);
+            analyser.setOSCPort (treeWhosePropertyHasChanged[property]);
         }
         else if (property == AnalysisModel::Ids::IPAddress)
         {
-            analyser.setIPAddress(treeWhosePropertyHasChanged[property].toString().toStdString());
+            analyser.setIPAddress (treeWhosePropertyHasChanged[property].toString().toStdString());
         }
     }
     else
@@ -305,10 +224,10 @@ void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhose
         {
             for (int i = 0;i < analyser.audioAnalyses.size();i++)
             {
-                 if (treeWhosePropertyHasChanged.getType() == analyser.audioAnalyses[i]->getIdentifier())
-                 {
-                     analyser.audioAnalyses[i]->send = treeWhosePropertyHasChanged[AnalysisProperties::send];
-                 }
+                if (treeWhosePropertyHasChanged.getType() == analyser.audioAnalyses[i]->getIdentifier())
+                {
+                    analyser.audioAnalyses[i]->send = treeWhosePropertyHasChanged[AnalysisProperties::send];
+                }
             }
         }
         // plot state changes
@@ -327,7 +246,7 @@ void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhose
                 }
             }
             
-            // clear the plot history 
+            // clear the plot history
             analyser.clearPlotHistory();
         }
         else // deal with custom properties here
@@ -336,10 +255,10 @@ void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhose
             {
                 if (treeWhosePropertyHasChanged.getType() == analyser.audioAnalyses[i]->getIdentifier())
                 {
-                    analyser.audioAnalyses[i]->handleCustomPropertyChange(treeWhosePropertyHasChanged, property);
+                    analyser.audioAnalyses[i]->handleCustomPropertyChange (treeWhosePropertyHasChanged, property);
                 }
             }
-                
+            
         }
         
         

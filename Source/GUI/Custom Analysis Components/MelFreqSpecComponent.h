@@ -24,7 +24,7 @@
 #ifndef __SoundAnalyser__MelFreqSpecComponent__
 #define __SoundAnalyser__MelFreqSpecComponent__
 
-#include "../../JuceLibraryCode/JuceHeader.h"
+#include "../../../JuceLibraryCode/JuceHeader.h"
 #include "../../Audio Analysis/AnalysisModel.h"
 #include "../SimpleAnalysisComponent.h"
 

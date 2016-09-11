@@ -1,0 +1,5 @@
+In this folder you should put a symbolic link to your JUCE folder
+
+To create the JUCE sym link:
+- change into this /Libs folder (cd <path to libs>)
+- create a sym link to your JUCE folder (ln -s <path to JUCE folder>)
