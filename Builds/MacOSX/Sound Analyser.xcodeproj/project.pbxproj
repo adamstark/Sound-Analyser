@@ -37,6 +37,7 @@
 		5EC9BCE6CA40EA548813FF69 = {isa = PBXBuildFile; fileRef = 874FD935A8FB40D27097313C; };
 		74A9CB08B68818308CE1A6CC = {isa = PBXBuildFile; fileRef = 8D4C4AA98C492B21B7A24375; };
 		1194F2A67EA1CD38ECD74642 = {isa = PBXBuildFile; fileRef = 3D63A9072078A1C818580AE6; };
+		D158A5C37BCE7E87064E0E70 = {isa = PBXBuildFile; fileRef = FC82F0A86E1ABD90C7E81A37; };
 		DC356C6387BB52D384F865E9 = {isa = PBXBuildFile; fileRef = CA3E5AC0C6E5312814439B64; };
 		84E3E7476C5A68F201246DB9 = {isa = PBXBuildFile; fileRef = 51FE57EADBAAA901A0C1027E; };
 		C4C7E7E95A5C65321096A200 = {isa = PBXBuildFile; fileRef = B69E3390DF93E1B26A6BB6BC; };
@@ -1046,6 +1047,7 @@
 		BC29C152C1A150C622C0AABE = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CAMutex.cpp; path = "../../Libs/JUCE/modules/juce_audio_plugin_client/AU/CoreAudioUtilityClasses/CAMutex.cpp"; sourceTree = "SOURCE_ROOT"; };
 		BC42604DD1B7C2A83EB8BF02 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_MidiMessage.h"; path = "../../Libs/JUCE/modules/juce_audio_basics/midi/juce_MidiMessage.h"; sourceTree = "SOURCE_ROOT"; };
 		BC4C87A5D51807DE94670B69 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "juce_mac_MessageManager.mm"; path = "../../Libs/JUCE/modules/juce_events/native/juce_mac_MessageManager.mm"; sourceTree = "SOURCE_ROOT"; };
+		BC6D2AC7DD171C1B3C310440 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WindowFunctions.h; path = ../../Source/Libraries/Gist/src/fft/WindowFunctions.h; sourceTree = "SOURCE_ROOT"; };
 		BC6FB605DAAA53E7DB664F88 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_RSAKey.cpp"; path = "../../Libs/JUCE/modules/juce_cryptography/encryption/juce_RSAKey.cpp"; sourceTree = "SOURCE_ROOT"; };
 		BC80B6904900B79AB714CAF2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "juce_audio_plugin_client_VST_utils.mm"; path = "../../Libs/JUCE/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST_utils.mm"; sourceTree = "SOURCE_ROOT"; };
 		BD4778FC1833B8702AD90A2D = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "res_books_51.h"; path = "../../Libs/JUCE/modules/juce_audio_formats/codecs/oggvorbis/libvorbis-1.3.2/lib/books/coupled/res_books_51.h"; sourceTree = "SOURCE_ROOT"; };
@@ -1406,6 +1408,7 @@
 		FC27D8553E30A6799FBBE454 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_Random.cpp"; path = "../../Libs/JUCE/modules/juce_core/maths/juce_Random.cpp"; sourceTree = "SOURCE_ROOT"; };
 		FC39CDEAE709374C646B8AC7 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_OpenGLContext.cpp"; path = "../../Libs/JUCE/modules/juce_opengl/opengl/juce_OpenGLContext.cpp"; sourceTree = "SOURCE_ROOT"; };
 		FC61C3F54FC2840D56FB44D2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_SplashScreen.cpp"; path = "../../Libs/JUCE/modules/juce_gui_extra/misc/juce_SplashScreen.cpp"; sourceTree = "SOURCE_ROOT"; };
+		FC82F0A86E1ABD90C7E81A37 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WindowFunctions.cpp; path = ../../Source/Libraries/Gist/src/fft/WindowFunctions.cpp; sourceTree = "SOURCE_ROOT"; };
 		FC9F191FC3FF96745AADFE47 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_RTAS_DigiCode1.cpp"; path = "../../Libs/JUCE/modules/juce_audio_plugin_client/RTAS/juce_RTAS_DigiCode1.cpp"; sourceTree = "SOURCE_ROOT"; };
 		FCAAD37CD5998D95F540F20C = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_MemoryInputStream.cpp"; path = "../../Libs/JUCE/modules/juce_core/streams/juce_MemoryInputStream.cpp"; sourceTree = "SOURCE_ROOT"; };
 		FD174CFB9ED5974E58832D90 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = pngrtran.c; path = "../../Libs/JUCE/modules/juce_graphics/image_formats/pnglib/pngrtran.c"; sourceTree = "SOURCE_ROOT"; };
@@ -1460,7 +1463,9 @@
 					C93073AAEB3E1EF03AEDFD03, ); name = core; sourceTree = "<group>"; };
 		13173149FBAC7C1155DD15ED = {isa = PBXGroup; children = (
 					3D63A9072078A1C818580AE6,
-					8521A2691B88EBE13977119F, ); name = fft; sourceTree = "<group>"; };
+					8521A2691B88EBE13977119F,
+					FC82F0A86E1ABD90C7E81A37,
+					BC6D2AC7DD171C1B3C310440, ); name = fft; sourceTree = "<group>"; };
 		556D4A8AF670896C86E74351 = {isa = PBXGroup; children = (
 					CA3E5AC0C6E5312814439B64,
 					0B9F1F5E3904FD063ABE695B, ); name = mfcc; sourceTree = "<group>"; };
@@ -3136,6 +3141,7 @@
 				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/Components/";
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
+				OTHER_CPLUSPLUSFLAGS = "-DUSE_ACCELERATE_FFT";
 				OTHER_LDFLAGS = "-bundle -lSound\\ Analyser";
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -d ppc64_$ppc64 -d x86_64_$x86_64 -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Versions/A/Headers -I \"$(DEVELOPER_DIR)/Extras/CoreAudio/AudioUnits/AUPublic/AUBase\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.adamstark.SoundAnalyser;
@@ -3172,6 +3178,7 @@
 				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/Components/";
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
+				OTHER_CPLUSPLUSFLAGS = "-DUSE_ACCELERATE_FFT";
 				OTHER_LDFLAGS = "-bundle -lSound\\ Analyser";
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -d ppc64_$ppc64 -d x86_64_$x86_64 -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Versions/A/Headers -I \"$(DEVELOPER_DIR)/Extras/CoreAudio/AudioUnits/AUPublic/AUBase\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.adamstark.SoundAnalyser;
@@ -3203,6 +3210,7 @@
 				HEADER_SEARCH_PATHS = ("../../JuceLibraryCode", "../../Libs/JUCE/modules", "$(inherited)");
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
+				OTHER_CPLUSPLUSFLAGS = "-DUSE_ACCELERATE_FFT";
 				PRODUCT_BUNDLE_IDENTIFIER = com.adamstark.SoundAnalyser;
 				SDKROOT_ppc = macosx10.5; }; name = Debug; };
 		B6AE9FC59B54D8A5D15DC36A = {isa = XCBuildConfiguration; buildSettings = {
@@ -3232,6 +3240,7 @@
 				HEADER_SEARCH_PATHS = ("../../JuceLibraryCode", "../../Libs/JUCE/modules", "$(inherited)");
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
+				OTHER_CPLUSPLUSFLAGS = "-DUSE_ACCELERATE_FFT";
 				PRODUCT_BUNDLE_IDENTIFIER = com.adamstark.SoundAnalyser;
 				SDKROOT_ppc = macosx10.5; }; name = Release; };
 		619D2F762C70B50A1BDD4D1D = {isa = XCBuildConfiguration; buildSettings = {
@@ -3326,6 +3335,7 @@
 					5EC9BCE6CA40EA548813FF69,
 					74A9CB08B68818308CE1A6CC,
 					1194F2A67EA1CD38ECD74642,
+					D158A5C37BCE7E87064E0E70,
 					DC356C6387BB52D384F865E9,
 					84E3E7476C5A68F201246DB9,
 					C4C7E7E95A5C65321096A200,

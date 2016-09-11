@@ -15,6 +15,7 @@
 #include "Audio Analysis/AudioAnalysisManager.h"
 #include "Audio Analysis/AnalysisModel.h"
 
+
 //==============================================================================
 /**
 */
