@@ -46,7 +46,8 @@ public:
     //==============================================================================
     void performAnalysis (std::vector<float> magnitudeSpectrum)
     {
-        mfccOutput = mfcc.melFrequencySpectrum(magnitudeSpectrum);
+        mfcc.calculateMelFrequencySpectrum (magnitudeSpectrum);
+        mfccOutput = mfcc.melSpectrum;
     }
     
     //==============================================================================

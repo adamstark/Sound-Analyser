@@ -43,7 +43,7 @@
 namespace ProjectInfo
 {
     const char* const  projectName    = "Sound Analyser";
-    const char* const  versionString  = "1.0.3.alpha1";
+    const char* const  versionString  = "1.0.3.alpha3";
     const int          versionNumber  = 0x1000300;
 }
 #endif

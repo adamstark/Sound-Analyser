@@ -253,7 +253,7 @@ void SoundAnalyserAudioProcessorEditor::resized()
     
     float titleWidth = 280;
     pluginTitleLabel.setBounds (getWidth() - titleWidth - 10, getHeight() - 60, titleWidth, 50);
-    pluginVersionLabel.setBounds (getWidth() - 50, getHeight() - 15, 40, 10);
+    pluginVersionLabel.setBounds (getWidth() - 100, getHeight() - 15, 90, 10);
 }
 
 //==============================================================================

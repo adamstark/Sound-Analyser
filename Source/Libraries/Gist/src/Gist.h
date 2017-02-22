@@ -65,6 +65,7 @@ public:
     /** Constructor
      * @param audioFrameSize the input audio frame size
      * @param fs the input audio sample rate
+     * @param windowType the type of window function to use
      */
     Gist (int audioFrameSize, int fs, WindowType windowType = HanningWindow);
 
@@ -93,7 +94,7 @@ public:
     /** Process an audio frame
      * @param audioFrame a vector containing audio samples
      */
-    void processAudioFrame (std::vector<T> audioFrame_);
+    void processAudioFrame (const std::vector<T>& audioFrame_);
 
     /** Process an audio frame
      * @param frame a pointer to an array containing the audio frame
@@ -103,7 +104,7 @@ public:
 
     /** Gist automatically calculates the magnitude spectrum when processAudioFrame() is called, this function returns it.
      @returns the current magnitude spectrum */
-    std::vector<T> getMagnitudeSpectrum();
+    const std::vector<T>& getMagnitudeSpectrum();
 
     //================= CORE TIME DOMAIN FEATURES =================
 
@@ -156,13 +157,13 @@ public:
     T pitch();
 
     //=========================== MFCCs =============================
+    
+    /** Calculates the Mel Frequency Spectrum */
+    const std::vector<T>& getMelFrequencySpectrum();
 
-    /** @Returns the Mel Frequency Spectrum */
-    std::vector<T> melFrequencySpectrum();
-
-    /** @Returns the Mel Frequency Cepstral Coefficients as a vector */
-    std::vector<T> melFrequencyCepstralCoefficients();
-
+    /** Calculates the Mel-frequency Cepstral Coefficients */
+    const std::vector<T>& getMelFrequencyCepstralCoefficients();
+    
 private:
     //=======================================================================
 
