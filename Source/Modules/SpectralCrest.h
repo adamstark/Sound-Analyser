@@ -24,7 +24,7 @@
 #ifndef _SOUNDANALYSER_SPECTRALCREST_
 #define _SOUNDANALYSER_SPECTRALCREST_
 
-#include "AudioAnalysis.h"
+#include "../Audio Analysis/AudioAnalysis.h"
 #include <cmath>
 
 class SpectralCrest : public AudioAnalysis

@@ -244,10 +244,10 @@ public:
     }
     
     /** Indicates whether the module should update the plotting vectors */
-    bool plot;
+    std::atomic<bool> plot;
     
     /** Indicates whether the module should send its result by OSC */
-    bool send;
+    std::atomic<bool> send;
     
     /** The address pattern of the audio analysis module */
     std::string addressPattern;

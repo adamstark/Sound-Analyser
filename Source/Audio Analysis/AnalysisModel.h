@@ -36,11 +36,13 @@ struct AnalysisProperties
     static const Identifier plot;               /**< The 'plot' identifier */
     static const Identifier name;               /**  The audio analysis name identifier */
     
-    struct FFT {
+    struct FFT
+    {
         static const Identifier numSamplesToSend;
     };
     
-    struct MelFrequencySpectrum {
+    struct MelFrequencySpectrum
+    {
         static const Identifier numBins;
     };
     

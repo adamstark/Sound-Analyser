@@ -25,8 +25,8 @@
 #define Sound_Analyser_SP_ChordDetector_h
 
 #include "../Audio Analysis/AudioAnalysis.h"
-#include "../Libraries/Stark-Plumbley/Chromagram.h"
-#include "../Libraries/Stark-Plumbley/ChordDetector.h"
+#include "../../Libs/Stark-Plumbley/Chromagram.h"
+#include "../../Libs/Stark-Plumbley/ChordDetector.h"
 
 class SP_ChordDetector : public AudioAnalysis
 {

@@ -26,17 +26,11 @@
 //==============================================================================
 FFTComponent::FFTComponent(ValueTree& analysisTree_) : SimpleAnalysisComponent(analysisTree_)
 {
-    setSize (580, 30);
+    numFFTSamplesText.setText ("# Samples", dontSendNotification);
+    addAndMakeVisible (&numFFTSamplesText);
     
-    numFFTSamplesText.setText("# Samples", dontSendNotification);
-    addAndMakeVisible(&numFFTSamplesText);
-    
-    numFFTSamples.setColour(Label::textColourId, Colours::black);
-    numFFTSamples.setColour(Label::ColourIds::backgroundColourId, Colours::white);
-    numFFTSamples.setColour(Label::ColourIds::outlineColourId, Colours::lightgrey);
-    numFFTSamples.setText("512", dontSendNotification);
-    numFFTSamples.setEditable(true);
-    addAndMakeVisible(&numFFTSamples);
+    numFFTSamples.setText ("512", dontSendNotification);
+    addAndMakeVisible (&numFFTSamples);
     
     numFFTSamples.addListener(this);
     

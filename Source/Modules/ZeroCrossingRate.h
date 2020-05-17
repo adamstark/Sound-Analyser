@@ -24,7 +24,7 @@
 #ifndef SoundAnalyser_ZeroCrossingRate_h
 #define SoundAnalyser_ZeroCrossingRate_h
 
-#include "AudioAnalysis.h"
+#include "../Audio Analysis/AudioAnalysis.h"
 #include <cmath>
 
 class ZeroCrossingRate : public AudioAnalysis
@@ -46,7 +46,7 @@ public:
     //==============================================================================
     void performAnalysis (std::vector<float> audioFrame)
     {
-        zcrOutputValue = tdf.zeroCrossingRate(audioFrame);
+        zcrOutputValue = tdf.zeroCrossingRate (audioFrame);
     }
     
     //==============================================================================
@@ -64,13 +64,13 @@ public:
     //==============================================================================
     Identifier getIdentifier()
     {
-        return Identifier("ZeroCrossingRate");
+        return Identifier ("ZeroCrossingRate");
     }
     
     //==============================================================================
     Identifier getCollectionIdentifier()
     {
-        return Identifier("Gist");
+        return Identifier ("Gist");
     }
     
     //==============================================================================

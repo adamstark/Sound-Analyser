@@ -24,6 +24,8 @@
 #ifndef SoundAnalyser_SpectralDifference_h
 #define SoundAnalyser_SpectralDifference_h
 
+#include "../Audio Analysis/AudioAnalysis.h"
+
 class SpectralDifference : public AudioAnalysis
 {
 public:

@@ -24,7 +24,7 @@
 #ifndef SoundAnalyser_FFTMagnitudeSpectrum_h
 #define SoundAnalyser_FFTMagnitudeSpectrum_h
 
-#include "AudioAnalysis.h"
+#include "../Audio Analysis/AudioAnalysis.h"
 #include "../GUI/Custom Analysis Components/FFTComponent.h"
 #include <cmath>
 
@@ -90,7 +90,7 @@ public:
     
     //==============================================================================
     /** overriding this as we have custom properties */
-    void handleCustomPropertyChange(ValueTree& tree, const Identifier& property)
+    void handleCustomPropertyChange (ValueTree& tree, const Identifier& property)
     {
         if (property == AnalysisProperties::FFT::numSamplesToSend)
         {
@@ -198,9 +198,7 @@ public:
 private:
     
     ValueTree magSpecTree;
-    
-    int numSamplesToSend;
-    
+    std::atomic<int> numSamplesToSend;
     std::vector<float> magnitudeSpectrumResult;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FFTMagnitudeSpectrum)

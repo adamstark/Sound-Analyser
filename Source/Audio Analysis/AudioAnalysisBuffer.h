@@ -70,7 +70,7 @@ private:
     /** Keeps a count of the number of samples collected */
     int numSamplesCollected;
     
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AudioAnalysisBuffer)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioAnalysisBuffer)
 };
 
 #endif /* defined(__SoundAnalyser__AudioBuffer__) */

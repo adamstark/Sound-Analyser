@@ -18,33 +18,17 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     processor (p),
     analyserTree (tree)
 {
-    setSize (600, 500);
-    
-    LookAndFeel::setDefaultLookAndFeel(&pluginLookAndFeel);
-
     newAnalysisButton.setButtonText ("+");
     addAndMakeVisible (&newAnalysisButton);
     newAnalysisButton.addListener (this);
     
-    OSCPort.setColour (Label::ColourIds::textColourId, Colours::black);
     OSCPort.setText (analyserTree[AnalysisModel::Ids::Port], dontSendNotification);
-    OSCPort.setEditable (true);
-    OSCPort.setColour (Label::ColourIds::backgroundColourId, Colours::white);
-    OSCPort.setColour (Label::ColourIds::outlineColourId, Colours::lightgrey);
     addAndMakeVisible (&OSCPort);
     
-    IPAddressValue.setColour (Label::ColourIds::textColourId, Colours::black);
     IPAddressValue.setText (analyserTree[AnalysisModel::Ids::Port], dontSendNotification);
-    IPAddressValue.setEditable (true);
-    IPAddressValue.setColour (Label::ColourIds::backgroundColourId, Colours::white);
-    IPAddressValue.setColour (Label::ColourIds::outlineColourId, Colours::lightgrey);
     addAndMakeVisible (&IPAddressValue);
     
-    analyserId.setColour (Label::ColourIds::textColourId, Colours::black);
     analyserId.setText (analyserTree[AnalysisModel::Ids::AnalyserId], dontSendNotification);
-    analyserId.setEditable (true);
-    analyserId.setColour (Label::ColourIds::backgroundColourId, Colours::white);
-    analyserId.setColour (Label::ColourIds::outlineColourId, Colours::lightgrey);
     addAndMakeVisible (&analyserId);
     
     pluginTitleLabel.setFont (40);
@@ -66,11 +50,7 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     bufferSizeComboBox.addItem ("2048", 6);
     bufferSizeComboBox.addItem ("4096", 7);
     
-    bufferSizeValue.setEditable (true);
     bufferSizeValue.setText (analyserTree[AnalysisModel::Ids::BufferSize].toString(), dontSendNotification);
-    bufferSizeValue.setColour (Label::ColourIds::textColourId, Colours::black);
-    bufferSizeValue.setColour (Label::ColourIds::backgroundColourId, Colours::white);
-    bufferSizeValue.setColour (Label::ColourIds::outlineColourId, Colours::lightgrey);
     addAndMakeVisible (&bufferSizeValue);
     
     bufferSizeText.setText ("Buffer Size: ", dontSendNotification);
@@ -95,8 +75,10 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     IPAddressValue.addListener (this);
     bufferSizeValue.addListener (this);
     
-    refreshFromTree();
+    setSize (600, 500);
     
+    refreshFromTree();
+
     startTimer (50);
 }
 
@@ -143,42 +125,42 @@ void SoundAnalyserAudioProcessorEditor::refreshFromTree()
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
 {
-    PluginLookAndFeel::fillWithBackgroundTexture (g);
-    g.setColour (Colour::fromRGBA (56, 61, 68,245));
-    g.fillAll (Colour::fromRGBA (34, 34, 34,245));
+    //PluginLookAndFeel::fillWithBackgroundTexture (g);
+    //g.setColour (Colour::fromRGBA (56, 61, 68,245));
+    //g.fillAll (Colour::fromRGBA (34, 34, 34,245));
+    
+    g.fillAll (findColour (PluginLookAndFeel::DarkGrey));
     
     if (processor.analyser.currentAnalysisToPlotType == FloatOutput)
     {
-        int N = processor.analyser.plotHistory.size();
+        int N = static_cast<int> (processor.analyser.plotHistory.size());
         
         int plotX = (getWidth()- N)/2;
         
-        g.fillRect(plotX, plotY, N, plotHeight);
-        
-        g.setColour (Colours::lightsteelblue);
+        g.setColour (Colours::white.withAlpha (0.3f));
+        g.fillRect (plotX, plotY, N, plotHeight);
         
         float previousValue = processor.analyser.plotHistory[0];
         
         // get the max value
         float maxValue = -10000;
-        for (int i = 0;i < N;i++)
+        for (int i = 0; i < N; i++)
         {
             if (processor.analyser.plotHistory[i] > maxValue)
-            {
                 maxValue = processor.analyser.plotHistory[i];
-            }
         }
         
+        g.setColour (findColour (PluginLookAndFeel::SeaGreen));
+        
         // do the plotting
-        for (int i = 0;i < N-1;i++)
+        for (int i = 0; i < N - 1; i++)
         {
-            float currentValue = processor.analyser.plotHistory[i+1];
+            float currentValue = processor.analyser.plotHistory[i + 1];
             
             int p1 = plotY + (plotHeight - ((previousValue / maxValue) * plotHeight));
             int p2 = plotY + (plotHeight - ((currentValue / maxValue) * plotHeight));
             
-            g.setColour (Colours::lightsteelblue);
-            g.drawLine (plotX+i,p1,plotX+i+1,p2);
+            g.drawLine (plotX + i, p1, plotX + i + 1, p2, 2);
             
             previousValue = currentValue;
         }
@@ -186,39 +168,38 @@ void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
     }
     else if (processor.analyser.currentAnalysisToPlotType == VectorOutput)
     {
-        int N = processor.analyser.vectorPlot.size();
+        int N = static_cast<int> (processor.analyser.vectorPlot.size());
         int plotWidth = 512;
         
         int plotX = (getWidth() - plotWidth) / 2;
         
-        g.fillRect(plotX,plotY, plotWidth,plotHeight);
+        g.setColour (Colours::white.withAlpha (0.3f));
+        g.fillRect (plotX, plotY, plotWidth, plotHeight);
         
-        g.setColour(Colours::greenyellow);
+        g.setColour (findColour (PluginLookAndFeel::SeaGreen));
         
         float previousValue = processor.analyser.vectorPlot[0];
         
         // get the max value
         float maxValue = -10000;
-        for (int i = 0;i < N;i++)
+        for (int i = 0; i < N; i++)
         {
             if (processor.analyser.vectorPlot[i] > maxValue)
-            {
                 maxValue = processor.analyser.vectorPlot[i];
-            }
         }
         
         // do the plotting
-        for (int i = 0;i < N-1;i++)
+        for (int i = 0; i < N - 1; i++)
         {
             float currentValue = processor.analyser.vectorPlot[i + 1];
             
             int p1 = plotY + (plotHeight - ((previousValue / maxValue) * plotHeight));
             int p2 = plotY + (plotHeight - ((currentValue / maxValue) * plotHeight));
             
-            int x1 = i*round (512.0/((double)N-1.));
-            int x2 = (i+1)*round (512.0/((double)N-1.));
+            int x1 = i * round (512.0 / static_cast<double> (N - 1));
+            int x2 = (i + 1) * round (512.0 / static_cast<double> (N - 1));
             
-            g.drawLine(plotX+x1,p1,plotX+x2,p2);
+            g.drawLine (plotX + x1, p1, plotX + x2, p2, 2);
             
             previousValue = currentValue;
         }
@@ -271,11 +252,9 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
                        "Please slect a new device from the list below",
                        AlertWindow::NoIcon);
         
-        ScopedPointer<AnalysisSelectionComponent> analysisSelector;
+        std::unique_ptr<AnalysisSelectionComponent> analysisSelector = std::make_unique<AnalysisSelectionComponent> (analyserTree, &processor.analyser);
         
-        analysisSelector = new AnalysisSelectionComponent (analyserTree, &processor.analyser);
-        
-        w.addCustomComponent(analysisSelector);
+        w.addCustomComponent (analysisSelector.get());
         
         w.addButton ("ok",     1, KeyPress (KeyPress::returnKey, 0, 0));
         w.addButton ("cancel", 0, KeyPress (KeyPress::escapeKey, 0, 0));
@@ -291,8 +270,7 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
                 AudioAnalysis *chosenAnalysis = processor.analyser.audioAnalyses[optionIndexChosen];
                 AnalysisModel::addNewAnalysis (analyserTree, chosenAnalysis->createAnalysisTree());
             }
-        }
-        
+        }  
     }
 }
 
@@ -331,9 +309,7 @@ void SoundAnalyserAudioProcessorEditor::addAnalysis(ValueTree& analysisTree)
     for (int i = 0; i < processor.analyser.audioAnalyses.size(); i++)
     {
         if (analysisTree.getType() == processor.analyser.audioAnalyses[i]->getIdentifier())
-        {
-            analysisComponents.add( processor.analyser.audioAnalyses[i]->getGUIComponent (analysisTree));
-        }
+            analysisComponents.add (processor.analyser.audioAnalyses[i]->getGUIComponent (analysisTree));
     }
     
     addChildComponent (analysisComponents.getLast());
@@ -349,7 +325,7 @@ void SoundAnalyserAudioProcessorEditor::comboBoxChanged (ComboBox* comboBoxThatH
     {
         int selectedItem = bufferSizeComboBox.getSelectedItemIndex();
         
-        AnalysisModel::setBufferSize (analyserTree,getBufferSizeFromIndex(selectedItem));
+        AnalysisModel::setBufferSize (analyserTree, getBufferSizeFromIndex (selectedItem));
     }
 }
 

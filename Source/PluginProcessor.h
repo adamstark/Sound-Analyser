@@ -14,7 +14,8 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Audio Analysis/AudioAnalysisManager.h"
 #include "Audio Analysis/AnalysisModel.h"
-
+#include "GUI/PluginLookAndFeel.h"
+#include "Utilities/TaskQueue.h"
 
 //==============================================================================
 /**
@@ -75,6 +76,12 @@ private:
     
     //==============================================================================
     void refreshFromTree();
+    
+    PluginLookAndFeel pluginLookAndFeel;
+    TaskQueue taskQueue;
+    
+    WeakReference<SoundAnalyserAudioProcessor>::Master masterReference;
+    friend class WeakReference<SoundAnalyserAudioProcessor>;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SoundAnalyserAudioProcessor)

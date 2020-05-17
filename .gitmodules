@@ -1,0 +1,3 @@
+[submodule "Libs/Gist"]
+	path = Libs/Gist
+	url = https://github.com/adamstark/Gist

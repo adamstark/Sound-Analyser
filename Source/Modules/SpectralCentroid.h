@@ -24,7 +24,7 @@
 #ifndef SoundAnalyser_SpectralCentroid_h
 #define SoundAnalyser_SpectralCentroid_h
 
-#include "AudioAnalysis.h"
+#include "../Audio Analysis/AudioAnalysis.h"
 #include <cmath>
 
 

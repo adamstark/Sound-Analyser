@@ -24,7 +24,9 @@
 #include "AnalysisSelectionComponent.h"
 
 //==============================================================================
-AnalysisSelectionComponent::AnalysisSelectionComponent(ValueTree& analyserTree_,AudioAnalysisManager *analyser_) : analyser(analyser_), analyserTree(analyserTree_)
+AnalysisSelectionComponent::AnalysisSelectionComponent (ValueTree& tree, AudioAnalysisManager* a)
+ :  analyser (a),
+    analyserTree (tree)
 {
     setSize(500,300);
     
@@ -118,7 +120,7 @@ void AnalysisSelectionComponent::fillSelectionLists()
     // -----------------------------------------
     //analysisItems.resize(collections.size());
     
-    for (int i = 0;i < collections.size();i++)
+    for (int i = 0; i < collections.size(); i++)
     {
         Array<AnalysisItem> items;
         

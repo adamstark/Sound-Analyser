@@ -27,6 +27,7 @@
 #include "../../../JuceLibraryCode/JuceHeader.h"
 #include "../../Audio Analysis/AnalysisModel.h"
 #include "../SimpleAnalysisComponent.h"
+#include "../EditableLabel.h"
 
 class FFTComponent : public SimpleAnalysisComponent, public Label::Listener {
     
@@ -44,7 +45,7 @@ public:
 private:
     
     Label numFFTSamplesText;
-    Label numFFTSamples;
+    EditableLabel numFFTSamples;
     
     //======================================================================//
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FFTComponent)

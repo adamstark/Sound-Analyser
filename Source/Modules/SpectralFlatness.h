@@ -24,7 +24,7 @@
 #ifndef _SOUNDANALYSER_SPECTRALFLATNESS_
 #define _SOUNDANALYSER_SPECTRALFLATNESS_
 
-#include "AudioAnalysis.h"
+#include "../Audio Analysis/AudioAnalysis.h"
 #include <cmath>
 
 class SpectralFlatness : public AudioAnalysis

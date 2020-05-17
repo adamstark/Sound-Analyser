@@ -22,33 +22,39 @@
 //=======================================================================
 
 #include "AudioAnalysisManager.h"
-#include "../Libraries/speex/include/speex/speex_resampler.h"
+#include "../../Libs/speex/include/speex/speex_resampler.h"
 
 //==============================================================================
 AudioAnalysisManager::AudioAnalysisManager (int bufferSize_)
  :  bufferSize (bufferSize_),
     audioBuffer (bufferSize),
     gist (bufferSize, DEFAULT_SAMPLING_FREQUENCY),
-    port(8000),
+    port (8000),
     ipAddress ("127.0.0.1")
 {
-    setBufferSize(bufferSize);
+    setBufferSize (bufferSize);
     
     // this function adds all algorithms that the plug-in will have access to
     addAudioAnalysisAlgorithms();
     
     currentAnalysisToPlotType = FloatOutput;
     
-    setAnalyserIdString("1");
+    setAnalyserIdString ("1");
 
     vectorPlot.resize (512);
     plotHistory.resize (512);
     
     for (int i = 0; i < 512; i++)
     {
-        plotHistory[i] = 0;
-        vectorPlot[i] = 0;
+        plotHistory[i] = 0.f;
+        vectorPlot[i] = 0.f;
     }
+}
+
+//==============================================================================
+AudioAnalysisManager::~AudioAnalysisManager()
+{
+    masterReference.clear();
 }
 
 //==============================================================================
@@ -90,27 +96,20 @@ void AudioAnalysisManager::analyseAudio (float* buffer,int numSamples)
         {
             if (audioAnalyses[i]->send || audioAnalyses[i]->plot)
             {
-                if (audioAnalyses[i]->getOutputType() == FloatOutput)
-                {
+                if (audioAnalyses[i]->getInputType() == AudioBufferInput)
+                    audioAnalyses[i]->performAnalysis (audioBuffer.buffer);
+                else if (audioAnalyses[i]->getInputType() == MagnitudeSpectrumInput)
+                    audioAnalyses[i]->performAnalysis (gist.getMagnitudeSpectrum());
                 
-                    float output = 0.0;
-                    
-                    if (audioAnalyses[i]->getInputType() == AudioBufferInput)
+                if (audioAnalyses[i]->resultReady())
+                {
+                    if (audioAnalyses[i]->getOutputType() == FloatOutput)
                     {
-                        audioAnalyses[i]->performAnalysis (audioBuffer.buffer);
-                    }
-                    else if (audioAnalyses[i]->getInputType() == MagnitudeSpectrumInput)
-                    {
-                        audioAnalyses[i]->performAnalysis (gist.getMagnitudeSpectrum());
-                    }
-
-                    
-                    if (audioAnalyses[i]->resultReady())
-                    {
-                        output = audioAnalyses[i]->getAnalysisResultAsFloat();
-                        
+                        float output = audioAnalyses[i]->getAnalysisResultAsFloat();
+                            
                         if (audioAnalyses[i]->send)
                         {
+                            const ScopedLock sl (lock);
                             OSCMessage m (OSCAddressPattern (audioAnalyses[i]->addressPattern));
                             m.addFloat32 (output);
                             osc.send (m);
@@ -118,120 +117,91 @@ void AudioAnalysisManager::analyseAudio (float* buffer,int numSamples)
                         
                         if (audioAnalyses[i]->plot)
                         {
-                            updatePlotHistory(output);
+                            MessageManager::callAsync ([w = WeakReference<AudioAnalysisManager> (this), output]()
+                            {
+                                if (! w.wasObjectDeleted())
+                                    w->updatePlotHistory (output);
+                            });
                         }
-                        
                     }
-                }
-                else if (audioAnalyses[i]->getOutputType() == VectorOutput)
-                {
-                    std::vector<float> output;
-                    
-                    if (audioAnalyses[i]->getInputType() == AudioBufferInput)
+                    else if (audioAnalyses[i]->getOutputType() == VectorOutput)
                     {
-                       audioAnalyses[i]->performAnalysis (audioBuffer.buffer);
-                    }
-                    else if (audioAnalyses[i]->getInputType() == MagnitudeSpectrumInput)
-                    {
-                        audioAnalyses[i]->performAnalysis(gist.getMagnitudeSpectrum());
-                    }
-                    else
-                    {
-                        // failsafe!
-                        output.resize(1);
-                        output[0] = 0.0;
-                    }
-                    
-                    if (audioAnalyses[i]->resultReady())
-                    {
-                        output = audioAnalyses[i]->getAnalysisResultAsVector();
-                        
+                        std::vector<float> output = audioAnalyses[i]->getAnalysisResultAsVector();
+                            
                         if (audioAnalyses[i]->send)
                         {
+                            const ScopedLock sl (lock);
                             OSCMessage m (OSCAddressPattern (audioAnalyses[i]->addressPattern));
                             
-                            for (int i = 0;i < output.size();i++)
-                            {
+                            for (int i = 0; i < output.size(); i++)
                                 m.addFloat32 (output[i]);
-                            }
                             
                             osc.send (m);
                         }
 
                         if (audioAnalyses[i]->plot)
                         {
-                            updateVectorPlot (output);
+                            MessageManager::callAsync ([w = WeakReference<AudioAnalysisManager> (this), output]()
+                            {
+                                w->updateVectorPlot (output);
+                            });
                         }
                     }
                 }
-                
-                
             }
         }
     }
-    
 }
 
 //==============================================================================
 void AudioAnalysisManager::updatePlotHistory (float newSample)
 {
-    int N = plotHistory.size();
+    JUCE_ASSERT_MESSAGE_THREAD;
     
-    for (int i = 0; i < N-1;i++)
-    {
-        plotHistory[i] = plotHistory[i+1];
-    }
+    int N = static_cast<int> (plotHistory.size());
     
-    plotHistory[N-1] = newSample;
+    for (int i = 0; i < N - 1; i++)
+        plotHistory[i] = plotHistory[i + 1];
+    
+    plotHistory[N - 1] = newSample;
 }
 
 //==============================================================================
 void AudioAnalysisManager::clearPlotHistory()
 {
-    int N = plotHistory.size();
+    JUCE_ASSERT_MESSAGE_THREAD;
+    
+    int N = static_cast<int> (plotHistory.size());
     
     for (int i = 0; i < N;i++)
-    {
         plotHistory[i] = 0;
-    }
 }
 
 //==============================================================================
 void AudioAnalysisManager::setAnalyserIdString (std::string analyserId)
 {
-    std::string idWithSlash("/");
-    
+    std::string idWithSlash ("/");
     idWithSlash = idWithSlash.append (analyserId);
-    
     for (int i = 0; i < audioAnalyses.size(); i++)
-    {
         audioAnalyses[i]->buildAddressPatternFromId (idWithSlash);
-    }
 }
 
 //==============================================================================
-void AudioAnalysisManager::setBufferSize(int bufferSize_)
+void AudioAnalysisManager::setBufferSize (int b)
 {
-    // store the buffer size
-    bufferSize = bufferSize_;
+    bufferSize = b;
     
-    // initialise the audio buffer
     audioBuffer.setBufferSize (bufferSize);
-    
     gist.setAudioFrameSize (bufferSize);
     
-    // -----------------------------------------------
-    // now for some analysis specific initialisations
-    
     for (int i = 0; i < audioAnalyses.size(); i++)
-    {
         audioAnalyses[i]->setInputAudioFrameSize (bufferSize);
-    }
 }
 
 //==============================================================================
 void AudioAnalysisManager::setOSCPort (int oscPort)
 {
+    const ScopedLock sl (lock);
     port = oscPort;
     osc.connect (ipAddress, port);
 }
@@ -239,6 +209,7 @@ void AudioAnalysisManager::setOSCPort (int oscPort)
 //==============================================================================
 void AudioAnalysisManager::setIPAddress (std::string remoteHostIPAddress)
 {
+    const ScopedLock sl (lock);
     ipAddress = remoteHostIPAddress;
     osc.connect (ipAddress, port);
 }
@@ -247,9 +218,7 @@ void AudioAnalysisManager::setIPAddress (std::string remoteHostIPAddress)
 void AudioAnalysisManager::setSamplingFrequency (int fs)
 {
     for (int i = 0; i < audioAnalyses.size(); i++)
-    {
         audioAnalyses[i]->setSamplingFrequency (fs);
-    }
 }
 
 //==============================================================================
@@ -269,7 +238,7 @@ std::vector<float> AudioAnalysisManager::resamplePlot (std::vector<float> v)
     float* outF;
     outF = new float[v.size()];
     
-    for (int i = 0;i < v.size();i++)
+    for (int i = 0; i < v.size(); i++)
     {
         inF[i] = (float) v[i];
     }
@@ -302,22 +271,21 @@ std::vector<float> AudioAnalysisManager::resamplePlot (std::vector<float> v)
 //==============================================================================
 void AudioAnalysisManager::updateVectorPlot (std::vector<float> v)
 {
+    JUCE_ASSERT_MESSAGE_THREAD
+    
     // if the vector is less than or equal to the
     // length of our plot window then we can just
     // use it as is
     if (v.size() <= 512)
     {
-        vectorPlot.resize(v.size());
+        vectorPlot.resize (v.size());
         
-        for (int i = 0;i < v.size();i++)
-        {
+        for (int i = 0; i < v.size(); i++)
             vectorPlot[i] = v[i];
-        }
     }
     else // otherwise, we have to downsample
     {
-        vectorPlot.resize(512);
-        
-        vectorPlot = resamplePlot(v);
+        vectorPlot.resize (512);
+        vectorPlot = resamplePlot (v);
     }
 }

@@ -27,14 +27,15 @@
 #include "../../../JuceLibraryCode/JuceHeader.h"
 #include "../../Audio Analysis/AnalysisModel.h"
 #include "../SimpleAnalysisComponent.h"
+#include "../EditableLabel.h"
 
 class MelFreqSpecComponent : public SimpleAnalysisComponent, public Label::Listener {
     
 public:
-    MelFreqSpecComponent(ValueTree& analysisTree_);
+    MelFreqSpecComponent (ValueTree& analysisTree);
     
     //==============================================================================
-    void customComponentPropertyChange(ValueTree& treeWhosePropertyHasChanged, const Identifier& property);
+    void customComponentPropertyChange (ValueTree& treeWhosePropertyHasChanged, const Identifier& property);
     void customComponentResized();
     void customComponentRefreshFromTree();
 
@@ -44,7 +45,7 @@ public:
 private:
     
     Label numMelBinsText;
-    Label numMelBins;
+    EditableLabel numMelBins;
     
     //======================================================================//
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MelFreqSpecComponent)

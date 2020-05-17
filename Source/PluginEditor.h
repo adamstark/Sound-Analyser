@@ -17,7 +17,7 @@
 #include "GUI/PluginLookAndFeel.h"
 #include "GUI/SimpleAnalysisComponent.h"
 #include "GUI/AnalysisSelectionComponent.h"
-#include "../JuceLibraryCode/JuceHeader.h"
+#include "GUI/EditableLabel.h"
 
 //==============================================================================
 enum BufferSizeValues
@@ -102,21 +102,18 @@ private:
     OwnedArray<Component> analysisComponents;
     TextButton newAnalysisButton;
     int plotX, plotY, plotHeight;
-    
-    Label analyserId;
-    Label OSCPort;
+
+    Label pluginTitleLabel;
+    Label pluginVersionLabel;
     Label OSCPortText;
-    Label IPAddressValue;
     Label IPAddressText;
     Label analyserIdText;
     Label bufferSizeText;
-    Label bufferSizeValue;
-    Label pluginTitleLabel;
-    Label pluginVersionLabel;
-    
+    EditableLabel IPAddressValue;
+    EditableLabel analyserId;
+    EditableLabel OSCPort;
+    EditableLabel bufferSizeValue;
     ComboBox bufferSizeComboBox;
-    
-    PluginLookAndFeel pluginLookAndFeel;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SoundAnalyserAudioProcessorEditor)
 };

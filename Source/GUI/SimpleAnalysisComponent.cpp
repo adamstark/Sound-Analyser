@@ -30,11 +30,8 @@ SimpleAnalysisComponent::SimpleAnalysisComponent(ValueTree& analysisTree_) : ana
 
     setSize (580, 30);
     
-    
-    
     String name = analysisTree[AnalysisProperties::name];
     analysisName.setText(name, dontSendNotification);
-    analysisName.setFont(Font(16));
     addAndMakeVisible(&analysisName);
     
     sendButton.setButtonText("Send");

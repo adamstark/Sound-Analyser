@@ -24,7 +24,7 @@
 #ifndef __SoundAnalyser__PeakEnergy__
 #define __SoundAnalyser__PeakEnergy__
 
-#include "AudioAnalysis.h"
+#include "../Audio Analysis/AudioAnalysis.h"
 #include <cmath>
 
 class PeakEnergy : public AudioAnalysis

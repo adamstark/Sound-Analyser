@@ -25,7 +25,7 @@
 #define _SOUNDANALYSER_AUDIOANALYSISMANAGER_
 
 //=======================================================================
-#include "../Libraries/Gist/src/Gist.h"
+#include "../../Libs/Gist/src/Gist.h"
 #include "AudioAnalysisBuffer.h"
 #include "AudioAnalysis.h"
 
@@ -55,18 +55,26 @@
 //=======================================================================
 /** A class to manage audio input and all audio analysis modules
  */
-class AudioAnalysisManager {
+class AudioAnalysisManager
+{
 
 public:
-    /** Constructor */
-    AudioAnalysisManager (int bufferSize_);
     
+    //=======================================================================
+    /** Constructor */
+    AudioAnalysisManager (int bufferSize);
+    
+    /** Destructor */
+    ~AudioAnalysisManager();
+    
+    //=======================================================================
     /** Passes the audio buffer through a number of analysis algorithms
      * @param buffer the audio buffer containing the audio samples
      * @param numSamples the number of audio samples in the buffer
      */
     void analyseAudio (float* buffer, int numSamples);
 
+    //=======================================================================
     /** Sets the analyser Id string, which will be prepended to all
      * OSC messages
      * @param analyserId the analyser Id
@@ -78,7 +86,7 @@ public:
      * use an AudioBuffer object to manage audio buffer sizes
      * @param bufferSize_ the new audio buffer size to use
      */
-    void setBufferSize (int bufferSize_);
+    void setBufferSize (int bufferSize);
     
     /** Sets the network port to be used for sending OSC messages
      * @param oscPort the port to send OSC messages to
@@ -100,6 +108,7 @@ public:
      */
     void setHostFrameSize (int frameSize);
     
+    //=======================================================================
     /** Resets the plotHistory to zeros */
     void clearPlotHistory();
     
@@ -107,7 +116,7 @@ public:
     OwnedArray<AudioAnalysis> audioAnalyses;
     
     /** The current audio analysis plot type */
-    OutputType currentAnalysisToPlotType;
+    std::atomic<OutputType> currentAnalysisToPlotType;
     
     /** A vector containing time domain data to be plotted in the plug-in GUI */
     std::vector<float> plotHistory;
@@ -148,6 +157,12 @@ private:
     
     /** The remote host IP address to send to */
     String ipAddress;
+    
+    /** Lock for updating osc object */
+    CriticalSection lock;
+    
+    WeakReference<AudioAnalysisManager>::Master masterReference;
+    friend class WeakReference<AudioAnalysisManager>;
     
     //=======================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioAnalysisManager)

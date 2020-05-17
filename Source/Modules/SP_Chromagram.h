@@ -24,8 +24,8 @@
 #ifndef Sound_Analyser_SP_Chromagram_h
 #define Sound_Analyser_SP_Chromagram_h
 
-#include "AudioAnalysis.h"
-#include "../Libraries/Stark-Plumbley/Chromagram.h"
+#include "../Audio Analysis/AudioAnalysis.h"
+#include "../../Libs/Stark-Plumbley/Chromagram.h"
 
 class SP_Chromagram : public AudioAnalysis 
 {
@@ -60,13 +60,10 @@ public:
     std::vector<float> getAnalysisResultAsVector()
     {
         std::vector<double> chromagram = chroma.getChromagram();
-        
-        std::vector<float> chromaFloat(12);
+        std::vector<float> chromaFloat (12);
         
         for (int i = 0;i < 12;i++)
-        {
             chromaFloat[i] = (float) chromagram[i];
-        }
         
         return chromaFloat;
     }

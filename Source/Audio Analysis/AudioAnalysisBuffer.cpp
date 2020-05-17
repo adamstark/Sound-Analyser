@@ -25,26 +25,24 @@
 
 //==============================================================================
 AudioAnalysisBuffer::AudioAnalysisBuffer (int bufferSize_)
- :  bufferReady(false),
-    numSamplesCollected(0)
+ :  bufferReady (false),
+    numSamplesCollected (0)
 {
 
 }
 
 //==============================================================================
-void AudioAnalysisBuffer::setBufferSize (int bufferSize_)
+void AudioAnalysisBuffer::setBufferSize (int b)
 {
     // initialise buffer length
-    bufferSize = bufferSize_;
+    bufferSize = b;
     
     // resize the buffer vector to hold the right number of samples
     buffer.resize (bufferSize);
     
     // initialise the buffer to zeros
     for (int i = 0; i < bufferSize; i++)
-    {
         buffer[i] = 0.0;
-    }
 }
 
 //==============================================================================
@@ -58,9 +56,7 @@ void AudioAnalysisBuffer::addNewSamplesToBuffer (float* samples, int numSamples)
     {
         // shift back existing audio samples
         for (int k = 0; k < (bufferSize - numSamples); k++)
-        {
-            buffer[k] = buffer[k+numSamples];
-        }
+            buffer[k] = buffer[k + numSamples];
         
         // now copy the new samples to the remaining part of the buffer
         int j = 0;
@@ -82,9 +78,7 @@ void AudioAnalysisBuffer::addNewSamplesToBuffer (float* samples, int numSamples)
     {
         // in this case, we will copy the most recent samples to the buffer
         for (int k = 0; k < bufferSize; k++)
-        {
-            buffer[k] = samples[numSamples-bufferSize+k];
-        }
+            buffer[k] = samples[numSamples - bufferSize + k];
         
         bufferReady = true;
     }

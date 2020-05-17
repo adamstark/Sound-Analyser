@@ -4,38 +4,25 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Sound Analyser (AU).xcscheme</key>
+		<key>Sound Analyser - AU.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
-		<key>Sound Analyser (All).xcscheme</key>
+		<key>Sound Analyser - All.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>Sound Analyser (Shared Code).xcscheme</key>
+		<key>Sound Analyser - Shared Code.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>Sound Analyser - Standalone Plugin.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>2</integer>
-		</dict>
-	</dict>
-	<key>SuppressBuildableAutocreation</key>
-	<dict>
-		<key>5F52355BD8291B40EDE60884</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>8CBC6694A419B101D2DBE51D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E78C41C1451837162EDE313B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
 		</dict>
 	</dict>
 </dict>
