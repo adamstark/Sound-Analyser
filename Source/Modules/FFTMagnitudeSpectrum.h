@@ -52,22 +52,16 @@ public:
         
         if (magnitudeSpectrumResult.size() <= magnitudeSpectrum.size())
         {
-            for (int i = 0;i < magnitudeSpectrumResult.size();i++)
-            {
+            for (int i = 0; i < magnitudeSpectrumResult.size(); i++)
                 magnitudeSpectrumResult[i] = magnitudeSpectrum[i];
-            }
         }
         else // <--- THIS SHOULDN'T HAPPEN
         {
-            for (int i = 0;i < magnitudeSpectrum.size();i++)
-            {
+            for (size_t i = 0; i < magnitudeSpectrum.size(); i++)
                 magnitudeSpectrumResult[i] = magnitudeSpectrum[i];
-            }
             
-            for (int i = magnitudeSpectrum.size();i < magnitudeSpectrumResult.size();i++)
-            {
+            for (size_t i = magnitudeSpectrum.size(); i < magnitudeSpectrumResult.size(); i++)
                 magnitudeSpectrumResult[i] = 0.0;
-            }
         }
     }
     
