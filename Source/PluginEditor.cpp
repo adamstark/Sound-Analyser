@@ -31,11 +31,11 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     analyserId.setText (analyserTree[AnalysisModel::Ids::AnalyserId], dontSendNotification);
     addAndMakeVisible (&analyserId);
     
-    pluginTitleLabel.setFont (40);
+    pluginTitleLabel.setFont (FontOptions (40));
     pluginTitleLabel.setText ("Sound Analyser", dontSendNotification);
     addAndMakeVisible (&pluginTitleLabel);
     
-    pluginVersionLabel.setFont (Font(10));
+    pluginVersionLabel.setFont (FontOptions (10));
     pluginVersionLabel.setText (JucePlugin_VersionString , dontSendNotification);
     pluginVersionLabel.setColour (Label::ColourIds::textColourId, Colours::lightgrey);
     addAndMakeVisible (pluginVersionLabel);

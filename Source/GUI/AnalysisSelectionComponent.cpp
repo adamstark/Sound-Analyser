@@ -36,39 +36,39 @@ AnalysisSelectionComponent::AnalysisSelectionComponent (ValueTree& tree, AudioAn
     addAndMakeVisible(&collectionList);
     addAndMakeVisible(&analysisList);
     
-    Font f (14,Font::bold);
+    Font f (FontOptions (14, Font::bold));
     analysisNameLabel.setFont(f);
     
-    technicalDescriptionText.setFont(12);
-    simpleDescriptionText.setFont(12);
+    technicalDescriptionText.setFont (FontOptions (12));
+    simpleDescriptionText.setFont (FontOptions (12));
     
-    technicalDescriptionText.setMinimumHorizontalScale(1.0);
-    simpleDescriptionText.setMinimumHorizontalScale(1.0);
+    technicalDescriptionText.setMinimumHorizontalScale (1.0);
+    simpleDescriptionText.setMinimumHorizontalScale (1.0);
     
-    simpleDescriptionText.setJustificationType(Justification::topLeft);
-    technicalDescriptionText.setJustificationType(Justification::topLeft);
+    simpleDescriptionText.setJustificationType (Justification::topLeft);
+    technicalDescriptionText.setJustificationType (Justification::topLeft);
     
     addressPatternLabel.setText("Address Pattern:", dontSendNotification);
-    addressPatternLabel.setFont(Font(11,Font::bold));
+    addressPatternLabel.setFont (FontOptions (11, Font::bold));
     
     authorNameLabel.setText("Written by:", dontSendNotification);
-    authorNameLabel.setFont(Font(11,Font::bold));
+    authorNameLabel.setFont (FontOptions (11, Font::bold));
     
     technicalDescriptionLabel.setText("Technical Description:", dontSendNotification);
-    technicalDescriptionLabel.setFont(Font(11,Font::bold));
+    technicalDescriptionLabel.setFont (FontOptions (11, Font::bold));
     
     simpleDescriptionLabel.setText("Simple Description:", dontSendNotification);
-    simpleDescriptionLabel.setFont(Font(11,Font::bold));
+    simpleDescriptionLabel.setFont (FontOptions (11, Font::bold));
     
     collectionLabel.setText("Collection:", dontSendNotification);
-    collectionLabel.setFont(Font(11,Font::bold));
+    collectionLabel.setFont (FontOptions (11, Font::bold));
     
-    authorNameText.setFont(Font(11));
-    addressPatternText.setFont(Font(11));
-    technicalDescriptionText.setFont(Font(11));
-    simpleDescriptionText.setFont(Font(11));
+    authorNameText.setFont (FontOptions (11));
+    addressPatternText.setFont (FontOptions (11));
+    technicalDescriptionText.setFont (FontOptions (11));
+    simpleDescriptionText.setFont (FontOptions (11));
 
-    collectionText.setFont(Font(10,Font::italic));
+    collectionText.setFont (FontOptions (10, Font::italic));
     
     addAndMakeVisible(&analysisNameLabel);
     
