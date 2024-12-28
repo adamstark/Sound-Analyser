@@ -125,10 +125,6 @@ void SoundAnalyserAudioProcessorEditor::refreshFromTree()
 //==============================================================================
 void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
 {
-    //PluginLookAndFeel::fillWithBackgroundTexture (g);
-    //g.setColour (Colour::fromRGBA (56, 61, 68,245));
-    //g.fillAll (Colour::fromRGBA (34, 34, 34,245));
-    
     g.fillAll (findColour (PluginLookAndFeel::DarkGrey));
     
     if (processor.analyser.currentAnalysisToPlotType == FloatOutput)
@@ -140,6 +136,8 @@ void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
         g.setColour (Colours::white.withAlpha (0.3f));
         g.fillRect (plotX, plotY, N, plotHeight);
         
+        float latestValue = processor.analyser.plotHistory[N - 1];
+        
         float previousValue = processor.analyser.plotHistory[0];
         
         // get the max value
@@ -150,6 +148,20 @@ void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
                 maxValue = processor.analyser.plotHistory[i];
         }
         
+        float referenceValue = powf (10.f, round (log10 (maxValue)));
+        
+        while (referenceValue > maxValue * 0.7)
+            referenceValue = referenceValue / 2.f;
+        
+        int referenceY = plotY + (plotHeight - ((referenceValue / maxValue) * plotHeight));
+        
+        if (isPositiveAndBelow (referenceY, plotY + plotHeight))
+        {
+            g.setColour (Colours::white.withAlpha (0.4f));
+            g.drawLine (plotX, referenceY, plotX + N, referenceY, 1.f);
+            g.drawText (String (referenceValue, 3), plotX + 10, referenceY - 20, 90, g.getCurrentFont().getHeight(), Justification::left);
+        }
+                
         g.setColour (findColour (PluginLookAndFeel::SeaGreen));
         
         // do the plotting
@@ -165,6 +177,13 @@ void SoundAnalyserAudioProcessorEditor::paint (Graphics& g)
             previousValue = currentValue;
         }
         
+        g.setColour (Colours::white);
+        Rectangle<int> valueBounds (plotX + N - 100, plotY + 5, 95, g.getCurrentFont().getHeight());
+        g.drawText (String (latestValue, 4), valueBounds, Justification::right);
+        
+        g.setColour (Colours::white.withAlpha (0.4f));
+        Rectangle<int> peakValueBounds (plotX + 10, plotY + 5, 95, g.getCurrentFont().getHeight());
+        g.drawText ("Peak: " + String (maxValue, 4), peakValueBounds, Justification::left);
     }
     else if (processor.analyser.currentAnalysisToPlotType == VectorOutput)
     {
@@ -229,12 +248,12 @@ void SoundAnalyserAudioProcessorEditor::resized()
     OSCPortText.setBounds (getWidth()-260, 10, 40, 20);
     OSCPort.setBounds (getWidth()-210, 10, 40, 20);
     
-    analyserIdText.setBounds (getWidth()-170, 10, 80, 20);
-    analyserId.setBounds (getWidth()-80, 10, 70, 20);
+    analyserIdText.setBounds (getWidth() - 170, 10, 80, 20);
+    analyserId.setBounds (getWidth() - 80, 10, 70, 20);
     
-    float titleWidth = 280;
+    float titleWidth = 230;
     pluginTitleLabel.setBounds (getWidth() - titleWidth - 10, getHeight() - 60, titleWidth, 50);
-    pluginVersionLabel.setBounds (getWidth() - 100, getHeight() - 15, 90, 10);
+    pluginVersionLabel.setBounds (getWidth() - 60, getHeight() - 15, 50, 10);
 }
 
 //==============================================================================
@@ -259,7 +278,6 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
         w.addButton ("ok",     1, KeyPress (KeyPress::returnKey, 0, 0));
         w.addButton ("cancel", 0, KeyPress (KeyPress::escapeKey, 0, 0));
         w.setColour (AlertWindow::ColourIds::backgroundColourId, Colours::lightgrey);
-        
         
         if (w.runModalLoop() != 0) // if they picked 'ok'
         {
@@ -304,7 +322,7 @@ void SoundAnalyserAudioProcessorEditor::textEditorTextChanged (TextEditor& textE
 }
 
 //==============================================================================
-void SoundAnalyserAudioProcessorEditor::addAnalysis(ValueTree& analysisTree)
+void SoundAnalyserAudioProcessorEditor::addAnalysis (ValueTree& analysisTree)
 {
     for (int i = 0; i < processor.analyser.audioAnalyses.size(); i++)
     {
@@ -314,7 +332,6 @@ void SoundAnalyserAudioProcessorEditor::addAnalysis(ValueTree& analysisTree)
     
     addChildComponent (analysisComponents.getLast());
     analysisComponents.getLast()->setVisible (true);
-    
     resized();
 }
 
