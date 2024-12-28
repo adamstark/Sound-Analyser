@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="pakifU" name="Sound Analyser" projectType="audioplug" version="1.0.3.alpha3"
+<JUCERPROJECT id="pakifU" name="Sound Analyser" projectType="audioplug" version="1.0.4"
               bundleIdentifier="com.adamstark.SoundAnalyser" includeBinaryInAppConfig="1"
               buildVST="0" buildVST3="0" buildAU="1" buildAUv3="0" buildRTAS="0"
               buildAAX="0" pluginName="Sound Analyser" pluginDesc="Sound Analyser"
@@ -9,9 +9,9 @@
               pluginProducesMidiOut="0" pluginIsMidiEffectPlugin="0" pluginEditorRequiresKeys="1"
               pluginAUExportPrefix="SoundAnalyserAU" pluginRTASCategory=""
               aaxIdentifier="com.yourcompany.SoundAnalyser" pluginAAXCategory="2"
-              jucerVersion="5.4.7" companyName="Adam Stark" companyWebsite="http://www.adamstark.co.uk"
+              companyName="Adam Stark" companyWebsite="http://www.adamstark.co.uk"
               pluginFormats="buildAU,buildStandalone" pluginCharacteristicsValue="pluginEditorRequiresKeys"
-              buildStandalone="1" enableIAA="0">
+              buildStandalone="1" enableIAA="0" jucerFormatVersion="1">
   <MAINGROUP id="audbiQ" name="Sound Analyser">
     <GROUP id="{2C82B68B-A1AE-2FA3-9BD8-19FA171B2009}" name="Fonts">
       <GROUP id="{1CC893E0-6416-02A0-BB8C-1EFB0F760392}" name="Lato">
@@ -195,7 +195,8 @@
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
-    <XCODE_MAC targetFolder="Builds/MacOSX" extraCompilerFlags="-DUSE_ACCELERATE_FFT">
+    <XCODE_MAC targetFolder="Builds/MacOSX" extraCompilerFlags="-DUSE_ACCELERATE_FFT"
+               extraDefs="JUCE_MODAL_LOOPS_PERMITTED=1">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Sound Analyser"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="Sound Analyser"/>
