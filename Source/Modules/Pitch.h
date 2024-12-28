@@ -21,8 +21,7 @@
  */
 //=======================================================================
 
-#ifndef SoundAnalyser_PitchYin_h
-#define SoundAnalyser_PitchYin_h
+#pragma once
 
 #include "../Audio Analysis/AudioAnalysis.h"
 
@@ -129,5 +128,3 @@ private:
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pitch)
 };
-
-#endif

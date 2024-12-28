@@ -21,8 +21,7 @@
  */
 //=======================================================================
 
-#ifndef __Sound_Analyser__MelFrequencySpectrum__
-#define __Sound_Analyser__MelFrequencySpectrum__
+#pragma once
 
 #include "../Audio Analysis/AudioAnalysis.h"
 #include "../GUI/Custom Analysis Components/MelFreqSpecComponent.h"
@@ -79,7 +78,7 @@ public:
         numBins = analysisTree[AnalysisProperties::MelFrequencySpectrum::numBins];
         
         // set the number of coefficients in the mfcc object
-        mfcc.setNumCoefficients(numBins);
+        mfcc.setNumCoefficients (numBins);
     }
     
     //==============================================================================
@@ -90,7 +89,7 @@ public:
         {
             numBins = tree[property];
             
-            mfcc.setNumCoefficients(numBins);
+            mfcc.setNumCoefficients (numBins);
         }
     }
     
@@ -98,14 +97,14 @@ public:
     /** overriding this as we have custom parameters */
     virtual ValueTree createAnalysisTree()
     {
-        ValueTree tree(getIdentifier());
+        ValueTree tree (getIdentifier());
         
-        tree.setProperty(AnalysisProperties::send, 0, nullptr);
-        tree.setProperty(AnalysisProperties::plot, 0, nullptr);
-        tree.setProperty(AnalysisProperties::name, getName(), nullptr);
+        tree.setProperty (AnalysisProperties::send, 0, nullptr);
+        tree.setProperty (AnalysisProperties::plot, 0, nullptr);
+        tree.setProperty (AnalysisProperties::name, getName(), nullptr);
         
         // extra properties for Mel Frequency Spectrum
-        tree.setProperty(AnalysisProperties::MelFrequencySpectrum::numBins, 13, nullptr);
+        tree.setProperty (AnalysisProperties::MelFrequencySpectrum::numBins, 13, nullptr);
         
         return tree;
     }
@@ -180,5 +179,3 @@ private:
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MelFrequencySpectrum)
 };
-
-#endif /* defined(__Sound_Analyser__MelFrequencySpectrum__) */

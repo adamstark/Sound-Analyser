@@ -21,8 +21,7 @@
  */
 //=======================================================================
 
-#ifndef _SOUNDANALYSER_SPECTRALCREST_
-#define _SOUNDANALYSER_SPECTRALCREST_
+#pragma once
 
 #include "../Audio Analysis/AudioAnalysis.h"
 #include <cmath>
@@ -117,5 +116,3 @@ private:
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SpectralCrest)
 };
-
-#endif

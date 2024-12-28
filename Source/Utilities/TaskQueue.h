@@ -20,8 +20,7 @@
  */
 //=======================================================================
 
-#ifndef TaskQueue_h
-#define TaskQueue_h
+#pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -81,6 +80,3 @@ private:
     AbstractFifo abstractFifo;
     std::unique_ptr<std::function<void()>> buffer [QUEUE_SIZE];
 };
-
-
-#endif /* TaskQueue_h */

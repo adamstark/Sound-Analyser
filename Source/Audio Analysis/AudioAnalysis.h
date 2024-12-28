@@ -21,8 +21,7 @@
  */
 //=======================================================================
 
-#ifndef _SOUNDANALYSER_AUDIOANALYSIS_
-#define _SOUNDANALYSER_AUDIOANALYSIS_
+#pragma once
 
 #include <vector>
 #include <string>
@@ -159,7 +158,6 @@ public:
         return v;
     }
 
-    
     /** Indicates whether the audio analysis result is ready to be returned from one of the 'get' functions
         (e.g. getAnalysisResultAsFloat() ). By default this always returns true, but if you want to implement
         an audio analysis module which doesn't return a result from every buffer then you can override this
@@ -253,5 +251,3 @@ public:
     std::string addressPattern;
    
 };
-
-#endif /* defined(__SoundAnalyser__Analysis__) */

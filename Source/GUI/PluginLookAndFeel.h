@@ -21,8 +21,7 @@
  */
 //=======================================================================
 
-#ifndef __SoundAnalyser__PluginLookAndFeel__
-#define __SoundAnalyser__PluginLookAndFeel__
+#pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -126,6 +125,3 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginLookAndFeel)
     
 };
-
-
-#endif /* defined(__SoundAnalyser__PluginLookAndFeel__) */

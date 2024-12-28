@@ -41,7 +41,7 @@ MelFreqSpecComponent::MelFreqSpecComponent (ValueTree& tree)
 
 
 //==============================================================================
-void MelFreqSpecComponent::customComponentPropertyChange(ValueTree& treeWhosePropertyHasChanged, const Identifier& property)
+void MelFreqSpecComponent::customComponentPropertyChange (ValueTree& treeWhosePropertyHasChanged, const Identifier& property)
 {
     if (property == AnalysisProperties::MelFrequencySpectrum::numBins)
         numMelBins.setText(treeWhosePropertyHasChanged[property], dontSendNotification);

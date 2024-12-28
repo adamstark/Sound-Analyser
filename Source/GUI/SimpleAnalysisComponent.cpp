@@ -25,7 +25,8 @@
 #include "SimpleAnalysisComponent.h"
 
 //==============================================================================
-SimpleAnalysisComponent::SimpleAnalysisComponent(ValueTree& analysisTree_) : analysisTree(analysisTree_)
+SimpleAnalysisComponent::SimpleAnalysisComponent (ValueTree& tree)
+ :  analysisTree (tree)
 {
 
     setSize (580, 30);
@@ -82,9 +83,9 @@ void SimpleAnalysisComponent::resized()
 
 
 //==============================================================================
-void SimpleAnalysisComponent::paint(Graphics& g)
+void SimpleAnalysisComponent::paint (Graphics& g)
 {
-   // g.fillAll(Colours::silver);
+   
 }
 
 //==============================================================================

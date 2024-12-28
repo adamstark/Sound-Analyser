@@ -22,8 +22,7 @@
  */
 //=======================================================================
 
-#ifndef _SOUNDANALYSER_SIMPLEANALYSISCOMPONENT_
-#define _SOUNDANALYSER_SIMPLEANALYSISCOMPONENT_
+#pragma once
 
 #include "../Audio Analysis/AnalysisModel.h"
 #include "../../JuceLibraryCode/JuceHeader.h"
@@ -79,12 +78,9 @@ private:
     Label analysisName;
     TextButton sendButton;
     TextButton plotButton;
-    
     TextButton removeButton;
     
     //======================================================================//
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleAnalysisComponent)
     //======================================================================//
 };
-
-#endif /* defined(__Gluver__MappingComponent__) */

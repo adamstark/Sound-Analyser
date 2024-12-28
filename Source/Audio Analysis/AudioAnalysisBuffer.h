@@ -21,8 +21,7 @@
  */
 //=======================================================================
 
-#ifndef _SOUNDANALYSER_AUDIOBUFFER_
-#define _SOUNDANALYSER_AUDIOBUFFER_
+#pragma once
 
 #include <vector>
 #include "../../JuceLibraryCode/JuceHeader.h"
@@ -37,18 +36,18 @@ class AudioAnalysisBuffer {
     
 public:
     /** Constructor */
-    AudioAnalysisBuffer (int bufferSize_);
+    AudioAnalysisBuffer (int bufferSize);
     
     /** Adds a number of new audio samples to the audio buffer
      * @param samples a pointer to an array containing the samples to add to the buffer
      * @param numSamples the number of samples in the array
      */
-    void addNewSamplesToBuffer (float*samples, int numSamples);
+    void addNewSamplesToBuffer (float* samples, int numSamples);
     
     /** Sets the buffer size
-     * @param bufferSize_ the new buffer size
+     * @param bufferSize the new buffer size
      */
-    void setBufferSize (int bufferSize_);
+    void setBufferSize (int bufferSize);
     
     /** @returns the buffer size */
     int getBufferSize();
@@ -72,5 +71,3 @@ private:
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioAnalysisBuffer)
 };
-
-#endif /* defined(__SoundAnalyser__AudioBuffer__) */

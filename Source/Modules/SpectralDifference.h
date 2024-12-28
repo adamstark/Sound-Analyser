@@ -21,8 +21,7 @@
  */
 //=======================================================================
 
-#ifndef SoundAnalyser_SpectralDifference_h
-#define SoundAnalyser_SpectralDifference_h
+#pragma once
 
 #include "../Audio Analysis/AudioAnalysis.h"
 
@@ -31,7 +30,9 @@ class SpectralDifference : public AudioAnalysis
 public:
     
     //==============================================================================
-    SpectralDifference(int frameSize) : spectralDifferenceOutputValue(0.0), odf(frameSize)
+    SpectralDifference (int frameSize)
+     :  spectralDifferenceOutputValue (0.0),
+        odf (frameSize)
     {
 
     }
@@ -116,5 +117,3 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SpectralDifference)
 
 };
-
-#endif

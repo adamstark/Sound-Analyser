@@ -24,7 +24,8 @@
 #include "FFTComponent.h"
 
 //==============================================================================
-FFTComponent::FFTComponent(ValueTree& analysisTree_) : SimpleAnalysisComponent(analysisTree_)
+FFTComponent::FFTComponent (ValueTree& analysisTree_)
+ :  SimpleAnalysisComponent (analysisTree_)
 {
     numFFTSamplesText.setText ("# Samples", dontSendNotification);
     addAndMakeVisible (&numFFTSamplesText);

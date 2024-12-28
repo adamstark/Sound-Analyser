@@ -21,15 +21,16 @@
  */
 //=======================================================================
 
-#ifndef __SoundAnalyser__MelFreqSpecComponent__
-#define __SoundAnalyser__MelFreqSpecComponent__
+#pragma once
 
 #include "../../../JuceLibraryCode/JuceHeader.h"
 #include "../../Audio Analysis/AnalysisModel.h"
 #include "../SimpleAnalysisComponent.h"
 #include "../EditableLabel.h"
 
-class MelFreqSpecComponent : public SimpleAnalysisComponent, public Label::Listener {
+class MelFreqSpecComponent :    public SimpleAnalysisComponent,
+                                public Label::Listener
+{
     
 public:
     MelFreqSpecComponent (ValueTree& analysisTree);
@@ -51,5 +52,3 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MelFreqSpecComponent)
     //======================================================================//
 };
-
-#endif /* defined(__SoundAnalyser__MelFreqSpecComponent__) */

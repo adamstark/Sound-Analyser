@@ -21,8 +21,7 @@
  */
 //=======================================================================
 
-#ifndef Sound_Analyser_SP_Chromagram_h
-#define Sound_Analyser_SP_Chromagram_h
+#pragma once
 
 #include "../Audio Analysis/AudioAnalysis.h"
 #include "../../Libs/Stark-Plumbley/Chromagram.h"
@@ -147,5 +146,3 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SP_Chromagram)
 };
 
-
-#endif

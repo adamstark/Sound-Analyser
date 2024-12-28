@@ -21,8 +21,7 @@
  */
 //=======================================================================
 
-#ifndef __SoundAnalyser__PeakEnergy__
-#define __SoundAnalyser__PeakEnergy__
+#pragma once
 
 #include "../Audio Analysis/AudioAnalysis.h"
 #include <cmath>
@@ -117,5 +116,3 @@ private:
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PeakEnergy)
 };
-
-#endif /* defined(__SoundAnalyser__PeakEnergy__) */

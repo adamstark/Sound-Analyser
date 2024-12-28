@@ -1,4 +1,5 @@
 //=======================================================================
+//=======================================================================
 /** @file AudioAnalysisManager.cpp
  *  @brief A class to manage audio input and all audio analysis modules
  *  @author Adam Stark
@@ -243,7 +244,7 @@ std::vector<float> AudioAnalysisManager::resamplePlot (std::vector<float> v)
         inF[i] = (float) v[i];
     }
     
-    SpeexResamplerState *resampler;
+    SpeexResamplerState* resampler;
     
     int err = 0;
     

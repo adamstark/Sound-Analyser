@@ -21,8 +21,7 @@
  */
 //=======================================================================
 
-#ifndef __Sound_Analyser__AnalysisSelectionComponent__
-#define __Sound_Analyser__AnalysisSelectionComponent__
+#pragma once
 
 #include "../Audio Analysis/AudioAnalysisManager.h"
 #include "../../JuceLibraryCode/JuceHeader.h"
@@ -93,5 +92,3 @@ private:
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AnalysisSelectionComponent)
 };
-
-#endif /* defined(__Sound_Analyser__AnalysisSelectionComponent__) */

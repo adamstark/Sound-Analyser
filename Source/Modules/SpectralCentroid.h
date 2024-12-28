@@ -21,13 +21,10 @@
  */
 //=======================================================================
 
-#ifndef SoundAnalyser_SpectralCentroid_h
-#define SoundAnalyser_SpectralCentroid_h
+#pragma once
 
 #include "../Audio Analysis/AudioAnalysis.h"
 #include <cmath>
-
-
 
 class SpectralCentroid : public AudioAnalysis
 {
@@ -119,5 +116,3 @@ private:
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SpectralCentroid)
 };
-
-#endif

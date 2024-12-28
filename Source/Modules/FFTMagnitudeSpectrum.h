@@ -21,8 +21,7 @@
  */
 //=======================================================================
 
-#ifndef SoundAnalyser_FFTMagnitudeSpectrum_h
-#define SoundAnalyser_FFTMagnitudeSpectrum_h
+#pragma once
 
 #include "../Audio Analysis/AudioAnalysis.h"
 #include "../GUI/Custom Analysis Components/FFTComponent.h"
@@ -197,5 +196,3 @@ private:
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FFTMagnitudeSpectrum)
 };
-
-#endif

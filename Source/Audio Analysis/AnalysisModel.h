@@ -21,8 +21,7 @@
  */
 //=======================================================================
 
-#ifndef _SOUNDANALYSER_ANALYSISMODEL_
-#define _SOUNDANALYSER_ANALYSISMODEL_
+#pragma once
 
 #define DEFAULT_BUFFER_SIZE 1024
 #define DEFAULT_OSC_PORT 8000
@@ -50,7 +49,8 @@ struct AnalysisProperties
 
 //======================================================================
 /** Defines the core structure and properties of the Sound Analyser plug-in */
-class AnalysisModel {
+class AnalysisModel
+{
     
 public:
     
@@ -79,7 +79,7 @@ public:
      * @param analyserTree the main application tree
      * @param bufferSize the new buffer size
      */
-    static void setBufferSize (ValueTree analyserTree,int bufferSize);
+    static void setBufferSize (ValueTree analyserTree, int bufferSize);
     
     /** Holds the current host frame size */
     static int currentHostFrameSize;
@@ -106,5 +106,3 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AnalysisModel);
     //======================================================================//
 };
-
-#endif /* defined(__SoundAnalyser__AnalysisModel__) */

@@ -24,11 +24,11 @@
 #include "AudioAnalysisBuffer.h"
 
 //==============================================================================
-AudioAnalysisBuffer::AudioAnalysisBuffer (int bufferSize_)
+AudioAnalysisBuffer::AudioAnalysisBuffer (int b)
  :  bufferReady (false),
     numSamplesCollected (0)
 {
-
+    setBufferSize (b);
 }
 
 //==============================================================================

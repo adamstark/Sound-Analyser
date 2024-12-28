@@ -21,13 +21,14 @@
  */
 //=======================================================================
 
-#ifndef __Sound_Analyser__ItemListComponent__
-#define __Sound_Analyser__ItemListComponent__
+#pragma once
 
 #include "../../JuceLibraryCode/JuceHeader.h"
 #include "../Audio Analysis/AnalysisModel.h"
 
-class ItemListComponent : public ListBox, ListBoxModel, public ChangeBroadcaster
+class ItemListComponent :   public ListBox,
+                            public ListBoxModel,
+                            public ChangeBroadcaster
 {
 public:
     
@@ -47,7 +48,5 @@ private:
     
     StringArray listItems;
     
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ItemListComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ItemListComponent)
 };
-
-#endif /* defined(__Sound_Analyser__ItemListComponent__) */

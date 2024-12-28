@@ -21,8 +21,7 @@
  */
 //=======================================================================
 
-#ifndef __SoundAnalyser__FFTComponent__
-#define __SoundAnalyser__FFTComponent__
+#pragma once
 
 #include "../../../JuceLibraryCode/JuceHeader.h"
 #include "../../Audio Analysis/AnalysisModel.h"
@@ -51,5 +50,3 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FFTComponent)
     //======================================================================//
 };
-
-#endif /* defined(__SoundAnalyser__FFTComponent__) */

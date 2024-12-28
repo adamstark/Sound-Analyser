@@ -24,10 +24,9 @@
 #include "ItemListComponent.h"
 
 //==============================================================================
-ItemListComponent::ItemListComponent() : ListBox ("d+d source", 0)
+ItemListComponent::ItemListComponent()
 {
-    setModel(this);
-    
+    setModel (this);
     updateContent();
 }
 
@@ -38,7 +37,7 @@ int ItemListComponent::getNumRows()
 }
 
 //==============================================================================
-void ItemListComponent::setContentList(StringArray list)
+void ItemListComponent::setContentList (StringArray list)
 {
     listItems = list;
     
@@ -57,11 +56,11 @@ void ItemListComponent::paintListBoxItem (int rowNumber, Graphics& g, int width,
 {
     if (rowIsSelected)
     {
-        g.fillAll(Colours::lightblue);
+        g.fillAll (Colours::lightblue);
     }
     
-    g.setFont(12);
-    g.drawFittedText(listItems[rowNumber], 5, 0, width-5, height, Justification::centredLeft, 1);
+    g.setFont (12);
+    g.drawFittedText (listItems[rowNumber], 5, 0, width-5, height, Justification::centredLeft, 1);
     
 }
 

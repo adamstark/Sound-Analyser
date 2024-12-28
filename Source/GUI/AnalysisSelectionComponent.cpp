@@ -36,7 +36,7 @@ AnalysisSelectionComponent::AnalysisSelectionComponent (ValueTree& tree, AudioAn
     addAndMakeVisible(&collectionList);
     addAndMakeVisible(&analysisList);
     
-    Font f(14,Font::bold);
+    Font f (14,Font::bold);
     analysisNameLabel.setFont(f);
     
     technicalDescriptionText.setFont(12);

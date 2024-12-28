@@ -21,8 +21,7 @@
  */
 //=======================================================================
 
-#ifndef SoundAnalyser_ZeroCrossingRate_h
-#define SoundAnalyser_ZeroCrossingRate_h
+#pragma once
 
 #include "../Audio Analysis/AudioAnalysis.h"
 #include <cmath>
@@ -116,6 +115,3 @@ private:
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ZeroCrossingRate)
 };
-
-
-#endif

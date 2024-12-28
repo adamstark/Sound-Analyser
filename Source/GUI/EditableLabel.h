@@ -6,8 +6,7 @@
 //  Copyright © 2020 Adam Stark. All rights reserved.
 //
 
-#ifndef EditableLabel_h
-#define EditableLabel_h
+#pragma once
 
 #include <JuceHeader.h>
 
@@ -16,5 +15,3 @@ class EditableLabel :   public Label
 public:
     EditableLabel();
 };
-
-#endif /* EditableLabel_h */

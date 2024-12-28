@@ -21,8 +21,7 @@
  */
 //=======================================================================
 
-#ifndef _SOUNDANALYSER_AUDIOANALYSISMANAGER_
-#define _SOUNDANALYSER_AUDIOANALYSISMANAGER_
+#pragma once
 
 //=======================================================================
 #include "../../Libs/Gist/src/Gist.h"
@@ -168,5 +167,3 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioAnalysisManager)
     //=======================================================================
 };
-
-#endif /* defined(__SoundAnalyser__AudioAnalysisManager__) */
