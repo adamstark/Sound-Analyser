@@ -32,7 +32,7 @@ class SP_ChordDetector : public AudioAnalysis
 public:
     
     //==============================================================================
-    SP_ChordDetector(int frameSize,int samplingFrequency) : chroma(frameSize,samplingFrequency)
+    SP_ChordDetector(int frameSize, int samplingFrequency) : chroma(frameSize,samplingFrequency)
     {
 
     }

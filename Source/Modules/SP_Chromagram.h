@@ -31,7 +31,7 @@ class SP_Chromagram : public AudioAnalysis
 public:
     
     //==============================================================================
-    SP_Chromagram(int frameSize,int samplingFrequency) : chroma(frameSize,samplingFrequency)
+    SP_Chromagram(int frameSize, int samplingFrequency) : chroma(frameSize,samplingFrequency)
     {
 
     }

@@ -84,7 +84,7 @@ void AudioAnalysisManager::addAudioAnalysisAlgorithms()
 }
 
 //==============================================================================
-void AudioAnalysisManager::analyseAudio (float* buffer,int numSamples)
+void AudioAnalysisManager::analyseAudio (float* buffer, int numSamples)
 {
     // add new audio frame to our larger buffer
     audioBuffer.addNewSamplesToBuffer (buffer,numSamples);

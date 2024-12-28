@@ -28,32 +28,27 @@
 SimpleAnalysisComponent::SimpleAnalysisComponent (ValueTree& tree)
  :  analysisTree (tree)
 {
-
     setSize (580, 30);
     
     String name = analysisTree[AnalysisProperties::name];
-    analysisName.setText(name, dontSendNotification);
-    addAndMakeVisible(&analysisName);
+    analysisName.setText (name, dontSendNotification);
+    addAndMakeVisible (&analysisName);
     
-    sendButton.setButtonText("Send");
-    //sendButton.setColour(TextButton::ColourIds::buttonOnColourId, Colours::blueviolet);
-    //sendButton.setColour(TextButton::ColourIds::buttonColourId, Colours::silver);
-    sendButton.setToggleState(false, dontSendNotification);
-    addAndMakeVisible(&sendButton);
+    sendButton.setButtonText ("Send");
+    sendButton.setToggleState (false, dontSendNotification);
+    addAndMakeVisible (&sendButton);
     
     plotButton.setButtonText("Plot");
-    //plotButton.setColour(TextButton::ColourIds::buttonOnColourId, Colours::yellowgreen);
-    //plotButton.setColour(TextButton::ColourIds::buttonColourId, Colours::silver);
-    plotButton.setToggleState(false, dontSendNotification);
-    addAndMakeVisible(&plotButton);
+    plotButton.setToggleState (false, dontSendNotification);
+    addAndMakeVisible (&plotButton);
     
-    removeButton.setButtonText("x");
-    addAndMakeVisible(&removeButton);
+    removeButton.setButtonText ("x");
+    addAndMakeVisible (&removeButton);
     
-    analysisTree.addListener(this);
-    sendButton.addListener(this);
-    plotButton.addListener(this);
-    removeButton.addListener(this);
+    analysisTree.addListener (this);
+    sendButton.addListener (this);
+    plotButton.addListener (this);
+    removeButton.addListener (this);
         
     refreshFromTree();
 }
@@ -61,7 +56,7 @@ SimpleAnalysisComponent::SimpleAnalysisComponent (ValueTree& tree)
 //==============================================================================
 void SimpleAnalysisComponent::refreshFromTree()
 {
-    sendButton.setToggleState(analysisTree[AnalysisProperties::send],dontSendNotification);
+    sendButton.setToggleState(analysisTree[AnalysisProperties::send], dontSendNotification);
     plotButton.setToggleState(analysisTree[AnalysisProperties::plot], dontSendNotification);
     
     customComponentRefreshFromTree();
@@ -72,11 +67,11 @@ void SimpleAnalysisComponent::refreshFromTree()
 //==============================================================================
 void SimpleAnalysisComponent::resized()
 {
-    removeButton.setBounds(0,0,20,20);
-    analysisName.setBounds(30,0,300,20);
+    removeButton.setBounds (0,0,20,20);
+    analysisName.setBounds (30,0,300,20);
     
-    sendButton.setBounds(280,0,40,20);
-    plotButton.setBounds(340, 0, 40, 20);
+    sendButton.setBounds (280,0,40,20);
+    plotButton.setBounds (340, 0, 40, 20);
 
     customComponentResized();
 }
@@ -97,11 +92,11 @@ void SimpleAnalysisComponent::buttonClicked (Button* button)
         
         if (state == true)
         {
-            analysisTree.setProperty(AnalysisProperties::send, 0, nullptr);
+            analysisTree.setProperty (AnalysisProperties::send, 0, nullptr);
         }
         else
         {
-            analysisTree.setProperty(AnalysisProperties::send, 1, nullptr);
+            analysisTree.setProperty (AnalysisProperties::send, 1, nullptr);
         }
     }
     else if (button == &plotButton)
@@ -110,12 +105,12 @@ void SimpleAnalysisComponent::buttonClicked (Button* button)
         
         if (state == true)
         {
-            analysisTree.setProperty(AnalysisProperties::plot, 0, nullptr);
+            analysisTree.setProperty (AnalysisProperties::plot, 0, nullptr);
         }
         else
         {
-            AnalysisModel::turnOffAllPlotting(analysisTree.getParent());
-            analysisTree.setProperty(AnalysisProperties::plot, 1, nullptr);
+            AnalysisModel::turnOffAllPlotting (analysisTree.getParent());
+            analysisTree.setProperty (AnalysisProperties::plot, 1, nullptr);
         }
     }
     else if (button == &removeButton)
@@ -131,11 +126,11 @@ void SimpleAnalysisComponent::valueTreePropertyChanged (ValueTree& treeWhoseProp
     {
         if (property == AnalysisProperties::send)
         {
-            sendButton.setToggleState(analysisTree[AnalysisProperties::send],dontSendNotification);
+            sendButton.setToggleState (analysisTree[AnalysisProperties::send], dontSendNotification);
         }
         else if (property == AnalysisProperties::plot)
         {
-            plotButton.setToggleState(analysisTree[AnalysisProperties::plot], dontSendNotification);
+            plotButton.setToggleState (analysisTree[AnalysisProperties::plot], dontSendNotification);
         }
         
         customComponentPropertyChange(treeWhosePropertyHasChanged,property);
@@ -157,7 +152,7 @@ void SimpleAnalysisComponent::valueTreeChildRemoved (ValueTree& parentTree, Valu
 }
 
 //==============================================================================
-void SimpleAnalysisComponent::valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved,int oldIndex, int newIndex)
+void SimpleAnalysisComponent::valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved, int oldIndex, int newIndex)
 {
 
 }

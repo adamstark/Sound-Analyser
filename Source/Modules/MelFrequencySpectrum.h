@@ -31,7 +31,7 @@ class MelFrequencySpectrum : public AudioAnalysis
 public:
     
     //==============================================================================
-    MelFrequencySpectrum (int frameSize,int samplingFrequency) : mfcc (frameSize,samplingFrequency)
+    MelFrequencySpectrum (int frameSize, int samplingFrequency) : mfcc (frameSize,samplingFrequency)
     {
         numBins = 13;
     }

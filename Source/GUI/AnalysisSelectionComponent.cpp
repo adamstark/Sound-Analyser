@@ -210,8 +210,8 @@ void AnalysisSelectionComponent::changeListenerCallback (ChangeBroadcaster* sour
         analysisNameLabel.setText(name, dontSendNotification);
         authorNameText.setText(author, dontSendNotification);
         addressPatternText.setText(addressPattern, dontSendNotification);
-        simpleDescriptionText.setText(simpleDes,dontSendNotification);
-        technicalDescriptionText.setText(technicalDes,dontSendNotification);
+        simpleDescriptionText.setText(simpleDes, dontSendNotification);
+        technicalDescriptionText.setText(technicalDes, dontSendNotification);
         collectionText.setText(currentCollectionName, dontSendNotification);
     }
     else if (source == &collectionList)
