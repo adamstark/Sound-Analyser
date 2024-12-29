@@ -273,11 +273,12 @@ void SoundAnalyserAudioProcessorEditor::buttonClicked (Button* button)
         
         std::unique_ptr<AnalysisSelectionComponent> analysisSelector = std::make_unique<AnalysisSelectionComponent> (analyserTree, &processor.analyser);
         
-        w.addCustomComponent (analysisSelector.get());
+        w.setColour (AlertWindow::ColourIds::textColourId, Colours::white);
+        w.setColour (AlertWindow::ColourIds::backgroundColourId, findColour (PluginLookAndFeel::DarkGrey));
         
+        w.addCustomComponent (analysisSelector.get());
         w.addButton ("ok",     1, KeyPress (KeyPress::returnKey, 0, 0));
         w.addButton ("cancel", 0, KeyPress (KeyPress::escapeKey, 0, 0));
-        w.setColour (AlertWindow::ColourIds::backgroundColourId, Colours::lightgrey);
         
         if (w.runModalLoop() != 0) // if they picked 'ok'
         {
