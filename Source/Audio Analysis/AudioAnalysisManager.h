@@ -28,9 +28,6 @@
 #include "AudioAnalysisBuffer.h"
 #include "AudioAnalysis.h"
 
-
-
-
 //=======================================================================
 // import all audio analysis modules
 #include "../Modules/RMS.h"
@@ -45,9 +42,6 @@
 #include "../Modules/MelFrequencySpectrum.h"
 #include "../Modules/SP_Chromagram.h"
 #include "../Modules/SP_ChordDetector.h"
-
-//=======================================================================
-#include "../JuceLibraryCode/JuceHeader.h"
 
 #define DEFAULT_SAMPLING_FREQUENCY 44100
 

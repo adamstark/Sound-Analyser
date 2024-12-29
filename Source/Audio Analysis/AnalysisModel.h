@@ -26,7 +26,7 @@
 #define DEFAULT_BUFFER_SIZE 1024
 #define DEFAULT_OSC_PORT 8000
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include <JuceHeader.h>
 
 //======================================================================
 struct AnalysisProperties

@@ -25,7 +25,6 @@
 #pragma once
 
 #include "../Audio Analysis/AnalysisModel.h"
-#include "../../JuceLibraryCode/JuceHeader.h"
 
 /** A generic GUI component for AudioAnalysis modules. 
  

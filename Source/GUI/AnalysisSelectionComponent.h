@@ -24,7 +24,6 @@
 #pragma once
 
 #include "../Audio Analysis/AudioAnalysisManager.h"
-#include "../../JuceLibraryCode/JuceHeader.h"
 #include "ItemListComponent.h"
 
 

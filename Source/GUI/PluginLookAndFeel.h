@@ -23,7 +23,7 @@
 
 #pragma once
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include <JuceHeader.h>
 
 class PluginLookAndFeel : public LookAndFeel_V3
 {

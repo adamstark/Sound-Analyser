@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include <JuceHeader.h>
 
 #define QUEUE_SIZE 2048
 

@@ -23,7 +23,6 @@
 
 #pragma once
 
-#include "../../../JuceLibraryCode/JuceHeader.h"
 #include "../../Audio Analysis/AnalysisModel.h"
 #include "../SimpleAnalysisComponent.h"
 #include "../EditableLabel.h"

@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include <JuceHeader.h>
 #include "Audio Analysis/AudioAnalysisManager.h"
 #include "Audio Analysis/AnalysisModel.h"
 #include "GUI/PluginLookAndFeel.h"

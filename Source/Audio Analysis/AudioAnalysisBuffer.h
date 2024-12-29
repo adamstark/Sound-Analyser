@@ -24,7 +24,7 @@
 #pragma once
 
 #include <vector>
-#include "../../JuceLibraryCode/JuceHeader.h"
+#include <JuceHeader.h>
 
 //=======================================================================
 /** A class to manage an audio buffer, which may be different to the host
