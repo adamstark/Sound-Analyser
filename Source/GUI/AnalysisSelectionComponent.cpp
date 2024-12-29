@@ -22,19 +22,20 @@
 //=======================================================================
 
 #include "AnalysisSelectionComponent.h"
+#include "PluginLookAndFeel.h"
 
 //==============================================================================
 AnalysisSelectionComponent::AnalysisSelectionComponent (ValueTree& tree, AudioAnalysisManager* a)
  :  analyser (a),
     analyserTree (tree)
 {
-    setSize(500,300);
+    setSize (500,300);
     
-    collectionList.addChangeListener(this);
-    analysisList.addChangeListener(this);
+    collectionList.addChangeListener (this);
+    analysisList.addChangeListener (this);
     
-    addAndMakeVisible(&collectionList);
-    addAndMakeVisible(&analysisList);
+    addAndMakeVisible (&collectionList);
+    addAndMakeVisible (&analysisList);
     
     Font f (FontOptions (14, Font::bold));
     analysisNameLabel.setFont(f);
@@ -48,19 +49,19 @@ AnalysisSelectionComponent::AnalysisSelectionComponent (ValueTree& tree, AudioAn
     simpleDescriptionText.setJustificationType (Justification::topLeft);
     technicalDescriptionText.setJustificationType (Justification::topLeft);
     
-    addressPatternLabel.setText("Address Pattern:", dontSendNotification);
+    addressPatternLabel.setText ("Address Pattern:", dontSendNotification);
     addressPatternLabel.setFont (FontOptions (11, Font::bold));
     
-    authorNameLabel.setText("Written by:", dontSendNotification);
+    authorNameLabel.setText ("Written by:", dontSendNotification);
     authorNameLabel.setFont (FontOptions (11, Font::bold));
     
-    technicalDescriptionLabel.setText("Technical Description:", dontSendNotification);
+    technicalDescriptionLabel.setText ("Technical Description:", dontSendNotification);
     technicalDescriptionLabel.setFont (FontOptions (11, Font::bold));
     
-    simpleDescriptionLabel.setText("Simple Description:", dontSendNotification);
+    simpleDescriptionLabel.setText ("Simple Description:", dontSendNotification);
     simpleDescriptionLabel.setFont (FontOptions (11, Font::bold));
     
-    collectionLabel.setText("Collection:", dontSendNotification);
+    collectionLabel.setText ("Collection:", dontSendNotification);
     collectionLabel.setFont (FontOptions (11, Font::bold));
     
     authorNameText.setFont (FontOptions (11));
@@ -70,19 +71,19 @@ AnalysisSelectionComponent::AnalysisSelectionComponent (ValueTree& tree, AudioAn
 
     collectionText.setFont (FontOptions (10, Font::italic));
     
-    addAndMakeVisible(&analysisNameLabel);
+    addAndMakeVisible (&analysisNameLabel);
     
-    addAndMakeVisible(&authorNameLabel);
-    addAndMakeVisible(&addressPatternLabel);
-    addAndMakeVisible(&technicalDescriptionLabel);
-    addAndMakeVisible(&simpleDescriptionLabel);
-    addAndMakeVisible(&collectionLabel);
+    addAndMakeVisible (&authorNameLabel);
+    addAndMakeVisible (&addressPatternLabel);
+    addAndMakeVisible (&technicalDescriptionLabel);
+    addAndMakeVisible (&simpleDescriptionLabel);
+    addAndMakeVisible (&collectionLabel);
     
-    addAndMakeVisible(&authorNameText);
-    addAndMakeVisible(&addressPatternText);
-    addAndMakeVisible(&technicalDescriptionText);
-    addAndMakeVisible(&simpleDescriptionText);
-    addAndMakeVisible(&collectionText);
+    addAndMakeVisible (&authorNameText);
+    addAndMakeVisible (&addressPatternText);
+    addAndMakeVisible (&technicalDescriptionText);
+    addAndMakeVisible (&simpleDescriptionText);
+    addAndMakeVisible (&collectionText);
     
     
     fillSelectionLists();
@@ -95,27 +96,26 @@ void AnalysisSelectionComponent::fillSelectionLists()
     
     // -----------------------------------------
     // create category list
-    for (int i = 0;i < analyser->audioAnalyses.size();i++)
+    for (int i = 0; i < analyser->audioAnalyses.size(); i++)
     {
-        if (!collectionInArray(analyser->audioAnalyses[i]->getCollectionIdentifier()))
+        if (! collectionInArray (analyser->audioAnalyses[i]->getCollectionIdentifier()))
         {
             CollectionItem c;
             
             c.collectionName = analyser->audioAnalyses[i]->getCollectionName();
             c.collectionId = analyser->audioAnalyses[i]->getCollectionIdentifier();
             
-            collections.add(c);
+            collections.add (c);
         }
     }
     
     // make name list
-    for (int i = 0;i < collections.size();i++)
+    for (int i = 0; i < collections.size(); i++)
     {
-        collectionNames.add(collections[i].collectionName);
+        collectionNames.add (collections[i].collectionName);
     }
     
-    collectionList.setContentList(collectionNames);
-    
+    collectionList.setContentList (collectionNames);
     
     // -----------------------------------------
     //analysisItems.resize(collections.size());
@@ -124,7 +124,7 @@ void AnalysisSelectionComponent::fillSelectionLists()
     {
         Array<AnalysisItem> items;
         
-        for (int j = 0;j < analyser->audioAnalyses.size();j++)
+        for (int j = 0; j < analyser->audioAnalyses.size(); j++)
         {
             if (analyser->audioAnalyses[j]->getCollectionIdentifier() == collections[i].collectionId)
             {
@@ -134,26 +134,22 @@ void AnalysisSelectionComponent::fillSelectionLists()
                 a.analysisId = analyser->audioAnalyses[j]->getIdentifier();
                 a.analysis = analyser->audioAnalyses[j];
                 
-                items.add(a);
-                
+                items.add (a);
             }
         }
         
-        analysisItems.add(items);
-        
+        analysisItems.add (items);
     }
     
-    
-    
-    setAnalysisList(0);
-    collectionList.selectRow(0);
+    setAnalysisList (0);
+    collectionList.selectRow (0);
 }
 
 //==============================================================================
-bool AnalysisSelectionComponent::collectionInArray(Identifier col)
+bool AnalysisSelectionComponent::collectionInArray (Identifier col)
 {
     bool found = false;
-    for (int j = 0;j < collections.size();j++)
+    for (int j = 0; j < collections.size(); j++)
     {
         if (collections[j].collectionId == col)
         {
@@ -165,9 +161,9 @@ bool AnalysisSelectionComponent::collectionInArray(Identifier col)
 }
 
 //==============================================================================
-void AnalysisSelectionComponent::paint(Graphics& g)
+void AnalysisSelectionComponent::paint (Graphics& g)
 {
-    g.fillAll(Colours::royalblue);
+    g.fillAll (findColour (PluginLookAndFeel::DarkGrey));
 }
 
 //==============================================================================
@@ -180,7 +176,7 @@ int AnalysisSelectionComponent::getSelectedAnalysis()
     
     int selectedAnalysisIndex = -1;
     
-    for (int i = 0;i < analyser->audioAnalyses.size();i++)
+    for (int i = 0; i < analyser->audioAnalyses.size(); i++)
     {
         if (analyser->audioAnalyses[i]->getIdentifier() == analysisId)
         {
@@ -207,55 +203,54 @@ void AnalysisSelectionComponent::changeListenerCallback (ChangeBroadcaster* sour
         String technicalDes = analysisItems[currentCollection][selectedIndex].analysis->getTechnicalDescription();
         String currentCollectionName = analysisItems[currentCollection][selectedIndex].analysis->getCollectionName();
         
-        analysisNameLabel.setText(name, dontSendNotification);
-        authorNameText.setText(author, dontSendNotification);
-        addressPatternText.setText(addressPattern, dontSendNotification);
-        simpleDescriptionText.setText(simpleDes, dontSendNotification);
-        technicalDescriptionText.setText(technicalDes, dontSendNotification);
-        collectionText.setText(currentCollectionName, dontSendNotification);
+        analysisNameLabel.setText (name, dontSendNotification);
+        authorNameText.setText (author, dontSendNotification);
+        addressPatternText.setText (addressPattern, dontSendNotification);
+        simpleDescriptionText.setText (simpleDes, dontSendNotification);
+        technicalDescriptionText.setText (technicalDes, dontSendNotification);
+        collectionText.setText (currentCollectionName, dontSendNotification);
     }
     else if (source == &collectionList)
     {
-        analysisList.selectRow(0);
-        setAnalysisList(collectionList.getSelectedRow());
+        analysisList.selectRow (0);
+        setAnalysisList (collectionList.getSelectedRow());
     }
 }
 
 //==============================================================================
-void AnalysisSelectionComponent::setAnalysisList(int listIndex)
+void AnalysisSelectionComponent::setAnalysisList (int listIndex)
 {
     StringArray analysisNameList;
     
-    for (int i = 0;i < analysisItems[listIndex].size();i++)
+    for (int i = 0; i < analysisItems[listIndex].size(); i++)
     {
-        analysisNameList.add(analysisItems[listIndex][i].analysisName);
+        analysisNameList.add (analysisItems[listIndex][i].analysisName);
     }
     
-    analysisList.setContentList(analysisNameList);
+    analysisList.setContentList (analysisNameList);
 }
 
 //==============================================================================
 void AnalysisSelectionComponent::resized()
 {
-    collectionList.setBounds(5,10,150,getHeight()-20);
+    collectionList.setBounds (5, 10, 150, getHeight()-20);
     
-    analysisList.setBounds(collectionList.getBounds().translated(155, 0));
+    analysisList.setBounds (collectionList.getBounds().translated (155, 0));
     
-    analysisNameLabel.setBounds(320,10,175,20);
+    analysisNameLabel.setBounds (320, 10, 175, 20);
     
-    collectionLabel.setBounds(315, 40, 175, 20);
-    collectionText.setBounds(325,55,175,20);
+    collectionLabel.setBounds (315, 40, 175, 20);
+    collectionText.setBounds (325, 55, 175, 20);
     
-    authorNameLabel.setBounds(315,75, 175, 20);
-    authorNameText.setBounds(325,90,175, 20);
+    authorNameLabel.setBounds (315, 75, 175, 20);
+    authorNameText.setBounds (325, 90, 175, 20);
     
-    addressPatternLabel.setBounds(315, 110, 175, 20);
-    addressPatternText.setBounds(325,125,175,20);
+    addressPatternLabel.setBounds (315, 110, 175, 20);
+    addressPatternText.setBounds (325, 125, 175, 20);
     
-    simpleDescriptionLabel.setBounds(315,145,175,20);
-    simpleDescriptionText.setBounds(325,160,175,60);
+    simpleDescriptionLabel.setBounds (315, 145, 175, 20);
+    simpleDescriptionText.setBounds (325, 160, 175, 60);
     
-    technicalDescriptionLabel.setBounds(315, 220, 175, 20);
-    technicalDescriptionText.setBounds(325,235,175,60);
-
+    technicalDescriptionLabel.setBounds (315, 220, 175, 20);
+    technicalDescriptionText.setBounds (325, 235, 175, 60);
 }

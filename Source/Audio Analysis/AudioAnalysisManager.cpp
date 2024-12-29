@@ -93,7 +93,7 @@ void AudioAnalysisManager::analyseAudio (float* buffer, int numSamples)
     {
         gist.processAudioFrame (audioBuffer.buffer);
         
-        for (int i = 0;i < audioAnalyses.size();i++)
+        for (int i = 0; i < audioAnalyses.size(); i++)
         {
             if (audioAnalyses[i]->send || audioAnalyses[i]->plot)
             {
@@ -256,7 +256,7 @@ std::vector<float> AudioAnalysisManager::resamplePlot (std::vector<float> v)
     
     err = speex_resampler_process_float (resampler, 0, inF, &inLen, outF, &outLen);
     
-    for (int i = 0;i < resampledSignal.size();i++)
+    for (int i = 0; i < resampledSignal.size(); i++)
     {
         resampledSignal[i] = outF[i];
     }

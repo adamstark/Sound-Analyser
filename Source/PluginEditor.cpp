@@ -102,7 +102,7 @@ void SoundAnalyserAudioProcessorEditor::refreshFromTree()
 {
     analysisComponents.clear();
     
-    for (int i = 0;i < analyserTree.getNumChildren();i++)
+    for (int i = 0; i < analyserTree.getNumChildren(); i++)
     {
         ValueTree analysisTree = analyserTree.getChild(i);
         
@@ -233,7 +233,7 @@ void SoundAnalyserAudioProcessorEditor::resized()
     
     int lastComponentY = 0;
     
-    for (int i = 0;i < analysisComponents.size();i++)
+    for (int i = 0; i < analysisComponents.size(); i++)
     {
         analysisComponents[i]->setBounds (10, (plotY + plotHeight + 25) + lastComponentY, analysisComponents[i]->getWidth(), analysisComponents[i]->getHeight());
         

@@ -48,7 +48,7 @@ public:
     {
         std::vector<double> doublePrecisionBuffer(audioFrame.size());
         
-        for (int i = 0;i < doublePrecisionBuffer.size();i++)
+        for (int i = 0; i < doublePrecisionBuffer.size(); i++)
         {
             doublePrecisionBuffer[i] = (double) audioFrame[i];
         }

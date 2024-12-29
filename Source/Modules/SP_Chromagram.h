@@ -47,7 +47,7 @@ public:
     {
         std::vector<double> doublePrecisionBuffer(audioFrame.size());
         
-        for (int i = 0;i < doublePrecisionBuffer.size();i++)
+        for (int i = 0; i < doublePrecisionBuffer.size(); i++)
         {
             doublePrecisionBuffer[i] = (double) audioFrame[i];
         }
@@ -61,7 +61,7 @@ public:
         std::vector<double> chromagram = chroma.getChromagram();
         std::vector<float> chromaFloat (12);
         
-        for (int i = 0;i < 12;i++)
+        for (int i = 0; i < 12; i++)
             chromaFloat[i] = (float) chromagram[i];
         
         return chromaFloat;

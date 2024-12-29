@@ -38,7 +38,7 @@ void SoundAnalyserAudioProcessor::refreshFromTree()
     analyser.setIPAddress (analyserTree[AnalysisModel::Ids::IPAddress].toString().toStdString());
     analyser.setAnalyserIdString (analyserTree[AnalysisModel::Ids::AnalyserId].toString().toStdString());
     
-    for (int i = 0;i < analyser.audioAnalyses.size();i++)
+    for (int i = 0; i < analyser.audioAnalyses.size(); i++)
     {
         ValueTree tree = analyserTree.getChildWithName (analyser.audioAnalyses[i]->getIdentifier());
         analyser.audioAnalyses[i]->initialise (tree);
@@ -241,7 +241,7 @@ void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhose
         {
             JUCE_ASSERT_MESSAGE_THREAD
             
-            for (int i = 0;i < analyser.audioAnalyses.size();i++)
+            for (int i = 0; i < analyser.audioAnalyses.size(); i++)
             {
                 if (treeWhosePropertyHasChanged.getType() == analyser.audioAnalyses[i]->getIdentifier())
                     analyser.audioAnalyses[i]->send = treeWhosePropertyHasChanged[AnalysisProperties::send];
@@ -270,7 +270,7 @@ void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhose
         {
             JUCE_ASSERT_MESSAGE_THREAD
             
-            for (int i = 0;i < analyser.audioAnalyses.size();i++)
+            for (int i = 0; i < analyser.audioAnalyses.size(); i++)
             {
                 if (treeWhosePropertyHasChanged.getType() == analyser.audioAnalyses[i]->getIdentifier())
                 {
@@ -291,7 +291,7 @@ void SoundAnalyserAudioProcessor::valueTreeChildAdded (ValueTree& parentTree, Va
 //==============================================================================
 void SoundAnalyserAudioProcessor::valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved, int indexFromWhichChildWasRemoved)
 {
-    for (int i = 0;i < analyser.audioAnalyses.size();i++)
+    for (int i = 0; i < analyser.audioAnalyses.size(); i++)
     {
         if (childWhichHasBeenRemoved.getType() == analyser.audioAnalyses[i]->getIdentifier())
         {
